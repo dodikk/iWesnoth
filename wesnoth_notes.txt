@@ -1,0 +1,742 @@
+Favorite campaigns:
+-------------------
+Ooze Mini-Campaign
+Dead Water - really hard
+Invasion of the Unknown
+Brotherhood of Light
+World Conquest
+A New Order (?)
+Wesband
+
+Favorite Eras:
+--------------
+Ageless
+Age of Heroes
+Era of Myths
+
+
+
+
+
+
+with pool_alloc
+43.49mb, 155.21mb vm
+3:32 until main menu
+
+without pool_alloc:
+a little bit slower, but much less memory used
+
+
+- really need to "re-initialize fonts for the current language"? NO
+- convert file streams to memory streams
+- do not use gzip to cache
+- cache differences to main set only, not the whole thing
+- split out terrain, units, help
+	- only load unit/terrain cfg as they are required
+
+
+
+
+DATA/_main.cfg
+	themes/
+		default.cfg
+	core/
+		core/macros/ 				-- a lot of gameplay wml
+		core/help.cfg 				-- the help system, a LOT of text
+		core/terrain.cfg 
+		core/terrain-graphics/ 		-- lots of files
+		core/units.cfg 				-- a TON of files in here...
+	multiplayer/
+		multiplayer/scanarios/
+		multiplayer/eras.cfg
+	campaigns/ 						-- just to load the campaign info
+	core/terrain-graphics.cfg
+	game_config.cfg
+	
+
+
+
+Baseline profile:
+Took 24709 ms to read gui/default.cfg file (release mode)
+Took 383 ms to save gui config to archive
+
+Starting config_cache::read_file() at 127960 ticks
+Ended config_cache::read_file() at 208941 ticks (80981 ms)
+Took 23202 ms to save game config to archive.
+Took 44795 ms to load game config from archive. (3mb file)
+
+-> converting to memory stream == no difference (file is read in very quickly)
+-> disabling loading screen progress bar == no difference
+-> compile in release mode == 53834 ms
+-> remove try/catch in parser loop == 66101 ms ...
+-> disable c++ exceptions in compiler == doesn't work (boost exceptions needed)
+-> decompress in one step ==
+-> turn off DEBUG and DEBUG_ERROR preprocessor defines ==
+
+Time Profiling, from start to main menu:
+40980ms tokenizer::next_token()
+	- seems to be slow std::basic_string functions like reserve, assign
+std::basic_istream::get() - 
+
+-> rewrote tokenizer::next_token() to use char buffers == 33708 ms
+
+New profile data:
+
+Took 24570 ms to read gui/default.cfg file.
+Took 387 ms to save gui config to archive.
+Starting config_cache::read_file() at 30863 ticks
+Ended config_cache::read_file() at 66876 ticks (36013ms)
+time elapsed: 78126 ms
+
+ms		function
+19500	tokenizer::next_token()
+12630	parser::parse_variable()
+7510	preprocessor_data::get_chunk()
+6790	tokenizer::skip_comment()
+
+-> removed text domains from tokenizer::skip_comment()
+
+Took 16783 ms to read gui/default.cfg file.
+Took 371 ms to save gui config to archive.
+Starting config_cache::read_file() at 22835 ticks
+Ended config_cache::read_file() at 53222 ticks (30387ms)
+time elapsed: 63539 ms
+
+
+-> preprocessed gui/default.cfg	== Took 2797 ms to read gui/default.cfg file
+
+
+
+-> create custom binary cfg cache file system, with key, value tables
+n x [key index], [value index]
+n x [children cfgs]
+n x [key strings]
+n x [value strings]
+
+to create data tree, just point to key/value table in memory
+
+
+BUT it is complicated to create string tables 
+
+config::saveCache()
+short numKeys
+numKeys x key, value (pascal style strings: length, then the char data)
+short numChildren
+numChildren x names
+[recursive child data]
+
+
+
+Took 827 ms to read cached file /var/mobile/Applications/948A4D67-11FC-4172-8862-2F37989D1D0E/wesnoth.app/data/gui/gui.cached.cfg
+Took 10306 ms to read cached file /private/var/mobile/Applications/948A4D67-11FC-4172-8862-2F37989D1D0E/Documents/wesnoth1.6/cache/cache-v1.6.3-a76d6f857c35047c0a634eb329e1338b653fcea2.cache.cfg
+time elapsed: 33771 ms
+
+-> use minimal .cfg to launch
+
+time elapsed: 7736 ms
+
+24.8% 1400ms GLES_RenderCopy -> glTexSubImage2D
+
+-> fixed loading screen not to update whole screen...
+
+----------
+
+Optimizing game loading...
+
+3:28 to load tutorial...
+
+terrain_builder::rotate_rule() 51800ms, 37.1%
+
+-> cache terrain_builder output?? .. but sometimes terrain can change from saved games?
+-> okay to cache "terrain_builder::building_rules_" as this is loaded from the cfg, BUT it can change for every campaign
+
+-> add recursive cache saving, starting from
+terrain_builder: building_ruleset building_rules_;
+
+
+39740ms to load tutorial
+
+-------------
+
+-> build string table system for cache, to reduce size and speed up loading
+	-> much smaller, but still same load time... use c strings to avoid std::string overhead?
+	DONE
+	
+Optimizing game draw speed...
+
+3fps
+32.6% GLES_RenderCopy
+
+-> check openGL texture format
+32 bit SDL_PIXELFORMAT_ABGR8888
+format = GL_RGBA 6408 
+formattype = GL_UNSIGNED_BYTE 5121
+
+-> optimize full-screen update by just recreating the texture
+CAN'T, the texture is 512x512, not 480x320
+-> use 512x512 pixel buffer, and recreate texture each time it is updated
+
+5fps, still most of time in GLES_RenderCopy
+
+
+-> upgrade to proper SDL 1.3 using SDL_TEXTURE instead of surfaces
+DONE
+
+terrain graphics: 72x72 = 14x14 tiles in cache = 196 tiles
+unit graphics
+interface
+can still keep some stuff as surfaces, such as dialogs?
+24mb texture limit... 4mb per 1024x1024 = 6 pages
+game should be under 20mb runtime memory too
+
+implement automatic surface->texture generation and cache
+DONE
+
+how to do clipping in opengl???
+fix clip_rect_setter, clip src rect, dst rect
+DONE
+
+automatically cache textures but encapsulating it in surface structure,
+that stores both SDL_Surface and SDL_TextureID
+DONE
+
+font::draw_text is slow... It has to convert the surfaces to create the cached texture
+should we cache the character output from SDL_TTF and render char by char? that would be very quick
+DONE -> implemented text cache, but check neutral_surface_format -> ABGR888
+
+huge amount of memory churn every frame... should be using pointers instead of passing everything by reference...
+
+memory required and time to load terrain is very large, way to cache only what is needed for the level??
+currently it caches building_ruiles_ only... can we cache tile_map_ directly for each level?
+
+26mb to get to tutorial, but churns through 334mb!
+
+
+changing openGL states is expensive!  cache the state...
+DONE
+
+was drawing a fullscreen background each time which was overdrawn by the map
+DONE
+
+to avoid constant texture binding, create 1024x1024 hex graphic cache, 14x14 72x72 = 196 tiles 
+LRU cache using lists, when a tile is drawn, it gets moved to the end of the list. Remove the head entry if needed
+DONE
+
+
+Pretty fast on device now, scrolls around tutorial quickly!
+10mb texture use, 11-15fps
+
+BUT cache miss stalls fps. Need to precache when map loaded. This will also avoid long black screen before map is displayed
+Count how many cache entries are required, have two texture pages
+See if avoiding same-texture binding speeds things up
+
+Change cache system to speed game loading (after initial setup)
+-> load full base config at start
+-> load cfg diff's for each level
+-> what about terrain? it takes too long to parse the building rules... need a building rule diff system too...
+
+
+new profiling data after changing string loading (with mempool on)
+-> startup
+Took 50 ms to read tips cache
+took 1089 ms to read gui cache
+took 94ms to read minimal launch cache
+startup in 9961ms
+
+-> load tutorial
+took 10139ms to read TUTORIAL defined cache
+	-> check if this includes help, terrain?? YES it still includes terrain...
+took 3380ms to load help cache
+took 23006ms to load terrain cache
+done initializing managers... 30251
+
+
+hmmm... they say file access is slow... is it slower than loading in a gzip version and uncompressing in memory? let's test that theory...
+IMPLEMENT GZIP -> Time to load in 3mb file: 174ms. Time to load 88k compressed version and decompress: 6ms. The time variance is insignificant, but space savings is well worth it. PLUS there may be slowdowns with the current system that streams the file in a few bytes at a time... It is more like 614ms
+DONE
+
+sometimes the original image source is changed, eg to fade in a recruited unit. In this case, the cache needs to be invalidated!
+DONE on surface.assign()
+
+5s in game_controller::set_unit_data() -> cache this?
+3s to load help cache, which isn't needed at this point! from play_controller::init(CVideo&)
+DONE
+pre-allocate space with vector.reserve() to avoid memory thrashing? ****
+DONE
+instead of map[key]=value, use map.insert(std::pair<key, value>) ****
+DONE
+16740ms in terrain_builder::loadCache()
+
+new profiling data:
+-> startup
+took 89ms to read fonts
+took 43ms to read tips
+took 713 ms to read gui
+took 92ms to read minimal launch cache
+startup in 9087ms
+
+-> load tutorial
+took 10256ms to read TUTORIAL cache
+took 28575ms to load terrain cache
+done initializing managers... 32417
+
+
+memory mapped IO?	NOT NEEDED
+make sure computed path is cached YES
+
+to optimize many small allocations of the same object of a fixed size, try using boost.pool allocator      std::vector<int, boost::pool_allocator<int> > v;
+unordered sets can perform much faster than ordered maps, eg use    boost::unordered_map<std::string, int> map(10000);
+
+make new functions for blit_reversed and blit with color/tint/alpha, to minimize image cache
+
+use string table for config objects in memory, will speed up loading as well as reduce memory requirements
+DONE with StringPool class
+
+hide initial loading by using splash screens? or intro sequence? or start loading in the background in a separate thread
+use defines map "/data APPLE TINY" and diffs
+cache-v1.6.3-6d8ff741cd1977c76142eb886aa787f8724a0f90.dat with defines_map /data APPLE TINY TUTORIAL'
+cache-v1.6.3-59a3187d5a962426ea99174ccd72f2aad6324e89.dat with defines_map /data/minimal_launch.cfg APPLE TINY'
+
+
+waiting to load after a map entry is inserted:
+took 13643ms to read terrain cache
+done initializing managers... 18045
+
+use pool allocators for strings:
+#include <boost/pool/pool_alloc.hpp>
+typedef std::basic_string<char, std::char_traits<char>, boost::fast_pool_allocator<char> > String;
+
+
+using gcc mt allocator:
+took 9505ms to read terrain cache
+done initializing managers... 14344
+
+
+
+Campaigns:
+190 levels in main-line campaigns
+almost 300 levels in user-made addon campaigns
+
+
+portrait images: 400x400 => 176x176
+
+REMEMBER TO USE PNG OPTIMIZATION PROGRAM!!!
+
+
+Remove translations ^
+ability,traits: female_name
+unit config: name
+map config: user_team_name
+DONE
+
+
+TODO:
+cache openGL renders, to sort by texture?
+or always render to texture or a way to get the render buffer to scroll??
+
+
+
+
+
+
+need memory reduction
+---------------------
+
+30mb to get to tutorial
+creating textures counts against app memory? eg 1024x1024 streaming texture = 4mb for texture + 4mb for surface bits :(
+	SO create pixels during pre-cache phase, then create textures and free pixels
+fullscreen image 480x320 = 614400 bytes. So make sure to clear loadscreen image!
+at 7.5s in, a std::vector<int> took up 966656 bytes!
+	DONE - was the font codepoints
+soooo many strings are 4096 bytes... !!! like 1500 strings = 6mb!!! wtf!
+	-> create new lightweight string class
+std::vector<image::cache_item<surface>> is taking up lots of memory
+	-> well, it's the cached surfaces, duhhh
+SDL_CreateRGBSurface or course has tons of objects
+
+try again using memory pool at 30mb
+	-> no difference in memory??
+get rid of font cfg after it is loaded in?
+we do not really need font::font_map, font::split_text() functions...
+	DONE
+
+instead of brightening tile, use a white alpha tile brighten.png
+
+cached building rules aren't really working... it's like they're out of order or something...
+OR it seems like a problem with cached images...
+checking code indicates a problem with image locator function... the filename is correct, but returned image is different
+	FIXED - added init_index() call to locator loadCache
+default to turn web stats OFF
+
+instead of caching all tiles, loop through and cache the 196 most-used tiles to one texture map
+
+using new string class:
+took 4266 ms to read tutorial cache
+took 9170ms to read terrain cache
+done initializing managers... 12444
+
+22mb to get to tutorial
+
+terrain memory reduction:
+
+- use rotate flags to reuse edge tiles
+- use pvrtc compression:
+	texturetool -e PVRTC --channel-weighting-linear --bits-per-pixel-4 -o test2.pvrtc -p test2_p.png test2.png
+	memory from png: 72x72x4 = 20k...  memory from pvrtc: 128x128/2 = 8k (only 40% of original!)
+	BUT we still need texture maps... so group logical tiles together into maps
+	base full-hex tiles still need to be in a png, since it needs to tile, however the overlays are fine if there are compression artifacts
+	1 = 128x128, 
+	3x3 (9) = 256x256, 10 pixel spacers
+	6x6 (36) = 512x512, 10 pixel spacers. 1mb uncompressed, vs ... 131k compressed!!!
+	13x13(169) = 1024x1024, 6 pixel spacers = 4mb vs 524k compressed = only 12.5% of the uncompressed, or savings of 87.5% !!!
+	
+	too bad we can't use it on units... units need to be palette swapped for team color...
+		actually......... we can afford to pre-color the units to avoid the need for palette swapping! how many colors are needed?
+		9 colors: red, blue, green, purple, black, brown, orange, white, teal
+		this will decrease runtime memory required
+	ughhh... castle tiles are NOT 72x72, but much bigger and various sizes... but at least we should trim them to minimum size...
+	DONE
+	
+fix help images to use different terrain tiles
+minimap rendering won't work with new terrain tile system... replace with known color for each tile type?
+
+
+after implementing texture atlases:
+without pool_alloc:
+16mb texture memory
+but 46mb real memory?? 13.7mb of 16 byte allocations (most from strings), 8mb of 1024x1024 texture??
+6fps
+
+with pool_alloc:
+18mb net bytes... the 1024x1024 allocations were freed after awhile <phew>
+most memory in 32 byte allocations... for the map entries
+
+implemented new/delete using pool_alloc, but then all memory is hidden in the object alloc tool.
+SO it is better to just use the built-in memory routines, as these are pooled anyways...
+and look to the "memory monitor" for the real memory usage of the app
+
+SO: we have a lot of room left in texture memory... we should convert more surfaces to use native textures, if possible
+like the GUI...
+
+implement terrain render queue and sort by texture to improve performance. turn on z-buffer
+	can't use z-buffer with transparent textures... just sort by layer, then texture
+
+use a memory profiling tool to check memory usage
+use more pooled strings, maybe for terrain builder or image locator? check tod variance for image locator
+can we free cfg memory after it is parsed? like terrain, units: game_config_.clear_children("terrain_graphics");
+	NOT units, it is checked
+use compressed textures for story screens, portrait pics
+
+at tutorial finished loading:
+------------------------------------------------
+MALLOC:     36560896 (   34.9 MB) Heap size
+MALLOC:     30969360 (   29.5 MB) Bytes in use by application
+MALLOC:      3993600 (    3.8 MB) Bytes free in page heap
+MALLOC:       220784 (    0.2 MB) Bytes free in central cache
+MALLOC:            0 (    0.0 MB) Bytes free in transfer cache
+MALLOC:      1377152 (    1.3 MB) Bytes free in thread caches
+MALLOC:         6800              Spans in use
+MALLOC:            3              Thread heaps in use
+MALLOC:       917504 (    0.9 MB) Metadata allocated
+------------------------------------------------
+
+From profiler:
+
+22.3mb to get to tutorial
+1.2mb string assign (5.3%) - global initializers??
+4.0mb (18%) SDL_CreateRGBSurface
+2.6mb (11.9%) String
+config add_child 1.5mb (6.5%)
+gnu_cxx_new_allocator allocate 11mb (49.4%)
+
+load tutorial, then load HTTT = memory leak??
+9.8mb
+-> we need to free all the image caches...
+
+std::vector
+- overhead of 12 bytes
+- calling reserve tries to allocate exactly the requested size (no strict per-element overhead, if capacity met)
+- adding 1 more than capacity doubles the size
+- calling vector::clear() does not actually free any memory!
+
+std::map
+- overhead of 24 bytes
+- each element overhead of 16-18 bytes
+- calling clear frees all memory
+
+using new memory pool and better maps in config:
+Finished loading level:
+------------------------------------------------
+MALLOC:     31318016 (   29.9 MB) Heap size
+MALLOC:     26023408 (   24.8 MB) Bytes in use by application
+MALLOC:      3702784 (    3.5 MB) Bytes free in page heap
+MALLOC:       220080 (    0.2 MB) Bytes free in central cache
+MALLOC:            0 (    0.0 MB) Bytes free in transfer cache
+MALLOC:      1371744 (    1.3 MB) Bytes free in thread caches
+MALLOC:         5602              Spans in use
+MALLOC:            3              Thread heaps in use
+MALLOC:       917504 (    0.9 MB) Metadata allocated
+------------------------------------------------
+(saved 5mb in heap size!)
+
+added string pools and better maps to terrain builder and image locator stuff:
+Finished loading level:
+------------------------------------------------
+MALLOC:     27123712 (   25.9 MB) Heap size
+MALLOC:     21908648 (   20.9 MB) Bytes in use by application
+MALLOC:      3682304 (    3.5 MB) Bytes free in page heap
+MALLOC:       133120 (    0.1 MB) Bytes free in central cache
+MALLOC:            0 (    0.0 MB) Bytes free in transfer cache
+MALLOC:      1399640 (    1.3 MB) Bytes free in thread caches
+MALLOC:         4587              Spans in use
+MALLOC:            2              Thread heaps in use
+MALLOC:       786432 (    0.8 MB) Metadata allocated
+------------------------------------------------
+(saved another 4mb in heap size!!)
+
+4mb of rgb surfaces... time to start implementing native textures for the gui!! timage
+
+Finished loading level:
+------------------------------------------------
+MALLOC:     25026560 (   23.9 MB) Heap size
+MALLOC:     20019192 (   19.1 MB) Bytes in use by application
+MALLOC:      3485696 (    3.3 MB) Bytes free in page heap
+MALLOC:       147280 (    0.1 MB) Bytes free in central cache
+MALLOC:            0 (    0.0 MB) Bytes free in transfer cache
+MALLOC:      1374392 (    1.3 MB) Bytes free in thread caches
+MALLOC:         4569              Spans in use
+MALLOC:            2              Thread heaps in use
+MALLOC:       786432 (    0.8 MB) Metadata allocated
+------------------------------------------------
+
+- image locator is still caching some stuff... try doing a texture locator...
+
+changed to avoid caching timage surfaces
+
+Finished loading level:
+------------------------------------------------
+MALLOC:     23977984 (   22.9 MB) Heap size
+MALLOC:     18930280 (   18.1 MB) Bytes in use by application
+MALLOC:      3473408 (    3.3 MB) Bytes free in page heap
+MALLOC:       166576 (    0.2 MB) Bytes free in central cache
+MALLOC:            0 (    0.0 MB) Bytes free in transfer cache
+MALLOC:      1407720 (    1.3 MB) Bytes free in thread caches
+MALLOC:         4433              Spans in use
+MALLOC:            6              Thread heaps in use
+MALLOC:       786432 (    0.8 MB) Metadata allocated
+------------------------------------------------
+
+- try a global String -> shared_string replacement??
+- free caches on exiting from level
+
+- now a lot of time is spent on get_terrain() calls, so cache this per tile, and clear cache when terrain changes
+
+struct terrain_constraint in builder.hpp has std::vector<shared_string> set_flag, no_flag, has_flag... BUT these are normally empty, wasting 12 bytes of overhead each. Change to std::vector<>*, which can be NULL
+
+
+#define DEBUG_NEW new(_NORMAL_BLOCK, __FILE__, __LINE__)
+#define new DEBUG_NEW
+
+-----
+
+Crash when loading:
+
+check release build settings??
+- did not properly update device executable when tcmalloc was disabled... had to clean project and delete from device!
+
+2.2 - 
+2.2.1 - error compiling game_preferences_display.cpp - (standard input):28757:bad immediate value for offset (4112)
+	with -Os, works with -O2
+3.0 - openGL does not render at all? even on device
+
+on device:
+during loading of tutorial...
+EXC_BAD_INSTRUCTION
+#0  0x32d327e2 in std::operator+<char, std::char_traits<char>, std::allocator<char> > ()
+#1  0x00000024 in ?? ()
+#2  0x00000024 in ?? ()
+#3  0x00000024 in ?? ()
+
+... it worked using debug mode... and compiling with -Os certainly worked before...
+
+theories:
+- compiler is generating incorrect code
+- something was wrong when adding shared_strings or skiplist_map
+- something in tcmalloc is overriding default behavior
+- a hidden memory problem is trashing memory somewhere
+
+try removing ALL tcmalloc code from binary
+- no change
+remove shared_string and skiplist_map
+- works again!
+
+and much faster...
+Took 6361ms to read tutorial cache file, vs 22000ms with cached strings......
+
+re-implement tcmalloc
+- still works fine
+re-implement shared strings
+- fails!
+-> totally redo the shared string implementation
+- works again
+- with full tcmalloc: still works!
+We're back in business...
+- reimplement skiplist_map, still works on device
+- now emulator has random crashes when using tcmalloc??
+
+Optimize loading...
+-------------------
+
+2:09 to get to level loaded black screen
+25140ms std::_rbtree from shared_strings
+	- try skiplist_map instead of map...
+9540 from pthread_setspecific gStringPool, shared_string::clear()
+	-> there is a setting to make static variables thread safe! that is the culprit...
+	- so, reimplement without using static variable
+
+2:24 using skiplist_maps.... global variable is the same as static variable hehe... try turning off the thread-safe setting...
+22820 from shared_string::clear()
+15800 from shared_string::shared_string(shared_string const&)
+ 9860 from skiplist
+ 8860 from pthread_setspecific
+ 8200 from memcmp
+
+fixed shared_string to use reference counting that doesn't require a map lookup
+1:12 to black tutorial screen
+10130 shared_string::set
+ 5480 pthread_setspecific
+ 3180 tc_malloc
+ 2710 tc_free
+
+
+in-game optimizations
+---------------------
+
+inverted call tree:
+19.6% display::get_terrain_images() -- but this needs to animate the map....
+35.7% game_display::draw_report() -- check if we really need to call this so much
+-> a lot faster now!
+
+there is still definitely some memory corruption going on... make a custom memory checker along with Malloc testing flags, to check all memory allocations every n calls
+
+implemented reversed drawing for unit images, cutting memory by 1/2
+- do the same for semi-brightened, brightened
+
+At titlescreen
+------------------------------------------------
+MALLOC:      6291456 (    6.0 MB) Heap size
+MALLOC:      1371440 (    1.3 MB) Bytes in use by application
+MALLOC:      4481024 (    4.3 MB) Bytes free in page heap
+MALLOC:       197552 (    0.2 MB) Bytes free in central cache
+MALLOC:        15360 (    0.0 MB) Bytes free in transfer cache
+MALLOC:       226080 (    0.2 MB) Bytes free in thread caches
+MALLOC:          314              Spans in use
+MALLOC:            1              Thread heaps in use
+MALLOC:       524288 (    0.5 MB) Metadata allocated
+------------------------------------------------
+
+Finished loading level (tutorial)
+------------------------------------------------
+MALLOC:     19783680 (   18.9 MB) Heap size
+MALLOC:     15260272 (   14.6 MB) Bytes in use by application
+MALLOC:      3796992 (    3.6 MB) Bytes free in page heap
+MALLOC:       137616 (    0.1 MB) Bytes free in central cache
+MALLOC:            0 (    0.0 MB) Bytes free in transfer cache
+MALLOC:       588800 (    0.6 MB) Bytes free in thread caches
+MALLOC:         3595              Spans in use
+MALLOC:            1              Thread heaps in use
+MALLOC:       524288 (    0.5 MB) Metadata allocated
+------------------------------------------------
+
+find wml that we can discard after the cached data is loaded...
+terrain_graphics?
+units or unit_types -> the unit_type_data keeps a config pointer around...
+check unit_types.hpp and convert more std::string to shared_string
+
+saved 2.4mb!
+Finished loading level (tutorial)
+------------------------------------------------
+MALLOC:     16637952 (   15.9 MB) Heap size
+MALLOC:     12817120 (   12.2 MB) Bytes in use by application
+MALLOC:      3100672 (    3.0 MB) Bytes free in page heap
+MALLOC:       131344 (    0.1 MB) Bytes free in central cache
+MALLOC:            0 (    0.0 MB) Bytes free in transfer cache
+MALLOC:       588816 (    0.6 MB) Bytes free in thread caches
+MALLOC:         3008              Spans in use
+MALLOC:            1              Thread heaps in use
+MALLOC:       524288 (    0.5 MB) Metadata allocated
+------------------------------------------------
+
+Finished loading level (HTTT normal)
+------------------------------------------------
+MALLOC:     19783680 (   18.9 MB) Heap size
+MALLOC:     16546648 (   15.8 MB) Bytes in use by application
+MALLOC:      2551808 (    2.4 MB) Bytes free in page heap
+MALLOC:       191712 (    0.2 MB) Bytes free in central cache
+MALLOC:            0 (    0.0 MB) Bytes free in transfer cache
+MALLOC:       493512 (    0.5 MB) Bytes free in thread caches
+MALLOC:         3662              Spans in use
+MALLOC:            1              Thread heaps in use
+MALLOC:       524288 (    0.5 MB) Metadata allocated
+------------------------------------------------
+perhaps the +4mb is for the intro image...
+
+Using Memory Monitor: 18.84mb titlescreen, not much help determining where all the memory is going...
+
+implement MAP_MISC for attack-indicator-*, MAP_FOOTSTEPS for footsteps, 
+get rid of transparent UI items (but UI in a map is actually bigger...)
+use pvrtc for fullscreen story images, loading screens
+
+openGL resource bytes
+---------------------
+titlescreen - 7.7mb textures
+HTTT after intro - 21.8mb textures, 11-14 fps
+recruit - goes up to 27.3mb texture use, then crashes? why 5mb textures to recruit something??
+-> ahhhhh... there was a bug in the new delayed texture delete system in RenderQueue, where it didn't actually delete textures :P
+
+HTTT after intro - 18.9mb
+recruit - now stable at about 19.5mb
+crashed during AI turn, but only 20mb textures used... EXC_BAD_ACCESS in shared_string::clear with null data_
+memory continues to rise during gameplay... 18.9mb to 24mb in first turn. What is taking almost 5mb of memory??
+
+
+TODO: use pvrtc for unit maps, but 2x upscale and pre palette swapped: still 50% reduction in size
+
+Memory still slowly rises above 26mb heap, because of units? or AI caching or something?
+Is there a set delay after an AI unit moves?
+
+using unordered maps for std::map<string, x> should speed things up considerably
+something not quite right with the unitmap freeing, like it does not free the least used. It will free one, and then immediately create it again...
+still goes to 28mb on turn 3 HTTT, but seems stable...
+
+optimization during AI turns:
+-----------------------------
+17.1% shared_string::set
+10.7% pthread_setspecific
+ 3.6% tc_malloc
+ 3.5% gStringPool
+ 2.7% std::rb_tree<map_location, std::pair<map_location const, unsigned long>
+
+hmmm.... what if we just never freed shared strings? just let the count remain at zero... it would reduce the cost for shared_string::set and eliminate shared_string::clear
+
+17.6% shared_string::set
+ 8.1% pthread_setspecific
+ 4.2% tc_malloc
+ 3.7% tc_free
+ 2.6% gStringPool
+
+unit::get_state
+unit::movement_cost
+
+optimized checking for "slowed" state
+switched to boost::unordered_map for shared_string -> memory hog and waaaaay too slow to start campaign
+
+(inverted call tree)
+12.8% std::-Rb_tree<> -> but most from shared_string::set...
+ 5.5% tc_free
+ 4.7% shared_string::set
+ 4.7% tc_malloc
+ 2.7% renderQueueRender
+-----
+
+about 50% is spent rendering, to speed up more, we have to switch back to tile invalidation system, and invalidate all on scroll
