@@ -1,0 +1,24 @@
+// "filename.png", texOffsetX, texOffsetY, flags, texW, texH, trimmedX, trimmedY, originalW, originalH, UNITMAP_ELVES_ARCHERID
+addMapEntry("units/elves-wood/archer-bow-attack1.png", 213, 136, 0, 34, 47, 20, 14, 72, 72, UNITMAP_ELVES_ARCHER);
+addMapEntry("units/elves-wood/archer-bow-attack2.png", 213, 183, 0, 34, 47, 20, 14, 72, 72, UNITMAP_ELVES_ARCHER);
+addMapEntry("units/elves-wood/archer-bow-attack3.png", 179, 183, 0, 34, 47, 20, 14, 72, 72, UNITMAP_ELVES_ARCHER);
+addMapEntry("units/elves-wood/archer-bow-attack4.png", 145, 136, 0, 34, 48, 20, 13, 72, 72, UNITMAP_ELVES_ARCHER);
+addMapEntry("units/elves-wood/archer-bow-defend.png", 111, 89, 0, 34, 50, 20, 11, 72, 72, UNITMAP_ELVES_ARCHER);
+addMapEntry("units/elves-wood/archer-bow.png", 179, 136, 0, 34, 47, 20, 14, 72, 72, UNITMAP_ELVES_ARCHER);
+addMapEntry("units/elves-wood/archer-die1.png", 214, 89, 0, 37, 41, 22, 20, 72, 72, UNITMAP_ELVES_ARCHER);
+addMapEntry("units/elves-wood/archer-die2.png", 118, 43, 0, 41, 33, 22, 29, 72, 72, UNITMAP_ELVES_ARCHER);
+addMapEntry("units/elves-wood/archer-die3.png", 159, 43, 0, 41, 32, 22, 30, 72, 72, UNITMAP_ELVES_ARCHER);
+addMapEntry("units/elves-wood/archer-die4.png", 200, 43, 0, 44, 20, 19, 41, 72, 72, UNITMAP_ELVES_ARCHER);
+addMapEntry("units/elves-wood/archer-idle-1.png", 145, 184, 0, 33, 48, 20, 13, 72, 72, UNITMAP_ELVES_ARCHER);
+addMapEntry("units/elves-wood/archer-idle-2.png", 111, 139, 0, 32, 48, 20, 13, 72, 72, UNITMAP_ELVES_ARCHER);
+addMapEntry("units/elves-wood/archer-idle-3.png", 111, 187, 0, 29, 48, 20, 13, 72, 72, UNITMAP_ELVES_ARCHER);
+addMapEntry("units/elves-wood/archer-idle-4.png", 77, 139, 0, 29, 48, 20, 13, 72, 72, UNITMAP_ELVES_ARCHER);
+addMapEntry("units/elves-wood/archer-idle-5.png", 77, 187, 0, 29, 48, 20, 13, 72, 72, UNITMAP_ELVES_ARCHER);
+addMapEntry("units/elves-wood/archer-idle-6.png", 34, 87, 0, 29, 48, 20, 13, 72, 72, UNITMAP_ELVES_ARCHER);
+addMapEntry("units/elves-wood/archer-sword-1.png", 0, 0, 0, 34, 59, 20, 2, 72, 72, UNITMAP_ELVES_ARCHER);
+addMapEntry("units/elves-wood/archer-sword-2.png", 34, 0, 0, 45, 43, 18, 16, 72, 72, UNITMAP_ELVES_ARCHER);
+addMapEntry("units/elves-wood/archer-sword-3.png", 34, 43, 0, 43, 44, 21, 15, 72, 72, UNITMAP_ELVES_ARCHER);
+addMapEntry("units/elves-wood/archer-sword-4.png", 77, 43, 0, 41, 46, 20, 15, 72, 72, UNITMAP_ELVES_ARCHER);
+addMapEntry("units/elves-wood/archer-sword-defend.png", 77, 89, 0, 34, 50, 20, 11, 72, 72, UNITMAP_ELVES_ARCHER);
+addMapEntry("units/elves-wood/archer-sword.png", 180, 89, 0, 34, 46, 20, 15, 72, 72, UNITMAP_ELVES_ARCHER);
+//addMapEntry("units/elves-wood/archer.png", 145, 89, 0, 35, 47, 20, 14, 72, 72, UNITMAP_ELVES_ARCHER);

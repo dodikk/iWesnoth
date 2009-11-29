@@ -1,0 +1,568 @@
+________________________________________________________________________________
+
+                    INVASION FROM THE UNKNOWN - CHANGELOG
+________________________________________________________________________________
+
+     [D]: definitive | [P]: placeholder | [T]: testing | [U]: unstable
+________________________________________________________________________________
+
+Version 1.14.0:
+- Graphics:
+    - New or updated unit graphics: Shaxthal Warlord, Shaxthal Protector
+      Drone, Shaxthal Runner Drone, Shaxthal Sentry Drone, Shaxthal Assault
+      Drone, Demon (L1), Demon Zephyr, Elvish Ascetic, Elvish Mystic, Elvish
+      Avatar, Shaxthal Master Drone
+
+- Language and i18n:
+    - Applied SouthernOracle's revisions of all scenarios and both episodes'
+      story text.
+
+- Terrains:
+    - Fixed more transition issues with gates and walls of any kind.
+
+- Units:
+    - Balancing:
+        - Reduced Sylvan Warden's melee attack strength from 6-5 to 6-3.
+________________________________________________________________________________
+
+Version 1.12.1:
+- Graphics:
+    - New or updated unit graphics: Demon, Demon Zephyr, Elvish Ascetic, Elvish
+      Mystic, Shaxthal Sentry Drone, Shaxthal Warlord.
+
+- Scenarios:
+    - 12 (The Escape):
+        - Fixed objectives reset code not being executed again after the first
+          enemy leader is defeated.
+    - 23C (Broken Heart):
+        - Fixed a WML/Formula syntax problem that made an essential event not
+          trigger until the end of the scenario.
+          (http://www.wesnoth.org/forum/viewtopic.php?p=363314#p363314)
+________________________________________________________________________________
+
+Version 1.12.0:
+- Administration and maintenance:
+    - Minimum Wesnoth version requirement is 1.5.14 (1.6 RC3).
+
+- Scenarios:
+    - 03 (Memories from the Depths):
+        - Do not offer loyal undead on any difficulty level.
+    - 22B (The Gauntlet):
+        - Made it possible for matrix components to attack the player.
+    - Alien units are not available until scenario 19.
+
+- Terrains:
+    - Fixed awkward lack of Dirt <-> dark-tile Road transitions.
+    - Fixed some transition issues with gates and brick walls.
+
+- Units:
+    - Balancing:
+        - The player cannot recruit Ghouls anymore - however, they are still
+          available as an alternate advancement for Walking Corpses.
+________________________________________________________________________________
+
+Version 1.11.1.1:
+- Scenarios:
+    - Applied some more text revisions from Solsword.
+    - Revised some maps.
+
+- Terrains:
+    - Fixed awkward lack of Dirt <-> Hive transitions.
+________________________________________________________________________________
+
+Version 1.11.1:
+- Administration and maintenance:
+    - Bumped minimum Wesnoth version requirement to 1.5.10, and dropped
+      compatibility with IftU 1.10.3 and earlier, and Wesnoth 1.5.9 and earlier.
+
+- Graphics:
+    - Removed portraits: Murlin.
+    - Updated baseframes: Water Serpent.
+
+- Scenarios:
+    - Fixed some plot holes.
+    - Revised some maps.
+    - Applied a user-contributed patch to the English text (from Solsword).
+    - The Ring of Regeneration may not be used by faeries, units of the Elvish
+      Shaman line, or Anlindë.
+    - The Berserk Potion may not be used by faeries, units of the Elvish Shaman
+      line, Anlindë, Mal Keshar, or units of the Walking Corpse or Ghoul lines.
+    - Re-enabled custom AI formulas for dark hive guardians in final scenarios.
+    - 24 (Epilogue):
+        - Fixed a map size issue that caused Wesnoth 1.5.11+ to abort.
+
+- Units:
+    - Balancing:
+        - Force Cockatrices to use only their ranged attack on offensive
+          strikes.
+        - Reduced Elvish Prowler's HP from 62 to 54.
+        - Replaced Elvish Trapper's skirmishing ability with ambush.
+________________________________________________________________________________
+
+Version 1.11.0:
+- Graphics:
+    - Updated baseframes: Shaxthal Rayblade, Shaxthal Master Drone (masked and
+                          unmasked), Shaxthal Warlord (masked and unmasked),
+                          Water Serpent.
+    - Updated portraits: Elyssa (masked and unmasked) [D].
+
+- Scenarios:
+    - New scenarios:
+        - 22C (The Dark Hive)
+        - 23A (Frozen Hell)
+    - Removed scenarios:
+        - 23A (Interim)
+    - Scenario 14 (Bye and Behold):
+        - Fixed King Asthorgar not getting his portrait when starting
+          Episode II from scratch.
+
+- Units:
+    - Balancing:
+        - Gave real shaxthal stats to Elyssa.
+            - Replaced "infernal chill" (cold, ranged, magical 15-2) with the
+              more powerful "burning inferno" (fire, ranged, magical 14-3).
+            - Gave her the Submerges ability.
+            - Reduced her "sword" attack strength (melee, blade, drains 12-4) to
+              11-4.
+        - Made the Water Serpent a level 2 unit. 'nuff said.
+    - Merged Elynia's union attack animation into her unit.
+    - Removed Elvish Horseman unit due to artwork requirements and balancing.
+________________________________________________________________________________
+
+Version 1.10.5:
+- Administration and maintenance:
+    - Began to use inline formulas in WML to decrease code complexity. This
+      means that this campaign will not work properly in Wesnoth 1.5.6 or
+      earlier.
+    - Saved games of the last boss fight and afterwards may no longer work.
+
+- Graphics:
+    - Updated baseframes: Elynia, Master of Darkness, Elvish Mystic,
+                          Elvish Avatar, Shaxthal Protector Drone.
+    - Updated portraits: Lédinor [D], King Asthorgar [D].
+
+- Scenarios:
+    - 8 (Errand of Hope):
+        - Slight improvements to the initial custscene.
+    - 8 - final cutscene (A Royal Meeting):
+        - Fixed probably the most half-assed dialog sequence in this campaign's
+          history. Damnit, there were even a few plot contradictions in it.
+    - 10 (The Source of Light):
+        - Removed the possibility of giving the draining potion to faerie
+          beings and undead spirits (reported by TheJM).
+    - 22A, 22B, 23A, 23B:
+        - Fixed WML that invoked undefined behavior from the vconfig engine.
+          This change means you've got to restart "Innuendo" or the last turn
+          of The Heart to update your saves, since otherwise the recall list
+          for the last scenarios will be unusable.
+        - Prohibited plagued units (Walking Corpses, Soullesses, Ghouls) from
+          being carried over to next scenarios.
+    - 22A (Innuendo):
+        - Removed one recall/recruitment hex for the player.
+    - 22B (Gauntlet):
+        - Major map revisions.
+
+- Units:
+    - Balancing:
+        - Increased Aragwaith Sorcerer's total movement from 5 to 6.
+        - Increased Chaos Hound's HP from 21 to 22.
+        - Increased Hellhound's HP from 44 to 47.
+    - Fixed glitchy animations:
+        - Bone Knight
+    - Removed unused units:
+        - Bear
+        - Giant Boar
+    - Renamed units:
+        - Sylvan Faerie -> Sylvan Warden
+________________________________________________________________________________
+
+Version 1.10.4:
+- Graphics:
+    - Updated portraits: Igor [D], Galas [D], Mal Keshar [D], Anlindë [D],
+                         Elynia [D], Lédinor [P], Mal Hekuba [P].
+
+- Language and i18n:
+    - Cleaned up usage of textdomains.
+    - Brought back translations from WesCamp-i18n into the official
+      distribution: French, Italian, Spanish, Turkish.
+
+- Music and sound effects:
+    - Removed battle6.ogg since it's been included in the official Wesnoth
+      mainline distribution as suspense.ogg since 1.5.7.
+
+- Scenarios:
+    - Fixed a few typos or removed inexisting words.
+    - 1 (Border Patrol):
+        - Fixed a text overflow issue in the story screens.
+    - 5 (Crossfire, Cursed Plateau):
+        - Gave a more visible indication that Dark Adepts are recruitable in
+          these scenarios.
+    - 22A (Innuendo):
+        - Removed a coffin that was floating over abyss.
+        - Some "minor" revisions.
+    - 23C (Broken Heart):
+        - Some "minor" revisions.
+
+- Units:
+    - Balancing, including changes after mainline revision 32126:
+        - Reduced Shaxthal Rayblade's movement costs:
+            - Deep water: 4 -> 3
+            - Shallow water: 3 -> 2
+            - Swamp water: 3 -> 2
+        - Increased Shaxthal Rayblade's defense on deep water from 10% to 20%.
+        - Reduced Shaxthal Rayblade's defense on reef terrain from 40% to 30%.
+        - Reduced Shaxthal Runner and Protector's defense on reef terrain from
+          40% to 30%.
+        - Reduced 'aragwaithfoot' movetype defense on reef and swamp
+          water terrains from 40% to 30%.
+        - Reduced 'aragwaithmounted' movetype defense on reef terrain from 40%
+          to 30%.
+        - Reduced Doom Guard's line defense on reef terrain from 30% to 20%.
+        - Reduced 'impfoot' movetype defense on reef terrain from 50% to 40%.
+        - Reduced 'impfoot' movetype defense on shallow water from 40% to 30%.
+        - Reduced 'impfoot' movetype defense on swamp water from 60% to 40%.
+        - Reduced 'demon' movetype defense on reef terrain from 50% to 40%.
+        - Reduced 'demon' movetype defense on shallow water from 40% to 30%.
+        - Reduced 'demon' movetype defense on swamp water from 60% to 50%.
+        - Reduced 'undeadmountedfoot' movetype defense on reef terrain from 40%
+          to 30%.
+        - Reduced 'steppebasic' movetype defense on reef terrain from 40% to
+          30%.
+        - Reduced 'steppelusive' movetype defense on reef terrain from 50% to
+          40%.
+        - Reduced 'steppescout' movetype defense on reef terrain from 40% to
+          30%.
+        - Reduced 'mutantfoot' movetype defense on reef terrain from 50% to 40%.
+        - Removed unused movetype, 'crawlerfoot'.
+        - Reduced Steppe Savage's defense on reef terrain from 50% to 40%.
+        - Reduced Elynia's defense on reef terrain from 50% to 40%.
+    - Gave the Dwarvish Runesmith proper attack icons.
+________________________________________________________________________________
+
+Version 1.10.3:
+- EXPERIMENTAL [U]:
+    - Make Galas, Mal Keshar, Erathan Althurin and Igor use kitty's transparent
+      portraits in 1.5.7.
+
+- Administration and maintenance:
+    - Removed unused, deprecated and/or unmaintained files:
+        - SPOILERS
+        - TEXT_SOURCES
+
+- Graphics:
+    - New portraits: Mal Keshar [D]
+
+- Scenarios:
+    - 3 (Memories from the Depths):
+        - Faerie spirits aren't supposed to be able to take the Ring of
+          Switftness.
+    - 4 (Over the Sands):
+        - Merged from upstream (/trunk/data/campaigns/Under_the_Burning_Suns):
+            - revision 31828 <zookeeper> Added a little overlay icon to
+              dehydrated units.
+              (Tue Dec 30 21:38:13 2008 +0000)
+            - revision 31840 <zookeeper> Allowed villages to rehydrate units.
+              (Wed Dec 31 17:55:05 2008 +0000)
+            - revision 31841 <zookeeper> Fixed rehydration screwing up attack
+              stats of units that leveled up after getting dehydrated.
+              (Wed Dec 31 18:16:45 2008 +0000)
+    - 5a (Crossfire), 5b (Cursed Plateau):
+        - Faerie spirits aren't supposed to be able to take the Ring of
+          Regeneration.
+    - 9 (The Library):
+        - Fixed enemy respawn points.
+    - 10 (The Source of Light):
+        - Faerie and elvish spirits aren't supposed to be able to take the
+          Draining potion.
+        - Text revisions, including a few English variant fixes (e.g. UK
+          English in middle of US English). Also gave Igor more stuff to say.
+    - 14 (Bye and Behold):
+        - Make Igor available when starting episode II on HARD.
+    - 21 (The Heart):
+        - Fix graphic glitches.
+        - Fix an "invalid WML" warning.
+    - 22A (Innuendo):
+        - Blocked entrance to secret scenario.
+        - Fixed spelling mistakes.
+        - Made the filters for objects that may be applied only to living
+          beings exclude Faerie Spirits as well.
+        - Revised dialog and objectives text.
+    - 22B (The Gauntlet):
+        - Revised dialog text.
+    - 22C (The Backyard):
+        - Removed unbalanced and unmaintained scenario, "The Backyard".
+
+- Units:
+    - Made Anlindë's unit line visible in the help engine again.
+    - Removed units: Captain, Commander, Dark General, Swordsman (mainline
+                     override), Man at Arms, Champion, Crossbowman, High Guard,
+                     Deathguard.
+________________________________________________________________________________
+
+Version 1.10.2:
+- Maintenance toolchain:
+    - Made build-external-archive.sh use uname instead of GNU distribution-
+      specific environment variables. Also, fill the PUBLISH tag with a bit more
+      of information. In the future I'll probably use GnuPG to sign packages.
+    - Updated the WMLDIRS and IMPORTDIRS tags.
+
+- Scenarios:
+    - 3 (Memories from the Depths):
+        - Cosmetic and consistency fixes on the map.
+        - Erase a duplicated 'not' in the initial dialogue.
+    - 4 (Over the Sands):
+        - http://www.wesnoth.org/forum/viewtopic.php?p=328014#p328014:
+            - Force dehydration/hydration to operate only on units located
+              on the gamemap.
+            - Removed an accidentally copy & pasted unit filter that
+              hydrated on victory only those units that would have been
+              hydrated on the next turn (stepping on water hexes, blah blah).
+
+- Units:
+    - Fix a small mistake in Galas' character description text.
+________________________________________________________________________________
+
+Version 1.10.1a:
+- Graphics:
+    - New portraits: Althurin [D]
+
+- Scenarios:
+    - 12 (The Escape):
+        - Balancing changes.
+    - 21 (The Heart):
+        - Balancing changes.
+        - Fixed an "invalid WML" warning
+
+- Units:
+    - Fixed all instances of UNREACHABLE with the macro of the same name.
+    - Refactoring of Elynia's unit code.
+    - Removed units: City Guard.
+________________________________________________________________________________
+
+Version 1.10.1:
+- Graphics:
+    - New portraits: Igor [D]
+    - Updated unit graphics: Elynia, Elvish Mystic, Elvish Avatar, Blood Imp,
+                             Demon, Demon Zephyr
+
+- Scenarios:
+    - Subtle storyline changes since 1.10.0 (applies HISTORY and CHARACTERS,
+      which are not distributed officially yet)
+    - 8 (Errand of Hope):
+        - Balancing changes.
+        - Fixed some invalid WML warnings
+    - 10 (The Source of Light):
+        - Balancing changes.
+        - Dialog revisions.
+    - 11 (Strike on New Knalga):
+        - Balancing changes.
+        - Dialog revisions.
+        - Fixed an Unknown-Unit-Type schroedinbug (i.e. improbably triggered in
+          practice - which is still a Bad Thing since it was part of an
+          enemy's recruit list).
+    - 12 (The Escape):
+        - Balancing changes.
+    - 14 (Bye and Behold):
+        - Balancing changes.
+    - 15 (Shadows of Time):
+        - Cosmetic/balancing changes: the enemy recruits random Walking Corpse
+          variations from a set that seems to fit the map.
+    - 16 (Arrival of the Battalion):
+        - Balancing changes.
+    - 17 (Dawn of the Great War):
+        - Removed reference to Wose recruitment in a dialog (a left-over from
+          ancient releases).
+    - 19 (Legend of Wesmere):
+        - Fixed a typo in one of Erathan's lines.
+    - 20.5 (The Plot):
+        - Althurin no longer "kills" King Asthorgar.
+    - 21 (The Heart):
+        - Make Althurin's first-time description available when starting
+          straight from episode II.
+
+- Units:
+    - Balancing:
+        - Player's Dark Adepts can advance to Liches.
+          THIS CHANGE BREAKS OLD SAVED GAMES.
+    - Fixed Elvish Avatar's ranged arcane attack animation.
+    - Removed Elvish Protector for not fitting the quality requirement for this
+      series.
+________________________________________________________________________________
+
+Version 1.10.0 (interim release):
+- Ported from 1.4 branch to trunk. Cycholka/Mist ran wmllint on it for
+  making it compatible with Wesnoth 1.5.1 and later.
+- Prevented past-the-end WML array access using new macros,
+  VARIABLE_RANDOM_SUBSCRIPT and RANDOM_SUBSCRIPT.
+  All WML found with the regular expression /\.\.\$[a-zA-Z0-9_]*\.length/
+  was fixed to use this method.
+- Removed many unused macros.
+    - Ditch IS_ON_MAP in favor of mainline NOT_ON_RECALL_LIST.
+- Switched back from ~ preprocessor includes to @, which allows IftU to be
+  loaded from a mainline datadir if present. This is completely absurd IMO, but
+  users of our SVN trunk have the weird habit of making the checkout in such
+  exotic locations...
+
+- Graphics:
+    - Added baseframes: Elvish Civilian (bow attack), Elvish Avatar,
+                        Elvish Ascetic
+    - Added portraits: Elvish Civilian male [P] and female [P]
+    - Gave Elynia a separate standing animation when she's over water,
+      impassable or unwalkable terrains - she also uses this animation while
+      moving.
+    - New original portraits by Kitty: Galas [D], Anlindë [D], Elynia [D],
+                                       Erathan [D]
+    - Removed now unnecessary generic portraits: Lich, Dark Adept,
+      female Dark Adept
+    - Updated baseframes: Elynia, Elvish Civilian, Blood Imp, Shaxthal Drone,
+                          Shaxthal Assault Drone, Shaxthal Wyrm, Elvish Prowler,
+                          Elvish Trapper
+    - Updated portraits: Dryad [P]
+
+- Language and i18n:
+    - Changed unit race text for female Demons from "race+female^Demon"
+      to "race+female^Demoness".
+    - Changed female unit_type names for the Demon tree to be of the
+      "Demoness" form rather than "Demon".
+
+- Music and sound effects:
+    - Added battle7.ogg, a work-in-progress music piece by Rain that I liked. :)
+    - Removed West's "sad.ogg" since its mainline original, "nr-sad.ogg" is
+      being moved to a public location reachable by this campaign.
+
+- Scenarios:
+    - Added first-time description for Elynia, Erathan and Althurin.
+    - Character first-time descriptions and the option to skip them are enabled
+      when starting straight from episode II.
+    - Changed all instances of "alright" to more formal expressions as
+      suggested by Espreon.
+    - Player can choose Galas initial unit type when starting straight from
+      episode II.
+    - Revised glamour ability WML and enabled HP changes (still quirky due to
+      engine bugs on arithmetic with WML variables containing real numbers)
+    - Sanitized many event unit filters.
+    - Some dialogs were improved (Shadow Master alone, with nobody's help!
+                                  mwahahahahahhaaa!!!)
+    - Turned Anlindë from Elvish Sorceress into Elvish Ascetic.
+    - 1 (Border Patrol):
+        - Map balancing.
+    - 2 (A Real Confrontation):
+        - A few dialogue improvements at the start - they also involve changes
+          on the free recall mechanics.
+        - Add an explanation for the Elvish civilians.
+        - Other balancing changes.
+    - 4 (Over the Sands):
+        - New dehydration logic from Under the Burning Suns.
+    - 5a (Crossfire):
+        - Added more gold income to some enemy sides.
+        - Status balancing.
+        - Map balancing.
+        - Units can no longer move to the "green side" of the map.
+    - 6 (The Moon Valley):
+        - Yeti is not a blocker for victory.
+    - 7 (The Elf versus Goliath):
+        - Added Fog of War.
+        - Increased overall difficulty.
+        - Increased level of demon enemies.
+        - Strength potion's filter is more strict regarding non-living beings.
+    - 9 (The Library):
+        - Galas movement costs in cave terrains don't get reduced on hardest
+          difficulty.
+    - 10 (The Source of Light):
+        - Made berserk potion have effect only until the end of this scenario.
+        - Mal Keshar explains why Elynia hid herself in this cave.
+        - Fixed some awkward grammar
+          (http://www.wesnoth.org/forum/viewtopic.php?p=305960#p305960)
+    - 16 (Arrival of the Battalion):
+        - Fixed a bug which made Quogar Ratham always speak a line that Erathan
+          is supposed to speak otherwise.
+    - 17 (Dawn of the Great War):
+        - Fixed insane music fade-out delay after the initial character dialog.
+    - 22B (Gauntlet):
+        - Did significant clean-ups, removing most variables and all macros
+          that were used before.
+        - Drones now use Formula AI rules.
+    - 22C (The Backyard):
+        - This scenario is no longer enabled. The code will be left around for
+          two more releases, but it will be disabled unless the WML preprocessor
+          symbol HAVE_BACKYARD is defined.
+    - 23A (Interim):
+        - Clean-ups.
+        - Reduced turn limit.
+    - 23B (Welcome to the Lair of the Shadow Master):
+        - Boss can now recruit units.
+        - Changed controller for side of door units from 'ai'
+          to 'null'.
+        - Increased turn limit by 100; scenario starts at the
+          turn that "Interim" was finished plus one
+        - Made many changes to this scenario, making the boss fight
+          far harder, fixing old bugs, and changing the former balance.
+
+- Terrains:
+    - Made Dark Road terrain play better with castle/keep terrain types
+      (C*, K*).
+    - Renamed many terrain types, rendering some old saved games unusable.
+    - Revised most of the terrain graphics layout code to be 1.5.x-compatible.
+
+- Units:
+    - Added units: Chaos Raider, Chaos Cavalier, Chaos Cataphract,
+                   Chaos Bowman, Chaos Longbowman, Chaos Crossbowman,
+                   Chaos Heavy Longbowman, Chaos Advanced Crossbowman,
+                   Elvish Ascetic (character), Elvish Mystic (character),
+                   Elvish Avatar (character).
+    - Balancing:
+        - Added farmland to vegetated terrains list
+        - Elynia's AMLAs:
+            - AMLA 0 (unbound): new attack (thorns, ranged, pierce,
+              magic) -> (removed)
+            - AMLA 1: melee +1D, HP +5 <FH> , XP +20% -> HP +5, XP +30%
+            - AMLA 2: melee +1S, HP <FH>, XP +30% -> melee +1D, XP +45%
+            - AMLA 3: melee +1D, HP <FH>, XP +40% -> melee +1S, XP +60%
+            - AMLA 4: melee +1S, HP <FH>, XP +50% -> ranged +
+              thorns <ranged, pierce> [magic] 7-3, XP +75%.
+        - Gave most units adequate movement costs and defense
+          on Reef terrain.
+        - Imps may receive the traits Weak, Slow or Dim.
+        - Increased Shaxthal Razorbird's resistance to damage as follows:
+            - Blade: 0% -> 10% <base>
+            - Pierce: 0% -> 10%
+        - Increased Shaxthal Thunderbird's resistance to damage as follows:
+            - Blade: 0% -> 10% <base>
+            - Pierce: 0% -> 20%
+        - Increased Worker Droid's movement costs as follows:
+            - Shallow Water: 3 -> 4
+            - Swamp Water: 3 -> 4
+        - Reduced Chaos Hound line's movement cost on swamp from 3 to 2.
+        - Reduced Chaos Razerman's axe attack strength from 25-2 (!) to 18-2.
+        - Reduced Dark Knight's axe attack strength from 17-2 to 14-2.
+        - Reduced Dark Knight's cost from 36g to 32g.
+        - Reduced Doom Guard's cost from 40g to 35g.
+        - Reduced Elvish Hunter's HP from 30 to 29.
+        - Reduced Elvish Protector's pierce resistance from 60% to 30%.
+        - Reduced Elvish Prowler's HP from 66 to 62.
+        - Reduced Elvish Trapper's HP from 44 to 43.
+        - Reduced Elvish Warrior Spirit's HP from 18 to 16.
+        - Reduced Hell Overlord's axe attack strength from 31-2 (!) to 20-2.
+        - Increased Lady of Light's XP from 65 to 90.
+        - Reduced Sylvan Faerie's HP from 68 to 61.
+        - Increased Sylvan Faerie's melee attack strength from 8-3 to 6-5.
+        - Reduced Sylvan Faerie's ensnare attack strength from 7-4 to 6-3.
+        - Reduced Sylvan Faerie's thorns attack strength from 9-3 to 7-3.
+        - Reduced Sylvan Faerie's mystic fire attack strength from 8-6 to 5-5.
+        - Removed 'magical' weapon special from Elynia's staff.
+    - Fixed a bug which caused Anlindë to lose her portrait after advancing to
+      level 4.
+    - Fixed cockatrice and chimera not being immune to plaguing
+    - Fixed references to inexistent images (actually typos) in Dwarvish
+      Runesmith's attack animation.
+    - Fixed WEAPON_SPECIAL_DRAINS -> WEAPON_SPECIAL_DRAIN typo on Giant Leech.
+    - Removed an extra, obsolete defense animation from Elvish Hunter.
+    - Removed inclusion of inexistent macro BIRD_NAMES.
+    - Removed some engine bug workarounds that we don't need on 1.5.x.
+    - Removed units: Wose Shaman, Dread Bat [mainlined]
+    - Simplified rules for vegetated terrain recognition on unit specials
+    - Simplified Shaxthal's unit_type variation WML
+________________________________________________________________________________
+
+; $Id$
+; kate: indent-mode normal; encoding utf-8; space-indent on; word-wrap on;

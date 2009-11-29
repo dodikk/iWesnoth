@@ -1,0 +1,20 @@
+// "filename.png", texOffsetX, texOffsetY, flags, texW, texH, trimmedX, trimmedY, originalW, originalH, UNITMAP_GOBLINS_IMPALERID
+addMapEntry("units/goblins/impaler-attack-n.png", 166, 152, 0, 27, 57, 26, 4, 72, 72, UNITMAP_GOBLINS_IMPALER);
+addMapEntry("units/goblins/impaler-attack-ne.png", 0, 0, 0, 53, 38, 19, 22, 72, 72, UNITMAP_GOBLINS_IMPALER);
+addMapEntry("units/goblins/impaler-attack-ranged-s.png", 193, 203, 0, 30, 38, 20, 21, 72, 72, UNITMAP_GOBLINS_IMPALER);
+addMapEntry("units/goblins/impaler-attack-s.png", 223, 208, 0, 30, 48, 23, 16, 72, 72, UNITMAP_GOBLINS_IMPALER);
+addMapEntry("units/goblins/impaler-attack-se-1.png", 74, 77, 0, 48, 38, 20, 21, 72, 72, UNITMAP_GOBLINS_IMPALER);
+addMapEntry("units/goblins/impaler-attack-se-2.png", 39, 38, 0, 49, 39, 21, 23, 72, 72, UNITMAP_GOBLINS_IMPALER);
+addMapEntry("units/goblins/impaler-death-1.png", 74, 190, 0, 42, 36, 17, 21, 72, 72, UNITMAP_GOBLINS_IMPALER);
+addMapEntry("units/goblins/impaler-death-2.png", 122, 115, 0, 42, 35, 19, 22, 72, 72, UNITMAP_GOBLINS_IMPALER);
+addMapEntry("units/goblins/impaler-death-3.png", 120, 190, 0, 42, 36, 23, 21, 72, 72, UNITMAP_GOBLINS_IMPALER);
+addMapEntry("units/goblins/impaler-death-4.png", 120, 152, 0, 46, 38, 23, 22, 72, 72, UNITMAP_GOBLINS_IMPALER);
+addMapEntry("units/goblins/impaler-death-5.png", 74, 115, 0, 48, 37, 24, 25, 72, 72, UNITMAP_GOBLINS_IMPALER);
+addMapEntry("units/goblins/impaler-death-6.png", 74, 152, 0, 46, 38, 25, 28, 72, 72, UNITMAP_GOBLINS_IMPALER);
+addMapEntry("units/goblins/impaler-death-7.png", 164, 115, 0, 47, 31, 25, 37, 72, 72, UNITMAP_GOBLINS_IMPALER);
+addMapEntry("units/goblins/impaler-death-8.png", 120, 226, 0, 46, 27, 25, 45, 72, 72, UNITMAP_GOBLINS_IMPALER);
+addMapEntry("units/goblins/impaler-death-9.png", 74, 226, 0, 46, 24, 25, 48, 72, 72, UNITMAP_GOBLINS_IMPALER);
+addMapEntry("units/goblins/impaler-defend.png", 223, 152, 0, 27, 56, 22, 4, 72, 72, UNITMAP_GOBLINS_IMPALER);
+addMapEntry("units/goblins/impaler-ne-defend.png", 193, 152, 0, 30, 51, 21, 9, 72, 72, UNITMAP_GOBLINS_IMPALER);
+addMapEntry("units/goblins/impaler-ne.png", 0, 38, 0, 39, 49, 20, 11, 72, 72, UNITMAP_GOBLINS_IMPALER);
+//addMapEntry("units/goblins/impaler.png", 39, 77, 0, 35, 53, 22, 7, 72, 72, UNITMAP_GOBLINS_IMPALER);

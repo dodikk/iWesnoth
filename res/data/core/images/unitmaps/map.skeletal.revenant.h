@@ -1,0 +1,21 @@
+// "filename.png", texOffsetX, texOffsetY, flags, texW, texH, trimmedX, trimmedY, originalW, originalH, UNITMAP_SKELETAL_REVENANTID
+addMapEntry("units/undead-skeletal/revenant-attack-1.png", 198, 206, 0, 45, 49, 9, 11, 72, 72, UNITMAP_SKELETAL_REVENANT);
+addMapEntry("units/undead-skeletal/revenant-attack-10.png", 103, 161, 0, 43, 50, 13, 11, 72, 72, UNITMAP_SKELETAL_REVENANT);
+addMapEntry("units/undead-skeletal/revenant-attack-2.png", 51, 161, 0, 43, 49, 9, 11, 72, 72, UNITMAP_SKELETAL_REVENANT);
+addMapEntry("units/undead-skeletal/revenant-attack-3.png", 151, 205, 0, 45, 48, 8, 11, 72, 72, UNITMAP_SKELETAL_REVENANT);
+addMapEntry("units/undead-skeletal/revenant-attack-4.png", 51, 110, 0, 52, 51, 9, 12, 72, 72, UNITMAP_SKELETAL_REVENANT);
+addMapEntry("units/undead-skeletal/revenant-attack-5.png", 51, 61, 0, 57, 49, 2, 15, 72, 72, UNITMAP_SKELETAL_REVENANT);
+addMapEntry("units/undead-skeletal/revenant-attack-6.png", 0, 0, 0, 51, 61, 13, 3, 72, 72, UNITMAP_SKELETAL_REVENANT);
+addMapEntry("units/undead-skeletal/revenant-attack-7.png", 51, 0, 0, 50, 61, 19, 3, 72, 72, UNITMAP_SKELETAL_REVENANT);
+addMapEntry("units/undead-skeletal/revenant-attack-8.png", 103, 110, 0, 48, 51, 20, 12, 72, 72, UNITMAP_SKELETAL_REVENANT);
+addMapEntry("units/undead-skeletal/revenant-attack-9.png", 101, 0, 0, 38, 52, 15, 12, 72, 72, UNITMAP_SKELETAL_REVENANT);
+addMapEntry("units/undead-skeletal/revenant-defend-1.png", 151, 157, 0, 47, 48, 9, 13, 72, 72, UNITMAP_SKELETAL_REVENANT);
+addMapEntry("units/undead-skeletal/revenant-defend-2.png", 151, 110, 0, 50, 47, 6, 15, 72, 72, UNITMAP_SKELETAL_REVENANT);
+addMapEntry("units/undead-skeletal/revenant-dying-1.png", 201, 110, 0, 42, 45, 8, 15, 72, 72, UNITMAP_SKELETAL_REVENANT);
+addMapEntry("units/undead-skeletal/revenant-dying-2.png", 159, 61, 0, 36, 42, 14, 18, 72, 72, UNITMAP_SKELETAL_REVENANT);
+addMapEntry("units/undead-skeletal/revenant-dying-3.png", 103, 211, 0, 41, 40, 10, 22, 72, 72, UNITMAP_SKELETAL_REVENANT);
+addMapEntry("units/undead-skeletal/revenant-dying-4.png", 108, 61, 0, 51, 30, 8, 28, 72, 72, UNITMAP_SKELETAL_REVENANT);
+addMapEntry("units/undead-skeletal/revenant-dying-5.png", 51, 210, 0, 52, 30, 8, 32, 72, 72, UNITMAP_SKELETAL_REVENANT);
+addMapEntry("units/undead-skeletal/revenant-dying-6.png", 195, 61, 0, 55, 24, 7, 39, 72, 72, UNITMAP_SKELETAL_REVENANT);
+addMapEntry("units/undead-skeletal/revenant-dying-7.png", 195, 85, 0, 54, 23, 8, 40, 72, 72, UNITMAP_SKELETAL_REVENANT);
+//addMapEntry("units/undead-skeletal/revenant.png", 198, 157, 0, 46, 49, 10, 11, 72, 72, UNITMAP_SKELETAL_REVENANT);

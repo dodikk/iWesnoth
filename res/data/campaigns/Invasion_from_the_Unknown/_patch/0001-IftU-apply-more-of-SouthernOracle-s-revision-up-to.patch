@@ -1,0 +1,1810 @@
+From 0867abb43ffe20215001a6c04b34cfdffc342fb6 Mon Sep 17 00:00:00 2001
+From: Ignacio Morelle <shadowm2006@gmail.com>
+Date: Thu, 16 Jul 2009 19:29:22 -0400
+Subject: [PATCH] IftU: apply more of SouthernOracle's revision, up to scenario 14x B
+
+---
+ scenarios/01_Border_Patrol.cfg            |    6 +-
+ scenarios/02_A_Real_Confrontation.cfg     |   16 +-
+ scenarios/03_Memories_from_the_Depths.cfg |   10 +-
+ scenarios/08a_Errand_of_Hope.cfg          |    2 +-
+ scenarios/10_The_Source_of_Light.cfg      |  236 ++++++++++++++--------------
+ scenarios/11_Strike_on_New_Knalga.cfg     |  126 ++++++++--------
+ scenarios/12_The_Escape.cfg               |   52 +++---
+ scenarios/13_Face_your_Fate.cfg           |   34 ++--
+ scenarios/14_Bye_and_Behold.cfg           |  130 ++++++++--------
+ scenarios/cutscenes/08x.cfg               |   88 ++++++------
+ scenarios/cutscenes/12x.cfg               |   12 +-
+ scenarios/cutscenes/14x_A.cfg             |   14 +-
+ scenarios/cutscenes/14x_B.cfg             |   60 ++++----
+ 13 files changed, 393 insertions(+), 393 deletions(-)
+
+diff --git a/scenarios/01_Border_Patrol.cfg b/scenarios/01_Border_Patrol.cfg
+index d03fda9..d481f08 100644
+--- a/scenarios/01_Border_Patrol.cfg
++++ b/scenarios/01_Border_Patrol.cfg
+@@ -157,7 +157,7 @@
+         {CLEAR_VARIABLE random}
+         # Initialize objectives
+         [objectives]
+-            {OBJECTIVE_TO_WIN ( _ "Hold out as long as possible")}
++            {OBJECTIVE_TO_WIN ( _ "Hold out as long as possible.")}
+             {OBJECTIVE_TO_LOSE ( _ "Death of Galas")}
+             # {OBJECTIVE_TO_LOSE ( _ "Turns run out")}
+             {OBJECTIVE_NOTES (_"Start recruiting just in case.")}
+@@ -169,7 +169,7 @@
+         [message]
+             speaker=narrator
+             image=wesnoth-icon.png
+-            message= _ "Do you want to see a brief description of the characters the first time you select them in the map?"
++            message= _ "Do you want to see a brief description of the characters the first time you select them on the map?"
+             [option]
+                 message={STR_YES} # wmllint: ignore
+                 [command]
+@@ -298,7 +298,7 @@
+ 
+         [message]
+             speaker=unit
+-            message= _ " *Argh* I have been... defeated..."
++            message= _ " *Argh* I have been...defeated..."
+         [/message]
+ 
+         {ENDLEVEL_DEFEAT}
+diff --git a/scenarios/02_A_Real_Confrontation.cfg b/scenarios/02_A_Real_Confrontation.cfg
+index 540d565..e5af47a 100644
+--- a/scenarios/02_A_Real_Confrontation.cfg
++++ b/scenarios/02_A_Real_Confrontation.cfg
+@@ -231,12 +231,12 @@
+         # Initialize objectives
+         [objectives]
+             side=1
+-            {OBJECTIVE_TO_WIN   ( _ "Resist until turns run out")}
+-            {OBJECTIVE_TO_BONUS ( _ "or defeat all enemy leaders (heroic bonus)")}
++            {OBJECTIVE_TO_WIN   ( _ "Resist until turns run out.")}
++            {OBJECTIVE_TO_BONUS ( _ "or defeat all enemy leaders. (Heroic bonus)")}
+             {OBJECTIVE_TO_LOSE  ( _ "Death of Lédinor")}
+             {OBJECTIVE_TO_LOSE  ( _ "Death of Galas")}
+             {OBJECTIVE_TO_LOSE  ( _ "Death of Anlindë")}
+-            {OBJECTIVE_TO_LOSE  ( _ "Less than $essential_villages_count elven villages are left standing")}
++            {OBJECTIVE_TO_LOSE  ( _ "Less than $essential_villages_count elven villages are left standing.")}
+         [/objectives]
+ 
+         # Create Anlindë's unit
+@@ -383,7 +383,7 @@
+         [/role]
+ 
+         {MSG_SUF (role=scared_one) ( _ "What was that!?")}
+-        {MSG_UNIT Lédinor ( _ "Bright Gods... what is that thing?")}
++        {MSG_UNIT Lédinor ( _ "Bright Gods...what is that thing?")}
+         {MSG_UNIT Anlindë ( _ "I sense a great evil coming from there. Whatever it is, I fear that these foes may overwhelm us.")}
+     [/event]
+ 
+@@ -402,7 +402,7 @@
+ 
+         {MSG_SUF (role=scared_one) ( _ "I do not think we can resist them!")}
+         {MSG_UNIT Lédinor ( _ "So, there is yet human civilization on this continent. I wonder why we have not encountered them before?")}
+-        {MSG_UNIT Anlindë ( _ "It must be that they are a new tribe, only recently come into its power... and that power is an evil not of our world. Look!")}
++        {MSG_UNIT Anlindë ( _ "It must be that they are a new tribe, only recently come into its power...and that power is an evil not of our world. Look!")}
+ 
+         {EX_LOYAL_UNIT (Demon Zephyr) (Garya) ( _ "Garya") 5 5 33}
+         {MAKE_FEMALE}
+@@ -459,7 +459,7 @@
+         {MSG_UNIT Anlindë ( _ "We certainly will not survive in the desert from whence the humans came, especially since we don't know how many more human warriors follow their back trail. Therefore, I suggest withdrawing to the northern cave system that goes beneath the sands. We can block the entrance so they won't be able to pursue us, then we will make our way into the northern lands well away from them.")}
+         {MSG_UNIT Anlindë ( _ "All of the groups we have spotted so far come from the south of here. That probably means that they do not inhabit the far North. If we depart in that direction, we might find a new home to settle in. If we fail, at least we will die with our heads high.")}
+         {MSG_UNIT Lédinor ( _ "You bring hard counsel, but I see its wisdom.")}
+-        {MSG_UNIT Galas ( _ "The darkness... who knows what perils await us there?")}
++        {MSG_UNIT Galas ( _ "The darkness... Who knows what perils await us there?")}
+         {MSG_UNIT Anlindë ( _ "We are in a narrow place between the peril of the caves and the certainty of death at the hands of that...thing...the humans command.")}
+         {MSG_UNIT Galas ( _ "Most of our people are not experienced in moving at night, let alone in the darkness and depths of a cavern!")}
+         {MSG_UNIT Anlindë ( _ "I fear we have no other alternative left. Unless you civilians think it a better course to stand and fight to our death, and be expunged from the green world without trace?")}
+@@ -473,9 +473,9 @@
+         {MSG_UNIT Anlindë ( _ "I had not.")}
+         {MSG_UNIT Lédinor ( _ "Someone must stay here to spoil their attack, I shall do it..")}
+         {MSG_UNIT Anlindë ( _ "But...")}
+-        {MSG_UNIT Galas ( _ "My lord... why?")}
++        {MSG_UNIT Galas ( _ "My lord...why?")}
+         {MSG_UNIT Lédinor ( _ "Because it's all I can do for our future. I am too old to long survive in the desert, but here I can die well. Galas, you are a brave warrior, albeit unseasoned -- and more to the point, you have the intelligence to *lead* brave warriors. I pass to you the war-leadership of the elves of the Valley of Elynia.")}
+-        {MSG_UNIT Galas ( _ "I... cannot. I'm not ready for this!")}
++        {MSG_UNIT Galas ( _ "I...cannot. I'm not ready for this!")}
+         {MSG_UNIT Lédinor ( _ "None of us are ever ready for such a burden. But we must bear it nevertheless.")}
+         # Anyone but Lédinor, just in case.
+         {MSG_SUF (
+diff --git a/scenarios/03_Memories_from_the_Depths.cfg b/scenarios/03_Memories_from_the_Depths.cfg
+index b57286d..c0311bb 100644
+--- a/scenarios/03_Memories_from_the_Depths.cfg
++++ b/scenarios/03_Memories_from_the_Depths.cfg
+@@ -172,7 +172,7 @@
+ 
+         [objectives]
+             side=1
+-            {OBJECTIVE_TO_WIN ( _ "Explore the caves")}
++            {OBJECTIVE_TO_WIN ( _ "Explore the caves.")}
+             {OBJECTIVE_TO_LOSE ( _ "Death of Galas")}
+             {OBJECTIVE_TO_LOSE ( _ "Death of Anlindë")}
+             {OBJECTIVE_TO_LOSE ( _ "Turns run out")}
+@@ -182,10 +182,10 @@
+     [event]
+         name=start
+         {MSG_NARRATOR ( _ "After the remaining survivors entered the cave, and Galas and Anlindë went in, she collapsed the cave entrance with a spell. Her hope was that this would buy them time to find a northward exit.")}
+-        {MSG_UNIT Galas ( _ "We lost our home... many of our children and elders... and our lord, at the hands of those fiends... what will we do now? Where will we go?")}
++        {MSG_UNIT Galas ( _ "We lost our home...many of our children and elders...and our lord, at the hands of those fiends...what will we do now? Where will we go?")}
+         {MSG_UNIT Anlindë ( _ "Don't despair, Galas. This is not the first time we have lost our home, and we always have found a new one. I think it will be no different this time.")}
+         {MSG_UNIT Galas ( _ "I profoundly hope so. We must continue down these caves, then. But Anlindë, you mentioned something about an evil force before counselling flight.  What did you mean?")}
+-        {MSG_UNIT Anlindë ( _ "I meant there was some great evil aiding the humans. Not merely ordinary necromancers and war-beasts, but something worse. Something I believed we had already vanquished... but now I realize we had not, at least not completely...")}
++        {MSG_UNIT Anlindë ( _ "I meant there was some great evil aiding the humans. Not merely ordinary necromancers and war-beasts, but something worse. Something I believed we had already vanquished...but now I realize we had not, at least not completely...")}
+         {MSG_UNIT Galas ( _ "I still don't understand. Of what foe do you speak?")}
+         {MSG_UNIT Anlindë ( _ "Nothing you should know, impudent boy! Do not ask of it again; some truths should go unrevealed save in dire necessity, and this is no such an occasion. Now I suggest we find an exit before they discover how to reopen the cave entrance. There is no looking back - our valley is probably in ruins by now. It saddens me, but we must live with it.")}
+         {MSG_UNIT Galas ( _ "I suppose so... Let us find an exit. If we but can...this cave system has never been explored before.")}
+@@ -214,7 +214,7 @@
+         [objectives]
+             side=1
+             summary= _ "New objectives:"
+-            {OBJECTIVE_TO_WIN ( _ "Find the undead enemy leader")}
++            {OBJECTIVE_TO_WIN ( _ "Find the undead enemy leader.")}
+             {OBJECTIVE_TO_LOSE ( _ "Death of Galas")}
+             {OBJECTIVE_TO_LOSE ( _ "Death of Anlindë")}
+             {OBJECTIVE_TO_LOSE ( _ "Turns run out")}
+@@ -247,7 +247,7 @@
+         [objectives]
+             side=1
+             summary= _ "New objectives:"
+-            {OBJECTIVE_TO_WIN ( _ "Defeat Mal Keshar")}
++            {OBJECTIVE_TO_WIN ( _ "Defeat Mal Keshar.")}
+             {OBJECTIVE_TO_LOSE ( _ "Death of Galas")}
+             {OBJECTIVE_TO_LOSE ( _ "Death of Anlindë")}
+             {OBJECTIVE_TO_LOSE ( _ "Turns run out")}
+diff --git a/scenarios/08a_Errand_of_Hope.cfg b/scenarios/08a_Errand_of_Hope.cfg
+index de2d6e9..9df97df 100644
+--- a/scenarios/08a_Errand_of_Hope.cfg
++++ b/scenarios/08a_Errand_of_Hope.cfg
+@@ -868,7 +868,7 @@
+                     id=Althurin
+                 [/have_unit]
+                 [then]
+-                    {MSG_UNIT Althurin ( _ "Friend elves, I must report to this news to the king. Please stand fast, I shall be back with you soon.")}
++                    {MSG_UNIT Althurin ( _ "Friend elves, I must report this news to the king. Please stand fast, I shall be back with ye soon.")}
+                     # Workaround to avoid side 2 being declared as loser,
+                     # which would make them lose their captured villages.
+                     [unit]
+diff --git a/scenarios/10_The_Source_of_Light.cfg b/scenarios/10_The_Source_of_Light.cfg
+index 7846988..d84aace 100644
+--- a/scenarios/10_The_Source_of_Light.cfg
++++ b/scenarios/10_The_Source_of_Light.cfg
+@@ -326,19 +326,19 @@
+         name=start
+         [message]
+             x,y=50,3
+-            message= _ "It is... an enormous power fills the entire place!"
++            message= _ "It is...an enormous power. It fills the entire place!"
+         [/message]
+-        {MSG_UNIT (Mal Keshar) ( _ "I feel it. It is the Source of Light. Her presence is weak in comparison to when she was in the surface, but strong nonetheless.")}
++        {MSG_UNIT (Mal Keshar) ( _ "I feel it. It is the Source of Light. Her presence is weak in comparison to when she was on the surface, but still strong nonetheless.")}
+         {MSG_UNIT Anlindë ( _ "She is here. We have arrived, finally...")}
+-        {MSG_UNIT Galas ( _ "You magic-skilled people can perceive things I cannot.")}
+-        {MSG_UNIT Althurin ( _ "Indeed, lad. Magic experience grants you the ability to perceive things whose existance is ignored by common people. My runic detectors indicate that an ancient magic affects these tunnels, a magic which is unknown to dwarves of the present age.")}
++        {MSG_UNIT Galas ( _ "You magic-skilled people can perceive things which are beyond me.")}
++        {MSG_UNIT Althurin ( _ "Indeed, lad. Magic experience grants ye the ability to perceive the existence of things which are ignored by common folk. My runic detectors indicate that an ancient magic affects these tunnels, a magic unknown to dwarves of the present age.")}
+         {MSG_UNIT Galas ( _ "Fair enough, find the Source. We should not waste too much time in this search, for we do not know when those fiends will let themselves fall upon Knalga.")}
+         {MSG_UNIT (Mal Keshar) ( _ "If they have not already.")}
+-        {MSG_UNIT Althurin ( _ "I hope they haven't. Our economy is thriving, but it is still less than adequate for supporting us in a full-sized war.")}
++        {MSG_UNIT Althurin ( _ "I hope they haven't. Our economy is thrivin', but it's still less than adequate for supportin' us in a full-scale war.")}
+         {QUAKE (rumble.ogg)}
+         [message]
+             role=boyscout
+-            message= _ "Less chatter and more scouting, people, before the earth falls over us!"
++            message= _ "Less chatter and more scouting, people, before the walls cave in on us!"
+         [/message]
+     [/event]
+ 
+@@ -368,9 +368,9 @@
+                 {MSG_SPEAKER unit ( _ "The elves! Damn, the rearguard could not hold against them!")}
+                 {MSG_UNIT Mena ( _ "Persistent fools. But it matters little; we shall destroy them, shan't we? For the Emperor!")}
+                 {MSG_SPEAKER second_unit ( _ "Oh.")}
+-                {MSG_UNIT Galas ( _ "They must be after our savior, they want to stop us!")}
+-                {MSG_UNIT (Mal Keshar) ( _ "Their master must be certain of what fate awaits them if we call upon the power of the Union. And looks like they have a never-ending supply of grunt attack force too.")}
+-                {MSG_UNIT Galas ( _ "We must try to defeat this group now before they can invoke reinforcements, and secure these caves. I hope we can manage it.")}
++                {MSG_UNIT Galas ( _ "They must be after our savior. They want to stop us!")}
++                {MSG_UNIT (Mal Keshar) ( _ "Their master must be aware of what fate lies in store for them if we call upon the power of the Union. And it looks like they have a never-ending supply of grunt attackers, too.")}
++                {MSG_UNIT Galas ( _ "We must try to defeat this group now, before they can invoke reinforcements and secure these caves. I hope we can manage it.")}
+ 
+                 [objectives]
+                     side=1
+@@ -393,7 +393,7 @@
+ 
+         [message]
+             speaker=unit
+-            message= _ "Oh, Master... I have... failed..."
++            message= _ "Oh, Master... I have...failed..."
+         [/message]
+     [/event]
+ 
+@@ -403,7 +403,7 @@
+             id=Mena
+         [/filter]
+ 
+-        {MSG_SPEAKER second_unit ( _ "Die, you fiend, and stay dead!")}
++        {MSG_SPEAKER second_unit ( _ "Die, you fiend! And stay dead!")}
+ 
+         {QUAKE (cave-in.ogg)}
+ 
+@@ -432,7 +432,7 @@
+             terrain=Qxu # wmllint: ignore
+         [/terrain]
+ 
+-        {MSG_SPEAKER second_unit ( _ "Oooh! What the... hey, look! The cave wall there has raised!")}
++        {MSG_SPEAKER second_unit ( _ "Oooh! What the... Hey, look! The cave wall there has raised!")}
+         [remove_shroud]
+             {RECT 28 16 36 20}
+         [/remove_shroud]
+@@ -738,17 +738,17 @@
+             [/remove_shroud]
+ 
+             {MSG_UNIT Galas ( _ "The earth shakes! It must be a volcanic eruption!")}
+-            {MSG_UNIT (Mal Keshar) ( _ "No, it is not. We are just awakening the forces of nature with our mere presence here. Which indicates nobody has stepped in these caves for a long time, possibly for millions of years.")}
++            {MSG_UNIT (Mal Keshar) ( _ "No, it is not. We are just awakening the forces of nature by merely being here. Which indicates no one has been in these caves for a very long time, possibly for millions of years.")}
+             {MSG_UNIT Anlindë ( _ "Except the Lady of Light, whose energy comes from the walls at the center of the chamber!")}
+-            {MSG_UNIT (Mal Keshar) ( _ "Right... this is her last resting place. She bound and sealed herself in this chamber, for she probably thought nobody would need her again. Hmph. An elegant manner of killing oneself temporarily, indeed.")}
++            {MSG_UNIT (Mal Keshar) ( _ "Right... This was her final resting place. She bound and sealed herself within this chamber, for she probably thought nobody would need her again. Hmph. An elegant manner of killing oneself temporarily, indeed.")}
+             {MSG_UNIT Galas ( _ "What should we do? These walls are impassable!")}
+-            {MSG_UNIT (Mal Keshar) ( _ "There must be a way to open the walls. The chamber is shaped around a hexagonal center, and its corners look strangely clean. The runes carved in each one of them must indicate something, and being all different in each corner, it might mean that we have got to activate them from six different places, distant from the chamber.")}
+-            {MSG_UNIT Althurin ( _ "Yes, runic glyphs! They activate on contact, and most important chambers, gates and tunnels are designed to be opened via this sort of glyph. But, where are they?")}
+-            {MSG_UNIT Galas ( _ "We'll have to explore to find out their locations.")}
++            {MSG_UNIT (Mal Keshar) ( _ "There must be a way to open these walls. The chamber is shaped around a hexagonal center, and its corners look strangely clean. The runes carved in each one of them must indicate something, and being all different in each corner, it might mean that we have to activate them from six different places, away from the chamber.")}
++            {MSG_UNIT Althurin ( _ "Yes, runic glyphs! They activate on contact, and the most important chambers, gates, and tunnels were designed to be opened with this same sort of glyph. But, where are they?")}
++            {MSG_UNIT Galas ( _ "We'll have to explore to find their locations.")}
+             {MSG_UNIT (Mal Keshar) ( _ "We ought to be careful. We are not welcome here. I can sense dangerous creatures of all kinds roaming about.")}
+             [objectives]
+                 side=1
+-                {OBJECTIVE_TO_WIN ( _ "Find the 6 glyphs that should open the central chamber")}
++                {OBJECTIVE_TO_WIN ( _ "Find the 6 glyphs that should open the central chamber.")}
+                 {OBJECTIVE_TO_LOSE ( _ "Death of Galas")}
+                 {OBJECTIVE_TO_LOSE ( _ "Death of Anlindë")}
+                 {OBJECTIVE_TO_LOSE ( _ "Death of Mal Keshar")}
+@@ -772,11 +772,11 @@
+                 [if]
+                     {VARIABLE_NUM_EQUALS tcx 2}
+                     [then]
+-                        {MSG_UNIT (Mal Keshar) ( _ "Perhaps if I concentrate for a while, I could figure out the location of each glyph.")}
+-                        {MSG_UNIT Galas ( _ "Oh yes? That would be a great help.")}
++                        {MSG_UNIT (Mal Keshar) ( _ "Perhaps if I can concentrate for a while, I could figure out the location of each glyph.")}
++                        {MSG_UNIT Galas ( _ "Really? That would be a great help.")}
+                         [objectives]
+                             side=1
+-                            {OBJECTIVE_TO_WIN ( _ "Find the 6 glyphs that should open the central chamber")}
++                            {OBJECTIVE_TO_WIN ( _ "Find the 6 glyphs that should open the central chamber.")}
+                             {OBJECTIVE_TO_LOSE ( _ "Death of Galas")}
+                             {OBJECTIVE_TO_LOSE ( _ "Death of Anlindë")}
+                             {OBJECTIVE_TO_LOSE ( _ "Death of Mal Keshar")}
+@@ -846,7 +846,7 @@
+                                     [remove_shroud]
+                                         {RECT 0 24 5 29}
+                                     [/remove_shroud]
+-                                    {MSG_UNIT (Mal Keshar) ( _ "Ah, got it.")}
++                                    {MSG_UNIT (Mal Keshar) ( _ "Ah. Got it.")}
+                                     {REDRAW}
+                                     {SCROLL_TO 19 2}
+                                     {DELAY 500}
+@@ -860,10 +860,10 @@
+                                     {DELAY 500}
+                                     {SCROLL_TO 2 26}
+                                     {DELAY 500}
+-                                    {MSG_UNIT Anlindë ( _ "Ah, thanks. This will ease our search greatly. Now we just have to find a way to get to each location.")}
++                                    {MSG_UNIT Anlindë ( _ "My thanks. This will ease our search greatly. Now we just have to find a way to get to each location.")}
+                                     [objectives]
+                                         side=1
+-                                        {OBJECTIVE_TO_WIN ( _ "Activate the 6 glyphs that should open the central chamber")}
++                                        {OBJECTIVE_TO_WIN ( _ "Activate the 6 glyphs that should open the central chamber.")}
+                                         {OBJECTIVE_TO_LOSE ( _ "Death of Galas")}
+                                         {OBJECTIVE_TO_LOSE ( _ "Death of Anlindë")}
+                                         {OBJECTIVE_TO_LOSE ( _ "Death of Mal Keshar")}
+@@ -1060,7 +1060,7 @@
+ 
+         {MSG_UNIT (Mal Keshar) ( _ "She is there, let us go.")}
+ 
+-        {MSG_UNIT Anlindë ( _ "I have been waiting this for too long.")}
++        {MSG_UNIT Anlindë ( _ "I have been waiting for this for too long.")}
+ 
+         [teleport]
+             [filter]
+@@ -1143,9 +1143,9 @@
+             message= _ "Destroy the necromancer!!"
+         [/message]
+ 
+-        {MSG_UNIT (Mal Keshar) ( _ "Huh? Nay. Prepare to meet your fate, you...")}
++        {MSG_UNIT (Mal Keshar) ( _ "Huh? Nay, prepare to meet *your* fate, you...")}
+ 
+-        {MSG_UNIT Anlindë ( _ "Stop, we are the Elves of the Valley of Elynia, you must let us pass!")}
++        {MSG_UNIT Anlindë ( _ "Stop! We are the Elves of the Valley of Elynia. You must let us pass!")}
+ 
+         [message]
+             type=Wose
+@@ -1154,7 +1154,7 @@
+ 
+         {MSG_UNIT Igor ( _ "Aaah, they're gonna crush us!")}
+ 
+-        {MSG_UNIT Anlindë ( _ "I call upon the powers of Light! May it awake our savior from her millenary sleep!")}
++        {MSG_UNIT Anlindë ( _ "I call upon the powers of Light! May they awaken our savior from her millennial sleep!")}
+ 
+         [sound]
+             name=magic-holy-2.ogg
+@@ -1164,7 +1164,7 @@
+         [/sound]
+         {FLASH_WHITE () }
+         # Open to suggestions. I'm not very romantic, ain't I? Huh? What the hell.
+-        {MSG_NARRATOR ( _ "As Anlindë pronounced the spell, the great tree at the center of the chamber disappeared, and a beautiful elven lady materialized in its place, laying in the grass floor. Big dragonfly wings on her back, her pale red hair and eyes, made it obvious that she was not any elf, but the Lady of Light. Half-asleep, her powers were still enough to illuminate the surroundings without requiring any minimal effort from her.")}
++        {MSG_NARRATOR ( _ "As Anlindë pronounced the spell, the great tree at the center of the chamber disappeared and a beautiful elven lady materialized in its place, lying on the grass floor. Big dragonfly wings on her back, and pale red hair and eyes made it obvious that she was not any elf, but the Lady of Light. Half-asleep, her powers were still strong enough to illuminate the surroundings without requiring any effort from her.")}
+         [terrain]
+             x,y=31,26
+             terrain=Ggf # wmllint: ignore
+@@ -1190,14 +1190,14 @@
+         [/scroll_to]
+         {DELAY 1000}
+ 
+-        {MSG_UNIT Elynia ( _ "Who has... awaken me?")}
++        {MSG_UNIT Elynia ( _ "Who has...awakened me?")}
+ 
+         [message]
+             id=Galas
+             message= _ "We are..."
+         [/message]
+ 
+-        {MSG_UNIT Elynia ( _ "Elves? Ehm... that's not possible, I may be still asleep...")}
++        {MSG_UNIT Elynia ( _ "Elves? Ehm... That's not possible. I may be still asleep...")}
+ 
+         [message]
+             id=Mal Keshar
+@@ -1253,53 +1253,53 @@
+         {MSG_MALIN_DUST ("`" + _"(pile of dust laying on the ground)
+ She's lovely.")}
+ 
+-        {MSG_UNIT Elynia ( _ "Well, thanks. You have awaken me, then. May I know who are you and what do you want?")}
++        {MSG_UNIT Elynia ( _ "Well, thank you. You have awoken me, then. May I know who you are and what it is you want?")}
+ 
+         {MSG_UNIT Galas ( _ "I am Galas, leader of the elves who inhabited your valley, my Lady. This is...")}
+ 
+-        {MSG_UNIT Althurin ( _ "Althurin, high Dwarvish Runemaster to the kingdom of Knalga.")}
++        {MSG_UNIT Althurin ( _ "Althurin, High Dwarven Runemaster to the Kingdom of Knalga.")}
+ 
+-        {MSG_UNIT Anlindë ( _ "Anlindë, first advisor of Galas.")}
++        {MSG_UNIT Anlindë ( _ "Anlindë, First Advisor of Galas.")}
+ 
+         {MSG_UNIT Igor ( _ "I'm Igor. I'm afraid I don't have any interesting occupations nowadays...")} # :-(   <- ESR's Terminal Frowney of Death
+ 
+-        {MSG_MALIN_DUST ( _ "Mal Keshar, necromancer and sort of a burned pile of bones. Could you quit your chatter and restore my old body?")}
++        {MSG_MALIN_DUST ( _ "Mal Keshar, necromancer extraordinaire and sort of a burned pile of bones. Could you quit your chatter and restore my old body?")}
+ 
+         {MSG_UNIT Elynia ( _ "I was certainly not informed of having a valley of my own. And why should I help one of your kind, necromancer?")}
+ 
+-        {MSG_UNIT Anlindë ( _ "Actually, he has helped us along the way to find you, my lady, and saved our lives multiple times. You are the Lady of Light, right?")}
++        {MSG_UNIT Anlindë ( _ "Actually, he has assisted us along the way to find you, my lady, and saved our lives multiple times. You are the Lady of Light, are you not?")}
+ 
+         {MSG_UNIT Elynia ( _ "That is what my people used to call me. And how can I trust your word, dreadful cultist?")}
+ 
+         {MSG_UNIT Galas ( _ "What?")}
+ 
+-        {MSG_UNIT Elynia ( _ "I might have been asleep for all this time but my memory still serves very well, Galas. I can sense Telchior's blood flowing through your veins- he was a real fool by sparing the life of this elf. But well, we could set our differences aside and talk, why did you come here? What do you need?")}
++        {MSG_UNIT Elynia ( _ "I might have been asleep for all this time but my memory still serves me very well, Galas. I can sense Telchior's blood flowing through your veins - he was a real fool by sparing the life of this elf. But I suppose we could set our differences aside and talk. Why did you come here? What do you need?")}
+ 
+-        {MSG_UNIT Galas ( _ "After you parted ways with our people, and the now desert elves, we found a new home in a valley located in the far East, which we named in your honor, and lived there for long. However, recent events forced us to flee from there, and find a new home. That is where we met Keshar...")}
++        {MSG_UNIT Galas ( _ "After you parted ways with our people, and those now known as desert elves, we found a new home in a valley located in the far East, which we named in your honor and lived there for a long time. However, recent events forced us to flee from there and find a new home. That is when we met Keshar...")}
+ 
+         {MSG_MALIN_DUST (_"Mal Keshar, please.")}
+ 
+-        {MSG_UNIT Galas ( _ "And he led us here to ask you for help in our war against those vile creatures called 'demons'...")}
++        {MSG_UNIT Galas ( _ "...and he led us here to ask you for help in our war against those vile creatures called 'demons'...")}
+ 
+-        {MSG_UNIT Elynia ( _ "The what? Demons!? But... but... it's impossible, we made sure they would never return, sealed Yanqui, and closed the portal!")}
++        {MSG_UNIT Elynia ( _ "The what? Demons!? But...but... That's impossible! We sealed Yanqui, closed the portal, and made sure they would never return!")}
+ 
+         {MSG_UNIT Galas ( _ "Yanqui? I do not understand...")}
+ 
+-        {MSG_UNIT Anlindë ( _ "It is a sad history that was forbidden to tell to new generations. You would not understand it, and the huge implications of those events.")}
++        {MSG_UNIT Anlindë ( _ "It is a sad history that was forbidden to be told to new generations. You would not understand it and the huge implications those events bring.")}
+ 
+-        {MSG_UNIT Elynia ( _ "True enough. But you cannot blindly face an unknown enemy in the battlefield- that would only bring you a harsh defeat. These are not regular foes, these are wicked monsters that do not feel, do not listen, and most certainly do not love.")}
++        {MSG_UNIT Elynia ( _ "True enough. But you cannot blindly face an unknown enemy on the battlefield - that would only bring you a harsh defeat. These are not regular foes. These are wicked monsters that do not feel, do not listen, and most certainly do not love.")}
+ 
+         {MSG_NARRATOR ( _ "A minute of silence followed.")}
+ 
+-        {MSG_UNIT Elynia ( _ "I can feel the suffering of your people. I know... those creatures almost destroyed the last remnants of the elvish civilization. We are facing the danger of extermination at their hands.")}
++        {MSG_UNIT Elynia ( _ "I can feel the suffering of your people. I know... Those creatures almost destroyed the last remnants of the elvish civilization. We are facing the danger of extermination at their hands.")}
+ 
+-        {MSG_UNIT Elynia ( _ "And you, necromancer, Mal Keshar. I long sought to destroy you for your crimes. You attacked innocent travelers, peaceful villages and attempted to put an end to the orcish tribes of the North, even when they were a part of the Northern Alliance! But you are tired of your evil ways. Your soul is corrupted, but you seek redemption, I feel it. Malin the Damned.")}
++        {MSG_UNIT Elynia ( _ "And you, necromancer Mal Keshar. I long sought to destroy you for your crimes. You attacked innocent travelers, peaceful villages, and attempted to put an end to the orcish tribes of the North, even when they were a part of the Northern Alliance! But you are tired of your evil ways. Your soul is corrupted, but you seek redemption - I feel it. Malin the Damned.")}
+ 
+-        {MSG_MALIN_DUST (_"The last person who called me that way had a rather unpleasant death; I bet you know that.")}
++        {MSG_MALIN_DUST (_"The last person who called me that had a rather unpleasant death - but I bet you know that, too.")}
+ 
+         {MSG_UNIT Elynia ( _ "I thought for a second that you would be grateful if I restored your body, but...")}
+ 
+-        {MSG_MALIN_DUST (_"Oh, no, no! Do it, please, this position is very uncomfortable for me. I swear that I'll do anything for you. Anything!")}
++        {MSG_MALIN_DUST (_"No, no, no! Do it, please! This position is very uncomfortable for me. I swear that I'll do anything for you. Anything!")}
+ 
+ #undef MSG_MALIN_DUST
+         {FLASH_GREEN ()}
+@@ -1331,30 +1331,30 @@ She's lovely.")}
+             name=heal.wav
+         [/sound]
+ 
+-        {MSG_UNIT (Mal Keshar) ( _ "Ahhh, much better!")}
++        {MSG_UNIT (Mal Keshar) ( _ "Ahhh. Much better!")}
+ 
+         {MSG_UNIT Galas ( _ "My lady, have you met the demons before?")}
+ 
+-        {MSG_UNIT Elynia ( _ "Not in great numbers. The only demon I ever met was a powerful ruler of their kind... well. Anlindë, I hope you understand that we cannot continue concealing that episode of our lives from Galas and this necromancer. They need to know the nature of the forces they have met. So, the time to tell the story of the demon lord Yanqui has come.")}
++        {MSG_UNIT Elynia ( _ "Not in great numbers. The only demon I ever met was a powerful ruler of their kind... What, Anlindë? I hope you understand that we cannot continue to conceal that episode of our lives from Galas and this necromancer. They need to know the nature of the forces they have encountered. So, the time to tell the story of the demon lord Yanqui has come.")}
+ 
+-        {MSG_UNIT Anlindë ( _ "I am not sure it is necessary. You might not trust me, I don't care; but I really do not want to see such conflicts occur again!")}
++        {MSG_UNIT Anlindë ( _ "I am not sure it is necessary. You may not trust me, and I do not care, but I really do not wish to see such conflicts occur again!")}
+ 
+-        {MSG_UNIT Elynia ( _ "I trust this brave warrior. Very few can face and survive a slaughter, and not lose their sanity. As for you, Anlindë, you know well the story so it does not matter. And the necromancer does not represent any authority for other elves, so whatever he says will not be taken into account by them, so he is not a threat, as far as I am concerned.")}
++        {MSG_UNIT Elynia ( _ "I trust this brave warrior. Very few can face and survive a slaughter, and not lose their sanity. As for you, Anlindë, you know well the story so it does not matter. And the necromancer does not represent any authority for other elves - whatever he says will not be taken into account by them - so he is not a threat, as far as I am concerned.")}
+ 
+         [if]
+             [have_unit]
+                 side,id=1,Igor
+             [/have_unit]
+             [then]
+-                {MSG_UNIT Igor ( _ "Should I just... go?")}
++                {MSG_UNIT Igor ( _ "Should I just...go?")}
+ 
+-                {MSG_UNIT Elynia ( _ "Um... you are a lonely goblin. I guess it will not harm if you listen as well. Your people may have forgotten the history, but I see no problem in teaching it to you. Perhaps someday you may return to them and remind them of the horrors of the past which we should avoid in the future, for good.")}
++                {MSG_UNIT Elynia ( _ "Hmm... You are a lonely goblin. I guess it would not hurt if you listen as well. Your people may have forgotten the history, but I see no problem in teaching it to you. Perhaps someday you may return to them and remind them of the horrors of the past which we should all avoid in the future. For good.")}
+ 
+-                {MSG_UNIT Igor ( _ "Oh, many thanks lady! I had never been treated as an equal by non-goblins! Many thanks!")}
++                {MSG_UNIT Igor ( _ "Oh, many thanks Lady! I have never been treated as an equal by non-goblins! Many thanks!")}
+             [/then]
+         [/if]
+ 
+-        {MSG_UNIT Elynia ( _ "No other elf should listen to this conversation. Now, you probably want to sit down on the grass, relax and listen. This is a very long history that you ought to know.")}
++        {MSG_UNIT Elynia ( _ "No other elf should listen to this conversation. Now, you will probably want to sit down on the grass to relax and listen. This is a very long history that you ought to know.")}
+ 
+         [store_unit]
+             [filter]
+@@ -1383,76 +1383,76 @@ She's lovely.")}
+ 
+         {CLEAR_VARIABLE other_elves_store}
+ 
+-        {MSG_NARRATOR ( _ "Galas ordered the rest of his kinsmen to patrol the caves, while Mal Keshar commanded his minions to protect the main chamber and make sure no one could listen to the conversation they were having with Elynia.")}
++        {MSG_NARRATOR ( _ "Galas ordered the rest of his kinsmen to patrol the caves, while Mal Keshar commanded his minions to protect the main chamber and make sure no one could listen in on the conversation they were having with Elynia.")}
+ 
+         {REDRAW}
+         {DELAY 750}
+ 
+-        {MSG_UNIT Elynia ( _ "We should start with the old story of the Golden Age. The continent was mostly dominated by Humans, who had eons ago established the Empire of Wesnoth in the Central lands. The Elves were distributed throughout the North-eastern, North-western and South-western forests, although small groups also wandered around Wesnoth or lived in the smaller forest areas. The Dwarves controlled all the mountains, hills and suchlike, usually competing with the fierce orcs and trolls who also liked that kind of terrains, and trading their precious ores with us, elves, and the humans of Wesnoth.")}
++        {MSG_UNIT Elynia ( _ "We should start with the old story of the Golden Age. The continent was mostly dominated by humans, who had established the Empire of Wesnoth eons ago in the Central lands. The elves were distributed throughout the northeastern, northwestern, and southwestern forests, although small groups also wandered around Wesnoth or lived in the smaller forested areas. The dwarves controlled all the mountains, hills, and so forth, usually competing with the fierce orcs and trolls who also favored those regions, and trading their precious ores with us elves, and the humans of Wesnoth.")}
+ 
+-        {MSG_UNIT Elynia ( _ "The forests south of the Dwarven Kingdom of Knalga were known as the Wesmere forest. Eons ago, they established themselves as the highest and sole authority for elves of all other countries. We valued our sages for their knowledge, more than for their age or martial or magic power, although power comes from knowledge, and knowledege from age, more often than not.")}
++        {MSG_UNIT Elynia ( _ "The forests south of the Dwarven Kingdom of Knalga were known as the Wesmere forest. Eons ago, they established themselves as the sole authority for elves of all other countries. We valued our sages for their knowledge, more than for their age, martial skill, or magic power - although power comes from knowledge, and knowledege from age, more often than not.")}
+ 
+-        {MSG_UNIT Elynia ( _ "The elves that lived there considered knowledge the most valuable thing in this world, so they were highly enthusiastic in investigating every secret of the world where we live. Each and every one, including the darkest ones... Though that gave us a great deal of order, discipline and safety for eons, as a civilization, it would not last forever.")}
++        {MSG_UNIT Elynia ( _ "The elves that lived there considered knowledge the most valuable thing in the world, they were highly enthusiastic in investigating every secret world had to offer. Each and every one, including the darkest ones... Though that gave our civilization a great deal of order, discipline, and safety for eons, it would not last forever.")}
+ 
+-        {MSG_UNIT Elynia ( _ "Still, the first step towards chaos was taken by the humans of Wesnoth. More specifically, the Emperor of Wesnoth demanded the creation of a second sun, right after a major invasion of undead led by the necromancer there by your side...")}
++        {MSG_UNIT Elynia ( _ "Still, the first step toward chaos was taken by the humans of Wesnoth. More specifically, by the Emperor of Wesnoth, who demanded the creation of a second sun right after a major invasion of undead, led by the necromancer there by your side...")}
+ 
+         {MSG_UNIT (Mal Keshar) ( _ "Hey, I was targeting orcs, not humans or elves. You just got in my way as always.")}
+ 
+-        {MSG_UNIT Elynia ( _ "Indeed. But that would be because the orcs whom you fought against were part of the ancient alliance established amongst the civilizations of the Northern lands. Your pointless skirmishes are part of the cause of the sad situation of the Continent nowadays. And for some reason, the Emperor of Wesnoth proclaimed the decree with specific instructions to conceal the decision from me, while I was in the field trying to locate you. He rejected my duty as his advisor!")}
++        {MSG_UNIT Elynia ( _ "Indeed. But that would be because the orcs whom you fought against were part of an ancient alliance established amongst the civilizations of the northern lands. Your pointless skirmishes are partly to blame for the sad condition of this Continent at present. And for some reason, the Emperor of Wesnoth issued the decree with specific instructions to conceal his witless decision from me, while I was in the field trying to locate *you*. He rejected my duty as his advisor!")}
+ 
+-        {MSG_UNIT Elynia ( _ "I could do nothing since I was too far from Wesnoth to stop the action. They gathered all their magi, students and masters alike, to obtain the power necessary to lift a mountain and fixate it up into the skies. That is your second sun, Naia. Created with the sole purpose of destroying darkness and evil forever. And it certainly worked for a time, but not forever.")}
++        {MSG_UNIT Elynia ( _ "I could do nothing since I was too far from Wesnoth to stop the ritual. They gathered all their magi, students and masters alike, to obtain the power necessary to lift a mountain and fixate its path in the skies. That is your second sun, Naia. Created with the sole purpose of destroying darkness and evil forever. And it certainly worked for a time, but not forever.")}
+ 
+-        {MSG_UNIT Elynia ( _ "Many centuries later, something horrible occurred in elvish lands. Nobody that is still alive knows exactly how it happened, and for good reason, for the most skilled sorcerers of Wesmere had somehow opened a portal to a different world during one of their many experiments. But things went awry and they awoke an evil and powerful force with it, which was incarnated in Yanqui, who adopted the form of a young elf seer. He told them that a great evil was going to swallow the lands and destroy the elvish civilization as a whole, taking with it all the knowledge they had collected over the years.")}
++        {MSG_UNIT Elynia ( _ "Many centuries later, something horrible occurred in the elvish lands. No one that is still alive remembers exactly how it happened, nor would they want to, for the most skilled sorcerers of Wesmere had somehow opened a portal to a different world during one of their many experiments. But things went awry, and they awoke an evil and powerful force along with it. This force adopted the form of a young elf seer and became the incarnation known as Yanqui. He told them that a great evil was going to swallow the lands and destroy the elvish civilization in its entirety, taking with it all the knowledge they had collected over the years.")}
+ 
+-        {MSG_UNIT Elynia ( _ "Predictably enough, he said that he would protect them if they worshiped him as a god. He also promised them unlimited knowledge and power to seal the pact... just what they had always wanted. Ambition blinded the minds of the Lords of Wesmere, so they agreed to the pact, even though Yanqui demanded blood sacrifices as part of it. Those who disagreed with the decision of the Ka'lian died as the first sacrifices to the demon lord.")}
++        {MSG_UNIT Elynia ( _ "Predictably enough, he said that he would protect them if they worshiped him as a god. He also promised them unlimited knowledge and power to seal the pact - just what they had always wanted. Ambition blinded the minds of the Lords of Wesmere, so they agreed to the pact, even though Yanqui demanded blood sacrifices as a part of it. Those who disagreed with the decision of the Ka'lian died as the first sacrifices to the demon lord.")}
+ 
+-        {MSG_UNIT Elynia ( _ "For a long time, these events remained a secret to the outer world, including the foreign elvish lands. The Ka'lian used any means necessary to make sure that the news would not spread out of Wesmere. But something else was happening in non-elven lands...")}
++        {MSG_UNIT Elynia ( _ "For a long time, these events remained a secret to the rest of the world, including the foreign elvish lands. The Ka'lian used any means necessary to make sure that the news would not spread out of Wesmere. But something else was happening in non-elvish lands...")}
+ 
+-        {MSG_UNIT Elynia ( _ "The Emperor that ruled Wesnoth in those days died of poisoning six years after Yanqui's appearance in Wesmere. Some thought that he effectively committed suicide. Others were sure that he would not have done such a thing, and that the new Emperor of Wesnoth, a nobleman by the name of Dantair whom I met a decade or two before, was behind it. He confirmed those fears just two years after the beginning of his rule when he demanded the creation of a third sun, describing it as 'an essential step to allow for further growth and prosperity in Wesnoth'. He was so confident of his political influence and the power of Wesnoth's magi that he believed people would recognize him as a 'rightful' ruler once a third sun was in the sky.")}
++        {MSG_UNIT Elynia ( _ "The Emperor that ruled Wesnoth in those days died of poisoning six years after Yanqui's appearance in Wesmere. Some thought that he effectively committed suicide. Others were certain that he would not have done such a thing, and that the new Emperor of Wesnoth - a nobleman by the name of Dantair, whom I met a decade or two before - was behind it. He confirmed those fears himself, just two years after the beginning of his rule, when he demanded the creation of a third sun describing it as 'an essential step allowing for further growth and prosperity in Wesnoth'. He was so confident in the power of Wesnoth's magi and in his own political influence that he believed people would recognize him as a 'rightful' ruler once a third sun was in the sky.")}
+ 
+-        {MSG_UNIT Elynia ( _ "But his confidence was too great. Since no necromancers or chaotic orcs had actually threatened Wesnoth's safety during the centuries since Naia's creation, the orders of magi had grown corrupt, and very few humans continued the serious pursuit of magic. The masters of old had passed away, and the new apprentices who came to take their place were a lazy and arrogant bunch. Nonetheless, Dantair went ahead with his plan.")}
++        {MSG_UNIT Elynia ( _ "But his confidence was too great. Since no necromancers or chaotic orcs had actually threatened Wesnoth's safety during the centuries since Naia's creation, the orders of the magi had grown corrupt, and very few humans continued the serious pursuit of magic. The masters of old had passed away, and the new apprentices who came to take their place were a lazy and arrogant bunch. Nonetheless, Dantair went ahead with his plan.")}
+ 
+-        {MSG_UNIT Igor ( _ "Bloody politicians. They always manage to manipulate and convince people of doing mad things!")}
++        {MSG_UNIT Igor ( _ "Bloody politicians. They always manage to manipulate and convince people into doing crazy things!")}
+ 
+-        {MSG_UNIT Elynia ( _ "When the rumors reached me, I made haste to force him to give up. However, he must have predicted that, since he sent some of his best troops to stop me from reaching him. When I finally arrived at the valley of Weldyn, it was too late. The creation of Gaia was being attempted, and to my heart's pain, I witnessed all what happened that fateful day.")}
++        {MSG_UNIT Elynia ( _ "When the rumors reached me, I made haste to force him to give up. However, he must have predicted that, since he sent some of his best troops to stop me from reaching him. When I finally arrived at the valley of Weldyn, it was too late. The creation of Gaia was being attempted and, to my heart's pain, I witnessed all that transpired that fateful day.")}
+ 
+-        {MSG_UNIT (Mal Keshar) ( _ "Ugh... that day. I had to move to another home since mine was...")}
++        {MSG_UNIT (Mal Keshar) ( _ "Ugh...that day. I had to move to another home since mine was...")}
+ 
+-        {MSG_UNIT Elynia ( _ "If you'll let me continue... as I said, the human magi's mastery of magic arts was not as strong as it used to be, and their attempt to lift and send Gaia to the skies was a total disaster. Their powers were not enough to tether Gaia high in the skies, so the mountain fell, crashing down onto Weldyn, the empire's capital, and giving rise to a huge cataclysm that destroyed cities, valleys, and even mountains. The earth-shattering force of the impact reshaped the land and altered even the coastline. All that was beautiful and of worth was ruined. I quickly returned to my home in Lintanir, the North-eastern elvish forest, to attempt to keep order amidst the chaos.")}
++        {MSG_UNIT Elynia ( _ "If you'll let me continue... As I said, the human magi's mastery of magic arts was not as strong as it used to be, and their attempt to lift and send Gaia to the skies was a total disaster. Their powers were not great enough to tether Gaia high in the skies, so the mountain fell, crashing down onto Weldyn, the empire's capital, and giving rise to a huge cataclysm that destroyed cities, valleys, and even mountains. The earth-shattering force of the impact reshaped the land and altered even the coastline. All that was beautiful and of worth was ruined. I quickly returned to my home in Lintanir, the northeastern elvish forest, in an attempt to keep order amidst the chaos.")}
+ 
+-        {MSG_UNIT Elynia ( _ "The humans struggled to survive, prey of panic, but they killed the Emperor, the magi, and their families, in response to their acts. I suppose that for the most knowledge-lacking citizens, magic was turned into taboo. Horrible wars started amongst Elves, Dwarves, Orcs and Trolls, altogether. Each kind's individuals would fight each other for the scarce resources left, except we... at least for a time.")}
++        {MSG_UNIT Elynia ( _ "The humans struggled to survive, the prey of panic, and they swiftly killed the Emperor, the magi, and their families in response to their acts. I suppose that for the most of the ignorant citizens, magic was turned into taboo. Horrible wars flared amongst elves, dwarves, orcs, and trolls altogether. Each kind would fight the other for the scarce resources left, except us... At least, for a time.")}
+ 
+-        {MSG_UNIT Elynia ( _ "Naia and Sela scorched all known lands, drying up rivers, fields, forests and lakes. Yanqui's power made Wesmere Forest stand intact, however. Green and seemingly peaceful. But he demanded unnatural sacrifices once more, and the Ka'lian agreed to his demand and executed his orders. All foreign species, including elves from other forests, were declared heretics, not worthy of living.")}
++        {MSG_UNIT Elynia ( _ "Naia and Sela scorched all known lands drying up rivers and lakes, fields and forests. Yanqui's power made Wesmere Forest stand intact, however; green and seemingly peaceful. But he demanded unnatural sacrifices once more, and the Ka'lian agreed to his demands and executed his orders. All foreign species, including elves from other forests, were declared heretics, not worthy of living.")}
+ 
+-        {MSG_UNIT Elynia ( _ "So, as creatures of other races, or elves from foreign forests came to Wesmere seeking shelter, the dark cultists sacrificed them to Yanqui. The pain and agony was feeding him, making his power stronger and stronger. When no more refugees came there out of fear, he ordered raiding parties organized to search for elves, humans, orcs, or whatever they could find in the outside lands.")}
++        {MSG_UNIT Elynia ( _ "So, as creatures from other races, or elves from foreign forests came to Wesmere seeking shelter, the dark cultists sacrificed them to Yanqui. The pain and agony were feeding him, making his power stronger and stronger. When no more refugees came there out of fear, he ordered raiding parties organized to search for elves, humans, orcs, or whatever they could find in the outside lands.")}
+ 
+-        {MSG_UNIT Elynia ( _ "We, the Elves of the Lintanir forest, had to abandon our home for it would support life no longer. And so Argan and I led my people out of the Northern forests. We eventually stumbled upon the Wesmere Forest.")}
++        {MSG_UNIT Elynia ( _ "We, the elves of the Lintanir forest, had to abandon our home for it would support life no longer. And so Argan and I led my people out of the northern forests. We eventually stumbled upon the Wesmere Forest.")}
+ 
+-        {MSG_UNIT Elynia ( _ "Obviously, not knowing what was happening in there, we decided to ask for refuge to the Ka'lian. However, we were ambushed at night during our travel to the capital. Many of us died, elders and children included. Either killed during the fight, or kidnapped and sacrificed for Yanqui, as my husband Argan would find out. He risked his own life to reach the capital and spy on the cultists.")}
++        {MSG_UNIT Elynia ( _ "Unaware of the corruption at the forest's heart, we decided to ask refuge of the Ka'lian. However, we were ambushed at night during our travel to the capital. Many of us died, elders and children included. Either killed during the fight, or kidnapped and sacrificed for Yanqui, as my husband Argan would later find out. He risked his own life to reach the capital and spy on the cultists.")}
+ 
+-        {MSG_UNIT Elynia ( _ "So we found ourselves faced with a difficult choice - stop our brethren, the Wesmere elves, and free them from the great evil at all costs, or flee to safety and let them continue their rule of cruelty, and eventually control the whole continent. Painfully, I chose the first, and started the lengthy War of Wesmere. That was the last war fought on this continent, because, to the best of my knowledge, we were the last civilization still standing back then.")}
++        {MSG_UNIT Elynia ( _ "So we found ourselves faced with a difficult choice - stop our brethren, the Wesmere elves, and free them from the great evil at all costs, or flee to safety and let them continue their rule of cruelty, and eventually control the whole continent. Painfully, I chose the first and started the lengthy War of Wesmere. That was the last war fought on the Continent, for we were the last civilization still standing back then, to the best of my knowledge.")}
+ 
+-        {MSG_UNIT Elynia ( _ "Even though our numbers were superior, their religious frenzy, obsession, and fear of destruction almost led the Wesmere elves to victory. We fought with all our might, but that only called upon the fury of the demon lord, who eventually appeared in his true form, to attack us from the skies.")}
++        {MSG_UNIT Elynia ( _ "Even though our numbers were superior, their religious frenzy, obsession, and fear of destruction almost led the Wesmere elves to victory. We fought with all our might, but that only called upon the fury of the demon lord, who eventually appeared in his true form to attack us from the skies.")}
+ 
+-        {MSG_UNIT Elynia ( _ "With little chance of prevailing, Argan and I had to call upon the power of the Union, risking destruction by our own powers. The Union of the Darkness and Light was not powerful enough, however, to destroy the demon, at least not entirely - his regeneration power was stronger.")}
++        {MSG_UNIT Elynia ( _ "With little chance of prevailing, Argan and I had to call upon the power of the Union, risking destruction by our own power. The Union of the Darkness and the Light was not powerful enough to destroy the demon, however, at least not entirely for his powers of regeneration were stronger.")}
+ 
+-        {MSG_UNIT Elynia ( _ "Finally, we managed to tear apart his body, and seal all the parts, and send them back to the underworld, destroying the portal that connected Wesmere to the underworld. Victory was ours. Wesmere, however, was a wreck, and no life was left there, except for a few survivors; less than one hundred elves. The few remaining Wesmere elves surrended and begged for forgiveness. We spared civilians' lives, but most priests and warriors left were executed and burned to ashes. We could not risk the possibility of another civil war, and we had to prevent the priests from summoning forces from underworld again at all costs.")}
++        {MSG_UNIT Elynia ( _ "Finally we managed to tear apart his body, sealing all the pieces with magic, then sent them back to the underworld, destroying the portal as our final act. Victory was ours. Wesmere, however, was a wreck, nothing living remained in the forest except for a few survivors - less than one hundred elves. The few remaining Wesmere elves surrended and begged for forgiveness. We spared the civilians' lives, but most priests and warriors left were executed and burned to ashes. We could not risk the possibility of another civil war, and we had to prevent the priests from summoning forces from the underworld again at all costs.")}
+ 
+-        {MSG_UNIT Elynia ( _ "It's ironic how we elves always despised humans because of their moral, intellectual and physical inferiority. The humans may have doomed all the world of Irdya to chaos, but our own kin were the only ones responsible for the end of the ancient elvish civilizations. The fact that our civilization only rarely makes mistaken decisions, but that the effects of those are always enormously catastrophic, is unsettling. This is why I fear that this may happen again. Yanqui was not the first false spiritual guide that inflicted massive harm on our people, but certainly the worst.")}
++        {MSG_UNIT Elynia ( _ "It is ironic how we elves have always despised humans because of their moral, intellectual, and physical inferiority. The humans may have doomed all the world of Irdya to chaos, but our own kin were the only ones responsible for the end of the ancient elvish civilization. Though our civilization rarely suffers from a lapse in judgement, the fact that the results are always enormously catastrophic is unsettling. That is why I fear this may happen yet again. Yanqui was not the first false spiritual guide that inflicted massive harm on our people, but certainly the worst.")}
+ 
+-        {MSG_UNIT Elynia ( _ "To keep our civilization in one piece, we had to forbid telling the story, and execute anyone who would dare to tell it. But we were never sure whether we killed every cultist or not. Of course, we know that one of them escaped execution, since one of the commanders spared her life. She assured him that she was just a simple ignorant follower, not a devout cultist. I felt she had to be executed, but unfortunately the rest of my people did not agree.")}
++        {MSG_UNIT Elynia ( _ "To keep our civilization in one piece, we had to forbid telling the story, and execute anyone who would dare to tell it. But we were never sure whether we had killed every cultist or not. Of course, we know that one of them escaped execution, since one of the commanders spared her life... She assured him that she was just a simple, ignorant follower, not a devout cultist. I felt she had to be executed, but unfortunately, the rest of my people did not agree.")}
+ 
+-        {MSG_UNIT Galas ( _ "Anlindë? But... but, she...")}
++        {MSG_UNIT Galas ( _ "Anlindë? But...but, she...")}
+ 
+-        {MSG_UNIT Anlindë ( _ "I was a priestess, yes, but not willing. He would have killed me and the rest of my family if I rejected his rule! Of course, at the end he killed them nonetheless. I realize that I only delayed their inevitable fate.")}
++        {MSG_UNIT Anlindë ( _ "I was a priestess, yes, but not willing. He would have killed me and the rest of my family if I had rejected his rule! Of course, at the end, he killed them nonetheless. I realize now that I only delayed their inevitable fate.")}
+ 
+         {MSG_UNIT Althurin ( _ "Why did the elves part ways?")}
+ 
+-        {MSG_UNIT Elynia ( _ "Anlindë wanted them to return to the Northeast. She said that we should have explored the unknown instead of retreating south. Of course, not every commander agreed, so eventually we went our separate ways, leaving both sides feeling wronged. Argan and I decided that our people no longer needed us, for Telchior and Anlindë would not listen to us. Quetor'el went south with his small group, but after the war I felt too weakened to be able to go with them across the desert. So Argan and I went here, to the depths, to live in peace. I am still surprised that Telchior and Anlindë could find a valley with life in the far East - I was wrong after all.")}
++        {MSG_UNIT Elynia ( _ "Anlindë wanted them to return to the Northeast. She said that we should have explored the unknown instead of retreating south. Of course, not every commander agreed, so eventually we went our separate ways, leaving both sides feeling wronged. Argan and I decided that our people no longer needed us, for Telchior and Anlindë would not listen to us. Quetor'el went south with his small group, but after the war I felt too weakened to travel with them across the desert. So Argan and I came here, to the depths, to live in peace. I am still surprised that Telchior and Anlindë managed to find a valley with life in the far East - I was wrong after all.")}
+ 
+-        {MSG_UNIT Elynia ( _ "However, on the way to this place, an earthquake caused the earth to break open. Argan fell to the darkness, and I could not follow him... Faithfully, I waited for years and years for him... I thought he could have survived that disaster... he always managed to escape the worst situations... But then, I realized that I was waiting for the impossible. I decided to sleep for the rest of eternity, since I... I needed him. And he was no more.")}
++        {MSG_UNIT Elynia ( _ "However, on the way to this place, an earthquake tore a rift in the ground near us. Argan fell into the darkness, and I could not follow him... Faithfully, I waited years and years for him... I thought he could have survived that disaster...he always managed to escape the worst situations... But then, I realized that I was waiting for the impossible. I decided to sleep for the rest of eternity, since I...needed him. And he was no more.")}
+ 
+-        {MSG_UNIT Galas ( _ "That's... horrible...")}
++        {MSG_UNIT Galas ( _ "That's...horrible...")}
+ 
+         {MSG_UNIT (Mal Keshar) ( _ "My deepest condolences.")}
+ 
+@@ -1460,19 +1460,19 @@ She's lovely.")}
+ 
+         {MSG_UNIT Igor ( _ "Oh no, what are we gonna do now?")} # ;-(
+ 
+-        {MSG_UNIT Elynia ( _ "Don't despair. Although the force of the Union has been lost forever, I will try to help you in any way that is possible. Still, I can't avoid being disturbed by the fact that someone opened a portal and possibly summoned Yanqui back into this world. The being who did that must have known this history in some way... or have done it by accident, which is far less likely. I certainly hope that the one who is originating this chaos is not Yanqui himself or any other being of his own kind.")}
++        {MSG_UNIT Elynia ( _ "Don't despair. Although the force of the Union has been lost forever, I will try to help you in any way that is possible. Still, I can't avoid being disturbed by the fact that someone opened a portal and possibly summoned Yanqui back into this world. The person responsible must have known this history in some way...or did it by accident, which is far less likely. I certainly hope that the one who is orchestrating this chaos is not Yanqui himself, or any other being of his kind.")}
+ 
+-        {MSG_UNIT Althurin ( _ "The individual responsible for this may be related in some way to Yechnagoth. She also knew of Yanqui somehow, or that was what we had been told by our hero, Rogrimir.")}
++        {MSG_UNIT Althurin ( _ "The individual responsible for this may be related in some way to Yechnagoth. She also knew of Yanqui somehow, or that's what we had been told by our hero, Rogrimir.")}
+ 
+-        {MSG_UNIT Elynia ( _ "Yechnagoth, the Eater of Souls? But she's just an ancient legend told by mothers to scare children- but I guess that nowadays you can expect anything.")}
++        {MSG_UNIT Elynia ( _ "Yechnagoth, the Eater of Souls? But she's just an ancient legend told by mothers to scare their children - but with times as they are, I suppose you can expect anything.")}
+ 
+-        {MSG_UNIT Althurin ( _ "Aye. According to the history, the Quenoth desert elves, led by Kalehssar, nephew of Tanuil and direct descendant of Quetor'el, defeated her on an isle far to the west, in the middle of the Vast Sea. She could corrupt all souls from that place, including humans, orcs, nagas and saurians. After being defeated, though, that influence was gone. But a large fraction of humans were still controlled by a powerful group of followers; I'd bet they are the ones behind all this plot. The 'loyalists'. They just want to expand their empire by taking over these lands and others yet to be discovered.")}
++        {MSG_UNIT Althurin ( _ "Aye. Accordin' to the history, the Quenoth desert elves led by Kalehssar - nephew of Tanuil, and direct descendant of Quetor'el - defeated her on an isle far to the west, in the middle of the Vast Sea. She could corrupt all souls from that place, includin' humans, orcs, nagas, and saurians. After bein' defeated, though, that influence was gone. But a large fraction of humans were still controlled by a powerful group of followers; I'd bet they are the ones behind this plot. The 'loyalists'. They probably want to expand their empire by takin' over these lands and others yet to be discovered.")}
+ 
+-        {MSG_UNIT Elynia ( _ "Interesting. So other elves survived and even managed to perform such a great feat. But somehow I fear that they did not really destroy her. It may have been a decoy; as far as I know, many ancient legends tell of brave lonely heroes slaying her. If the existence of Yechnagoth turns out to be true, what can be said of those tales? Perhaps her power is greater than we could suspect.")}
++        {MSG_UNIT Elynia ( _ "Interesting. So other elves survived and even managed to perform no small feat. But somehow I fear they did not really destroy her. It may have been a decoy; as far as I know, many ancient legends tell of brave, lonely heroes slaying her. If the existence of Yechnagoth turns out to be true, what can be said of those tales? Perhaps her power is greater than we could suspect.")}
+ 
+-        {MSG_UNIT Elynia ( _ "I can not believe either that simple humans could control the forces of the underworld. There must be something more powerful behind this.")}
++        {MSG_UNIT Elynia ( _ "I also cannot believe that simple humans could control the forces of the underworld. There must be something more powerful behind this.")}
+ 
+-        {MSG_UNIT Anlindë ( _ "It is an intriguing matter indeed. And, unfortunately, the knowledge amassed by our people, and the humans' lore masters, has been lost forever. If we could only access it, we may be able to find a glimmer of light to guide us in this dark new world.")}
++        {MSG_UNIT Anlindë ( _ "It is an intriguing matter, indeed. Unfortunately, the knowledge amassed by our people and the humans' lore masters has been lost forever. If only we could have accessed it; we might have been able to find a glimmer of light to guide us in this dark new world.")}
+ 
+         {MSG_UNIT (Mal Keshar) ( _ "I think we should move and quit wasting time here. The world needs us!")}
+ 
+@@ -1480,7 +1480,7 @@ She's lovely.")}
+ 
+         {MSG_UNIT Anlindë ( _ "Neither can I.")}
+ 
+-        {MSG_UNIT Igor ( _ "We'll see the sunlight again? It's been so long... so long since I left the surface...")}
++        {MSG_UNIT Igor ( _ "We'll see the sunlight again? It's been so long... So long since I've seen the surface...")}
+ 
+         [kill]
+             animate=no
+@@ -1527,7 +1527,7 @@ She's lovely.")}
+             terrain="Ww,Wo"
+         )}
+         {REDRAW}
+-        {MSG_SPEAKER unit ( _ "Wow. This place is plenty of water, deep and shallow. Some small fords should allow us to get past it, but I see that they are well guarded by water spirits and other creatures which have some kind of afinity with water. This will not be too easy, yet not too hard.")}
++        {MSG_SPEAKER unit ( _ "Wow. This place has plenty of water, deep and shallow. The small fords should allow us to cross it, but they appear to be well guarded by water spirits and other creatures which have some affinity with water. This will not be easy, but shouldn't prove to be too hard.")}
+     [/event]
+ 
+     [event]
+@@ -1545,7 +1545,7 @@ She's lovely.")}
+             [/and]
+         [/filter]
+         {REDRAW}
+-        {MSG_UNIT unit ( _ "There are lava streams down these chasms, from which hot air ascends and warms this cave. Interesting - there must be a volcano close to this cave system, or perhaps we are right into one.")}
++        {MSG_UNIT unit ( _ "There are lava streams down here from which hot air rises and warms this cave. Interesting - there must be a volcano near this cave system, or perhaps we are inside one.")}
+     [/event]
+ 
+     ################### DRAINING POTION ###################
+@@ -1594,12 +1594,12 @@ She's lovely.")}
+             [then]
+                 [message]
+                     speaker=unit
+-                    message= _ "This strange potion bottle gives me chills. A label with a skull on it makes it clear that it is a bad thing, but somehow, it does not smell like poison. A scroll close to it explains that it is a draining potion, which albeit makes the drinker much weaker, gives them the draining ability with their melee attacks. I am not sure if it is really worth the exchange, but draining my oponent's vital energy certainly attracts me."
++                    message= _ "This strange potion bottle gives me the chills. A label with a skull on it makes it clear that it is a bad thing, but for some reason it does not smell like poison. This scroll I found next to it explains that it is a draining potion - that while it makes the drinker much weaker, but it also grants them the draining ability with their melee attacks. I am not sure if it is really worth the exchange, but draining my opponent's vital energy certainly attracts me."
+                     [option]
+-                        message= _ "I think it is worthy, let me take it."
++                        message= _ "I think it is worthwhile. Let me have it."
+                         [command]
+                             {VARIABLE took_drainer yes}
+-                            {MSG_NARRATOR ( _ "The unit drinks the potion, feeling immediately dazed and confused. Then, its vital energy is lowered, but its melee weapons gain the draining special.")}
++                            {MSG_NARRATOR ( _ "The unit drinks the potion, feeling immediately dazed and confused. Then, its vital energy lowers but its melee weapons gain the draining specialty.")}
+                             [removeitem]
+                                 x,y=2,4
+                             [/removeitem]
+@@ -1638,7 +1638,7 @@ She's lovely.")}
+                         [/command]
+                     [/option]
+                     [option]
+-                        message= _ "On a second thought, I don't like the idea, it is abominable."
++                        message= _ "On a second thought, I don't like the idea. It is revolting."
+                     [/option]
+                 [/message]
+             [/then]
+@@ -1650,7 +1650,7 @@ She's lovely.")}
+                             speaker=narrator
+                             caption= _ "Drainer Potion"
+                             image=icons/potion-green-4.png
+-                            message= _ "This potion would add the Draining ability to this unit's melee attacks, if only it was a living unit. You might want to move an living one to it instead."
++                            message= _ "This potion would add the Draining ability to this unit's melee attacks, but only if it was a living unit. You might want to bring a living unit to it instead."
+                         [/message]
+                     [/then]
+                 [/if]
+@@ -1711,9 +1711,9 @@ She's lovely.")}
+             [then]
+                 [message]
+                     speaker=unit
+-                    message= _ "What a beautiful flask of red potion! I open and smell it, and I immediately feel euphoric and energized. It must be one of those ancient 'berserk' potions, which make the drinker stronger and frenetically lethal for its enemies. This implies many risks in combat, as berserk attacks don't allow you to get protection or suchlike while in combat. However, it might prove to be useful in our war against the demons."
++                    message= _ "What a beautiful flask for a potion! Reddish in color, I open and smell it, and immediately feel euphoric and energized. It must be one of those ancient 'berserk' potions, which make the drinker stronger and frenetically lethal to their enemies. This implies many risks in combat, as berserk attacks don't allow you to get protection and so forth during combat. However, it might prove to be useful in our war against the demons."
+                     [option]
+-                        message= _ "I'll take it, I do not fear death!"
++                        message= _ "I'll take it. I do not fear death!"
+                         [command]
+                             {VARIABLE took_berserker yes}
+                             [removeitem]
+@@ -1727,7 +1727,7 @@ She's lovely.")}
+                                 id=Berserk Potion
+                                 name= _ "Berserk Potion"
+                                 image=icons/potion-red-1.png
+-                                description= _ "For the remainder of this scenario, this potion adds the Berserk ability to this unit's melee attacks (which also gain strength), and makes it stronger against impact, blade and fire attacks. Also, it increases its maximum hitpoints 10% of the current maximum."
++                                description= _ "For the remainder of this scenario, this potion adds the Berserk ability to this unit's melee attacks (which also gain strength), and makes it stronger against impact, blade, and fire attacks. Also, the unit increases its maximum hitpoints by 10% of the current maximum."
+                                 [effect]
+                                     apply_to=attack
+                                     range=melee
+@@ -1760,14 +1760,14 @@ She's lovely.")}
+                             {MAKE_FACING_REVERSE}
+                             [message]
+                                 x,y=22,8
+-                                message= _ "Oh really? Let me check if you are really invincible!"
++                                message= _ "Oh really? Let's see if you really are invincible!"
+                             [/message]
+                             {MSG_SPEAKER unit ( _ "Uh-oh. I might be in trouble. Or perhaps not.")}
+                         [/command]
+                     [/option]
+                     [option]
+                         # FIXME: this text might be too much like a biased opinion of mine on berserkers!
+-                        message= _ "On the other hand, I do not want to get myself vanquished so easily."
++                        message= _ "On the other hand, I do not want to give up control of my emotions during battle."
+                     [/option]
+                 [/message]
+             [/then]
+@@ -1782,7 +1782,7 @@ She's lovely.")}
+                             speaker=narrator
+                             caption= _ "Berserk Potion"
+                             image=icons/potion-red-1.png
+-                            message= _ "This potion would add the Berserk ability to this unit's melee attacks, if only it was a strong, fearsome real fighter unit, living or not living. Spirits certainly do not count as strong fighters, since they don't even have a solid body. Elvish Shamans and other faerie beings do not count either. A bat should never use this kind of potions."
++                            message= _ "This potion would add the Berserk ability to this unit's melee attacks, if only it was a strong and skillful fighter unit, living or not. Spirits certainly cannot count as strong fighters, since they don't even have a solid body. Elvish shamans and other faerie beings do not count either, lacking combat prowess. A bat should never use this kind of potion for digestive reasons."
+                         [/message]
+                     [/then]
+                 [/if]
+@@ -1838,11 +1838,11 @@ She's lovely.")}
+         [message]
+             speaker=narrator
+             image="scenery/signpost.png"
+-            message= _ "Go'way!! We're like, closed or somethin'!!!"
++            message= _ "Go 'way!! We're like, closed or somethin'!!!"
+         [/message]
+         [message]
+             speaker=unit
+-            message= _ "Um... okay."
++            message= _ "Um...okay."
+         [/message]
+     [/event]
+ 
+@@ -1891,7 +1891,7 @@ She's lovely.")}
+             [then]
+                 [message]
+                     speaker=unit
+-                    message= _ "It is strange to find a house here, in the deep, but looks like someone inhabits it, for the good maintenance of the walls and door. The decoration of this cave also appears to be recent. What should I do, get away or see if somebody is living there?"
++                    message= _ "It is strange to find a house here in the deep, but it appears that someone lives there, judging by the condition of the exterior. The decorations to this cave also appear to be recent. What should I do - leave or see if somebody is still living there?"
+                     [option]
+                         message= _ "Shout and see."
+                         [command]
+@@ -1925,12 +1925,12 @@ She's lovely.")}
+                                             [/modifications]
+                                         [/unit]
+                                         {VARIABLE met_igor "yes"}
+-                                        {MSG_UNIT Igor ( _ "Aww. Is it that I can't find a safe place'ta live in?")}
++                                        {MSG_UNIT Igor ( _ "Awww. Can't I even find a safe place to live??")}
+                                         {MSG_SPEAKER unit ( _ "A goblin? How did you get here?")}
+-                                        {MSG_UNIT Igor ( _ "It's a long story. I used to live in the northlands, in a small town with my fellows. However, it came'ta happen that the foul 'loyalists' invaded it, ransacked it, killed my people, and left me with no home'ta live in. I couldn't believe I survived that night, and I just wish they had the same luck. Fearing for my life, I decided to enter the caves, and go the deepest possible, looking for safety and peace.")}
+-                                        {MSG_UNIT Igor ( _ "So I found these caverns, and set home here. However, da humans appeared again with their filthy cronies, and I managed to hide my cave from them. Now that you unhid it, I'll surely perish.")}
+-                                        {MSG_SPEAKER unit ( _ "I see. But perhaps you would prefer to follow us, instead of staying in these perilous pits, victim to the loyalists. We can give you protection.")}
+-                                        {MSG_UNIT Igor ( _ "Oh really? Wait, let me prepare my baggage and I shall go with you.")}
++                                        {MSG_UNIT Igor ( _ "It's a long story. I used to live in the northlands, in a small town with my fellows. However, it just so happened those foul 'loyalists' invaded it, ransacked it, killed my people, and left me with no home to live in. I couldn't believe I survived that night, I just wish they had the same luck. Fearing for my life, I decided to enter the caves and find the deepest one possible, looking for safety and peace.")}
++                                        {MSG_UNIT Igor ( _ "So I found these caverns, and set up home here. However, the dang humans appeared again with their filthy cronies, but this time I managed to hide my cave from them. Now that you unhid it, I'll surely perish.")}
++                                        {MSG_SPEAKER unit ( _ "I see. Well, would you like to perhaps follow us, rather than staying in these perilous pits? We could provide protection for you from the loyalists...")}
++                                        {MSG_UNIT Igor ( _ "Oh really? Wait a second, let me prepare my baggage and I shall go with you!")}
+                                         {MSG_SPEAKER unit ( _ "Very well.")}
+                                     [/command]
+                                 [/option]
+@@ -1941,7 +1941,7 @@ She's lovely.")}
+                         [/command]
+                     [/option]
+                     [option]
+-                        message= _ "I think it would be safer to remain away from this cave."
++                        message= _ "I think it would be safer to keep away from this cave."
+                     [/option]
+                 [/message]
+             [/then]
+@@ -1984,7 +1984,7 @@ She's lovely.")}
+                 [/filter_adjacent_location]
+             [/filter_location]
+         [/filter]
+-        {MSG_SPEAKER unit ( _ "Um... these gates seem to be magical in nature. They gently blow in a blueish tone, and I cannot even touch them.")}
+-        {MSG_UNIT (Galas) ( _ "There must be a way to open them, somewhere.")}
++        {MSG_SPEAKER unit ( _ "Hmm... These gates seem to be magical in nature. They gently glow in a blueish tone, and I cannot even touch them.")}
++        {MSG_UNIT (Galas) ( _ "There must be a way to open them somewhere.")}
+     [/event]
+ [/scenario]
+diff --git a/scenarios/11_Strike_on_New_Knalga.cfg b/scenarios/11_Strike_on_New_Knalga.cfg
+index ffd769b..bbd1085 100644
+--- a/scenarios/11_Strike_on_New_Knalga.cfg
++++ b/scenarios/11_Strike_on_New_Knalga.cfg
+@@ -295,8 +295,8 @@
+ 
+         [objectives]
+             side=1
+-            {OBJECTIVE_TO_WIN ( _ "Resist until turns run out")}
+-            {OBJECTIVE_TO_BONUS ( _ "Defeat all enemy leaders, if you can (bonus)")}
++            {OBJECTIVE_TO_WIN ( _ "Resist until turns run out.")}
++            {OBJECTIVE_TO_BONUS ( _ "Defeat all enemy leaders, if you can. (Bonus)")}
+             {OBJECTIVE_TO_LOSE ( _ "Death of Galas")}
+             {OBJECTIVE_TO_LOSE ( _ "Death of King Asthorgar")}
+             {OBJECTIVE_TO_LOSE ( _ "Death of Elynia")}
+@@ -311,18 +311,18 @@
+     [event]
+         name=start
+         {MSG_UNIT Galas ( _ "Look, Knalga's capital is under siege!")}
+-        {MSG_UNIT (Mal Keshar) ( _ "The bastards! As I feared, they made it here before us. It matters little, we shall drive them out of these caves anyway.")}
+-        {MSG_UNIT Elynia ( _ "So those are the demons? They are smaller than I thought. It is clear that there are no chiefs amongst these.")}
+-        {MSG_UNIT Althurin ( _ "They shall pay with their filthy blood if our king was assassined or harmed in any way by them...")}
+-        {MSG_UNIT Galas ( _ "Look, in the main keep! He is still alive and apparently safe...")}
+-        {MSG_UNIT (King Asthorgar) ( _ "Althurin! Our allies! They made it back, and they found the Lady of Light!")}
+-        {MSG_UNIT Galas ( _ "Indeed we did, sir. What's the current situation?")}
+-        {MSG_UNIT (King Asthorgar) ( _ "We are in dire need of all the help we can get. Our main defense forces have been defeated by these intruders, who brought the bulk of their army from nowhere. Most other cities have been destroyed, and we don't think we can hold them away from the main keep for much longer!")}
+-        {MSG_UNIT Galas ( _ "We will help you, lord, and we shall die fighting if it is necessary.")}
+-        {MSG_UNIT Anlindë ( _ "What? This is suicidal! We have already discussed this; we cannot fight against a true army, you know that better than me! Remember our losses at the valley. Do you want to sacrifice us all?")}
+-        {MSG_UNIT Galas ( _ "I could not leave the dwarves to perish alone! We are in debt with them. If it wasn't for them, or at least for their king and Althurin, we would never have found Elynia!")}
+-        {MSG_UNIT Elynia ( _ "Anlindë, you should have already learned that there are things more important than life itself, and things worse than death. We won't let ourselves fall before the demons, no matter what should happen.")}
+-        {MSG_UNIT Anlindë ( _ "(sighs) I guess then that we must do it. But, our forces are still weak.")}
++        {MSG_UNIT (Mal Keshar) ( _ "The bastards! As I feared, they made it here before us. It matters little, we shall drive them out of these caves regardless.")}
++        {MSG_UNIT Elynia ( _ "So those are the demons? They are smaller than I was expecting. It is clear that there are no chiefs amongst them.")}
++        {MSG_UNIT Althurin ( _ "They shall pay with their accursed blood if our king was assassinated or harmed in any way...")}
++        {MSG_UNIT Galas ( _ "Look! There in the main keep! He is still alive and apparently safe...")}
++        {MSG_UNIT (King Asthorgar) ( _ "Althurin! Our allies! They've made it back, and they've found the Lady of Light!")}
++        {MSG_UNIT Galas ( _ "Indeed we have, sir. What's the current situation?")}
++        {MSG_UNIT (King Asthorgar) ( _ "We are in dire need of all the help we can muster. Our main defense force has been defeated by these intruders, who brought the bulk of their army from out of nowhere. Most of our other cities have been destroyed, and I doubt we can hold them away from the main keep for much longer!")}
++        {MSG_UNIT Galas ( _ "We will help you, Your Excellency, and we shall die fighting if it is necessary.")}
++        {MSG_UNIT Anlindë ( _ "What?! This is suicidal! We have already discussed this - we cannot fight against a true army, you know that better than I! Remember our losses at the valley. Do you want to sacrifice us all?")}
++        {MSG_UNIT Galas ( _ "I can not leave the dwarves to perish alone! We are in debt to them. If it wasn't for them, or at least for their king and Althurin, we would never have found Elynia!")}
++        {MSG_UNIT Elynia ( _ "Anlindë, you should have already learned that there are some things more important than life itself, and some things worse than death. We will not let ourselves fall before the demons, no matter what happens.")}
++        {MSG_UNIT Anlindë ( _ "(sighs) Then I guess that is what we must do. But, our forces are still weak.")}
+         {MSG_UNIT (Mal Keshar) ( _ "You elves might be weak, but my minions shall never be, as long as I stand.")}
+     [/event]
+ 
+@@ -330,15 +330,15 @@
+ 
+     [event]
+         name=turn 2
+-        {MSG_UNIT Alazar ( _ "Your doom is at hand; surrender, dwarf King! If you do so, the Master might have mercy on some of your underlings and spare their lives.")}
++        {MSG_UNIT Alazar ( _ "Your doom is at hand. Surrender, dwarf king! If you do so now, the Master might have mercy on some of your underlings and spare their lives.")}
+         {MSG_UNIT Wygerm ( _ "We'll rip you to pieces if you don't accept our offer!")}
+-        {MSG_UNIT (King Asthorgar) ( _ "We'll never surrend, loathsome vermins! May Knalga be destroyed and forgotten first, but our kind will never let an inferior race take over our caves!")}
+-        {MSG_UNIT Alazar ( _ "Then, so be it. You have rejected our mercy with your pride and arrogancy. All men, attack! Use any methods you deem necessary and effective for wiping these creatures out of this place. For the Master! For the Empire!")}
++        {MSG_UNIT (King Asthorgar) ( _ "We'll never surrender, loathsome vermin! May Knalga be destroyed and forgotten first, but our kind will never let an inferior race take over our caves!")}
++        {MSG_UNIT Alazar ( _ "Then so be it. You have rejected our mercy with your pride and arrogance. All men, attack! Use any methods you deem necessary and effective to wipe these bearded children out. For the Master! For the Empire!")}
+         {DUMMY ( _ "NOTE FOR TRANSLATORS: the 'Blessed One' is Elynia")}
+-        {MSG_UNIT Oddis ( _ "Hey, look, they are the elves! And they made it back with the Blessed One!")}
+-        {MSG_UNIT "Armiza'ar" ( _ "Oh, that incompetent fool, Mena; so her expedition failed to vanquish the pointy-eared rats! It's our turn now. Let it be known that you shall pay with blood your bold, yet pitiful, repeated attempts to defeat us! You shall not escape this time!")}
+-        {MSG_UNIT Galas ( _ "It is easy to speak, foul sorcerer of Forbidden arts, but we have a new and great power by our side this time; we won't let you accomplish your goals, not now, nor ever after this battle!")}
+-        {MSG_UNIT Elynia ( _ "(blushes) Umm, Galas... don't you think you are exaggerating a bit?")}
++        {MSG_UNIT Oddis ( _ "Hey, look! Those are the elves! And they made it back with the Blessed One!")}
++        {MSG_UNIT "Armiza'ar" ( _ "Oh that incompetent fool, Mena... So her expedition failed to vanquish the pointy-eared rats! Well, it's our turn now. Let it be known that you shall pay with blood for your bold, yet pitiful, repeated attempts to defeat us! You shall not escape this time!")}
++        {MSG_UNIT Galas ( _ "That is easy to say, foul sorcerer of forbidden arts, but we have a strong, new power on our side this time. We won't let you accomplish your goals, not now, nor ever after this battle!")}
++        {MSG_UNIT Elynia ( _ "(blushes) Umm, Galas...don't you think you are exaggerating a bit?")}
+         {MSG_UNIT Casper ( _ "Prepare to die, dwarves and allies! We shall flood this cavern with your blood!")}
+         {QUAKE (cave-in.ogg)}
+         {MSG_UNIT Anlindë ( _ "What was that?")}
+@@ -359,32 +359,32 @@
+             facing=se
+         [/unit]
+         {MSG_UNIT Uldrex ( _ "Prepare to die, sub-creatures of the depths!")}
+-        {MSG_UNIT (Mal Keshar) ( _ "He, he. There you have a greater demon, Elynia.")}
++        {MSG_UNIT (Mal Keshar) ( _ "Heh, heh. There's your greater demon, Elynia.")}
+         {MSG_UNIT Elynia ( _ "I suppose I spoke too soon...")}
+     [/event]
+ 
+     [event]
+         name=turn 3
+-        {MSG_UNIT Galas ( _ "I don't want to be pesimistic, but the circumstances are strongly in favor of the enemy, so far. They have an overwhelming numerical advantage.")}
+-        {MSG_UNIT Elynia ( _ "The only thing we could do, then, is resist. There are not many resources here to feed and keep their troops in good shape. At some point their forces will be exhausted and, if we use our reserves wisely, we may have an advantage. At least dwarves and undead don't need so much rest as us elves.")}
+-        {MSG_UNIT (Mal Keshar) ( _ "If you let me make a suggestion, using the corpses of the fallen as a barrier would delay the enemy forces enough to let our best fighters do their duty from the safety of the best cave locations.")}
+-        {MSG_UNIT Galas ( _ "I admit the idea sounds pretty awful to me, as many of the corpses will be those of our kinsmen, but I can see that there is no other option left now... very well.")}
++        {MSG_UNIT Galas ( _ "I don't want to be pessimistic, but the circumstances are strongly in favor of the enemy, so far. They have an overwhelming numerical advantage.")}
++        {MSG_UNIT Elynia ( _ "The only thing we can do then is resist. There are not many resources here to feed and keep their troops in good shape. At some point their forces will become exhausted, so if we use our reserves wisely we may gain an advantage. At least dwarves and undead don't need so much rest as us elves.")}
++        {MSG_UNIT (Mal Keshar) ( _ "If I might make a suggestion - using the corpses of the fallen as a barrier could delay the enemy forces enough to let our best fighters do their duty from the safety of the best cave positions.")}
++        {MSG_UNIT Galas ( _ "I'll admit, the idea sounds pretty awful to me, as many of the corpses will be those of our kinsmen. But I can see that there is no other option left now... Very well.")}
+         {MSG_UNIT (Mal Keshar) ( _ "Very well!")}
+     [/event]
+ 
+     [event]
+         name=turn 10
+-        {MSG_UNIT (Mal Keshar) ( _ "What is up with this 'Empire'? Do they have some sort of unlimited source of attack force?")}
+-        {MSG_UNIT Elynia ( _ "The homeworld of these creatures, which we called 'Inferno' in my times, is exactly that; they are spawns of a greater creature, Uria. We do not know much of her, but we suspect that...")}
+-        {MSG_UNIT Anlindë ( _ "...  she gives birth to them at a constant rate, like ants.")}
++        {MSG_UNIT (Mal Keshar) ( _ "What is it with this 'Empire'? Do they have some sort of unlimited supply for recruits and freaks?")}
++        {MSG_UNIT Elynia ( _ "The homeworld of these creatures, which we called 'Inferno' in my time, is exactly that - they are the spawn of a greater creature, Uria. We do not know much of her, but we suspect that...")}
++        {MSG_UNIT Anlindë ( _ "...she gives birth to them at a constant rate, like ants.")}
+         {MSG_UNIT Elynia ( _ "Exactly.")}
+-        {MSG_UNIT (Mal Keshar) ( _ "Well then. Let's concentrate on the task at hand.")}
++        {MSG_UNIT (Mal Keshar) ( _ "Well then... Let us concentrate on the task at hand.")}
+     [/event]
+ 
+     [event]
+         name=enemies defeated
+-        {MSG_UNIT Galas ( _ "We have defeated them, at last! They are retreating!")}
+-        {MSG_UNIT Althurin ( _ "No, I don't think so. They must be preparing for retaliation. I don't think we have weakened even a small part of their true assault forces yet.")}
++        {MSG_UNIT Galas ( _ "At last, we have defeated them! They are retreating!")}
++        {MSG_UNIT Althurin ( _ "No, I don't think so. They must be preparin' for retaliation. The way they fight, I doubt we've seen even a hair of their main assault force yet.")}
+         {ENDLEVEL_VICTORY yes}
+     [/event]
+ 
+@@ -406,7 +406,7 @@
+             [/not]
+         ) ( _ "Retreat! We underestimated these persistent worms. It is time to execute the backup plan!")}
+         {MSG_UNIT Galas ( _ "Strange. The enemy troops retreat!")}
+-        {MSG_UNIT Althurin ( _ "This doesn't sound good. They must be preparing for retaliation. We have not weakened their forces enough yet.")}
++        {MSG_UNIT Althurin ( _ "This doesn't sound good. They must be preparin' for retaliation. We have not weakened their forces enough yet.")}
+         {ENDLEVEL_VICTORY no}
+     [/event]
+ 
+@@ -467,8 +467,8 @@
+         [if]
+             {VARIABLE_NUM_GREATER_THAN enemy_leaders_probe.length 3}
+             [then]
+-                {MSG_UNIT (Mal Keshar) ( _ "This seems hopeless. They keep coming in numbers; looks like they have brought a good deal of their reserves with them.")}
+-                {MSG_UNIT Galas ( _ "Keep pressing on then. We cannot lose this battle!")}
++                {MSG_UNIT (Mal Keshar) ( _ "This is looking hopeless. Their numbers keep coming - looks like they have brought a good deal of their reserves with them.")}
++                {MSG_UNIT Galas ( _ "We must persevere. We cannot lose this battle!")}
+             [/then]
+         [/if]
+ 
+@@ -477,32 +477,32 @@
+ 
+     [event]
+         name=victory
+-        {MSG_UNIT Elynia ( _ "I do not see any option other than leaving these mountains. All of us. Including the dwarves.")}
+-        {MSG_UNIT (King Asthorgar) ( _ "What? That is sheer madness. We have lived in these mountains for milleniums, and have never even tried to get used to the outsides. There we would be defenseless, vulnerable.")}
+-        {MSG_UNIT Althurin ( _ "If you allow me to say so, my lord, staying here would ensure our death, or worse. The loyalists are already aware of our presence, and shall not stop until taking over Knalga and our lives. What is the cause of their obsession with these mountains, is unknown to me, but anyone can see that they have a plan.")}
+-        {MSG_UNIT Galas ( _ "If my memory serves, you told us about friendly humans in the Far North. Would they still be oppositors to the Empire?")}
+-        {MSG_UNIT (King Asthorgar) ( _ "Yes, although I don't see any chances for them to win in a real war against the Chaos Empire. There are many skilled fighters and wisemen in their side, but that will never be enough. If we dwarves could not resist the enemy forces with our most advanced technology, there is no possibility that the less-advanced outsiders manage to do it.")}
+-        {MSG_UNIT (Mal Keshar) ( _ "(whispering) 'Our most advanced technology'... duh. How great arrogancy coming from such a short one...")}
+-        {MSG_UNIT Elynia ( _ "Not alone, at least. I mean, and if we could contact them and build a stronger army, of dwarves, elves, and humans, to defeat the Empire?")}
+-        {MSG_UNIT (King Asthorgar) ( _ "That is far from possible. Dwarves, Elves and Humans have never allied under a single banner. Never.")}
+-        {MSG_UNIT Elynia ( _ "Incorrect. When I was just an apprentice, I witnessed and participated of a war during which a great alliance that even included orcish tribes of the North, was forged. We were fighting against a Necromancer who had, coincidentally, established his own empire; the First Empire of Wesnoth. I am deeply disappointed, I did not expect that you had forgotten those events.")}
+-        {MSG_UNIT Elynia ( _ "I know, times have changed, however I am certain that we can forge a new super-alliance to defeat the Chaos Empire and put an end to this great evil that has befallen the world. We shall never have peace, or time for our own wars, if this menace is not stopped before our complete annihilation.")}
+-        {MSG_UNIT (King Asthorgar) ( _ "Well then, so your proposal is that we escape to the Northlands?")}
+-        {MSG_UNIT Elynia ( _ "Yes. Elves can go to look for help from the midlands, and you dwarves can explore the hills and mountains, to establish a new home if necessary. And then, when the rest of us are ready, we will call upon you to assist us in battle again.")}
+-        {MSG_UNIT (King Asthorgar) ( _ "I understand and agree, but, how are we going to make sure the demons do not follow us? We can block the tunnels, but with their machines, it would be just a small delay in the end. We need a distraction, a decoy.")}
+-        {MSG_UNIT Anlindë ( _ "I can set a trap for them, with help from the dead.")}
+-        {MSG_UNIT Galas ( _ "What? But Anlindë, you'll be trapped in this castle, to fight them alone. Odds are you will not get out of here, ever.")}
+-        {MSG_UNIT Anlindë ( _ "I know, but as Elynia said, there are things more important than life. For me, our people's safety is much more important then. And death itself is not the worst thing that can happen to me. I commited great crimes in the past, indirectly; sacrificing our people for an evil cause. I cannot erase my past. If I am going to die, I would prefer it to be sacrificing myself for our people, this time for a just cause. It is the best I can do to try to fix the damage I caused back then.")}
+-        {MSG_UNIT Galas ( _ "I see then, that I could not convince you of the opposite now.")}
+-        {MSG_UNIT Elynia ( _ "It was not necessary to take my words to heart, but if you feel so guilty for the past, I guess we cannot do much for you, other than help you realize your last wishes.")}
+-        {MSG_UNIT Althurin ( _ "M'lady, it was a pleasure to have met you, albeit being for so short time. But then, what are you going to do?")}
+-        {MSG_UNIT Anlindë ( _ "My plan is for me to stay here, fighting and distracting the demons, with a tad of help from Keshar's power to rise the dead. Only me and the dead, while you flee to the outsides unnoticed. I'll fight as long as possible, and find the assault commander to vanquish him, if possible. That way, you would have escaped North by the time they might find out that you fled.")}
+-        {MSG_UNIT (King Asthorgar) ( _ "You are really brave. Surprising, for an elvish lady. We have really underestimated your people.")}
+-        {MSG_UNIT (Mal Keshar) ( _ "In that case, I'll put some of my minions to aid you. And I wish you the best of lucks, may your soul rest in peace when all this is over.")}
+-        {MSG_UNIT Elynia ( _ "It saddens me to see what must happen so that our kind survives. I swear that I'll not rest until the last of those fiends is turned to ashes in the ground.")}
+-        {MSG_UNIT Galas ( _ "Farewell Anlindë, you were my best adviser. And so I wonder why should not I make the sacrifice instead?")}
+-        {MSG_UNIT Anlindë ( _ "You are still a young and brave warrior, Galas. Your time to lead our people to glory is approaching. I, in contrast, have already passed that time, albeit I have never been a warrior. With my crimes, I cannot be a leader, but you, your future is to be a leader.")}
+-        {MSG_UNIT Anlindë ( _ "But let's not delay this any longer. Our enemies are preparing for a final assault, and so we should do. May you succeed in vanquishing this evil, and have peace in the future!")}
++        {MSG_UNIT Elynia ( _ "I do not see any other option but to leave these mountains. All of us. Including the dwarves.")}
++        {MSG_UNIT (King Asthorgar) ( _ "What? That is sheer madness. We've lived in these mountains for millennia, and have never even tried to venture outside. We'd be defenseless there, vulnerable.")}
++        {MSG_UNIT Althurin ( _ "If ye might allow me to say so, my lord, stayin' here would only ensure our death, or worse. The loyalists are already aware of our presence here and they won't stop until they have Knalga and our lives along with it. Why they're so obsessed with these mountains is unknown to me, but anyone can see they have a plan brewin'.")}
++        {MSG_UNIT Galas ( _ "If my memory serves, you told us about friendly humans in the far North. Would they still stand in opposition to the Empire?")}
++        {MSG_UNIT (King Asthorgar) ( _ "Yes, although I don't see any chance for them to succeed in a real war against the Chaos Empire. There are many skilled fighters and wisemen on their side, but that'll never be enough. If we dwarves couldn't resist the enemy forces with our most advanced technology, then there is no possibility those less-advanced outsiders could manage it.")}
++        {MSG_UNIT (Mal Keshar) ( _ "(whispering) 'Our most advanced technology'... Phaw. Such a large amount of arrogance coming from such a tiny thing...")}
++        {MSG_UNIT Elynia ( _ "Not by themselves, at least. What if we could contact them and build a stronger army of dwarves, elves, and humans to defeat the Empire?")}
++        {MSG_UNIT (King Asthorgar) ( _ "That is far from possible. Dwarves, elves, and humans have never allied under a single banner. Never.")}
++        {MSG_UNIT Elynia ( _ "Incorrect. When I was just an apprentice, I witnessed and participated in a war during which a great alliance was forged - it even included the orcish tribes of the North. We were fighting against a necromancer who had coincidentally established his own empire, the First Empire of Wesnoth. I am deeply disappointed; I didn't figure on you forgetting those events.")}
++        {MSG_UNIT Elynia ( _ "I know, times have changed. However, I am certain that we can form a new super-alliance to defeat the Chaos Empire and put an end to this great evil that has befallen the world. We shall never have peace, or time for our own disputes, if this menace is not stopped before our complete annihilation.")}
++        {MSG_UNIT (King Asthorgar) ( _ "Well then, so ye propose we escape to the northlands?")}
++        {MSG_UNIT Elynia ( _ "Yes. Elves can search for aid in the midlands, and you dwarves can explore the hills and mountains, and establish a new home if necessary. And then, when the rest of us are ready, we will call upon you to assist us in battle once again.")}
++        {MSG_UNIT (King Asthorgar) ( _ "I understand and agree, but how are we going to make sure the demons don't follow us? We can block the tunnels, but with their machines it'd be just a small delay in the end. We need a distraction, a decoy.")}
++        {MSG_UNIT Anlindë ( _ "I can set a trap for them, with the help of the dead.")}
++        {MSG_UNIT Galas ( _ "What? But Anlindë, you'll be trapped in this castle to fight them alone. Chances are you won't be able to get out of here - ever.")}
++        {MSG_UNIT Anlindë ( _ "I know, but as Elynia said there are some things more important than life. For me, our people's safety is much more important than my own. And death itself is not the worst thing that can happen to me. I have indirectly committed great crimes in the past, sacrificing our people for an evil cause. I cannot erase my past. If I am going to die, then I would prefer it be by sacrificing myself for our people - this time for a just cause. It is the best I can do to repair the damage I caused back then.")}
++        {MSG_UNIT Galas ( _ "I see now that nothing I say will change your mind.")}
++        {MSG_UNIT Elynia ( _ "It was not necessary to take my words to heart, but if you feel so guilty about the past I suppose we cannot do much for you, other than help you realize your last wishes.")}
++        {MSG_UNIT Althurin ( _ "M'lady, it's a pleasure to have met ye, though bein' for so short a time. But now what're ye gonna do?")}
++        {MSG_UNIT Anlindë ( _ "My plan is to stay here fighting and distracting the demons, with a little help from Keshar's power over the deceased. Only me and the dead, while you flee to the outside unnoticed. I'll fight for as long as possible, and try to find the assault commander to vanquish him, if possible. That way you would have already escaped north by the time they learn that you are missing.")}
++        {MSG_UNIT (Mal Keshar) ( _ "In that case, I'll set some of my minions to aid you. And I wish you the best of luck - may your soul rest in peace when all this is over.")}
++        {MSG_UNIT Elynia ( _ "It saddens me to see what must happen so that our kind survives. I swear that I'll not rest until the last of those fiends is turned to cinders on the ground.")}
++        {MSG_UNIT (King Asthorgar) ( _ "Ye're really brave. Surprising, for an elvish lady. We've really underestimated yer people.")}
++        {MSG_UNIT Galas ( _ "Farewell Anlindë, you were like a mother to me, and my best adviser. But why shouldn't I make the sacrifice instead?")}
++        {MSG_UNIT Anlindë ( _ "You are still a young and brave warrior, Galas. Your time to lead our people to glory is approaching. I, in contrast, have already passed that time, though I have never been a warrior. With my crimes I cannot be a leader; but you, your future is to be a leader.")}
++        {MSG_UNIT Anlindë ( _ "But let us not delay this any longer. Our enemies are preparing for a final assault, and so should we. May you succeed in vanquishing this evil, and have obtain peace in the future!")}
+ 
+         [store_unit]
+             variable=king_probe
+@@ -616,7 +616,7 @@
+ 
+         [message]
+             speaker=unit
+-            message= _ "Today, you might win the battle, but you'll never win the war!"
++            message= _ "Today, you might have won the battle, but you'll never win the war!"
+         [/message]
+     [/event]
+ 
+@@ -640,7 +640,7 @@
+ 
+         [message]
+             speaker=second_unit
+-            message= _ "Ahh! How you dare..."
++            message= _ "Ahh! How dare you..."
+         [/message]
+     [/event]
+ 
+diff --git a/scenarios/12_The_Escape.cfg b/scenarios/12_The_Escape.cfg
+index bc087af..849872b 100644
+--- a/scenarios/12_The_Escape.cfg
++++ b/scenarios/12_The_Escape.cfg
+@@ -20,7 +20,7 @@
+ #define ESCAPE_BASE_OBJS
+     [objectives]
+         side=1
+-        {OBJECTIVE_TO_WIN ( _ "Galas, Elynia, or Mal Keshar must reach the exit to the northlands")}
++        {OBJECTIVE_TO_WIN ( _ "Galas, Elynia, or Mal Keshar must reach the exit to the northlands.")}
+         {OBJECTIVE_TO_LOSE ( _ "Death of Galas")}
+         {OBJECTIVE_TO_LOSE ( _ "Death of Elynia")}
+         {OBJECTIVE_TO_LOSE ( _ "Death of Mal Keshar")}
+@@ -189,9 +189,9 @@
+ 
+     [event]
+         name=start
+-        {MSG_UNIT Althurin ( _ "The exit is to the north. It has been a long time, though, since the last on which this caves were explored.")}
+-        {MSG_UNIT Galas ( _ "You mean that we cannot be sure what awaits in our path? We have got quite accustomed to that.")}
+-        {MSG_UNIT Elynia ( _ "We must make haste. We cannot be sure during how much time Anlindë will be able to distract our enemies. I just hope that her sacrifice is not in vain.")}
++        {MSG_UNIT Althurin ( _ "The exit's to the north. Though it's been a long time since these caves were last explored.")}
++        {MSG_UNIT Galas ( _ "You mean we cannot be certain of what lies ahead? We have grown quite accustomed to that.")}
++        {MSG_UNIT Elynia ( _ "We must make haste. We don't know how much longer Anlindë will be able to distract our enemies. I just hope that her sacrifice is not in vain.")}
+         {MSG_UNIT Galas ( _ "We shall make sure it is not. Now, let's go.")}
+     [/event]
+ 
+@@ -229,7 +229,7 @@
+ 
+         [message]
+             speaker=Althurin
+-            message= _ "I was not aware of this kind of things roaming about this zone."
++            message= _ "I was not aware these kinds o' things were roamin' around 'ere."
+         [/message]
+     [/event]
+ 
+@@ -294,12 +294,12 @@
+             x,y=10,38
+         [/unit]
+ 
+-        {MSG_UNIT Karshas ( _ "Damned creatures, you slaughtered our children and women! You'll pay with your blood!")}
++        {MSG_UNIT Karshas ( _ "Damned creatures. You slaughtered our women and children! You'll pay with your blood!")}
+         {MSG_UNIT Yreul ( _ "Not if we crush you to dirt first. Attack, underlings!")}
+-        {MSG_SUF (x,y=10,38) ( _ "Hey, hey, what do we have here? Da elfses and dwarfses are trying to escape thru da backdoor!")}
++        {MSG_SUF (x,y=10,38) ( _ "Hey, hey, what do we have here? Da elfses and dwarfses are tryin to escape thru da backdoor!")}
+         {MSG_SPEAKER unit ( _ "Uh...")}
+-        {MSG_UNIT Yreul ( _ "They are tough rats, but we can deal with them. The assault chieftain will be really pleased to see their heads impaled in our banners.")}
+-        {MSG_UNIT Galas ( _ "We'll have to deal with this scum first, otherwise they might report to their superiors with news of us. The trolls are not that important to get rid of.")}
++        {MSG_UNIT Yreul ( _ "They are tough for rats, but we can deal with them. The assault chieftain will be very pleased to see their heads impaled on our banners.")}
++        {MSG_UNIT Galas ( _ "We'll have to deal with this scum first, otherwise they might report news of us to their superiors. The trolls are not that important to us, but be cautious.")}
+ 
+         [objectives]
+             side=1
+@@ -320,7 +320,7 @@
+ 
+             [message]
+                 speaker=unit
+-                message= _ "Defeated... by rats!"
++                message= _ "Defeated...by rats!"
+             [/message]
+         [/event]
+ 
+@@ -387,10 +387,10 @@
+         {BOSS_POPUP}
+         [message]
+             type=Goliath
+-            message= _ "The vermins must die! Yes!"
++            message= _ "The vermin must die! Affirmative!"
+         [/message]
+-        {MSG_SPEAKER unit ( _ "Aaah! Another of these metallic beasts!")}
+-        {MSG_UNIT Galas ( _ "This starts to be more difficult than it was supposed to be.")}
++        {MSG_SPEAKER unit ( _ "Aaah! Another one of these metallic beasts!")}
++        {MSG_UNIT Galas ( _ "This is becoming harder than it was supposed to be.")}
+         [objectives]
+             side=1
+             {OBJECTIVE_TO_WIN ( _ "Defeat the Goliath")}
+@@ -503,12 +503,12 @@
+         {EX_LOYAL_UNIT (Chaos Headhunter) (Caror) ( _ "Caror") 5 18 26}
+         {EX_LOYAL_UNIT (Chaos Marauder) (Yelk) ( _ "Yelk") 5 21 25}
+         {MSG_UNIT (Rearguard Tracker) ( _ "Hizzoh! Aizkta kalmzarh ixthalamah!")}
+-        {MSG_SPEAKER unit ( _ "I have no idea what it means, but it cannot be nice.")}
++        {MSG_SPEAKER unit ( _ "I have no idea what that means, but it can't be good.")}
+         {MSG_SPEAKER Galas ( _ "Darn it, how did they get here?")}
+-        {MSG_SPEAKER (Mal Keshar) ( _ "They must be the rearguard of our 'friends'. It is a must for us to defeat their captain.")}
++        {MSG_SPEAKER (Mal Keshar) ( _ "They must be the rearguard of our 'friends'. It is a must that we defeat their captain.")}
+         [objectives]
+             side=1
+-            {OBJECTIVE_TO_WIN ( _ "Locate and defeat the rearguard captain")}
++            {OBJECTIVE_TO_WIN ( _ "Locate and defeat the rearguard captain.")}
+             {OBJECTIVE_TO_LOSE ( _ "Death of Galas")}
+             {OBJECTIVE_TO_LOSE ( _ "Death of Elynia")}
+             {OBJECTIVE_TO_LOSE ( _ "Death of Mal Keshar")}
+@@ -552,14 +552,14 @@
+         {BOSS_POPUP}
+         # Made the dialog in such way that it still sounds consistent and coherent, even when unit.id
+         # is one of the other speakers.
+-        {MSG_UNIT Lagonus ( _ "You're caught, by Uria you shall not pass any further!")}
+-        {MSG_UNIT Galas ( _ "Dream of that!")}
+-        {MSG_SPEAKER unit ( _ "I have seen many imps already, but this one looks stronger and smarter than the common.")}
++        {MSG_UNIT Lagonus ( _ "You're ours, by Uria you shall not pass any further!")}
++        {MSG_UNIT Galas ( _ "Wishful thinking, filth!")}
++        {MSG_SPEAKER unit ( _ "I have seen many imps by now, but this one looks stronger and smarter than the others.")}
+         {MSG_UNIT Elynia ( _ "Ugh, it is drooling, and it stinks.")}
+-        {MSG_UNIT (Mal Keshar) ( _ "Be careful. That slime looks and smells like poisonous.")}
++        {MSG_UNIT (Mal Keshar) ( _ "Be careful. That slime looks and smells poisonous.")}
+         [objectives]
+             side=1
+-            {OBJECTIVE_TO_WIN ( _ "Defeat Lagonus, the rearguard captain")}
++            {OBJECTIVE_TO_WIN ( _ "Defeat Lagonus, the rearguard captain.")}
+             {OBJECTIVE_TO_LOSE ( _ "Death of Galas")}
+             {OBJECTIVE_TO_LOSE ( _ "Death of Elynia")}
+             {OBJECTIVE_TO_LOSE ( _ "Death of Mal Keshar")}
+@@ -593,7 +593,7 @@
+             {EX_LOYAL_UNIT {DIFF (Mudcrawler) (Giant Mudcrawler) (Giant Mudcrawler)} (Lagonus's body) ( _ "Lagonus's body") 5 $x1 $y1}
+             {EX_LOYAL_UNIT (Mudcrawler) (Lagonus's body) ( _ "Lagonus's body") 5 $x1 $y1}
+ 
+-            {MSG_SPEAKER Galas ( _ "Its body tears apart and dissolves into slime!")}
++            {MSG_SPEAKER Galas ( _ "Its body is tearing apart and dissolving into slime!")}
+             {MSG_SPEAKER Elynia ( _ "Disgusting... I feel like vomiting.")}
+ 
+             [fire_event]
+@@ -647,13 +647,13 @@
+                 [/role]
+                 [message]
+                     role=otherone
+-                    message= _ "Wait, we still have to defeat these beasts that pursue us; otherwise, they will report of our position to their leaders!"
++                    message= _ "Wait, we still have to defeat these beasts that pursue us, otherwise they will report our position to their leaders!"
+                 [/message]
+             [/then]
+             [else]
+                 [message]
+                     speaker=unit
+-                    message= _ "The outsides. This way it is, people!"
++                    message= _ "The way out... It's this way, people!"
+                 [/message]
+                 # Go to an interlude scenario, intended to ease me testing of scenario 13's side init code
+                 # and to make a more interesting landscape for the player.
+@@ -664,7 +664,7 @@
+ 
+     [event]
+         name=time over
+-        {MSG_UNIT Galas ( _ "Oh no, their main assault force has found us! Anlindë, I am sorry. We have failed.")}
++        {MSG_UNIT Galas ( _ "Oh no! Their main assault force has found us! Anlindë, I am sorry. We have failed.")}
+     [/event]
+ 
+     [event]
+@@ -673,6 +673,6 @@
+         {DELAY 250}
+         {QUAKE (cave-in.ogg)}
+         {MSG_NARRATOR ( _ "The earth shakes.")}
+-        {MSG_UNIT Galas ( _ "I wonder what it could be.")}
++        {MSG_UNIT Galas ( _ "I wonder what that could be...")}
+     [/event]
+ [/scenario]
+diff --git a/scenarios/13_Face_your_Fate.cfg b/scenarios/13_Face_your_Fate.cfg
+index d1accfd..b33defc 100644
+--- a/scenarios/13_Face_your_Fate.cfg
++++ b/scenarios/13_Face_your_Fate.cfg
+@@ -198,12 +198,12 @@
+         ) ( _ "Shrieek!")}
+ 
+         {MSG_UNIT Anlindë ( _ "What are those creatures doing?")}
+-        {MSG_UNIT Durcanthil ( _ "I am not sure, but they seem to be laying their larvae on the cavern's floor, and consuming it.")}
+-        {MSG_UNIT Merlin ( _ "Milady, we shall not let these invaders take over Knalga without giving a bloody fight first. We'll fight for you; may glory be our tomb today.")}
++        {MSG_UNIT Durcanthil ( _ "I am not sure, but they seem to be layin' their larvae on the cavern's floor then eatin' it.")}
++        {MSG_UNIT Merlin ( _ "M'lady, we shall not let these invaders take over Knalga without givin' up a bloody fight first. We'll fight for ya. May glory be our tomb this day.")}
+ 
+-        {MSG_UNIT Laveri ( _ "Ah, the smell of death grows my desire of blood even bigger. With the dwarven defenses trampled all over by the drones, taking over the keep shall be easy.")}
++        {MSG_UNIT Laveri ( _ "Ah, the smell of death only enhances my thirst for blood. With the dwarven defenses crippled by the drones, taking over the keep shall be easy.")}
+         {MSG_UNIT Izkotep ( _ "Look, the elvish witch!")}
+-        {MSG_UNIT Laveri ( _ "Graaargh, kill her! And the elf leader too! Find the filthy fairy, but remember the commands of the Master; trap her, but never kill, torture or touch her in any other fashion!")}
++        {MSG_UNIT Laveri ( _ "Graaargh, kill her! And the elf leader too! Find the filthy fairy but heed the commands of the Master; trap her, but don't touch, torture, or kill her - even by accident!")}
+         {MSG_UNIT Izkotep ( _ "Attack now! You know what to do!")}
+ 
+         {MSG_UNIT Anlindë ( _ "The real assault has started. I hope we can give Galas and the rest enough time to escape unnoticed.")}
+@@ -307,9 +307,9 @@
+                 {PLAY_SOUND dwarf-laugh.wav}
+                 {DELAY 500}
+                 {MSG_UNIT Anlindë ( _ "The commander, at last! Come and fight with me, fiendish one! This place shall be your grave!")}
+-                {MSG_UNIT boss2 ( _ "Hah, you'd better run away, little worm, or I shall tear your tiny body to pieces and delight with your suffering!")}
+-                {MSG_UNIT boss2 ( _ "I can read your mind, so I know where your friends are. Your little sacrifice won't stop the wrath of the Shadow Master for trying to fool him! We'll find them all, and your pitiful efforts will have been wasted in vain.")}
+-                {MSG_UNIT Anlindë ( _ "Not if I can stop you first, may it be at cost of my life.")}
++                {MSG_UNIT boss2 ( _ "Hah! You'd better run away, little worm, or I shall tear your tiny body to pieces and delight in your suffering!")}
++                {MSG_UNIT boss2 ( _ "I can read your mind, so I know where your friends are. Your little sacrifice here doesn't fool the Shadow Master, nor will it save the cowards from His wrath! We'll find them all, and your pitiful efforts will have been wasted in vain.")}
++                {MSG_UNIT Anlindë ( _ "Not if I can stop you first! May it be at the cost of my life.")}
+                 # Set objectives
+                 [objectives]
+                     side=1
+@@ -346,10 +346,10 @@
+                             [if]
+                                 {VARIABLE_NUM_LESS_THAN boss_dcx 1}
+                                 [then]
+-                                    {MSG_UNIT Anlindë ( _ "It... is impossible!")}
+-                                    {MSG_UNIT boss2 ( _ "Your mundane weapons or pathetic spells are not enough to destroy me.")}
+-                                    {MSG_UNIT Anlindë ( _ "Then I'll figure out other way to destroy you.")}
+-                                    {MSG_UNIT boss2 ( _ "Ha, ha, I don't think you are ever going to have time for that before I kill you!")}
++                                    {MSG_UNIT Anlindë ( _ "It...is impossible!")}
++                                    {MSG_UNIT boss2 ( _ "Your mundane weapons and pathetic spells are not enough to destroy me.")}
++                                    {MSG_UNIT Anlindë ( _ "Then I'll figure out another way to destroy you.")}
++                                    {MSG_UNIT boss2 ( _ "Ha, ha, I don't think you're going to have enough time for that before I kill you!")}
+                                     {MSG_UNIT boss2 ( _ "By the power you have given me, Uria, may the spells that keep the undead animated be cancelled now!")}
+                                     {THUNDER (
+                                         [kill]
+@@ -362,7 +362,7 @@
+                                         [/kill]
+                                     )}
+                                     {DISALLOW_RECRUIT 1 ("Walking Corpse")}
+-                                    {MSG_UNIT Anlindë ( _ "This is a real proof that Mal Keshar has no power against these fiends. I must get rid of this mysterious masked face somehow, or they will be lost against it!")}
++                                    {MSG_UNIT Anlindë ( _ "This is actual proof Mal Keshar has no power against these fiends. I must get rid of this masked being somehow or they will be lost against it!")}
+                                 [/then]
+                             [/if]
+                             {VARIABLE_ADD boss_dcx 1}
+@@ -384,7 +384,7 @@
+             [then]
+                 [message]
+                     speaker=unit
+-                    message= _ "I am sorry... Galas... I... failed..."
++                    message= _ "I am sorry...Galas... I...failed..."
+                 [/message]
+                 {ENDLEVEL_DEFEAT}
+             [/then]
+@@ -408,13 +408,13 @@
+             [then]
+             [/then]
+             [else]
+-                {MSG_UNIT boss2 ( _ "Now, what part do you want to see teared apart first?")}
+-                {MSG_SPEAKER unit ( _ "You should not... waste more of your time... here... heh.")}
++                {MSG_UNIT boss2 ( _ "Now, which extremity do you want to see removed first?")}
++                {MSG_SPEAKER unit ( _ "You should not...waste more of your time...here...")}
+                 {MSG_UNIT boss2 ( _ "What?")}
+                 {QUAKE (cave-in.ogg)}
+                 {MSG_UNIT boss2 ( _ "What is this?")}
+                 {QUAKE (rumble.ogg)}
+-                {MSG_UNIT boss2 ( _ "But... the cave's roof! No!")}
++                {MSG_UNIT boss2 ( _ "But... The cave's roof! No!")}
+                 {MSG_SPEAKER unit ( _ "Yes, I shall not depart alone!")}
+                 {MSG_UNIT boss2 ( _ "You are mad!")}
+                 {MSG_UNIT (Laveri) ( _ "Aiyeee!! Retreat!! No, wait... aaargh!")}
+@@ -423,7 +423,7 @@
+                     side=3
+                     animate=yes
+                 [/kill]
+-                {MSG_SPEAKER unit ( _ "Death will take us all now...")}
++                {MSG_SPEAKER unit ( _ "Death will take all of us now...")}
+                 {QUAKE (rumble.ogg)}
+                 [kill]
+                     x=1-30
+diff --git a/scenarios/14_Bye_and_Behold.cfg b/scenarios/14_Bye_and_Behold.cfg
+index 5631e97..38d1a0e 100644
+--- a/scenarios/14_Bye_and_Behold.cfg
++++ b/scenarios/14_Bye_and_Behold.cfg
+@@ -299,7 +299,7 @@
+ 
+         [objectives]
+             side=1
+-            {OBJECTIVE_TO_WIN ( _ "Defeat all enemy leaders")}
++            {OBJECTIVE_TO_WIN ( _ "Defeat all enemy leaders.")}
+             {OBJECTIVE_TO_LOSE ( _ "Death of Galas")}
+             {OBJECTIVE_TO_LOSE ( _ "Death of Elynia")}
+             {OBJECTIVE_TO_LOSE ( _ "Death of Mal Keshar")}
+@@ -312,7 +312,7 @@
+         [message]
+             speaker=narrator
+             image=wesnoth-icon.png
+-            message= _ "Do you want to see a brief description of characters the first time you select them in the map?"
++            message= _ "Do you want to see a brief description of the characters the first time you select them on the map?"
+             [option]
+                 # !-- mainline-strings.cfg
+                 message={STR_YES} # wmllint: ignore
+@@ -332,7 +332,7 @@
+         [message]
+             speaker=narrator
+             image=wesnoth-icon.png
+-            message= _ "Galas has earned experience since the start of his journey in the last episode. You can now choose what advancement path he should follow afterwards. Remember that every path has its own advantages and disadvantages."
++            message= _ "Galas has gained experience since the start of his journey in the last episode. You may now choose what advancement path he should follow from here onwards. Remember that every path has its own advantages and disadvantages."
+         [/message]
+ 
+         #
+@@ -351,13 +351,13 @@
+         {CLEAR_VARIABLE side_number} # undo the hack
+ #endif
+ 
+-        {MSG_UNIT Althurin ( _ "Now, what do you want us to do, master Galas? We have definitively lost our home, as you had before, at the hands of those fiends.")}
+-        {MSG_UNIT Galas ( _ "(sighs) I know, and I feel guilty, as I guess they would never have raided Knalga if it was not for pursuing us. I am deeply sorry about that.")}
+-        {MSG_UNIT (King Asthorgar) ( _ "Don't be sorry, that would have happened sooner or later. If you did not warn us of the imminent menace, we would not have been prepared for the invasion, and would have perished in there; all our race exterminated in a few days.")}
+-        {MSG_UNIT Althurin ( _ "That's true. Your errand did us more good than bad, Galas. I think it showed us the cruel reality of the surface world, something that we were mostly unaware all this time.")}
+-        {MSG_UNIT (King Asthorgar) ( _ "Now, as you said before, all we can do is find a new home in these lands. But, are you sure you will be safe there, without us?")}
+-        {MSG_UNIT Galas ( _ "I thank you for your help, my lord, but we are now surrounded by forests, the kind of terrain we elves have been used to during milleniums. There in the darkness we were helpless on our own, but here we feel like in our home. It would be the best for you to set a new home in the mountains of these far lands, and get protection again, underground. I don't want to force you to accomplish a mission that you did not ask for.")}
+-        {MSG_UNIT (King Asthorgar) ( _ "So be it. Farewell, lord of the Elves of the forests, we shall remember you. May our paths meet again in better times.")}
++        {MSG_UNIT Althurin ( _ "Now what d'ye want us to do, Master Galas? We've certainly lost our home to the hands of those fiends, just as yer folk have.")}
++        {MSG_UNIT Galas ( _ "(sighs) I know, and I feel guilty for that. They never would have raided Knalga if they had not been pursuing us. I am deeply sorry.")}
++        {MSG_UNIT (King Asthorgar) ( _ "Ah don't be sorry, 'twould have happened sooner or later. If you hadn't warned us of the impending menace, we wouldn't have been prepared for the invasion, and would've likely perished in there - all our race exterminated in a few days...")}
++        {MSG_UNIT Althurin ( _ "That's true. Yer errand did us more good than harm, Galas. I think it showed us the cruel reality of the surface world, somethin' that we were mostly unaware of all this time.")}
++        {MSG_UNIT (King Asthorgar) ( _ "Now, as ye said before all we can do now is hunt for a new home in these lands. But are ye sure ye'll be safe out there without us?")}
++        {MSG_UNIT Galas ( _ "I thank you for your help, Majesty, but we are now surrounded by forests, the kind of terrain we elves have been used to for millennia. There in the darkness we were helpless on our own, but here it reminds us of home. I am sure you're anxious to explore the mountains and regain protection underground. I don't want to hold you to a mission that you did not ask for.")}
++        {MSG_UNIT (King Asthorgar) ( _ "So be it. Farewell to ye, Lord of the Elves of the Forests, we shall remember ye. May our paths meet again in better times.")}
+         # Fix for the "Big and Top-Secret Balancing Issue" reported in the forums
+         [store_unit]
+             [filter]
+@@ -378,7 +378,7 @@
+         [if]
+             {VARIABLE_BOOLEAN_EQUALS temp_passed_probe no}
+             [then]
+-                {MSG_UNIT Althurin ( _ "To show you our gratitude, I crafted this chainmail armor, light and strong, specially for Galas. It's made of a special metal that is rarely used for crafting weaponry or armors because of its difficult extraction and forging. I am sure it will be really necessary at some point in the future.")}
++                {MSG_UNIT Althurin ( _ "To show ye our gratitude, I crafted this chainmail armor, light and strong, specially for Galas. 'Tis made of a special metal that is rarely used for craftin' weaponry or armor 'cause of its difficult extraction and forgin'. I'm sure 'twill be necessary at some point in the future.")}
+                 [object]
+                     [filter]
+                         id=Galas
+@@ -388,7 +388,7 @@
+                     id=dwarven_chainmail_armor
+                     name= _ "Dwarven Chainmail Armor"
+                     image=icons/chainmail.png
+-                    description= _ "This light, shiny and mysterious chainmail armor, increases the unit's resistances as follows:
++                    description= _ "This shiny and mysterious light chainmail armor, increases the unit's resistances as follows:
+ Blade: +20%
+ Pierce: +30%
+ Impact: +10%
+@@ -404,12 +404,12 @@ Fire: +30%"
+                         [/resistance]
+                     [/effect]
+                 [/object]
+-                {MSG_UNIT Galas ( _ "Thanks, dwarven master. Surely it will help me, should I run into trouble when fighting at close range. Those fiends don't seem to have good blacksmiths to forge more effective weapons or armor for them.")}
++                {MSG_UNIT Galas ( _ "My thanks, dwarven master. Surely it will help me should I run into trouble when fighting at close range. Those fiends don't seem to possess good blacksmiths to forge effective weapons or armor for them.")}
+             [/then]
+         [/if]
+         {CLEAR_VARIABLE temp_passed_probe}
+         {CLEAR_VARIABLE galas_probe}
+-        {MSG_UNIT Althurin ( _ "Farewell Elynia, I wish I had more time to learn more of your people and your magical skills.")}
++        {MSG_UNIT Althurin ( _ "Farewell, Elynia. I wish I had more time to learn more of yer people and yer skill with magic.")}
+         {MSG_UNIT Elynia ( _ "Bye, Althurin. May we meet a second time.")}
+         # And they shall...
+         {REDRAW}
+@@ -430,10 +430,10 @@ Fire: +30%"
+         {REDRAW}
+         {MSG_NARRATOR ( _ "The dwarves leave.")}
+         {MSG_UNIT Elynia ( _ "So the plan is to find the humans and ally with them, right Galas?")}
+-        {MSG_UNIT Galas ( _ "Yes, my lady. That is the best plan I could make up.")}
+-        {MSG_UNIT Elynia ( _ "Galas, there is really no need to treat me as a superior. Treat me just as your friend.")}
+-        {MSG_UNIT (Mal Keshar) ( _ "I don't think they'll like my presence, let alone our companions... my companions... you know.")}
+-        {MSG_UNIT Galas ( _ "That is a very interesting point. But...")}
++        {MSG_UNIT Galas ( _ "Yes, my lady. That is the best plan I could come up with.")}
++        {MSG_UNIT Elynia ( _ "Galas, there is really no need to treat me as a superior. Treat me just as you would a friend.")}
++        {MSG_UNIT (Mal Keshar) ( _ "I don't think they'll like my presence, let alone our companions... My companions...you know.")}
++        {MSG_UNIT Galas ( _ "That is a very good point. But...")}
+         [move_unit_fake]
+             type=Aragwaith Strongbow
+             side=3
+@@ -475,44 +475,44 @@ Fire: +30%"
+         {EX_LOYAL_UNIT (Aragwaith Longswordsman) (Zednal) ( _ "Zednal") 3 12 35}
+         {REDRAW}
+ 
+-        {MSG_UNIT (Mal Keshar) ( _ "(whispering) I feel the answer approaching...")}
+-        {MSG_UNIT Erathan ( _ "Halt! Who goes there!")}
+-        {MSG_UNIT Galas ( _ "Erm... we, we are elves. We come in peace, as refugees.")}
+-        {MSG_UNIT Erathan ( _ "Elves? And refugees, you say. Elves, indeed. Creatures that don't exist but in old tales of the past times.")}
++        {MSG_UNIT (Mal Keshar) ( _ "(whispering) I feel we'll find out soon enough...")}
++        {MSG_UNIT Erathan ( _ "Halt! Who goes there?")}
++        {MSG_UNIT Galas ( _ "Uhm... We, we are elves. We come in peace, as refugees.")}
++        {MSG_UNIT Erathan ( _ "Elves? And refugees, you say. Mwa ha! Elves, indeed. Creatures that don't exist but in tall tales of the past times.")}
+         {MSG_UNIT Elynia ( _ "(whispering) Perhaps seducing him might be a better idea...")}
+         {MSG_UNIT (Mal Keshar) ( _ "(whispering) Or killing him...")}
+         {MSG_UNIT Galas ( _ "Sssht, quiet!")}
+         {MSG_UNIT Erathan ( _ "What?")}
+-        {MSG_UNIT Zednal ( _ "Erathan, although we have only heard of them in tales, I recall the fiends mentioning 'elfses'. I guess they meant elves, these elves. So it's unlikely a trap; they must be refugees indeed.")}
++        {MSG_UNIT Zednal ( _ "Erathan, although we have only heard of them in stories, I recall the fiends mentioning 'elfses'. I guess they meant 'elves', these elves. So it's unlikely a trap; they must be refugees indeed.")}
+         {MSG_UNIT Erathan ( _ "Are you refugees then? Why? And what is that thing doing behind you?")}
+         {MSG_UNIT Galas ( _ "This...")}
+-        {MSG_UNIT (Mal Keshar) ( _ "I have been called by many names, but none as disturbing as 'thing'...")}
+-        {MSG_UNIT Erathan ( _ "Ho! A necromancer. Our law is very strict on what we rangers should with black magic and all its foul practicioners. Give us good reasons not to call upon the local garrison, imprison and send all of you to be judged by our authorities.")}
++        {MSG_UNIT (Mal Keshar) ( _ "I have been called by many names, but none as disturbing as 'That Thing'...")}
++        {MSG_UNIT Erathan ( _ "Ho! A necromancer. Our law is very strict on what we rangers should do with black magic and all its foul practitioners. You had best have a magnificent story for us, else we summon the local garrison. Or perhaps you wish to be judged by our authorities, and thrown in prison?")}
+         {MSG_UNIT Galas ( _ "Well, we...")}
+-        {MSG_UNIT Elynia ( _ "We can have a deal. These seem to be difficult times for your country. Surely you would not give away the opportunity to get our help for your battles, specially since both of us want to get rid of a common enemy, the enemy that pushed us out of our homes.")}
+-        {MSG_UNIT Erathan ( _ "It depends on the enemy you are talking about, of course.")}
++        {MSG_UNIT Elynia ( _ "Perhaps we can make a deal. These seem to be difficult times for your country. Surely you would not pass up the opportunity to let us aid you in your battles, especially since both of us want to get rid of a common enemy - the enemy that pushed us from our homes.")}
++        {MSG_UNIT Erathan ( _ "That depends on which enemy you are talking about, of course.")}
+         {MSG_UNIT (Mal Keshar) ( _ "The demons. The loyalists. The damned Empire of Chaos and all the usurpers of the former glory of Wesnoth!")}
+-        {MSG_UNIT Erathan ( _ "You escape from those fiends, then. Funny thing, necromancers always rush away, as cowards, when they stumble on a stronger opponent.")}
+-        {MSG_UNIT (Mal Keshar) ( _ "Stup...")}
+-        {MSG_UNIT Elynia ( _ "Skeletal thing, sir... ranger, can we concentrate on the real subject please?")}
+-        {MSG_UNIT Erathan ( _ "Um... alright. Elves with a necromancer... the race of elves is almost extinct; they were formerly recognized as a great civilization, but now that I look at you, it's just... pathethic. Do you think you'll gain anything in exchange for serving us as allies? We don't have much to offer...")}
++        {MSG_UNIT Erathan ( _ "So, you escape from those fiends then. Funny thing, necromancers always flee as cowards when they stumble upon a stronger opponent.")}
++        {MSG_UNIT (Mal Keshar) ( _ "(grumbling) I'd like to hear him say that while I'm slitt-")}
++        {MSG_UNIT Elynia ( _ " *Ahem* Sir Ranger, can we concentrate on the real subject please?")}
++        {MSG_UNIT Erathan ( _ "Hmm...alright. Elves with a necromancer... The race of elves is almost extinct. They were formerly recognized as a great civilization, but now that I look at you, it's just...pathetic. Do you think you'll gain anything in exchange for serving us as allies? We don't have much to offer...")}
+         {MSG_UNIT Elynia ( _ "Shelter.")}
+-        {MSG_UNIT Erathan ( _ "Shelter? Uh... only the Grand Council can decide whether to allow you to live in our country or not.")}
+-        {MSG_UNIT Galas ( _ "If you cannot grant us shelter, at least we need your help in our fight against this common enemy.")}
+-        {MSG_UNIT Erathan ( _ "The Empire of Chaos is a real nuissance for us, but it is not enough reason to start an actual war, which seems to be what you suggest. We have resisted their forces all these years, why should we stop doing so now and send them an ultimatum strike when we are not and will never be in favorable conditions?")}
+-        {MSG_UNIT Elynia ( _ "Because the forces of Chaos are increasing. The Emperor currently has a whole continent under his control, and he has slaughtered all of the survivors that did not join him. As we have just escaped a major assault force, I can tell you the great darkness that approaches. You will not survive much time with this defensive attitude; eventually, the enemy will destroy your natural resources, take over your country and exterminate the survivors. You ought to admit it: the only chance we have to avoid our obliteration is to obliterate the Chaos Empire now that they have the least, if any, expectations of receiving an offensive reply rather than a defense.")}
+-        {MSG_UNIT Erathan ( _ "Wise words. Very wise, indeed. But who are you anyway? Or, more specifically, what are you? You look like one of those treacherous faeries. They like to trick our people to satisfy their whimsical demands.")}
+-        {MSG_UNIT (Mal Keshar) ( _ "She is Elynia, known by some elves as Eloh, the 'Source of Light' for the Dwarves, or the Lady of Light, for us, humans.")}
+-        {MSG_UNIT Erathan ( _ "The Lady of Light? Um... It's just an old myth. She never truly existed, and if she did, that would have been dozens of centuries go. She would have died long ago.")}
+-        {MSG_UNIT Elynia ( _ "That is much of an insult to me, and the ancient elvish lore. It is obvious that you never suffered the horrors of the Fall, unlike my people and I. Not surprising, since you are just a youth. Time passes, and humans as usual either forget or distort the history.")}
+-        {MSG_UNIT Erathan ( _ "Well, I suppose that we cannot judge by ourselves whether any of you are telling us the truth, or not. However, if you come to the capital for a meeting with the Grand Council, we could settle this doubt.")}
++        {MSG_UNIT Erathan ( _ "Shelter? Uh...only the Grand Council can decide whether you can live in our country or not.")}
++        {MSG_UNIT Galas ( _ "If you cannot grant us shelter, we at least need your help in our fight against this common enemy.")}
++        {MSG_UNIT Erathan ( _ "The Empire of Chaos is a real nuisance for us, but it isn't enough of a reason to start an actual war, which seems to be what you suggest. We have resisted their forces all these years. Why should we send them an ultimatum when we are no condition to strike, and perhaps will never be?")}
++        {MSG_UNIT Elynia ( _ "Because the forces of Chaos are increasing. The Emperor currently has an entire continent under his control, and any survivors are slaughtered if they do not join him. As we have just managed to escape from a major assault, I can tell you of the great darkness that approaches. You will not survive long with this defensive attitude - eventually the enemy will destroy your natural resources, take over your country, and exterminate the survivors. You ought to admit it: the only chance we have to avoid obliteration is to obliterate the Chaos Empire. And since they do not expect any major opposition to remain, time is of the essence.")}
++        {MSG_UNIT Erathan ( _ "Wise words. Very wise, indeed. But who are you anyway? Or more specifically, what are you? You look like one of those treacherous faeries. They like to trick our people to satisfy their whimsical demands.")}
++        {MSG_UNIT (Mal Keshar) ( _ "She is Elynia - also known as Eloh for certain elves, the 'Source of Light' for the dwarves, or the 'Lady of Light' for us humans.")}
++        {MSG_UNIT Erathan ( _ "The Lady of Light? Pah, that's just an old myth. She never truly existed. Even if she had, that would have been dozens of centuries ago. She'd be a relic by now.")}
++        {MSG_UNIT Elynia ( _ "That is as much of an insult to me as it is to our ancient elvish lore. It is obvious that you never suffered the horrors of the Fall, unlike my people and I. Not surprising since you are just a youth. Time passes and humans, as usual, either forget or distort the history.")}
++        {MSG_UNIT Erathan ( _ "Well, I suppose we cannot be the judge of whether you are telling us the truth or not. However, if you'd come with us to the capital for a meeting with the Grand Council we could settle this doubt.")}
+         {MSG_UNIT Elynia ( _ "That sounds reasonable.")}
+         {MSG_UNIT Galas ( _ "Agreed, then.")}
+-        {MSG_UNIT Erathan ( _ "No, no, no. Wait: first I must see a proof of reliability from you. As you said, you'd help us defeat our enemies. At the moment, these woods are infested with orcs, invaders who came from the northern steppes. If you can defeat them, I'll be pleased to arrange the meeting for you.")}
++        {MSG_UNIT Erathan ( _ "Ah, but not so fast. First, I must see proof that you are reliable. As you said, you'd help us defeat our enemies. At the moment these woods are infested with orcs, invaders who came from the northern steppes. If you can defeat them, I'll be pleased to arrange the meeting for you.")}
+         {MSG_UNIT Galas ( _ "Orcs? Hah! Agreed.")}
+-        {MSG_UNIT Erathan ( _ "Oh, my, I almost forgot... a colony of saurians is allied with the orcs. But they should not be a major problem for you. Right?")}
++        {MSG_UNIT Erathan ( _ "Oh my, I almost forgot... A colony of saurians is allied with the orcs. But then, they shouldn't be a major problem for you. Right?")}
+         {MSG_UNIT Galas ( _ "Eh...")}
+-        {MSG_UNIT Erathan ( _ "I thought so. We'll be watching you from close range in any case, so don't attempt to do anything... stupid. Ha, ha!")}
++        {MSG_UNIT Erathan ( _ "I thought not. We'll be watching you from close range in any case, so don't attempt to do anything...stupid. Hah ha!")}
+         {REDRAW}
+         {DELAY 750}
+ 
+@@ -555,9 +555,9 @@ Fire: +30%"
+             {REDRAW}
+         {NEXT i}
+ 
+-        {MSG_UNIT (Mal Keshar) ( _ "Not the friendly kind of natives, I even feel like they are playing with us. They did not even bother to tell us specifically where the pests are; I see no signs of them around.")}
+-        {MSG_UNIT Galas ( _ "There is something that makes me suspect... are we sure that they are not under the influence of the demons or that they are not any sort of mercenaries working for them?")}
+-        {MSG_UNIT Elynia ( _ "I think they are not any of the two options. Their attitude is suspicious, though. Let's beware.")}
++        {MSG_UNIT (Mal Keshar) ( _ "Not the friendliest of natives. I even feel like they are toying with us. They did not even bother to tell us specifically where the pests are; I see no signs of them around.")}
++        {MSG_UNIT Galas ( _ "There is something very suspicious here... Can we be certain they're not under the influence of the demons, or mercenaries under the demons' employ?")}
++        {MSG_UNIT Elynia ( _ "I doubt it is either of those options. Their attitude is peculiar, though. Let us be wary.")}
+ 
+         [if]
+             [have_unit]
+@@ -567,15 +567,15 @@ Fire: +30%"
+             [then]
+                 # Igor doesn't like the idea
+                 {MSG_UNIT Igor ( _ "Are we gonna kill orcs? Oh my, what should I do? I don't want to slay my kinsmen.")}
+-                {MSG_UNIT Elynia ( _ "Igor, your kinsmen are unlikely to recognize you as an ally alone anyway. So it does not matter much, in my humble opinion.")}
+-                {MSG_UNIT Igor ( _ "I guess so. Anyway, I owe you my life, so I'll follow you orders while I can breath.")}
++                {MSG_UNIT Elynia ( _ "Igor, your kinsmen are unlikely to recognize you as an ally alone anyway. So it matters little, as I see it.")}
++                {MSG_UNIT Igor ( _ "I guess so. Anyway I owe you my life, so I'll follow your orders until I stop breathing.")}
+             [/then]
+         [/if]
+ 
+-        {MSG_UNIT (Mal Keshar) ( _ "Ah, well... this mission will be pleasant to accomplish. For me, at least.")}
++        {MSG_UNIT (Mal Keshar) ( _ "Well, now... This mission will be pleasant to accomplish - for me at least.")}
+         {MSG_UNIT Galas ( _ "What are those creatures he mentioned, the 'saurians'?")}
+-        {MSG_UNIT (Mal Keshar) ( _ "Treacherous little vermins that love to frolic in swamps and impale you with their rusty spears from below the water. They often pose no great threat on their own - the problem is that you see them fighting along with those dirty orcs, most of the time. Hired mercenaries indeed.")}
+-        {MSG_UNIT Galas ( _ "Well, let's be onward then.")}
++        {MSG_UNIT (Mal Keshar) ( _ "Treacherous little pests that love to frolic in swampy waters and impale you with their rusty spears from below the surface. They often pose no great threat on their own - the problem is they fight along side those dirty orcs most of the time. Hired mercenaries indeed.")}
++        {MSG_UNIT Galas ( _ "Well, let's be about it then.")}
+     [/event]
+ 
+ #ifdef CAMPAIGN_INVASION_FROM_THE_UNKNOWN_EPISODE_II
+@@ -601,17 +601,17 @@ Fire: +30%"
+             [/have_unit]
+             [then]
+                 {MSG_UNIT Galas ( _ "We did it. Now what?")}
+-                {MSG_SUF (role=doubtful_elf) ( _ "It was not too difficult. I wonder then, why did they ask us to do the dirty work for them? If they have really fought worse enemies than demons, why couldn't they handle a bunch of orcs and lizards?")}
+-                {MSG_UNIT Galas ( _ "I suppose they were testing our skills. They seem to consider us weaklings in comparison. What is up with this arrogant people?")}
++                {MSG_SUF (role=doubtful_elf) ( _ "That was not too difficult. But why did they ask us to do the dirty work for them, I wonder? If they have really fought worse enemies than demons, why couldn't they handle a bunch of orcs and lizards?")}
++                {MSG_UNIT Galas ( _ "I suppose they were testing our skills. They seem to consider us weaklings in comparison. What is the matter with these arrogant people?")}
+             [/then]
+             [else]
+-                {MSG_UNIT Galas ( _ "It was not too difficult. I suppose they were testing our skills. They seem to consider us weaklings in comparison. What is up with this arrogant people")}
++                {MSG_UNIT Galas ( _ "That was not too difficult. I suppose they were testing our skills. They seem to consider us weaklings in comparison. What is the matter with these arrogant people?")}
+             [/else]
+         [/if]
+ 
+-        {MSG_UNIT Elynia ( _ "They are the Aragwaithi. Nobody knows where they came from, nor why. But as far as I know, they seemed to be descendants of a fallen noble race. They have always set apart from other humans or any other races in this continent. And it seems to be a more important distinction now.")}
++        {MSG_UNIT Elynia ( _ "They are the Aragwaithi. Nobody knows where they came from, nor why. But as far as I know, they seem to be descendants of a fallen noble race. They have always sat apart from other humans or any other races on this continent. And there seems to be a more important distinction now.")}
+ 
+-        {MSG_UNIT (Mal Keshar) ( _ "I also wonder where they came from. It was some time before the barbarians, that they came and claimed lands as their own. They must have been refugees of some war in an unknown land.")}
++        {MSG_UNIT (Mal Keshar) ( _ "I also wonder how they came to be here. It was some time before the barbarians that they arrived and claimed lands as their own. They might have been refugees themselves of some distant war in an unknown land.")}
+ 
+         [move_unit_fake]
+             type=$erathan_store.type
+@@ -640,7 +640,7 @@ Fire: +30%"
+ 
+         {CLEAR_VARIABLE erathan_sidekicks_store}
+ 
+-        {MSG_UNIT Erathan ( _ "I must admit I'm surprised after witnessing your performance in battle. I have arranged a meeting with the Grand Council for you, as agreed. Now follow us, we shall take you to our capital city, Raelthyn.")}
++        {MSG_UNIT Erathan ( _ "I must admit, I'm surprised after witnessing your performance in battle. I have arranged a meeting with the Grand Council for you, as agreed. Now follow us, we shall take you to our capital city, Raelthyn.")}
+         {REDRAW}
+         {DELAY 500}
+         [place_shroud]
+@@ -649,7 +649,7 @@ Fire: +30%"
+             side=1
+         [/place_shroud]
+         {MSG_UNIT Erathan ( _ "(whispering) Zednal?")}
+-        {MSG_UNIT Zednal ( _ "(whispering) Yes sir.")}
++        {MSG_UNIT Zednal ( _ "(whispering) Yes, sir.")}
+         {MSG_UNIT Erathan ( _ "(whispering) Just for safety, I want the escort to follow the faerie lass closely. I don't trust her.")}
+         {MSG_UNIT Zednal ( _ "(whispering) As you command, sir.")}
+ 
+@@ -663,8 +663,8 @@ Fire: +30%"
+                 race=orc
+             [/or]
+         )}
+-        {MSG_UNIT Galas ( _ "There they are! But... they seem not to be ordinary orcs. Beware, we don't know what sort of tricks these foes know.")}
+-        {MSG_SPEAKER unit ( _ "What? Are those elves? With undead? What the... let's be careful, those are not ordinary enemies!")}
++        {MSG_UNIT Galas ( _ "There they are! But...they do not seem to be ordinary orcs. Beware, we don't know what sort of tricks these foes have in store for us.")}
++        {MSG_SPEAKER unit ( _ "What? Are those elves? With undead? What the... Let's be careful. Those are not ordinary enemies!")}
+     [/event]
+ 
+     [event]
+@@ -672,8 +672,8 @@ Fire: +30%"
+         [filter]
+             id=Grilock
+         [/filter]
+-        {MSG_SPEAKER unit ( _ "Gaaargh... how could this happen to me!")}
+-        {MSG_UNIT Igor ( _ "I'm really sorry, bro'... I have new... friends.")}
++        {MSG_SPEAKER unit ( _ "Gaaargh... How could this happen to me!")}
++        {MSG_UNIT Igor ( _ "I'm really sorry, brother... I have new...friends.")}
+     [/event]
+ 
+     [event]
+@@ -700,12 +700,12 @@ Fire: +30%"
+         [message]
+             speaker=narrator
+             image="scenery/signpost.png"
+-            message= _ "Danger! Bridge no longer maintained; use it at your own risk."
++            message= _ "Danger! Bridge no longer maintained. Use at own risk."
+         [/message]
+ 
+         [message]
+             speaker=unit
+-            message= _ "So this is why it broke in half. Heh, the sign is outdated by now then."
++            message= _ "So this is why it broke in half. Heh, the sign is outdated then."
+         [/message]
+     [/event]
+ 
+@@ -713,7 +713,7 @@ Fire: +30%"
+     [event]
+         {SIGHTED_SUF_BY_PLAYER (type=Rabbit)}
+         {REDRAW}
+-        {MSG_UNIT Elynia ( _ "Look, a tiny bunny! Awww... what a cute fur ball!")}
++        {MSG_UNIT Elynia ( _ "Look, a tiny bunny! Awww... What a cute little furball!")}
+         {MSG_UNIT (Mal Keshar) ( _ "Blargh, get that thing out of my sight!")}
+     [/event]
+ [/scenario]
+diff --git a/scenarios/cutscenes/08x.cfg b/scenarios/cutscenes/08x.cfg
+index 7af26c3..78d42f1 100644
+--- a/scenarios/cutscenes/08x.cfg
++++ b/scenarios/cutscenes/08x.cfg
+@@ -145,105 +145,105 @@
+ 
+     [event]
+         name=start
+-        {MSG_UNIT (King Asthorgar) ( _ "Welcome, friends. It has been a long time since your kinsmen last visited us. But tell me, what are your names? What brings you here, to the depths of New Knalga?")}
++        {MSG_UNIT (King Asthorgar) ( _ "Welcome, friends. It's been a long time since yer kinsmen last visited us. But tell me, what're yer names? What brings ye here to the depths of New Knalga?")}
+ 
+-        {MSG_UNIT (Galas) ( _ "I am Galas, leader of the Elves from the Valley of Elynia.")}
++        {MSG_UNIT (Galas) ( _ "I am Galas, leader of the elves from the Valley of Elynia.")}
+ 
+-        {MSG_UNIT (Anlindë) ( _ "Anlindë, first advisor of Galas.")}
++        {MSG_UNIT (Anlindë) ( _ "Anlindë, First Advisor of Galas.")}
+ 
+-        {MSG_UNIT (Mal Keshar) ( _ "Mal Keshar, necromancer, tourist guide for these elves.")}
++        {MSG_UNIT (Mal Keshar) ( _ "Mal Keshar, necromancer and tour guide for these elves.")}
+ 
+-        {MSG_UNIT (King Asthorgar) ( _ "You, necromancer - it is well recorded by our historians that you killed many of our comrades centuries ago. However, in view of your  that you came here by the side of the people of Quenoth, I suppose we can tolerate your presence.")}
++        {MSG_UNIT (King Asthorgar) ( _ "You, necromancer - 'tis well recorded by our historians that ye killed many of our comrades centuries ago. However, since ye came here by the side of the people of Quenoth, I suppose we can tolerate yer presence.")
+ 
+-        {MSG_UNIT (Galas) ( _ "I cannot avoid asking, my lord, what are you talking about? What is Quenoth?")}
++        {MSG_UNIT (Galas) ( _ "Begging your pardon, Your Highness, but what are you talking about? What is Quenoth?")}
+ 
+-        {MSG_UNIT (Anlindë) ( _ "I think I know what he is talking about. King, your fellow dwarves talked about elves from the desert when they first met us. You now mention the people of Quenoth. Does that mean that our kind has already visited your realm? Did they truly come from the desert?")}
++        {MSG_UNIT (Anlindë) ( _ "I believe I know what he is talking about. King, your fellow dwarves spoke of elves from the desert when they first met us. You now mention these people of Quenoth. Does that mean that our kind has already visited your realm? Did they truly come from the desert?")}
+ 
+-        {MSG_UNIT (King Asthorgar) ( _ "Yes, indeed. It must ha' been more than six of our generations ago. My great-grandfather didn't even exist then! It is known by us that they opened the route for the restoration of Knalga.")}
++        {MSG_UNIT (King Asthorgar) ( _ "Aye, indeed. It must've been more than six of our generations ago. My great-grandfather didn't even exist then! 'Tis known by us that they opened the route for the restoration of Knalga.")}
+ 
+-        {MSG_UNIT (Althurin) ( _ "They certainly did so, by forcing the foul trolls to retreat back to the tunnels whence they came. That is just one of their many great deeds.")}
++        {MSG_UNIT (Althurin) ( _ "They certainly did at that, by forcin' the foul trolls to retreat back to the tunnels from whence they came. That's just one o' their many great deeds.")}
+ 
+-        {MSG_UNIT (King Asthorgar) ( _ "So, where do you come from? I didn't stop to wonder why you bring completely different weapons and clothes with you. I suppose you're not from the desert then?")}
++        {MSG_UNIT (King Asthorgar) ( _ "So, from whence do ye come? I hadn't stopped to wonder why ye bring completely different weapons and clothes with ye. I suppose ye're not from the desert then?")}
+ 
+-        {MSG_UNIT (Anlindë) ( _ "We actually come from a valley, far from here, surrounded by the vast lands that we call the 'unknown'. Our ancestors departed ways shortly after putting an end to a... certain war, due to political disputes. Two different groups separated; one group found the valley whence we came. Those are our direct ancestors, but I suspect the other group, whom you probably met, managed to eke out their lives in the desert.")}
++        {MSG_UNIT (Anlindë) ( _ "We actually come from a valley far from here, surrounded by the vast lands that we call 'The Unknown'. Our ancestors departed ways shortly after putting an end to a certain...war, due to political disputes. Two different groups separated - one group found the valley from which we were just expelled. We are their direct descendants, but I suspect the other group, whom you have probably met, managed to eke out their lives in the desert.")}
+ 
+         {MSG_UNIT (Galas) ( _ "That would explain why the orcs were aware of the existence of our brethren in the desert and why the savage human tribes were afraid of our hunters.")}
+ 
+-        {MSG_UNIT (Anlindë) ( _ "But the question remains. Were the Quenoth elves the only ones? Could other groups have survived in the desert?")}
++        {MSG_UNIT (Anlindë) ( _ "But the question remains: were the Quenoth elves the only ones? Could other groups have survived in the desert or elsewhere?")}
+ 
+-        {MSG_UNIT (Mal Keshar) ( _ "How could they have survived in the desert in the first place? Elves have always been a race bound to their green forests. They're the last ones I'd expect to walk on the hot sands even if forced to.")}
++        {MSG_UNIT (Mal Keshar) ( _ "How could they have survived in the desert in the first place? Elves have always been a race bound to their green forests. They're the last ones I'd expect to walk through hot sands even if forced to.")}
+ 
+-        {MSG_UNIT (King Asthorgar) ( _ "An intriguing matter indeed - recently we have sent scouts that report that life has managed to flourish in the desert, and that oases are now forests. But back then, none of that existed; it was just plain desert. Anyway, the elves we are talking about appeared all of a sudden when we were losing a war against the troll invaders. Selflessly, they killed the troll chieftains and drove back the well-organized troll marauders.")}
++        {MSG_UNIT (King Asthorgar) ( _ "An intriguing matter indeed. Recently we've sent scouts that report life has managed to flourish in the desert, and that oases have now become forests. But back then, none of that existed; it was just plain desert. Anyway, the elves we're talking about appeared all of a sudden when we were losing a war against the troll invaders. Selflessly, they killed the troll chieftains and drove back the well-organized troll marauders.")}
+ 
+-        {MSG_UNIT (King Asthorgar) ( _ "A boy, Kaleh, was leading these elves to find a new home in the far North, supposedly reserved for them by a goddess named 'Eloh'.")}
++        {MSG_UNIT (King Asthorgar) ( _ "A boy, Kaleh, was leading these elves to find a new home in the far North, supposedly reserved for 'em by a goddess named 'Eloh'.")}
+ 
+         {MSG_UNIT (Anlindë) ( _ "Eloh? I have read that name before...")}
+ 
+-        {MSG_UNIT (King Asthorgar) ( _ "But wait, I haven't finished! They left, but we sent one of our men to escort them to safety out of our caves. Our ancestors didn't get news of him for years, until he made it back with interesting news.")}
++        {MSG_UNIT (King Asthorgar) ( _ "But wait, I haven't finished! They left us, but we sent one of our men to escort them safely outta our caves. Our ancestors didn't have word of him for years, until he made it back with interesting news.")}
+ 
+-        {MSG_UNIT (King Asthorgar) ( _ "After escaping from a flood in the northern caves, they were surrounded by the same humans who killed and thwarted most of our scouting expeditions. They gave them a bloody fight, and somehow ended up on the shores of the Vast Sea, rescuing trapped merfolk that were going to be executed for a blood sacrifice to a human deity. But some elves turned against Kaleh's boys, under the influence of this 'Eloh' monster. And I say monster because she turned out to be the dreaded Eater of Souls, Yechnagoth.")}
++        {MSG_UNIT (King Asthorgar) ( _ "After escaping from a flood in the northern caves, they were surrounded by the same humans who killed and thwarted most of our scouting expeditions. They gave 'em a bloody fight, and somehow found themselves upon the shores of the Vast Sea, rescuing some trapped merfolk from execution in a bloody ritual to a human deity. But some elves turned against Kaleh's boys, under the influence of this 'Eloh' monster. And I say monster 'cause she turned out to be the dreaded Eater of Souls, Yechnagoth.")}
+ 
+-        {MSG_UNIT (Anlindë) ( _ "That name... I had not heard that name in too many years already.")}
++        {MSG_UNIT (Anlindë) ( _ "That name... Not enough time has passed for me to hear that name again.")}
+ 
+-        {MSG_UNIT (King Asthorgar) ( _ "The brave elves traveled to a lone isle in the ocean, Zocthanol, with the help of the merfolk. In the end, they slew the fake goddess, who was somehow controlling many creatures in an impressively broad area. Humans and orcs of the continent and even sea creatures were under her control! Even our kind and the trolls, deep underground, were almost affected by her influence.")}
++        {MSG_UNIT (King Asthorgar) ( _ "The brave elves traveled to a lone isle in the ocean, Zocthanol, with the help of the merfolk. In the end, they slew the fake goddess, who was somehow controlling many creatures in an impressively broad area. Humans and orcs of the Continent and even sea creatures were under her control! Even our kind and the trolls deep underground were almost affected by her influence.")}
+ 
+         {MSG_UNIT Anlindë ( _ "So, did these elves survive?")}
+ 
+-        {MSG_UNIT (King Asthorgar) ( _ "Yes. When this escort returned years later with the good news, we started to send scouts to the surface again, setting up new trade routes and relationships between the human country of the Far North and our kingdom, helping Knalga experience a new rebirth.")}
++        {MSG_UNIT (King Asthorgar) ( _ "Aye. When this escort returned years later with the good news, we began to send scouts to the surface again. We set up new trade routes and relationships 'tween the human country in the far North and our kingdom, thereby helping Knalga experience a new rebirth.")}
+ 
+-        {MSG_UNIT (King Asthorgar) ( _ "However, we discovered that the evil humans did not quit their business after Yechnagoth's fall. A conflict between the southern humans and the northern lands started, and most of us had to retreat back into our caves to avoid the crossfire. We were eventually forced to abandon our southern tunnels and block the paths that led to them. Of course, we still thrive, but our development is certainly slower than before the fire of war was rekindled. I'd say the same about the northern humans. Nonetheless, if you are looking for a new home like your distant relatives, the Far North should welcome your people.")}
++        {MSG_UNIT (King Asthorgar) ( _ "However, we discovered that the evil humans didn't stop their wicked dealings after Yechnagoth's fall. A conflict 'tween the southern humans and the northern lands began, and most of us had to retreat back to our caves to avoid the crossfire. We were eventually forced to abandon our southern tunnels and block the paths that led to 'em. Course, we're still thriving but our development is certainly slower since the flames of war were rekindled. I'd say the same of the northern humans. Nonetheless, if ye're looking for a new home like yer distant relatives, the far North should welcome yer people.")}
+ 
+         {MSG_UNIT Galas ( _ "We certainly need a new home. A great army of blood-thirsty human warriors destroyed ours with their fire-spitting demons.")}
+ 
+-        {MSG_UNIT Anlindë ( _ "And those soldiers of Uria are here as well. As Althurin might have told you, the forces of Chaos arrived at the doors of Knalga, literally.")}
++        {MSG_UNIT Anlindë ( _ "And those soldiers of Uria are here as well. As Althurin might have told you, the forces of Chaos have arrived at the doors of Knalga, literally.")}
+ 
+-        {MSG_UNIT (King Asthorgar) ( _ "Soldiers of Uria you say? I wasn't informed of the presence of demons in their ranks! Althurin, how is this possible?")}
++        {MSG_UNIT (King Asthorgar) ( _ "Soldiers of Uria ye say? I wasn't informed of the presence of demons in their ranks! Althurin, how's this possible?")}
+ 
+-        {MSG_UNIT (Althurin) ( _ "My apologies sir, but we decided to not spread the word until we could confirm our suspicions, to avoid causing unnecessary panic amongst our brethren. This is a very delicate issue, as I hope you understand.")}
++        {MSG_UNIT (Althurin) ( _ "My apologies, Sire, but we decided not to spread the word 'til we could confirm our suspicions, to avoid causin' unnecessary panic amongst our brethren. 'Tis a very delicate issue, as I hope ye understand.")}
+ 
+-        {MSG_UNIT (King Asthorgar) ( _ "Sure I do! Hmpf. But at least you could have the decency of giving me complete reports, not partially obscured ones!")}
++        {MSG_UNIT (King Asthorgar) ( _ "Course I do! Hmpf. But ye could've at least had the decency of giving me complete reports, not partially obscured ones!")}
+ 
+-        {MSG_UNIT Anlindë ( _ "Those warriors even control some alien war beasts. We just defeated one of their most powerful creatures... the Mechanical Goliath, we called it.")}
++        {MSG_UNIT Anlindë ( _ "Those warriors even control some alien war beasts. We just defeated one of their most powerful creatures - the Mechanical Goliath, we call it.")}
+ 
+-        {MSG_UNIT (King Asthorgar) ( _ "Our best craftmen have worked on such gigantic metallic warriors before. They're just machines. We believe that some prototypes were left behind when we moved from the southern caves, for we haven't found them in centuries. It may be that those were used as the basis for the enemy's artifacts.")}
++        {MSG_UNIT (King Asthorgar) ( _ "Our best craftmen have worked on such gigantic metallic warriors before. They're just machines. We believe that some prototypes were left behind when we moved from the southern caves, for we haven't found 'em in centuries. Mayhap those were used as the basis for the enemy's constructs.")}
+ 
+         {MSG_UNIT (Mal Keshar) ( _ "That's *really* bad news! How could you leave them behind?")}
+ 
+-        {MSG_UNIT (Althurin) ( _ "How can you speak in such a tone to the King!")}
++        {MSG_UNIT (Althurin) ( _ "How can ye speak in such a tone to the King?!")}
+ 
+-        {MSG_UNIT (King Asthorgar) ( _ "Let him. It was a great fault. A disastrous one that we cannot revert, of course, but one we certainly should be ashamed of; now that we know that our enemy has improved their forces in unthinkable ways. But what are we going to do to remedy it?")}
++        {MSG_UNIT (King Asthorgar) ( _ "Nay, let him. 'Twas a great fault. A disastrous one that we cannot change, of course, but one we certainly should be ashamed of. Now that we know that our enemy has improved their armies in unthinkable ways, what're we going to do to remedy it?")}
+ 
+-        {MSG_UNIT (Mal Keshar) ( _ "Well, we have a plan that could help us all, if we can carry it out.")}
++        {MSG_UNIT (Mal Keshar) ( _ "Well, we have a plan that could help all of us, if we can carry it out.")}
+ 
+-        {MSG_UNIT (Anlindë) ( _ "One of the many wars that took place after the Fall was caused by a creature of the same kind that troubles us all now. A demon, who was vanquished by two individuals alone, the Master of Darkness and the Lady of Light. According to our friendly necromancer, both of them descended to the depths of the earth for some purpose. Although the master of Darkness disappeared, we can sense the presence of the Lady of Light, Elynia, somewhere in the deepest caves of this system.")}
++        {MSG_UNIT (Anlindë) ( _ "One of the many wars that took place after the Fall was caused by a creature similar to the one that troubles us all now. A demon, who was vanquished by two individuals alone, the Master of Darkness and the Lady of Light. According to our friendly necromancer, both of them descended into the depths of the earth for some purpose. Although the Master of Darkness has disappeared, we can sense the presence of the Lady of Light, Elynia, somewhere in the deepest caves of this system.")}
+ 
+-        {MSG_UNIT (Althurin) ( _ "That's very interesting. My master once told me a fascinating story of what he found while exploring the unknown parts of these caves. He was a young dwarf, but well-versed in the art of runecrafting. He was seeking rare metals that could serve for crafting powerful and sophisticated weapons.")}
++        {MSG_UNIT (Althurin) ( _ "That's very curious. My master once told me a fascinatin' story of what he found while explorin' the unknown parts of these caves. He was but a lad, but well-versed in the art of runecraftin'. He was seekin' rare metals that could serve for craftin' powerful and sophisticated weapons.")}
+ 
+-        {MSG_UNIT (Althurin) ( _ "In those parts there were indeed rare materials waiting to be extracted;, but there were also rare monsters waiting for prey. He barely escaped from there alive. However, with his runic artifacts, he could detect a strong power hidden deeper in the earth. He dubbed it 'the source of Light itself'.")}
++        {MSG_UNIT (Althurin) ( _ "In those parts there're indeed rare materials waitin' to be excavated, but there're also strange monsters waitin' for prey. He barely escaped from there alive. However, with his runic artifacts he could detect a strong power hidden deeper within the earth. He dubbed it 'the source of Light itself'.")}
+ 
+-        {MSG_UNIT (King Asthorgar) ( _ "If your lady of Light is so powerful, it could have been her presence.")}
++        {MSG_UNIT (King Asthorgar) ( _ "If yer Lady of Light's so powerful, it could've been her presence.")}
+ 
+-        {MSG_UNIT (Anlindë) ( _ "Certainly. If we can find her alive and awaken her, the powers she controls alone could be an invaluable help against these foes. We shall descend to find her.")}
++        {MSG_UNIT (Anlindë) ( _ "Certainly. If we can find her alive and awaken her the power she controls alone could be an invaluable help against these foes. We shall descend to find her.")}
+ 
+-        {MSG_UNIT (King Asthorgar) ( _ "If you let me say so, lads and lady, that would be suicidal. As Althurin said, his master was young and it was extremely risky to wander those depths. Even the trolls know that nobody is welcome there. You could find death there, or something worse... I certainly would not spend troops on a fool's quest.")}
++        {MSG_UNIT (King Asthorgar) ( _ "I daresay, lads and lady, that would be suicidal. As Althurin has said, his master was young and 'twas extremely risky to wander those depths. Even the trolls know that nobody is welcome there. Ye could find death there, or something worse... I certainly wouldn't risk troops on a fool's quest.")}
+ 
+-        {MSG_UNIT (Althurin) ( _ "My king, I shall go with them, if you allow me to do so.")}
++        {MSG_UNIT (Althurin) ( _ "My King, I'll go with them, if you'll allow me to do so.")}
+ 
+-        {MSG_UNIT (King Asthorgar) ( _ "Althurin, what motivates you to do such a thing?")}
++        {MSG_UNIT (King Asthorgar) ( _ "Althurin, what motivates ye to do such a thing?")}
+ 
+-        {MSG_UNIT (Althurin) ( _ "Our loremasters have registered the history of this sorceress, Elynia. From what I know she is probably the most powerful one ever seen by any dwarf, orc or even elf. It is said she was cursed to live for the rest of eternity as a punishment for the arts she delved into.")}
++        {MSG_UNIT (Althurin) ( _ "Our loremasters have registered the history of this sorceress, Elynia. From what I can figure she's probably the most powerful one ever seen by any dwarf, orc, or even elf. 'Tis said she was cursed to live for the rest of eternity as a punishment for the arts she delved into.")}
+ 
+-        {MSG_UNIT (Althurin ) ( _ "We are indebted to these elves. *I* owe them personally for the help they gave us against the followers of Uria. The least I can do is go with them and guide them in the dense darkness; otherwise, I fear that they will never return from those pits.")}
++        {MSG_UNIT (Althurin) ( _ "We're indebted to these elves. *I* owe 'em personally for the help they gave us 'gainst the followers of Uria. The least I can do is go with 'em and guide 'em through the dense darkness. Otherwise, I fear that they'll never return from those pits.")}
+ 
+-        {MSG_UNIT (King Asthorgar) ( _ "You're currently the head of the Order of Runesmiths. If you don't return, we'll miss you sorely. But if you feel you must, then go. I will not impede your duty to the elves.")}
++        {MSG_UNIT (King Asthorgar) ( _ "You're currently the head of the Order of Runesmiths. If ye don't return, we'll miss ye sorely. But if ye feel ye must, then go. I'll not impede yer duty to the elves.")}
+ 
+-        {MSG_UNIT (King Asthorgar) ( _ "Friends, be careful, and listen to Althurin's advice; he is easily the wisest runecrafter we have. You will need all the support you can get down there. I wish you the best of luck in your mission, and know that your rear will be safe; we'll defend Knalga with our teeth if it's necessary.")}
++        {MSG_UNIT (King Asthorgar) ( _ "Friends, be on yer guard, and listen to Althurin's advice - he's easily the wisest runecrafter we have. You'll need all the support you can get down there. I wish ye the best of luck in yer mission, and know that yer rear will be safe. We'll defend Knalga with our teeth if necessary.")}
+ 
+-        {MSG_UNIT (Anlindë) ( _ "Thanks, my lord.")}
++        {MSG_UNIT (Anlindë) ( _ "Thank you, Your Majesty.")}
+ 
+         {DUMMY _"NOTE FOR TRANSLATORS: Mal Keshar is trying to say 'save your asses' in the next string.")}
+ 
+-        {MSG_UNIT (Mal Keshar) ( _ "Ah well, you know you can count on my undead minions to save your a... er, aid you in the depths. This is going to be fun...")}
++        {MSG_UNIT (Mal Keshar) ( _ "Hmm. Well you know you can count on my undead minions to save your a... *Ahem* aid you in the depths. This is going to be fun...")}
+ 
+         {MSG_SUF (role=naga_friend) ( _ "We ssshall go with you, although we are not sssure how much help we can offer in thossse cavesss.")}
+ 
+diff --git a/scenarios/cutscenes/12x.cfg b/scenarios/cutscenes/12x.cfg
+index c757e17..88b8527 100644
+--- a/scenarios/cutscenes/12x.cfg
++++ b/scenarios/cutscenes/12x.cfg
+@@ -103,13 +103,13 @@
+         # Dialogue starts
+         {REDRAW}
+         {DELAY 2000}
+-        {MSG_UNIT Galas ( _ "We made it! And there are no signals of demons around.")}
+-        {MSG_UNIT Elynia ( _ "Ah, I can feel again the wind in my hair... it has been a really long time. It is a bit cold, but still nice, for being underground during centuries.")}
+-        {MSG_UNIT (Mal Keshar) ( _ "You know, I do not feel very pleased to be in the surface again, but it's good for you. At least it is not a desert, I guess nothing could be worse for me than sand and no trees to protect me from the suns.")}
+-        {MSG_UNIT Galas ( _ "I wish Anlindë was here, with us, to enjoy the landscape and breath fresh air. I'll never stop feeling guilty for deliberately abandoning her there, in the caves. She was... she was the only one who could replace the loss of my mother...")}
++        {MSG_UNIT Galas ( _ "We made it! And there is no sign of demons around here.")}
++        {MSG_UNIT Elynia ( _ "Ah, I can feel the wind in my hair again... It has been a really long time. It is a little cold, but still nice after centuries of being underground.")}
++        {MSG_UNIT (Mal Keshar) ( _ "You know, I do not feel very pleased to be on the surface again, but good for you. At least it is not a desert, I don't think anything could be worse for me than leagues of sand and no trees to protect me from the suns.")}
++        {MSG_UNIT Galas ( _ "I wish Anlindë was here with us to enjoy the landscape and breathe the fresh air. I'll never stop feeling guilty for deliberately abandoning her there in the caves. She was...she was the only one who could have replaced the loss of my mother...")}
+         {MSG_UNIT Elynia ( _ "Do not feel guilty, Galas. As she said, that was the best she could do to fix her past crimes. Let's not dishonor her memory failing, we have a mission to complete.")}
+-        {MSG_NARRATOR ( _ "And so, they signaled the rest of the group to go out of the caverns.")}
+-        {MSG_NARRATOR ( _ "What happened to Anlindë was to be unknown to all of them, albeit legends of her last battle, her courage and purposefulness were to be remembered for the rest of times. Only a few ones would know what really happened that fateful day, in the depths of the ruins of New Knalga.")}
++        {MSG_NARRATOR ( _ "And so they signaled the rest of the group to emerge from the caverns.")}
++        {MSG_NARRATOR ( _ "The fate of Anlindë was to be unknown to all of them; albeit legends of her last battle, her courage, and purposefulness were to be remembered for the rest of time. Only a few would truly know what happened that fateful day, in the depths of the ruins of New Knalga.")}
+         {MSG_UNIT Elynia ( _ "May your soul rest in peace for the rest of eternity, Anlindë.")}
+         {REDRAW}
+         {DELAY 2000}
+diff --git a/scenarios/cutscenes/14x_A.cfg b/scenarios/cutscenes/14x_A.cfg
+index dcc8509..c4eddaa 100644
+--- a/scenarios/cutscenes/14x_A.cfg
++++ b/scenarios/cutscenes/14x_A.cfg
+@@ -174,21 +174,21 @@
+         name=start
+         {MSG_UNIT Erathan ( _ "Behold! This is our capital city, Raelthyn.")}
+         {MSG_UNIT Galas ( _ "It is a really beautiful city, indeed. Where are we going?")}
+-        {MSG_UNIT Erathan ( _ "I have arranged a meeting for you with the Grand Council. Only your leader, the lady and the necromancer may go in.")}
++        {MSG_UNIT Erathan ( _ "I have arranged a meeting for you with the Grand Council. Only your leader, the lady, and the necromancer may enter.")}
+         {MSG_UNIT (Mal Keshar) ( _ "I am just glad to know that you did not leave me out.")}
+         {MSG_UNIT Quor ( _ "Hold on! Who goes there?")}
+-        {MSG_UNIT Erathan ( _ "It's me, Erathan. I bring the strangers with me for a meeting with the Council.")}
+-        {MSG_UNIT Cain ( _ "Odd, but you can pass anyway.")}
++        {MSG_UNIT Erathan ( _ "It is I, Erathan. I bring the strangers with me for a meeting with the Council.")}
++        {MSG_UNIT Cain ( _ "Odd, but you may pass.")}
+         {MSG_UNIT Galas ( _ "And what about our people?")}
+-        {MSG_UNIT Erathan ( _ "They will have to stay in the town. We can't risk the security of our lords.")}
++        {MSG_UNIT Erathan ( _ "They will have to remain in town. We can't risk the security of our lords.")}
+         {MSG_UNIT Galas ( _ "I understand.")}
+         {MOVE_UNIT_EX (id=Erathan) ("3 ,4-6,7 ,8-9,10,11,12") ("19,18 ,19,18 ,17,18,17") 13 17}
+         {MOVE_UNIT_EX (id=Galas) ("3 ,4-6,7 ,8-9,10,11,12") ("19,18 ,19,18 ,17,18,17") 13 18}
+         {MOVE_UNIT_EX (id=Elynia) ("3 ,4-6,7 ,8-9,10,11") ("19,18 ,19,18 ,17,18") 12 17}
+         {MOVE_UNIT_EX (id=Mal Keshar) ("3 ,4-6,7 ,8-9,10") ("19,18 ,19,18 ,17") 11 18}
+-        {MSG_UNIT Emalor ( _ "Erathan, old friend! Who are they and what is their bussiness here?")}
+-        {MSG_UNIT Erathan ( _ "They are the strangers I spoke you of, those that I found in the southern mountains. I brought them for the meeting with the Grand Council.")}
+-        {MSG_UNIT Emalor ( _ "Be welcome, then, strangers, to the Council's palace. The lords are waiting for you in the meetings chamber.")}
++        {MSG_UNIT Emalor ( _ "Erathan, old friend! Who are they, and what is their business here?")}
++        {MSG_UNIT Erathan ( _ "These are the strangers I spoke of, those that I found in the southern mountains. I have brought them for the meeting with the Grand Council.")}
++        {MSG_UNIT Emalor ( _ "Be welcome then, strangers, to the Council's Palace. The lords are waiting for you in the meeting chamber.")}
+         {MSG_UNIT Erathan ( _ "Follow me.")}
+         {ENDLEVEL_QUIET}
+     [/event]
+diff --git a/scenarios/cutscenes/14x_B.cfg b/scenarios/cutscenes/14x_B.cfg
+index d4749c1..23c3aca 100644
+--- a/scenarios/cutscenes/14x_B.cfg
++++ b/scenarios/cutscenes/14x_B.cfg
+@@ -141,47 +141,47 @@
+ 
+     [event]
+         name=start
+-        {MSG_UNIT (De'Arthian) ( _ "Welcome, elves, to the Grand Council. It has been really a long time since the last of your kind was seen in this continent. Please, consider this as your home.")}
++        {MSG_UNIT (De'Arthian) ( _ "Welcome, elves, to the Grand Council. It has been a very long time since the last of your kind was seen on this continent. Please, consider this as your home.")}
+         {MSG_UNIT Galas ( _ "Thanks for your hospitality, my lord. It is a pleasure to meet such fine people.")}
+-        {MSG_UNIT Aleazar ( _ "The pleasure is ours, too. We have always admired your kind, for centuries or so. But tell us, what bussiness brought you here? Why have we not seen you for centuries?")}
+-        {MSG_UNIT Galas ( _ "The lands south from here, where we used to live, changed, and turned into a vast desert. We had to find refuge in a valley, far to the east, and have lived there since some time after the Fall.")}
+-        {MSG_UNIT Galas ( _ "We had usually to fight nomadic tribes of savage humans or orcs, but now we found ourselves after an organized, full-sized army of humans, and had to leave.")}
++        {MSG_UNIT Aleazar ( _ "The pleasure is ours, as well; we have always admired your kind. But tell us, what business has brought you here? Why have we not seen you for centuries?")}
++        {MSG_UNIT Galas ( _ "The lands south from here, where we used to live, changed and became a vast desert. We had to find refuge in a valley far to the east and had lived there since some time after the Fall.")}
++        {MSG_UNIT Galas ( _ "We usually had to fend off nomadic tribes of savage humans or orcs, but then we found ourselves faced with an organized, full-scale army of humans and were forced to flee.")}
+         {MSG_UNIT Torancyn ( _ "The loyalists.")}
+-        {MSG_UNIT Galas ( _ "Yes. We hid our people underground, with little, if any, hope of surviving, and we found Mal Keshar, who volunteered to help us find...")}
++        {MSG_UNIT Galas ( _ "Yes. We hid our people underground, with little hope of survival, until we found Mal Keshar, who volunteered to help us find...")}
+         {MSG_UNIT (Mal Keshar) ( _ "Elynia? I don't remember that part.")}
+-        {MSG_UNIT Galas ( _ "If you did not interrupt me... as I was saying, he guided us through the way to the Dwarven Kingdom of Knalga, south from here, in the great mountains.")}
++        {MSG_UNIT Galas ( _ "If you don't mind... As I was saying, he guided us all the way to the Dwarven Kingdom of Knalga, south from here, in the great mountains.")}
+         {MSG_UNIT Arnesius ( _ "You contacted the dwarves, then? Interesting.")}
+-        {MSG_UNIT Galas ( _ "Yes, we did. And so we found Elynia, but the demons found us meanwhile, and that meant the sacrifice of one of our best sorceresses, to distract them while we escaped, to the North.")}
+-        {MSG_UNIT Torancyn ( _ "Is it, then, that you want us to protect you? And what do we get in exchange?")}
++        {MSG_UNIT Galas ( _ "Yes, we did. And so we sought out Elynia to aid us, but meanwhile, the demons had found us. Our escape was paid for by the sacrifice of one of our best sorceresses, to distract them while we escaped North.")}
++        {MSG_UNIT Torancyn ( _ "So, you seek our protection? What do we receive in exchange?")}
+         {MSG_UNIT Galas ( _ "I never said that...")}
+-        {MSG_UNIT Elynia ( _ "He actually meant that we, specially me, want to defeat the evil ones once and for all. However, we don't have the numerical power to do it.")}
+-        {MSG_UNIT Elynia ( _ "Although Erathan said that you no longer consider them an important threat, I am sure that after their repeated defeats against our people, they will be preparing their army to march here, to anihilate the remaining rebels, that are, as far as I know, at least you and us.")}
+-        {MSG_UNIT Illana ( _ "That is an interesting theory, that we have already considered. Are you suggesting a large-scale war then? We, Aragwaithi, don't have the power, numerical or magical, to help you, not alone, at least.")}
+-        {MSG_UNIT Galas ( _ "Yes but we have...")}
+-        {MSG_UNIT (Mal Keshar) ( _ "The Lady of Light, by our side. That should be a good start.")}
+-        {MSG_UNIT Arnesius ( _ "Yes, we know. However, although I feel the Sylvan Essence on her, its power seems to have been lowered by the period being underground.")}
+-        {MSG_UNIT Elynia ( _ "I feel so. It seems that the darkness had a great influence on me.")}
+-        {MSG_UNIT Galas ( _ "But anyway, I am sure that if we join forces, we can vanquish the evil ones. Do you prefer to continue your lives defending your country from the ocassional raiders, until a real attack force is sent after you to obliterate your race? I for one, don't, and that is why I risked my people fleeing from our home valley, that is why many lives have already been lost, and that is the only thing we can do to make sure our dead rest in peace.")}
+-        {MSG_UNIT Galas ( _ "As I have already seen, the enemy, once it notices the nil effectiveness of it raiding groups, it launches a real, large-scale assault to crush its prey in matter of days, or even hours. We barely escaped to witness its modus operandi.")}
+-        {MSG_UNIT Galas ( _ "The continent was once free of any evil such as this, and all races were free men, with no worries about their probable doom or about defending against demonic beasts. We, elves, have wished and wished that the continent returns to be as it once was, but as we have seen, there is nothing that can be done without our own help. We want to see free people again, free lands clear of any evil.")}
+-        {MSG_UNIT Torancyn ( _ "Brave words, elf, but again, we don't have the strength, and surely you don't either.")}
++        {MSG_UNIT Elynia ( _ "What he means to say is we want to defeat the evil ones once and for all. I especially wish this to happen; however, we don't have the numerical power to do so.")}
++        {MSG_UNIT Elynia ( _ "Although Erathan has said you no longer consider them an important threat, I am convinced that after their repeated failures against our people they will be readying their legions to march here. They seek to annihilate any remaining rebels, which includes you and any others that haven't succumbed to their army.")}
++        {MSG_UNIT Illana ( _ "An interesting theory; one that we have already considered. Are you suggesting full-scale war then? We, Aragwaithi, do not have the power, numerical or magical, to help you - not alone, at least.")}
++        {MSG_UNIT Galas ( _ "Yes but we have-")}
++        {MSG_UNIT (Mal Keshar) ( _ " -the Lady of Light on our side. That should be a good start.")}
++        {MSG_UNIT Arnesius ( _ "Yes, we know. However, though I feel the Sylvan Essence on her, its power seems to have been lessened by the period underground.")}
++        {MSG_UNIT Elynia ( _ "Yes, that is how I feel. It appears that the darkness has had a great influence on me.")}
++        {MSG_UNIT Galas ( _ "Yet I am sure that if we join forces we can vanquish the evil ones. Do you really prefer to continue defending your country from occasional raiders, while a trained legion of hellish creatures is sent here to obliterate your race? I for one do not, and that is why I have risked saving my people, fleeing from our home valley. That is why many lives have already been lost, and that is the only thing we can do to make sure our dead rest in peace.")}
++        {MSG_UNIT Galas ( _ "As I have seen firsthand, once the enemy observes the ineffectiveness of it raiding groups, it launches a large full-scale assault to crush its prey in matter of days, or even hours. We barely escaped to witness this method of operation.")}
++        {MSG_UNIT Galas ( _ "The Continent was once free from evils such as these, and all races were free men without worries of impending doom or of battles with demonic beasts. We elves have wished and wished for the Continent to return to as it once was; but as we have seen, nothing can be done without the help of all. We want to see free people again, free lands clean of evil.")}
++        {MSG_UNIT Torancyn ( _ "Brave words, elf, but the fact remains we don't have the strength, and certainly you don't either.")}
+         {MSG_UNIT (Mal Keshar) ( _ "We can call upon the dwarves, they surely will help us!")}
+-        {MSG_UNIT Illana ( _ "I doubt that would be enough. However, I really would like to hear again of peace and freedom, in this age, as the continent once was.")}
+-        {MSG_UNIT Erathan ( _ "I think so.")}
++        {MSG_UNIT Illana ( _ "I doubt that would be enough. However, I too would very much like to hear of peace and freedom again in this age - as the continent once was.")}
++        {MSG_UNIT Erathan ( _ "As would I.")}
+         {MSG_UNIT (De'Arthian) ( _ "I suppose the effort and sacrifice will be worth the results.")}
+-        {MSG_UNIT Aleazar ( _ "We have been recognized before for our capability as warriors. I guess next generations would be ashamed to know that we sat down here to do nothing but talk.")}
++        {MSG_UNIT Aleazar ( _ "We have been recognized in the past for our capability as warriors. I suppose future generations would be ashamed to know that we assembled here to do nothing but talk.")}
+         {MSG_UNIT Arnesius ( _ "Well said.")}
+-        {MSG_UNIT Torancyn ( _ "(sighs) I guess voting would be a waste of time.")}
+-        {MSG_UNIT Illana ( _ "But if we are really going to prepare such a massive quest, the most help we can get, the better. And, although you might not like the idea, I think we should get the orcs join our side.")}
++        {MSG_UNIT Torancyn ( _ "(sighs) I presume voting would be a waste of time.")}
++        {MSG_UNIT Illana ( _ "But if we are really going to undertake such a large enterprise, the most help we can get the better. And, although you might not like the idea, I declare we should get the orcs to join our side.")}
+         {MSG_UNIT Torancyn ( _ "What the...?!")}
+         {MSG_UNIT (Mal Keshar) ( _ "What the...?!")}
+-        {MSG_UNIT Galas ( _ "The orcs? But, they are just one step above the demons! We can't let those beasts have an opportunity to kill us when unwary!")}
+-        {MSG_UNIT Illana ( _ "The orcs' savage instinct is impossible to calm down, except with promises of wealth and power. Most of the Great Continent has already been taken over by the Chaos Empire. If we defeat the Emperor, their hierarchy will be beheaded instantly, and the Empire will tear down to pieces. With the orcs fighting by our side, we'll quickly vanquish the remaining loyalists, and then we can give all that territory, and whatever is left in it, to the orcish council.")}
++        {MSG_UNIT Galas ( _ "The orcs? But they are just one step below the demons! We can't let those beasts have an opportunity to kill us when we've got our guards down!")}
++        {MSG_UNIT Illana ( _ "The orcs' savage instinct is impossible to pacify except with promises of wealth and power. Most of the Great Continent has already been taken over by the Chaos Empire. If we defeat the Emperor, their hierarchy will be beheaded instantly, and the Empire will fall to pieces. With the orcs fighting by our side we will quickly vanquish the remaining loyalists, and then we bestow all that territory, and whatever is left in it, upon the orcish council.")}
+         {MSG_UNIT (Mal Keshar) ( _ "This is madness...")}
+-        {MSG_UNIT Elynia ( _ "A great idea, indeed. I suppose it's safe to have them by our side with a good deal. They'll probably want money or something in advance.")}
+-        {MSG_UNIT (De'Arthian) ( _ "Money is not an issue for our country. With the pass of time, we have collected the, possibly, greatest amount of gold ever seen.")}
+-        {MSG_UNIT Illana ( _ "Tomorrow we shall send emissaries to the orcish tribes, and your group will be one of them. You will be sent to speak with one of the major tribes about the Silent Forest. You might probably want to rest; your journey has been long, and more challenges await in your path.")}
+-        {MSG_UNIT Arnesius ( _ "Yes, rest. Soon nobody will have time to sleep, if we start the war for real.")}
++        {MSG_UNIT Elynia ( _ "A smart idea, indeed. I suppose it's safe to have them on our side if a good bargain is involved. They'll probably want money or jewels in advance.")}
++        {MSG_UNIT (De'Arthian) ( _ "Money is not an issue for our country. With the passage of time we have collected possibly the greatest amount of gold ever seen.")}
++        {MSG_UNIT Illana ( _ "Tomorrow we shall send emissaries to the orcish tribes, and your group will be one of them. You will be sent to speak with one of the major tribes nearby the Silent Forest. Now, you must be tired. Your journey has been long, and more challenges await you on your path.")}
++        {MSG_UNIT Arnesius ( _ "Yes, rest. Soon no one will have time to sleep, once the war truly begins.")}
+         [store_unit]
+             kill=yes
+             [filter]
+-- 
+1.5.6.5
+

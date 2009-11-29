@@ -1,0 +1,20 @@
+// "filename.png", texOffsetX, texOffsetY, flags, texW, texH, trimmedX, trimmedY, originalW, originalH, UNITMAP_HUMANLOYALISTS_GENERALID
+addMapEntry("units/human-loyalists/general-attack-sword1.png", 113, 112, 0, 46, 58, 9, 7, 72, 72, UNITMAP_HUMANLOYALISTS_GENERAL);
+addMapEntry("units/human-loyalists/general-attack-sword2.png", 60, 51, 0, 53, 56, 8, 7, 72, 72, UNITMAP_HUMANLOYALISTS_GENERAL);
+addMapEntry("units/human-loyalists/general-attack-sword3.png", 0, 0, 0, 60, 51, 11, 9, 72, 72, UNITMAP_HUMANLOYALISTS_GENERAL);
+addMapEntry("units/human-loyalists/general-attack-sword4.png", 0, 51, 0, 60, 51, 11, 9, 72, 72, UNITMAP_HUMANLOYALISTS_GENERAL);
+addMapEntry("units/human-loyalists/general-attack-sword5.png", 159, 112, 0, 40, 57, 21, 8, 72, 72, UNITMAP_HUMANLOYALISTS_GENERAL);
+addMapEntry("units/human-loyalists/general-crossbow-attack1.png", 199, 169, 0, 40, 52, 17, 9, 72, 72, UNITMAP_HUMANLOYALISTS_GENERAL);
+addMapEntry("units/human-loyalists/general-crossbow-attack2.png", 161, 51, 0, 38, 52, 16, 9, 72, 72, UNITMAP_HUMANLOYALISTS_GENERAL);
+addMapEntry("units/human-loyalists/general-crossbow-defend.png", 60, 107, 0, 37, 52, 16, 9, 72, 72, UNITMAP_HUMANLOYALISTS_GENERAL);
+addMapEntry("units/human-loyalists/general-crossbow.png", 199, 112, 0, 37, 54, 18, 7, 72, 72, UNITMAP_HUMANLOYALISTS_GENERAL);
+addMapEntry("units/human-loyalists/general-defend-1.png", 199, 51, 0, 37, 53, 17, 7, 72, 72, UNITMAP_HUMANLOYALISTS_GENERAL);
+addMapEntry("units/human-loyalists/general-defend-2.png", 159, 169, 0, 40, 53, 14, 7, 72, 72, UNITMAP_HUMANLOYALISTS_GENERAL);
+addMapEntry("units/human-loyalists/general-idle-1.png", 0, 102, 0, 35, 53, 19, 8, 72, 72, UNITMAP_HUMANLOYALISTS_GENERAL);
+addMapEntry("units/human-loyalists/general-idle-2.png", 113, 170, 0, 37, 54, 19, 9, 72, 72, UNITMAP_HUMANLOYALISTS_GENERAL);
+addMapEntry("units/human-loyalists/general-idle-3.png", 0, 201, 0, 35, 45, 19, 19, 72, 72, UNITMAP_HUMANLOYALISTS_GENERAL);
+addMapEntry("units/human-loyalists/general-idle-4.png", 60, 0, 0, 35, 45, 19, 19, 72, 72, UNITMAP_HUMANLOYALISTS_GENERAL);
+addMapEntry("units/human-loyalists/general-idle-5.png", 0, 155, 0, 35, 46, 19, 18, 72, 72, UNITMAP_HUMANLOYALISTS_GENERAL);
+addMapEntry("units/human-loyalists/general-idle-6.png", 95, 0, 0, 35, 45, 19, 19, 72, 72, UNITMAP_HUMANLOYALISTS_GENERAL);
+addMapEntry("units/human-loyalists/general-leading.png", 113, 51, 0, 48, 61, 18, 0, 72, 72, UNITMAP_HUMANLOYALISTS_GENERAL);
+//addMapEntry("units/human-loyalists/general.png", 60, 159, 0, 35, 54, 19, 7, 72, 72, UNITMAP_HUMANLOYALISTS_GENERAL);

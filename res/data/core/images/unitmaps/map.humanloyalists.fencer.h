@@ -1,0 +1,26 @@
+// "filename.png", texOffsetX, texOffsetY, flags, texW, texH, trimmedX, trimmedY, originalW, originalH, UNITMAP_HUMANLOYALISTS_FENCERID
+addMapEntry("units/human-loyalists/fencer-attack-1.png", 0, 159, 0, 39, 41, 21, 20, 72, 72, UNITMAP_HUMANLOYALISTS_FENCER);
+addMapEntry("units/human-loyalists/fencer-attack-2.png", 122, 209, 0, 46, 43, 15, 18, 72, 72, UNITMAP_HUMANLOYALISTS_FENCER);
+addMapEntry("units/human-loyalists/fencer-attack-3.png", 167, 53, 0, 40, 46, 14, 17, 72, 72, UNITMAP_HUMANLOYALISTS_FENCER);
+addMapEntry("units/human-loyalists/fencer-attack-4.png", 207, 53, 0, 36, 46, 13, 15, 72, 72, UNITMAP_HUMANLOYALISTS_FENCER);
+addMapEntry("units/human-loyalists/fencer-attack-5.png", 122, 53, 0, 45, 48, 10, 14, 72, 72, UNITMAP_HUMANLOYALISTS_FENCER);
+addMapEntry("units/human-loyalists/fencer-attack-6.png", 175, 103, 0, 60, 42, 12, 19, 72, 72, UNITMAP_HUMANLOYALISTS_FENCER);
+addMapEntry("units/human-loyalists/fencer-attack-7.png", 175, 199, 0, 63, 42, 9, 20, 72, 72, UNITMAP_HUMANLOYALISTS_FENCER);
+addMapEntry("units/human-loyalists/fencer-attack-8.png", 175, 156, 0, 62, 43, 9, 18, 72, 72, UNITMAP_HUMANLOYALISTS_FENCER);
+addMapEntry("units/human-loyalists/fencer-attack-9.png", 60, 206, 0, 54, 43, 15, 18, 72, 72, UNITMAP_HUMANLOYALISTS_FENCER);
+addMapEntry("units/human-loyalists/fencer-defend-1-1.png", 60, 153, 0, 47, 53, 14, 10, 72, 72, UNITMAP_HUMANLOYALISTS_FENCER);
+addMapEntry("units/human-loyalists/fencer-defend-1-2.png", 122, 103, 0, 53, 53, 11, 11, 72, 72, UNITMAP_HUMANLOYALISTS_FENCER);
+addMapEntry("units/human-loyalists/fencer-defend.png", 61, 0, 0, 30, 48, 19, 13, 72, 72, UNITMAP_HUMANLOYALISTS_FENCER);
+addMapEntry("units/human-loyalists/fencer-die1.png", 122, 156, 0, 53, 53, 13, 9, 72, 72, UNITMAP_HUMANLOYALISTS_FENCER);
+addMapEntry("units/human-loyalists/fencer-die2.png", 0, 53, 0, 60, 53, 8, 11, 72, 72, UNITMAP_HUMANLOYALISTS_FENCER);
+addMapEntry("units/human-loyalists/fencer-die3.png", 0, 0, 0, 61, 53, 8, 18, 72, 72, UNITMAP_HUMANLOYALISTS_FENCER);
+addMapEntry("units/human-loyalists/fencer-die4.png", 60, 103, 0, 62, 50, 8, 22, 72, 72, UNITMAP_HUMANLOYALISTS_FENCER);
+addMapEntry("units/human-loyalists/fencer-die5.png", 60, 53, 0, 62, 50, 8, 22, 72, 72, UNITMAP_HUMANLOYALISTS_FENCER);
+addMapEntry("units/human-loyalists/fencer-idle-1.png", 0, 200, 0, 36, 42, 18, 19, 72, 72, UNITMAP_HUMANLOYALISTS_FENCER);
+addMapEntry("units/human-loyalists/fencer-idle-2.png", 91, 0, 0, 29, 42, 21, 19, 72, 72, UNITMAP_HUMANLOYALISTS_FENCER);
+addMapEntry("units/human-loyalists/fencer-idle-3.png", 178, 0, 0, 28, 42, 21, 19, 72, 72, UNITMAP_HUMANLOYALISTS_FENCER);
+addMapEntry("units/human-loyalists/fencer-idle-4.png", 120, 0, 0, 28, 43, 21, 18, 72, 72, UNITMAP_HUMANLOYALISTS_FENCER);
+addMapEntry("units/human-loyalists/fencer-idle-5.png", 206, 0, 0, 28, 41, 21, 20, 72, 72, UNITMAP_HUMANLOYALISTS_FENCER);
+addMapEntry("units/human-loyalists/fencer-idle-6.png", 148, 0, 0, 30, 40, 21, 21, 72, 72, UNITMAP_HUMANLOYALISTS_FENCER);
+addMapEntry("units/human-loyalists/fencer-idle-7.png", 256, 0, 0, 30, 38, 21, 23, 72, 72, UNITMAP_HUMANLOYALISTS_FENCER);
+//addMapEntry("units/human-loyalists/fencer.png", 0, 106, 0, 43, 53, 16, 9, 72, 72, UNITMAP_HUMANLOYALISTS_FENCER);

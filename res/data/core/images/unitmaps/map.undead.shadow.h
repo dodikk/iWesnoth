@@ -1,0 +1,19 @@
+// "filename.png", texOffsetX, texOffsetY, flags, texW, texH, trimmedX, trimmedY, originalW, originalH, UNITMAP_UNDEAD_SHADOWID
+addMapEntry("units/undead/shadow-n-1.png", 0, 127, 0, 52, 60, 12, 9, 72, 72, UNITMAP_UNDEAD_SHADOW);
+addMapEntry("units/undead/shadow-n-2.png", 0, 187, 0, 53, 58, 12, 10, 72, 72, UNITMAP_UNDEAD_SHADOW);
+addMapEntry("units/undead/shadow-n-3.png", 0, 68, 0, 53, 59, 12, 9, 72, 72, UNITMAP_UNDEAD_SHADOW);
+addMapEntry("units/undead/shadow-n-attack-1.png", 186, 127, 0, 55, 60, 10, 11, 72, 72, UNITMAP_UNDEAD_SHADOW);
+addMapEntry("units/undead/shadow-n-attack-2.png", 125, 67, 0, 56, 58, 9, 11, 72, 72, UNITMAP_UNDEAD_SHADOW);
+addMapEntry("units/undead/shadow-n-attack-3.png", 186, 188, 0, 59, 58, 8, 13, 72, 72, UNITMAP_UNDEAD_SHADOW);
+addMapEntry("units/undead/shadow-n-attack-4.png", 60, 0, 0, 59, 67, 12, 5, 72, 72, UNITMAP_UNDEAD_SHADOW);
+addMapEntry("units/undead/shadow-n-attack-5.png", 60, 127, 0, 63, 61, 6, 10, 72, 72, UNITMAP_UNDEAD_SHADOW);
+addMapEntry("units/undead/shadow-n-attack-6.png", 302, 0, 0, 50, 57, 8, 13, 72, 72, UNITMAP_UNDEAD_SHADOW);
+addMapEntry("units/undead/shadow-s-1.png", 181, 67, 0, 54, 60, 12, 10, 72, 72, UNITMAP_UNDEAD_SHADOW);
+addMapEntry("units/undead/shadow-s-2.png", 173, 0, 0, 53, 61, 13, 9, 72, 72, UNITMAP_UNDEAD_SHADOW);
+addMapEntry("units/undead/shadow-s-3.png", 119, 0, 0, 54, 60, 12, 9, 72, 72, UNITMAP_UNDEAD_SHADOW);
+addMapEntry("units/undead/shadow-s-attack-1.png", 123, 188, 0, 63, 60, 7, 8, 72, 72, UNITMAP_UNDEAD_SHADOW);
+addMapEntry("units/undead/shadow-s-attack-2.png", 123, 127, 0, 63, 61, 7, 7, 72, 72, UNITMAP_UNDEAD_SHADOW);
+addMapEntry("units/undead/shadow-s-attack-3.png", 60, 67, 0, 65, 60, 7, 7, 72, 72, UNITMAP_UNDEAD_SHADOW);
+addMapEntry("units/undead/shadow-s-attack-4.png", 0, 0, 0, 60, 68, 11, 1, 72, 72, UNITMAP_UNDEAD_SHADOW);
+addMapEntry("units/undead/shadow-s-attack-5.png", 60, 188, 0, 54, 63, 5, 6, 72, 72, UNITMAP_UNDEAD_SHADOW);
+addMapEntry("units/undead/shadow-s-attack-6.png", 256, 0, 0, 46, 65, 7, 5, 72, 72, UNITMAP_UNDEAD_SHADOW);

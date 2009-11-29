@@ -1,0 +1,27 @@
+// "filename.png", texOffsetX, texOffsetY, flags, texW, texH, trimmedX, trimmedY, originalW, originalH, MAP_FOREST_WINTERID
+addMapEntry("forest/deciduous-winter-2.png", 345, 186, 0, 71, 89, 56, 64, 180, 216, MAP_FOREST_WINTER);
+addMapEntry("forest/deciduous-winter-castle-small.png", 345, 366, 0, 74, 93, 57, 51, 180, 216, MAP_FOREST_WINTER);
+addMapEntry("forest/deciduous-winter-snow-2.png", 262, 364, 0, 71, 89, 56, 64, 180, 216, MAP_FOREST_WINTER);
+addMapEntry("forest/deciduous-winter-snow-castle-small.png", 268, 93, 0, 71, 86, 54, 65, 180, 216, MAP_FOREST_WINTER);
+addMapEntry("forest/deciduous-winter-snow-sparse-2.png", 268, 0, 0, 78, 78, 41, 54, 180, 216, MAP_FOREST_WINTER);
+addMapEntry("forest/deciduous-winter-snow-sparse-3.png", 101, 271, 0, 65, 81, 62, 64, 180, 216, MAP_FOREST_WINTER);
+addMapEntry("forest/deciduous-winter-snow-sparse-castle-small.png", 417, 93, 0, 78, 78, 46, 55, 180, 216, MAP_FOREST_WINTER);
+addMapEntry("forest/deciduous-winter-snow-sparse.png", 101, 108, 0, 70, 82, 55, 61, 180, 216, MAP_FOREST_WINTER);
+addMapEntry("forest/deciduous-winter-snow.png", 186, 0, 0, 82, 93, 50, 61, 180, 216, MAP_FOREST_WINTER);
+addMapEntry("forest/deciduous-winter-sparse-2.png", 339, 93, 0, 78, 78, 41, 54, 180, 216, MAP_FOREST_WINTER);
+addMapEntry("forest/deciduous-winter-sparse-3.png", 101, 190, 0, 65, 81, 62, 64, 180, 216, MAP_FOREST_WINTER);
+addMapEntry("forest/deciduous-winter-sparse-castle-small.png", 101, 352, 0, 67, 74, 57, 59, 180, 216, MAP_FOREST_WINTER);
+addMapEntry("forest/deciduous-winter-sparse.png", 422, 0, 0, 70, 82, 55, 61, 180, 216, MAP_FOREST_WINTER);
+addMapEntry("forest/deciduous-winter.png", 186, 93, 0, 82, 93, 50, 61, 180, 216, MAP_FOREST_WINTER);
+addMapEntry("forest/mixed-winter-2.png", 101, 0, 0, 85, 108, 46, 55, 180, 216, MAP_FOREST_WINTER);
+addMapEntry("forest/mixed-winter-castle-small.png", 186, 286, 0, 69, 91, 57, 68, 180, 216, MAP_FOREST_WINTER);
+addMapEntry("forest/mixed-winter-snow-2.png", 262, 275, 0, 83, 89, 41, 54, 180, 216, MAP_FOREST_WINTER);
+addMapEntry("forest/mixed-winter-snow-castle-small.png", 186, 377, 0, 76, 81, 41, 58, 180, 216, MAP_FOREST_WINTER);
+addMapEntry("forest/mixed-winter-snow-sparse-2.png", 262, 186, 0, 83, 89, 41, 54, 180, 216, MAP_FOREST_WINTER);
+addMapEntry("forest/mixed-winter-snow-sparse-castle-small.png", 346, 0, 0, 76, 79, 52, 69, 180, 216, MAP_FOREST_WINTER);
+addMapEntry("forest/mixed-winter-snow-sparse.png", 425, 275, 0, 76, 89, 49, 57, 180, 216, MAP_FOREST_WINTER);
+addMapEntry("forest/mixed-winter-snow.png", 186, 186, 0, 76, 100, 49, 46, 180, 216, MAP_FOREST_WINTER);
+addMapEntry("forest/mixed-winter-sparse-2.png", 0, 0, 0, 101, 102, 41, 43, 180, 216, MAP_FOREST_WINTER);
+addMapEntry("forest/mixed-winter-sparse-castle-small.png", 416, 186, 0, 77, 80, 52, 62, 180, 216, MAP_FOREST_WINTER);
+addMapEntry("forest/mixed-winter-sparse.png", 419, 366, 0, 77, 89, 49, 51, 180, 216, MAP_FOREST_WINTER);
+addMapEntry("forest/mixed-winter.png", 345, 275, 0, 80, 91, 54, 60, 180, 216, MAP_FOREST_WINTER);

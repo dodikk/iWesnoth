@@ -1,0 +1,26 @@
+// "filename.png", texOffsetX, texOffsetY, flags, texW, texH, trimmedX, trimmedY, originalW, originalH, UNITMAP_DWARVES_FIGHTERID
+addMapEntry("units/dwarves/fighter-axe-1.png", 214, 53, 0, 34, 31, 20, 27, 72, 72, UNITMAP_DWARVES_FIGHTER);
+addMapEntry("units/dwarves/fighter-axe-2.png", 202, 147, 0, 29, 50, 22, 8, 72, 72, UNITMAP_DWARVES_FIGHTER);
+addMapEntry("units/dwarves/fighter-axe-3.png", 169, 194, 0, 29, 47, 21, 11, 72, 72, UNITMAP_DWARVES_FIGHTER);
+addMapEntry("units/dwarves/fighter-axe-4.png", 135, 147, 0, 34, 47, 19, 12, 72, 72, UNITMAP_DWARVES_FIGHTER);
+addMapEntry("units/dwarves/fighter-axe-5.png", 94, 103, 0, 41, 51, 23, 9, 72, 72, UNITMAP_DWARVES_FIGHTER);
+addMapEntry("units/dwarves/fighter-axe-6.png", 94, 154, 0, 38, 36, 20, 25, 72, 72, UNITMAP_DWARVES_FIGHTER);
+addMapEntry("units/dwarves/fighter-axe-7.png", 169, 147, 0, 33, 47, 21, 14, 72, 72, UNITMAP_DWARVES_FIGHTER);
+addMapEntry("units/dwarves/fighter-axe-8.png", 202, 197, 0, 37, 39, 18, 22, 72, 72, UNITMAP_DWARVES_FIGHTER);
+addMapEntry("units/dwarves/fighter-axe-9.png", 179, 103, 0, 40, 36, 20, 24, 72, 72, UNITMAP_DWARVES_FIGHTER);
+addMapEntry("units/dwarves/fighter-defend-1.png", 45, 101, 0, 31, 33, 21, 25, 72, 72, UNITMAP_DWARVES_FIGHTER);
+addMapEntry("units/dwarves/fighter-defend-2.png", 45, 134, 0, 29, 34, 21, 27, 72, 72, UNITMAP_DWARVES_FIGHTER);
+addMapEntry("units/dwarves/fighter-hammer-1.png", 94, 190, 0, 26, 47, 21, 15, 72, 72, UNITMAP_DWARVES_FIGHTER);
+addMapEntry("units/dwarves/fighter-hammer-2.png", 45, 53, 0, 49, 48, 21, 19, 72, 72, UNITMAP_DWARVES_FIGHTER);
+addMapEntry("units/dwarves/fighter-hammer-3.png", 219, 103, 0, 35, 32, 22, 28, 72, 72, UNITMAP_DWARVES_FIGHTER);
+addMapEntry("units/dwarves/fighter-hammer-defend.png", 135, 194, 0, 32, 39, 21, 19, 72, 72, UNITMAP_DWARVES_FIGHTER);
+addMapEntry("units/dwarves/fighter-hammer.png", 178, 53, 0, 36, 30, 19, 28, 72, 72, UNITMAP_DWARVES_FIGHTER);
+addMapEntry("units/dwarves/fighter-idle-1.png", 45, 168, 0, 32, 30, 20, 28, 72, 72, UNITMAP_DWARVES_FIGHTER);
+addMapEntry("units/dwarves/fighter-idle-2.png", 45, 198, 0, 30, 30, 21, 28, 72, 72, UNITMAP_DWARVES_FIGHTER);
+addMapEntry("units/dwarves/fighter-idle-3.png", 91, 0, 0, 30, 30, 21, 28, 72, 72, UNITMAP_DWARVES_FIGHTER);
+addMapEntry("units/dwarves/fighter-idle-4.png", 45, 228, 0, 30, 26, 21, 33, 72, 72, UNITMAP_DWARVES_FIGHTER);
+addMapEntry("units/dwarves/fighter-idle-5.png", 135, 103, 0, 44, 44, 17, 14, 72, 72, UNITMAP_DWARVES_FIGHTER);
+addMapEntry("units/dwarves/fighter-idle-6.png", 45, 0, 0, 46, 53, 17, 4, 72, 72, UNITMAP_DWARVES_FIGHTER);
+addMapEntry("units/dwarves/fighter-idle-7.png", 0, 0, 0, 45, 55, 17, 2, 72, 72, UNITMAP_DWARVES_FIGHTER);
+addMapEntry("units/dwarves/fighter-idle-8.png", 94, 53, 0, 45, 50, 17, 6, 72, 72, UNITMAP_DWARVES_FIGHTER);
+//addMapEntry("units/dwarves/fighter.png", 139, 53, 0, 39, 31, 19, 28, 72, 72, UNITMAP_DWARVES_FIGHTER);

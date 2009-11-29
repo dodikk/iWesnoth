@@ -1,0 +1,23 @@
+// "filename.png", texOffsetX, texOffsetY, flags, texW, texH, trimmedX, trimmedY, originalW, originalH, UNITMAP_UTBS_ELVES_FIGHTERID
+addMapEntry("units/elves-desert/fighter-bow-attack1.png", 0, 47, 0, 35, 47, 18, 14, 72, 72, UNITMAP_UTBS_ELVES_FIGHTER);
+addMapEntry("units/elves-desert/fighter-bow-attack2.png", 41, 145, 0, 36, 47, 18, 14, 72, 72, UNITMAP_UTBS_ELVES_FIGHTER);
+addMapEntry("units/elves-desert/fighter-bow-attack3.png", 41, 98, 0, 36, 47, 18, 14, 72, 72, UNITMAP_UTBS_ELVES_FIGHTER);
+addMapEntry("units/elves-desert/fighter-bow-attack4.png", 41, 51, 0, 36, 47, 18, 14, 72, 72, UNITMAP_UTBS_ELVES_FIGHTER);
+addMapEntry("units/elves-desert/fighter-bow-defend.png", 116, 132, 0, 36, 50, 18, 11, 72, 72, UNITMAP_UTBS_ELVES_FIGHTER);
+addMapEntry("units/elves-desert/fighter-bow.png", 78, 184, 0, 36, 47, 18, 14, 72, 72, UNITMAP_UTBS_ELVES_FIGHTER);
+addMapEntry("units/elves-desert/fighter-defend.png", 41, 0, 0, 37, 51, 17, 10, 72, 72, UNITMAP_UTBS_ELVES_FIGHTER);
+addMapEntry("units/elves-desert/fighter-idle-1.png", 116, 182, 0, 36, 48, 18, 13, 72, 72, UNITMAP_UTBS_ELVES_FIGHTER);
+addMapEntry("units/elves-desert/fighter-idle-10.png", 152, 174, 0, 42, 42, 13, 19, 72, 72, UNITMAP_UTBS_ELVES_FIGHTER);
+addMapEntry("units/elves-desert/fighter-idle-11.png", 159, 46, 0, 37, 44, 15, 18, 72, 72, UNITMAP_UTBS_ELVES_FIGHTER);
+addMapEntry("units/elves-desert/fighter-idle-12.png", 78, 138, 0, 38, 46, 17, 15, 72, 72, UNITMAP_UTBS_ELVES_FIGHTER);
+addMapEntry("units/elves-desert/fighter-idle-2.png", 78, 90, 0, 38, 48, 16, 13, 72, 72, UNITMAP_UTBS_ELVES_FIGHTER);
+addMapEntry("units/elves-desert/fighter-idle-3.png", 78, 0, 0, 41, 46, 14, 15, 72, 72, UNITMAP_UTBS_ELVES_FIGHTER);
+addMapEntry("units/elves-desert/fighter-idle-4.png", 78, 46, 0, 42, 44, 14, 17, 72, 72, UNITMAP_UTBS_ELVES_FIGHTER);
+addMapEntry("units/elves-desert/fighter-idle-5.png", 152, 132, 0, 42, 42, 14, 19, 72, 72, UNITMAP_UTBS_ELVES_FIGHTER);
+addMapEntry("units/elves-desert/fighter-idle-6.png", 116, 90, 0, 43, 42, 13, 19, 72, 72, UNITMAP_UTBS_ELVES_FIGHTER);
+addMapEntry("units/elves-desert/fighter-idle-7.png", 194, 132, 0, 39, 42, 15, 19, 72, 72, UNITMAP_UTBS_ELVES_FIGHTER);
+addMapEntry("units/elves-desert/fighter-idle-8.png", 159, 90, 0, 37, 42, 15, 19, 72, 72, UNITMAP_UTBS_ELVES_FIGHTER);
+addMapEntry("units/elves-desert/fighter-idle-9.png", 194, 174, 0, 40, 44, 14, 17, 72, 72, UNITMAP_UTBS_ELVES_FIGHTER);
+addMapEntry("units/elves-desert/fighter-melee-1.png", 120, 46, 0, 39, 44, 25, 14, 72, 72, UNITMAP_UTBS_ELVES_FIGHTER);
+addMapEntry("units/elves-desert/fighter-melee-2.png", 0, 0, 0, 41, 47, 17, 14, 72, 72, UNITMAP_UTBS_ELVES_FIGHTER);
+//addMapEntry("units/elves-desert/fighter.png", 41, 192, 0, 35, 48, 18, 13, 72, 72, UNITMAP_UTBS_ELVES_FIGHTER);

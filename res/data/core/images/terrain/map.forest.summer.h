@@ -1,0 +1,16 @@
+// "filename.png", texOffsetX, texOffsetY, flags, texW, texH, trimmedX, trimmedY, originalW, originalH
+addMapEntry("forest/deciduous-summer-2.png", 188, 209, 0, 86, 101, 45, 59, 180, 216, MAP_FOREST_SUMMER);
+addMapEntry("forest/deciduous-summer-3.png", 101, 0, 0, 87, 111, 49, 49, 180, 216, MAP_FOREST_SUMMER);
+addMapEntry("forest/deciduous-summer-4.png", 188, 108, 0, 93, 101, 34, 51, 180, 216, MAP_FOREST_SUMMER);
+addMapEntry("forest/deciduous-summer-castle-small.png", 436, 209, 0, 70, 84, 56, 68, 180, 216, MAP_FOREST_SUMMER);
+addMapEntry("forest/deciduous-summer-sparse-2.png", 274, 409, 0, 81, 86, 41, 50, 180, 216, MAP_FOREST_SUMMER);
+addMapEntry("forest/deciduous-summer-sparse-3.png", 355, 411, 0, 70, 91, 60, 58, 180, 216, MAP_FOREST_SUMMER);
+addMapEntry("forest/deciduous-summer-sparse-castle-small.png", 358, 209, 0, 78, 85, 49, 52, 180, 216, MAP_FOREST_SUMMER);
+addMapEntry("forest/deciduous-summer-sparse.png", 432, 310, 0, 78, 94, 52, 57, 180, 216, MAP_FOREST_SUMMER);
+addMapEntry("forest/deciduous-summer.png", 274, 310, 0, 81, 99, 45, 56, 180, 216, MAP_FOREST_SUMMER);
+addMapEntry("forest/mixed-summer-2.png", 188, 0, 0, 87, 108, 44, 55, 180, 216, MAP_FOREST_SUMMER);
+addMapEntry("forest/mixed-summer-castle-small.png", 355, 310, 0, 77, 101, 48, 67, 180, 216, MAP_FOREST_SUMMER);
+addMapEntry("forest/mixed-summer-sparse-2.png", 0, 0, 0, 101, 102, 41, 43, 180, 216, MAP_FOREST_SUMMER);
+addMapEntry("forest/mixed-summer-sparse-castle-small.png", 188, 310, 0, 79, 82, 52, 62, 180, 216, MAP_FOREST_SUMMER);
+addMapEntry("forest/mixed-summer-sparse.png", 432, 404, 0, 79, 91, 49, 51, 180, 216, MAP_FOREST_SUMMER);
+addMapEntry("forest/mixed-summer.png", 274, 209, 0, 84, 101, 54, 57, 180, 216, MAP_FOREST_SUMMER);

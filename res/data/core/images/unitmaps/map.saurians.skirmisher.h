@@ -1,0 +1,22 @@
+// "filename.png", texOffsetX, texOffsetY, flags, texW, texH, trimmedX, trimmedY, originalW, originalH, UNITMAP_SAURIANS_SKIRMISHERID
+addMapEntry("units/saurians/skirmisher-attack-n1.png", 223, 189, 0, 26, 51, 25, 6, 72, 72, UNITMAP_SAURIANS_SKIRMISHER);
+addMapEntry("units/saurians/skirmisher-attack-n2.png", 82, 186, 0, 22, 48, 26, 13, 72, 72, UNITMAP_SAURIANS_SKIRMISHER);
+addMapEntry("units/saurians/skirmisher-attack-ranged-1.png", 41, 0, 0, 44, 39, 17, 22, 72, 72, UNITMAP_SAURIANS_SKIRMISHER);
+addMapEntry("units/saurians/skirmisher-attack-ranged-2.png", 121, 114, 0, 39, 35, 17, 28, 72, 72, UNITMAP_SAURIANS_SKIRMISHER);
+addMapEntry("units/saurians/skirmisher-attack1.png", 121, 189, 0, 34, 33, 17, 28, 72, 72, UNITMAP_SAURIANS_SKIRMISHER);
+addMapEntry("units/saurians/skirmisher-attack2.png", 121, 78, 0, 41, 36, 17, 28, 72, 72, UNITMAP_SAURIANS_SKIRMISHER);
+addMapEntry("units/saurians/skirmisher-defend.png", 189, 189, 0, 34, 40, 16, 21, 72, 72, UNITMAP_SAURIANS_SKIRMISHER);
+addMapEntry("units/saurians/skirmisher-idle-1.png", 41, 39, 0, 44, 39, 17, 22, 72, 72, UNITMAP_SAURIANS_SKIRMISHER);
+addMapEntry("units/saurians/skirmisher-idle-10.png", 162, 78, 0, 37, 33, 17, 28, 72, 72, UNITMAP_SAURIANS_SKIRMISHER);
+addMapEntry("units/saurians/skirmisher-idle-11.png", 155, 189, 0, 34, 39, 17, 22, 72, 72, UNITMAP_SAURIANS_SKIRMISHER);
+addMapEntry("units/saurians/skirmisher-idle-12.png", 189, 149, 0, 34, 40, 17, 21, 72, 72, UNITMAP_SAURIANS_SKIRMISHER);
+addMapEntry("units/saurians/skirmisher-idle-13.png", 155, 149, 0, 34, 40, 17, 21, 72, 72, UNITMAP_SAURIANS_SKIRMISHER);
+addMapEntry("units/saurians/skirmisher-idle-2.png", 160, 114, 0, 45, 29, 17, 32, 72, 72, UNITMAP_SAURIANS_SKIRMISHER);
+addMapEntry("units/saurians/skirmisher-idle-3.png", 82, 153, 0, 35, 33, 18, 28, 72, 72, UNITMAP_SAURIANS_SKIRMISHER);
+addMapEntry("units/saurians/skirmisher-idle-4.png", 205, 114, 0, 38, 34, 17, 27, 72, 72, UNITMAP_SAURIANS_SKIRMISHER);
+addMapEntry("units/saurians/skirmisher-idle-5.png", 0, 0, 0, 41, 46, 17, 15, 72, 72, UNITMAP_SAURIANS_SKIRMISHER);
+addMapEntry("units/saurians/skirmisher-idle-6.png", 82, 78, 0, 39, 42, 17, 19, 72, 72, UNITMAP_SAURIANS_SKIRMISHER);
+addMapEntry("units/saurians/skirmisher-idle-7.png", 41, 78, 0, 41, 41, 17, 20, 72, 72, UNITMAP_SAURIANS_SKIRMISHER);
+addMapEntry("units/saurians/skirmisher-idle-8.png", 199, 78, 0, 37, 33, 17, 28, 72, 72, UNITMAP_SAURIANS_SKIRMISHER);
+addMapEntry("units/saurians/skirmisher-idle-9.png", 82, 120, 0, 37, 33, 17, 28, 72, 72, UNITMAP_SAURIANS_SKIRMISHER);
+//addMapEntry("units/saurians/skirmisher.png", 121, 149, 0, 34, 40, 17, 21, 72, 72, UNITMAP_SAURIANS_SKIRMISHER);

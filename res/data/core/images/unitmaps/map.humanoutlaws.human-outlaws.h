@@ -1,0 +1,20 @@
+// "filename.png", texOffsetX, texOffsetY, flags, texW, texH, trimmedX, trimmedY, originalW, originalH, UNITMAP_HUMANOUTLAWS_HUMANOUTLAWSID
+addMapEntry("units/human-outlaws/assassin+female.png", 42, 0, 0, 43, 45, 15, 17, 72, 72, UNITMAP_HUMANOUTLAWS_HUMANOUTLAWS);
+addMapEntry("units/human-outlaws/assassin.png", 42, 45, 0, 43, 45, 15, 17, 72, 72, UNITMAP_HUMANOUTLAWS_HUMANOUTLAWS);
+addMapEntry("units/human-outlaws/bandit.png", 224, 93, 0, 32, 45, 21, 17, 72, 72, UNITMAP_HUMANOUTLAWS_HUMANOUTLAWS);
+addMapEntry("units/human-outlaws/footpad+female.png", 191, 93, 0, 33, 44, 19, 18, 72, 72, UNITMAP_HUMANOUTLAWS_HUMANOUTLAWS);
+addMapEntry("units/human-outlaws/footpad.png", 156, 184, 0, 33, 44, 19, 18, 72, 72, UNITMAP_HUMANOUTLAWS_HUMANOUTLAWS);
+addMapEntry("units/human-outlaws/fugitive+female.png", 121, 93, 0, 35, 47, 19, 14, 72, 72, UNITMAP_HUMANOUTLAWS_HUMANOUTLAWS);
+addMapEntry("units/human-outlaws/fugitive.png", 156, 93, 0, 35, 47, 19, 14, 72, 72, UNITMAP_HUMANOUTLAWS_HUMANOUTLAWS);
+addMapEntry("units/human-outlaws/highwayman.png", 85, 45, 0, 39, 48, 13, 16, 72, 72, UNITMAP_HUMANOUTLAWS_HUMANOUTLAWS);
+addMapEntry("units/human-outlaws/huntsman.png", 0, 0, 0, 42, 51, 15, 12, 72, 72, UNITMAP_HUMANOUTLAWS_HUMANOUTLAWS);
+addMapEntry("units/human-outlaws/outlaw+female.png", 191, 184, 0, 34, 44, 19, 17, 72, 72, UNITMAP_HUMANOUTLAWS_HUMANOUTLAWS);
+addMapEntry("units/human-outlaws/outlaw.png", 191, 140, 0, 35, 44, 19, 17, 72, 72, UNITMAP_HUMANOUTLAWS_HUMANOUTLAWS);
+addMapEntry("units/human-outlaws/poacher.png", 226, 140, 0, 30, 43, 21, 19, 72, 72, UNITMAP_HUMANOUTLAWS_HUMANOUTLAWS);
+addMapEntry("units/human-outlaws/ranger.png", 85, 93, 0, 36, 49, 20, 14, 72, 72, UNITMAP_HUMANOUTLAWS_HUMANOUTLAWS);
+addMapEntry("units/human-outlaws/rogue+female.png", 85, 142, 0, 31, 45, 21, 16, 72, 72, UNITMAP_HUMANOUTLAWS_HUMANOUTLAWS);
+addMapEntry("units/human-outlaws/rogue.png", 85, 187, 0, 31, 45, 21, 16, 72, 72, UNITMAP_HUMANOUTLAWS_HUMANOUTLAWS);
+addMapEntry("units/human-outlaws/thief+female.png", 121, 140, 0, 33, 44, 21, 17, 72, 72, UNITMAP_HUMANOUTLAWS_HUMANOUTLAWS);
+addMapEntry("units/human-outlaws/thief.png", 121, 184, 0, 33, 44, 21, 17, 72, 72, UNITMAP_HUMANOUTLAWS_HUMANOUTLAWS);
+addMapEntry("units/human-outlaws/thug.png", 156, 140, 0, 35, 44, 20, 19, 72, 72, UNITMAP_HUMANOUTLAWS_HUMANOUTLAWS);
+addMapEntry("units/human-outlaws/trapper.png", 225, 184, 0, 31, 46, 21, 14, 72, 72, UNITMAP_HUMANOUTLAWS_HUMANOUTLAWS);

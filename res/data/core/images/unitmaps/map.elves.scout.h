@@ -1,0 +1,23 @@
+// "filename.png", texOffsetX, texOffsetY, flags, texW, texH, trimmedX, trimmedY, originalW, originalH, UNITMAP_ELVES_SCOUTID
+addMapEntry("units/elves-wood/scout-attack.png", 44, 0, 0, 46, 54, 10, 8, 72, 72, UNITMAP_ELVES_SCOUT);
+addMapEntry("units/elves-wood/scout-attack1.png", 44, 54, 0, 46, 54, 10, 10, 72, 72, UNITMAP_ELVES_SCOUT);
+addMapEntry("units/elves-wood/scout-attack2.png", 90, 108, 0, 44, 54, 10, 10, 72, 72, UNITMAP_ELVES_SCOUT);
+addMapEntry("units/elves-wood/scout-defend.png", 0, 0, 0, 44, 58, 10, 2, 72, 72, UNITMAP_ELVES_SCOUT);
+addMapEntry("units/elves-wood/scout-idle-1.png", 0, 162, 0, 40, 52, 15, 10, 72, 72, UNITMAP_ELVES_SCOUT);
+addMapEntry("units/elves-wood/scout-idle-10.png", 213, 0, 0, 41, 52, 15, 10, 72, 72, UNITMAP_ELVES_SCOUT);
+addMapEntry("units/elves-wood/scout-idle-11.png", 44, 108, 0, 42, 52, 15, 10, 72, 72, UNITMAP_ELVES_SCOUT);
+addMapEntry("units/elves-wood/scout-idle-12.png", 178, 54, 0, 42, 52, 15, 10, 72, 72, UNITMAP_ELVES_SCOUT);
+addMapEntry("units/elves-wood/scout-idle-13.png", 136, 54, 0, 42, 52, 15, 10, 72, 72, UNITMAP_ELVES_SCOUT);
+addMapEntry("units/elves-wood/scout-idle-14.png", 90, 162, 0, 42, 52, 15, 10, 72, 72, UNITMAP_ELVES_SCOUT);
+addMapEntry("units/elves-wood/scout-idle-15.png", 134, 160, 0, 42, 52, 15, 10, 72, 72, UNITMAP_ELVES_SCOUT);
+addMapEntry("units/elves-wood/scout-idle-16.png", 44, 160, 0, 41, 52, 15, 10, 72, 72, UNITMAP_ELVES_SCOUT);
+addMapEntry("units/elves-wood/scout-idle-2.png", 0, 58, 0, 40, 52, 15, 10, 72, 72, UNITMAP_ELVES_SCOUT);
+addMapEntry("units/elves-wood/scout-idle-3.png", 0, 110, 0, 40, 52, 15, 10, 72, 72, UNITMAP_ELVES_SCOUT);
+addMapEntry("units/elves-wood/scout-idle-4.png", 90, 0, 0, 41, 52, 15, 10, 72, 72, UNITMAP_ELVES_SCOUT);
+addMapEntry("units/elves-wood/scout-idle-5.png", 176, 160, 0, 42, 52, 15, 10, 72, 72, UNITMAP_ELVES_SCOUT);
+addMapEntry("units/elves-wood/scout-idle-6.png", 131, 0, 0, 41, 52, 15, 10, 72, 72, UNITMAP_ELVES_SCOUT);
+addMapEntry("units/elves-wood/scout-idle-7.png", 172, 0, 0, 41, 52, 15, 10, 72, 72, UNITMAP_ELVES_SCOUT);
+addMapEntry("units/elves-wood/scout-idle-8.png", 176, 108, 0, 42, 52, 15, 10, 72, 72, UNITMAP_ELVES_SCOUT);
+addMapEntry("units/elves-wood/scout-idle-9.png", 134, 108, 0, 42, 52, 15, 10, 72, 72, UNITMAP_ELVES_SCOUT);
+//addMapEntry("units/elves-wood/scout-moving.png", 90, 54, 0, 46, 54, 10, 10, 72, 72, UNITMAP_ELVES_SCOUT);
+//addMapEntry("units/elves-wood/scout.png", 256, 0, 0, 40, 52, 15, 10, 72, 72, UNITMAP_ELVES_SCOUT);

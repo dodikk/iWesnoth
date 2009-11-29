@@ -1,0 +1,25 @@
+// "filename.png", texOffsetX, texOffsetY, flags, texW, texH, trimmedX, trimmedY, originalW, originalH, MAP_DCASTLE_CHASMID
+addMapEntry("dcastle-chasm-ccw-bl.png", 132, 101, 0, 73, 83, 32, 80, 126, 180, MAP_DCASTLE_CHASM);
+addMapEntry("dcastle-chasm-ccw-br.png", 0, 153, 0, 55, 99, 35, 36, 126, 144, MAP_DCASTLE_CHASM);
+addMapEntry("dcastle-chasm-ccw-l.png", 132, 184, 0, 73, 65, 17, 43, 126, 144, MAP_DCASTLE_CHASM);
+addMapEntry("dcastle-chasm-ccw-r.png", 256, 0, 0, 54, 95, 36, 73, 126, 180, MAP_DCASTLE_CHASM);
+addMapEntry("dcastle-chasm-ccw-tl.png", 310, 134, 0, 58, 53, 32, 80, 126, 180, MAP_DCASTLE_CHASM);
+addMapEntry("dcastle-chasm-ccw-tr.png", 205, 101, 0, 51, 54, 36, 44, 126, 144, MAP_DCASTLE_CHASM);
+addMapEntry("dcastle-chasm-concave-bl.png", 256, 95, 0, 54, 54, 36, 77, 126, 180, MAP_DCASTLE_CHASM);
+addMapEntry("dcastle-chasm-concave-br.png", 369, 168, 0, 43, 52, 36, 41, 126, 144, MAP_DCASTLE_CHASM);
+addMapEntry("dcastle-chasm-concave-l.png", 423, 0, 0, 56, 55, 34, 42, 126, 144, MAP_DCASTLE_CHASM);
+addMapEntry("dcastle-chasm-concave-r.png", 205, 184, 0, 51, 57, 36, 78, 126, 180, MAP_DCASTLE_CHASM);
+addMapEntry("dcastle-chasm-concave-tl.png", 0, 0, 0, 59, 153, 32, 16, 126, 180, MAP_DCASTLE_CHASM);
+addMapEntry("dcastle-chasm-concave-tr.png", 59, 108, 0, 55, 99, 35, 35, 126, 144, MAP_DCASTLE_CHASM);
+addMapEntry("dcastle-chasm-convex-bl.png", 310, 0, 0, 59, 81, 32, 80, 126, 180, MAP_DCASTLE_CHASM);
+addMapEntry("dcastle-chasm-convex-br.png", 369, 87, 0, 53, 81, 35, 44, 126, 144, MAP_DCASTLE_CHASM);
+addMapEntry("dcastle-chasm-convex-l.png", 132, 0, 0, 60, 101, 17, 43, 126, 144, MAP_DCASTLE_CHASM);
+addMapEntry("dcastle-chasm-convex-r.png", 369, 0, 0, 54, 87, 36, 79, 126, 180, MAP_DCASTLE_CHASM);
+addMapEntry("dcastle-chasm-convex-tl.png", 310, 187, 0, 58, 53, 32, 80, 126, 180, MAP_DCASTLE_CHASM);
+addMapEntry("dcastle-chasm-convex-tr.png", 256, 149, 0, 42, 52, 36, 44, 126, 144, MAP_DCASTLE_CHASM);
+addMapEntry("dcastle-chasm-cw-bl.png", 192, 0, 0, 59, 99, 32, 73, 126, 180, MAP_DCASTLE_CHASM);
+addMapEntry("dcastle-chasm-cw-br.png", 422, 87, 0, 52, 80, 35, 44, 126, 144, MAP_DCASTLE_CHASM);
+addMapEntry("dcastle-chasm-cw-l.png", 59, 0, 0, 73, 108, 17, 36, 126, 144, MAP_DCASTLE_CHASM);
+addMapEntry("dcastle-chasm-cw-r.png", 422, 167, 0, 54, 62, 36, 79, 126, 180, MAP_DCASTLE_CHASM);
+addMapEntry("dcastle-chasm-cw-tl.png", 310, 81, 0, 58, 53, 32, 80, 126, 180, MAP_DCASTLE_CHASM);
+addMapEntry("dcastle-chasm-cw-tr.png", 256, 201, 0, 42, 52, 36, 44, 126, 144, MAP_DCASTLE_CHASM);

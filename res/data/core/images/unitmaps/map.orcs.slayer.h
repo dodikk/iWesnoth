@@ -1,0 +1,23 @@
+// "filename.png", texOffsetX, texOffsetY, flags, texW, texH, trimmedX, trimmedY, originalW, originalH, UNITMAP_ORCS_SLAYERID
+addMapEntry("units/orcs/slayer-attack-1.png", 92, 198, 0, 32, 50, 19, 12, 72, 72, UNITMAP_ORCS_SLAYER);
+addMapEntry("units/orcs/slayer-attack-10.png", 92, 151, 0, 35, 47, 23, 13, 72, 72, UNITMAP_ORCS_SLAYER);
+addMapEntry("units/orcs/slayer-attack-11.png", 130, 141, 0, 41, 49, 17, 11, 72, 72, UNITMAP_ORCS_SLAYER);
+addMapEntry("units/orcs/slayer-attack-12.png", 171, 92, 0, 43, 42, 17, 18, 72, 72, UNITMAP_ORCS_SLAYER);
+addMapEntry("units/orcs/slayer-attack-13.png", 171, 141, 0, 40, 50, 12, 10, 72, 72, UNITMAP_ORCS_SLAYER);
+addMapEntry("units/orcs/slayer-attack-14.png", 211, 141, 0, 40, 47, 15, 12, 72, 72, UNITMAP_ORCS_SLAYER);
+addMapEntry("units/orcs/slayer-attack-2.png", 225, 44, 0, 29, 48, 18, 14, 72, 72, UNITMAP_ORCS_SLAYER);
+addMapEntry("units/orcs/slayer-attack-3.png", 43, 95, 0, 30, 49, 20, 12, 72, 72, UNITMAP_ORCS_SLAYER);
+addMapEntry("units/orcs/slayer-attack-4.png", 43, 144, 0, 28, 52, 27, 9, 72, 72, UNITMAP_ORCS_SLAYER);
+addMapEntry("units/orcs/slayer-attack-5.png", 43, 44, 0, 49, 51, 21, 9, 72, 72, UNITMAP_ORCS_SLAYER);
+addMapEntry("units/orcs/slayer-attack-6.png", 0, 0, 0, 65, 44, 7, 16, 72, 72, UNITMAP_ORCS_SLAYER);
+addMapEntry("units/orcs/slayer-attack-7.png", 130, 190, 0, 37, 49, 12, 11, 72, 72, UNITMAP_ORCS_SLAYER);
+addMapEntry("units/orcs/slayer-attack-8.png", 43, 196, 0, 33, 43, 14, 18, 72, 72, UNITMAP_ORCS_SLAYER);
+addMapEntry("units/orcs/slayer-attack-9.png", 214, 92, 0, 39, 45, 14, 15, 72, 72, UNITMAP_ORCS_SLAYER);
+addMapEntry("units/orcs/slayer-attack1-s.png", 0, 44, 0, 43, 60, 16, 0, 72, 72, UNITMAP_ORCS_SLAYER);
+addMapEntry("units/orcs/slayer-attack1.png", 92, 92, 0, 38, 59, 14, 1, 72, 72, UNITMAP_ORCS_SLAYER);
+addMapEntry("units/orcs/slayer-attack2-s.png", 183, 44, 0, 42, 39, 17, 22, 72, 72, UNITMAP_ORCS_SLAYER);
+addMapEntry("units/orcs/slayer-attack2.png", 92, 44, 0, 52, 48, 13, 14, 72, 72, UNITMAP_ORCS_SLAYER);
+addMapEntry("units/orcs/slayer-defend.png", 144, 44, 0, 39, 44, 11, 18, 72, 72, UNITMAP_ORCS_SLAYER);
+addMapEntry("units/orcs/slayer-ranged1.png", 171, 191, 0, 40, 49, 13, 14, 72, 72, UNITMAP_ORCS_SLAYER);
+addMapEntry("units/orcs/slayer-ranged2.png", 130, 92, 0, 41, 49, 13, 14, 72, 72, UNITMAP_ORCS_SLAYER);
+//addMapEntry("units/orcs/slayer.png", 211, 191, 0, 39, 49, 13, 14, 72, 72, UNITMAP_ORCS_SLAYER);

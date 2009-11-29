@@ -1,0 +1,19 @@
+// "filename.png", texOffsetX, texOffsetY, flags, texW, texH, trimmedX, trimmedY, originalW, originalH, UNITMAP_SKELETAL_SKELETONID
+addMapEntry("units/undead-skeletal/skeleton-attack-1.png", 202, 134, 0, 38, 44, 13, 15, 72, 72, UNITMAP_SKELETAL_SKELETON);
+addMapEntry("units/undead-skeletal/skeleton-attack-2.png", 45, 47, 0, 36, 52, 15, 6, 72, 72, UNITMAP_SKELETAL_SKELETON);
+addMapEntry("units/undead-skeletal/skeleton-attack-3.png", 0, 0, 0, 45, 65, 22, 1, 72, 72, UNITMAP_SKELETAL_SKELETON);
+addMapEntry("units/undead-skeletal/skeleton-attack-4.png", 45, 0, 0, 43, 47, 22, 22, 72, 72, UNITMAP_SKELETAL_SKELETON);
+addMapEntry("units/undead-skeletal/skeleton-attack-5.png", 123, 179, 0, 34, 47, 20, 17, 72, 72, UNITMAP_SKELETAL_SKELETON);
+addMapEntry("units/undead-skeletal/skeleton-defend-1.png", 81, 90, 0, 42, 44, 7, 15, 72, 72, UNITMAP_SKELETAL_SKELETON);
+addMapEntry("units/undead-skeletal/skeleton-defend-2.png", 81, 47, 0, 43, 43, 6, 16, 72, 72, UNITMAP_SKELETAL_SKELETON);
+addMapEntry("units/undead-skeletal/skeleton-dying-1.png", 123, 90, 0, 41, 44, 8, 17, 72, 72, UNITMAP_SKELETAL_SKELETON);
+addMapEntry("units/undead-skeletal/skeleton-dying-2.png", 204, 90, 0, 35, 41, 14, 20, 72, 72, UNITMAP_SKELETAL_SKELETON);
+addMapEntry("units/undead-skeletal/skeleton-dying-3.png", 164, 90, 0, 40, 38, 10, 25, 72, 72, UNITMAP_SKELETAL_SKELETON);
+addMapEntry("units/undead-skeletal/skeleton-dying-4.png", 124, 47, 0, 47, 28, 7, 31, 72, 72, UNITMAP_SKELETAL_SKELETON);
+addMapEntry("units/undead-skeletal/skeleton-dying-5.png", 202, 225, 0, 49, 29, 7, 33, 72, 72, UNITMAP_SKELETAL_SKELETON);
+addMapEntry("units/undead-skeletal/skeleton-dying-6.png", 171, 47, 0, 49, 24, 7, 40, 72, 72, UNITMAP_SKELETAL_SKELETON);
+addMapEntry("units/undead-skeletal/skeleton-dying-7.png", 88, 0, 0, 49, 24, 7, 40, 72, 72, UNITMAP_SKELETAL_SKELETON);
+addMapEntry("units/undead-skeletal/skeleton-idle-1.png", 163, 180, 0, 39, 46, 10, 15, 72, 72, UNITMAP_SKELETAL_SKELETON);
+addMapEntry("units/undead-skeletal/skeleton-idle-2.png", 163, 134, 0, 39, 46, 10, 15, 72, 72, UNITMAP_SKELETAL_SKELETON);
+addMapEntry("units/undead-skeletal/skeleton-idle-3.png", 202, 180, 0, 39, 45, 10, 16, 72, 72, UNITMAP_SKELETAL_SKELETON);
+//addMapEntry("units/undead-skeletal/skeleton.png", 123, 134, 0, 40, 45, 9, 15, 72, 72, UNITMAP_SKELETAL_SKELETON);

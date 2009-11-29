@@ -1,0 +1,21 @@
+// "filename.png", texOffsetX, texOffsetY, flags, texW, texH, trimmedX, trimmedY, originalW, originalH, MAP_FOREST_SNOWID
+addMapEntry("forest/snow-forest-2.png", 196, 116, 0, 100, 99, 36, 52, 180, 216, MAP_FOREST_SNOW);
+addMapEntry("forest/snow-forest-3.png", 368, 407, 0, 82, 93, 44, 59, 180, 216, MAP_FOREST_SNOW);
+addMapEntry("forest/snow-forest-4.png", 296, 116, 0, 76, 75, 45, 69, 180, 216, MAP_FOREST_SNOW);
+addMapEntry("forest/snow-forest-castle-n-ne.png", 96, 274, 0, 73, 52, 41, 104, 180, 216, MAP_FOREST_SNOW);
+addMapEntry("forest/snow-forest-castle-n.png", 96, 215, 0, 82, 59, 49, 92, 180, 216, MAP_FOREST_SNOW);
+addMapEntry("forest/snow-forest-castle-ne.png", 368, 308, 0, 85, 99, 45, 67, 180, 216, MAP_FOREST_SNOW);
+addMapEntry("forest/snow-forest-castle-nw-n-ne.png", 450, 407, 0, 58, 50, 59, 108, 180, 216, MAP_FOREST_SNOW);
+addMapEntry("forest/snow-forest-castle-nw-n.png", 435, 116, 0, 69, 59, 67, 90, 180, 216, MAP_FOREST_SNOW);
+addMapEntry("forest/snow-forest-castle-nw.png", 372, 116, 0, 63, 79, 60, 67, 180, 216, MAP_FOREST_SNOW);
+addMapEntry("forest/snow-forest-castle-s.png", 283, 215, 0, 94, 93, 37, 52, 180, 216, MAP_FOREST_SNOW);
+addMapEntry("forest/snow-forest-castle-se.png", 196, 324, 0, 79, 106, 36, 50, 180, 216, MAP_FOREST_SNOW);
+addMapEntry("forest/snow-forest-castle-small.png", 96, 326, 0, 71, 53, 42, 90, 180, 216, MAP_FOREST_SNOW);
+addMapEntry("forest/snow-forest-castle-sw-nw.png", 377, 215, 0, 73, 86, 39, 61, 180, 216, MAP_FOREST_SNOW);
+addMapEntry("forest/snow-forest-castle-sw.png", 283, 308, 0, 85, 100, 50, 50, 180, 216, MAP_FOREST_SNOW);
+addMapEntry("forest/snow-forest-small.png", 196, 215, 0, 87, 109, 45, 49, 180, 216, MAP_FOREST_SNOW);
+addMapEntry("forest/snow-forest-sparse-2.png", 96, 116, 0, 100, 99, 36, 52, 180, 216, MAP_FOREST_SNOW);
+addMapEntry("forest/snow-forest-sparse-3.png", 283, 408, 0, 82, 89, 44, 63, 180, 216, MAP_FOREST_SNOW);
+addMapEntry("forest/snow-forest-sparse-4.png", 196, 430, 0, 76, 75, 45, 69, 180, 216, MAP_FOREST_SNOW);
+addMapEntry("forest/snow-forest-sparse.png", 96, 0, 0, 96, 116, 36, 49, 180, 216, MAP_FOREST_SNOW);
+addMapEntry("forest/snow-forest.png", 0, 0, 0, 96, 116, 36, 49, 180, 216, MAP_FOREST_SNOW);

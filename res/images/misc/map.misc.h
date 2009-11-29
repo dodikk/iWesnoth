@@ -1,0 +1,21 @@
+// "filename.png", texOffsetX, texOffsetY, flags, texW, texH, trimmedX, trimmedY, originalW, originalH, MAP_MISCID
+addMapEntry("misc/attack-indicator-dst-n.png", 76, 76, 0, 38, 37, 17, 35, 72, 72, MAP_MISC);
+addMapEntry("misc/attack-indicator-dst-ne.png", 0, 0, 0, 38, 38, 0, 34, 72, 72, MAP_MISC);
+addMapEntry("misc/attack-indicator-dst-nw.png", 0, 38, 0, 38, 38, 34, 34, 72, 72, MAP_MISC);
+addMapEntry("misc/attack-indicator-dst-s.png", 76, 38, 0, 38, 37, 17, 0, 72, 72, MAP_MISC);
+addMapEntry("misc/attack-indicator-dst-se.png", 38, 38, 0, 38, 38, 0, 0, 72, 72, MAP_MISC);
+addMapEntry("misc/attack-indicator-dst-sw.png", 38, 76, 0, 38, 38, 34, 0, 72, 72, MAP_MISC);
+addMapEntry("misc/attack-indicator-src-n.png", 100, 113, 0, 24, 8, 24, 0, 72, 72, MAP_MISC);
+addMapEntry("misc/attack-indicator-src-ne.png", 0, 76, 0, 21, 26, 48, 7, 72, 72, MAP_MISC);
+addMapEntry("misc/attack-indicator-src-nw.png", 0, 102, 0, 21, 26, 3, 7, 72, 72, MAP_MISC);
+addMapEntry("misc/attack-indicator-src-s.png", 76, 113, 0, 24, 8, 24, 64, 72, 72, MAP_MISC);
+addMapEntry("misc/attack-indicator-src-se.png", 38, 0, 0, 21, 26, 48, 39, 72, 72, MAP_MISC);
+addMapEntry("misc/attack-indicator-src-sw.png", 59, 0, 0, 21, 26, 3, 39, 72, 72, MAP_MISC);
+addMapEntry("misc/ball-ally.png", 114, 76, 0, 10, 11, 16, 0, 72, 72, MAP_MISC);
+addMapEntry("misc/ball-moved.png", 114, 87, 0, 10, 11, 16, 0, 72, 72, MAP_MISC);
+addMapEntry("misc/ball-partmoved.png", 114, 98, 0, 10, 11, 16, 0, 72, 72, MAP_MISC);
+addMapEntry("misc/ball-unmoved.png", 38, 114, 0, 10, 11, 16, 0, 72, 72, MAP_MISC);
+addMapEntry("misc/capture.png", 80, 0, 0, 27, 17, 27, 49, 72, 72, MAP_MISC);
+addMapEntry("misc/leader-crown.png", 100, 121, 0, 15, 7, 13, 5, 72, 72, MAP_MISC);
+addMapEntry("misc/leader-expendable.png", 76, 121, 0, 15, 7, 13, 5, 72, 72, MAP_MISC);
+addMapEntry("misc/zoc.png", 80, 17, 0, 20, 18, 26, 51, 72, 72, MAP_MISC);

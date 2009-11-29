@@ -1,0 +1,21 @@
+// "filename.png", texOffsetX, texOffsetY, flags, texW, texH, trimmedX, trimmedY, originalW, originalH, UNITMAP_HUMANLOYALISTS_HALBERDIERID
+addMapEntry("units/human-loyalists/halberdier-defend.png", 105, 55, 0, 49, 53, 12, 9, 72, 72, UNITMAP_HUMANLOYALISTS_HALBERDIER);
+addMapEntry("units/human-loyalists/halberdier-idle-1.png", 150, 108, 0, 38, 53, 18, 9, 72, 72, UNITMAP_HUMANLOYALISTS_HALBERDIER);
+addMapEntry("units/human-loyalists/halberdier-idle-10.png", 316, 0, 0, 30, 56, 20, 10, 72, 72, UNITMAP_HUMANLOYALISTS_HALBERDIER);
+addMapEntry("units/human-loyalists/halberdier-idle-11.png", 52, 169, 0, 30, 58, 20, 10, 72, 72, UNITMAP_HUMANLOYALISTS_HALBERDIER);
+addMapEntry("units/human-loyalists/halberdier-idle-12.png", 286, 0, 0, 30, 56, 20, 10, 72, 72, UNITMAP_HUMANLOYALISTS_HALBERDIER);
+addMapEntry("units/human-loyalists/halberdier-idle-2.png", 106, 0, 0, 30, 55, 20, 10, 72, 72, UNITMAP_HUMANLOYALISTS_HALBERDIER);
+addMapEntry("units/human-loyalists/halberdier-idle-3.png", 136, 0, 0, 30, 54, 20, 7, 72, 72, UNITMAP_HUMANLOYALISTS_HALBERDIER);
+addMapEntry("units/human-loyalists/halberdier-idle-4.png", 105, 161, 0, 30, 58, 20, 3, 72, 72, UNITMAP_HUMANLOYALISTS_HALBERDIER);
+addMapEntry("units/human-loyalists/halberdier-idle-5.png", 52, 111, 0, 30, 58, 20, 3, 72, 72, UNITMAP_HUMANLOYALISTS_HALBERDIER);
+addMapEntry("units/human-loyalists/halberdier-idle-6.png", 0, 58, 0, 30, 56, 20, 10, 72, 72, UNITMAP_HUMANLOYALISTS_HALBERDIER);
+addMapEntry("units/human-loyalists/halberdier-idle-7.png", 0, 114, 0, 30, 56, 20, 10, 72, 72, UNITMAP_HUMANLOYALISTS_HALBERDIER);
+addMapEntry("units/human-loyalists/halberdier-idle-8.png", 0, 170, 0, 30, 56, 20, 10, 72, 72, UNITMAP_HUMANLOYALISTS_HALBERDIER);
+addMapEntry("units/human-loyalists/halberdier-idle-9.png", 256, 0, 0, 30, 56, 20, 10, 72, 72, UNITMAP_HUMANLOYALISTS_HALBERDIER);
+addMapEntry("units/human-loyalists/halberdier-pierce-n.png", 211, 161, 0, 27, 65, 22, 6, 72, 72, UNITMAP_HUMANLOYALISTS_HALBERDIER);
+addMapEntry("units/human-loyalists/halberdier-pierce-ne.png", 0, 0, 0, 52, 58, 14, 8, 72, 72, UNITMAP_HUMANLOYALISTS_HALBERDIER);
+addMapEntry("units/human-loyalists/halberdier-pierce-s.png", 182, 161, 0, 29, 61, 20, 11, 72, 72, UNITMAP_HUMANLOYALISTS_HALBERDIER);
+addMapEntry("units/human-loyalists/halberdier-pierce-se.png", 52, 55, 0, 53, 56, 12, 14, 72, 72, UNITMAP_HUMANLOYALISTS_HALBERDIER);
+addMapEntry("units/human-loyalists/halberdier-slash-se-1.png", 150, 161, 0, 32, 62, 23, 2, 72, 72, UNITMAP_HUMANLOYALISTS_HALBERDIER);
+addMapEntry("units/human-loyalists/halberdier-slash-se-2.png", 52, 0, 0, 54, 55, 18, 10, 72, 72, UNITMAP_HUMANLOYALISTS_HALBERDIER);
+//addMapEntry("units/human-loyalists/halberdier.png", 105, 108, 0, 45, 53, 16, 9, 72, 72, UNITMAP_HUMANLOYALISTS_HALBERDIER);

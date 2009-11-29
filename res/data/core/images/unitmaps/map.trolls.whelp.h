@@ -1,0 +1,22 @@
+// "filename.png", texOffsetX, texOffsetY, flags, texW, texH, trimmedX, trimmedY, originalW, originalH, UNITMAP_TROLLS_WHELPID
+addMapEntry("units/trolls/whelp-attack-1.png", 204, 206, 0, 33, 43, 17, 19, 72, 72, UNITMAP_TROLLS_WHELP);
+addMapEntry("units/trolls/whelp-attack-2.png", 0, 45, 0, 38, 49, 17, 15, 72, 72, UNITMAP_TROLLS_WHELP);
+addMapEntry("units/trolls/whelp-attack-3.png", 0, 0, 0, 47, 45, 17, 19, 72, 72, UNITMAP_TROLLS_WHELP);
+addMapEntry("units/trolls/whelp-defend-2.png", 171, 210, 0, 33, 41, 17, 21, 72, 72, UNITMAP_TROLLS_WHELP);
+addMapEntry("units/trolls/whelp-defend.png", 171, 166, 0, 33, 44, 17, 18, 72, 72, UNITMAP_TROLLS_WHELP);
+addMapEntry("units/trolls/whelp-die-1.png", 0, 127, 0, 36, 33, 20, 25, 72, 72, UNITMAP_TROLLS_WHELP);
+addMapEntry("units/trolls/whelp-die-2.png", 0, 94, 0, 36, 33, 20, 25, 72, 72, UNITMAP_TROLLS_WHELP);
+addMapEntry("units/trolls/whelp-die-3.png", 207, 45, 0, 36, 33, 20, 25, 72, 72, UNITMAP_TROLLS_WHELP);
+addMapEntry("units/trolls/whelp-die-4.png", 171, 45, 0, 36, 33, 20, 25, 72, 72, UNITMAP_TROLLS_WHELP);
+addMapEntry("units/trolls/whelp-die-5.png", 0, 193, 0, 35, 27, 20, 32, 72, 72, UNITMAP_TROLLS_WHELP);
+addMapEntry("units/trolls/whelp-die-6.png", 217, 134, 0, 35, 27, 20, 32, 72, 72, UNITMAP_TROLLS_WHELP);
+addMapEntry("units/trolls/whelp-die-7.png", 171, 134, 0, 46, 32, 9, 32, 72, 72, UNITMAP_TROLLS_WHELP);
+addMapEntry("units/trolls/whelp-idle-1.png", 204, 166, 0, 36, 40, 18, 21, 72, 72, UNITMAP_TROLLS_WHELP);
+addMapEntry("units/trolls/whelp-idle-2.png", 171, 92, 0, 36, 42, 18, 19, 72, 72, UNITMAP_TROLLS_WHELP);
+addMapEntry("units/trolls/whelp-idle-3.png", 38, 45, 0, 34, 46, 18, 15, 72, 72, UNITMAP_TROLLS_WHELP);
+addMapEntry("units/trolls/whelp-idle-4.png", 138, 45, 0, 33, 47, 18, 14, 72, 72, UNITMAP_TROLLS_WHELP);
+addMapEntry("units/trolls/whelp-idle-5.png", 105, 45, 0, 33, 47, 18, 14, 72, 72, UNITMAP_TROLLS_WHELP);
+addMapEntry("units/trolls/whelp-idle-6.png", 72, 45, 0, 33, 47, 18, 14, 72, 72, UNITMAP_TROLLS_WHELP);
+addMapEntry("units/trolls/whelp-idle-7.png", 138, 92, 0, 33, 46, 18, 15, 72, 72, UNITMAP_TROLLS_WHELP);
+addMapEntry("units/trolls/whelp-skeleton.png", 0, 160, 0, 36, 33, 20, 25, 72, 72, UNITMAP_TROLLS_WHELP);
+//addMapEntry("units/trolls/whelp.png", 207, 92, 0, 36, 39, 18, 23, 72, 72, UNITMAP_TROLLS_WHELP);

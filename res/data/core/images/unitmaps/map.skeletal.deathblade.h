@@ -1,0 +1,19 @@
+// "filename.png", texOffsetX, texOffsetY, flags, texW, texH, trimmedX, trimmedY, originalW, originalH, UNITMAP_SKELETAL_DEATHBLADEID
+addMapEntry("units/undead-skeletal/deathblade-attack1.png", 0, 0, 0, 52, 46, 12, 16, 72, 72, UNITMAP_SKELETAL_DEATHBLADE);
+addMapEntry("units/undead-skeletal/deathblade-attack2.png", 91, 46, 0, 35, 58, 25, 11, 72, 72, UNITMAP_SKELETAL_DEATHBLADE);
+addMapEntry("units/undead-skeletal/deathblade-attack3.png", 198, 135, 0, 30, 59, 31, 10, 72, 72, UNITMAP_SKELETAL_DEATHBLADE);
+addMapEntry("units/undead-skeletal/deathblade-defend-1.png", 126, 91, 0, 37, 49, 18, 13, 72, 72, UNITMAP_SKELETAL_DEATHBLADE);
+addMapEntry("units/undead-skeletal/deathblade-defend-2.png", 163, 135, 0, 35, 51, 19, 12, 72, 72, UNITMAP_SKELETAL_DEATHBLADE);
+addMapEntry("units/undead-skeletal/deathblade-dying-1.png", 126, 46, 0, 42, 45, 21, 15, 72, 72, UNITMAP_SKELETAL_DEATHBLADE);
+addMapEntry("units/undead-skeletal/deathblade-dying-2.png", 204, 91, 0, 38, 41, 20, 20, 72, 72, UNITMAP_SKELETAL_DEATHBLADE);
+addMapEntry("units/undead-skeletal/deathblade-dying-3.png", 163, 186, 0, 33, 35, 23, 26, 72, 72, UNITMAP_SKELETAL_DEATHBLADE);
+addMapEntry("units/undead-skeletal/deathblade-dying-4.png", 163, 221, 0, 35, 29, 24, 31, 72, 72, UNITMAP_SKELETAL_DEATHBLADE);
+addMapEntry("units/undead-skeletal/deathblade-dying-5.png", 126, 221, 0, 36, 28, 24, 33, 72, 72, UNITMAP_SKELETAL_DEATHBLADE);
+addMapEntry("units/undead-skeletal/deathblade-dying-6.png", 210, 46, 0, 38, 25, 22, 38, 72, 72, UNITMAP_SKELETAL_DEATHBLADE);
+addMapEntry("units/undead-skeletal/deathblade-dying-7.png", 168, 46, 0, 42, 26, 22, 39, 72, 72, UNITMAP_SKELETAL_DEATHBLADE);
+addMapEntry("units/undead-skeletal/deathblade-idle-1.png", 46, 46, 0, 45, 46, 21, 15, 72, 72, UNITMAP_SKELETAL_DEATHBLADE);
+addMapEntry("units/undead-skeletal/deathblade-idle-2.png", 163, 91, 0, 41, 44, 23, 17, 72, 72, UNITMAP_SKELETAL_DEATHBLADE);
+addMapEntry("units/undead-skeletal/deathblade-idle-3.png", 198, 194, 0, 40, 41, 23, 20, 72, 72, UNITMAP_SKELETAL_DEATHBLADE);
+addMapEntry("units/undead-skeletal/deathblade-idle-4.png", 126, 140, 0, 37, 40, 23, 21, 72, 72, UNITMAP_SKELETAL_DEATHBLADE);
+addMapEntry("units/undead-skeletal/deathblade-idle-5.png", 126, 180, 0, 36, 41, 23, 20, 72, 72, UNITMAP_SKELETAL_DEATHBLADE);
+//addMapEntry("units/undead-skeletal/deathblade.png", 0, 46, 0, 46, 47, 20, 14, 72, 72, UNITMAP_SKELETAL_DEATHBLADE);

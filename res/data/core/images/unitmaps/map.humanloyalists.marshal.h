@@ -1,0 +1,24 @@
+// "filename.png", texOffsetX, texOffsetY, flags, texW, texH, trimmedX, trimmedY, originalW, originalH, UNITMAP_HUMANLOYALISTS_MARSHALID
+addMapEntry("units/human-loyalists/marshal-attack-sword1.png", 140, 0, 0, 46, 58, 9, 7, 72, 72, UNITMAP_HUMANLOYALISTS_MARSHAL);
+addMapEntry("units/human-loyalists/marshal-attack-sword2.png", 130, 123, 0, 53, 58, 8, 5, 72, 72, UNITMAP_HUMANLOYALISTS_MARSHAL);
+addMapEntry("units/human-loyalists/marshal-attack-sword3.png", 70, 69, 0, 60, 54, 11, 6, 72, 72, UNITMAP_HUMANLOYALISTS_MARSHAL);
+addMapEntry("units/human-loyalists/marshal-attack-sword4.png", 70, 123, 0, 60, 54, 11, 6, 72, 72, UNITMAP_HUMANLOYALISTS_MARSHAL);
+addMapEntry("units/human-loyalists/marshal-attack-sword5.png", 0, 116, 0, 41, 60, 20, 5, 72, 72, UNITMAP_HUMANLOYALISTS_MARSHAL);
+addMapEntry("units/human-loyalists/marshal-crossbow-attack1.png", 338, 0, 0, 40, 52, 17, 9, 72, 72, UNITMAP_HUMANLOYALISTS_MARSHAL);
+addMapEntry("units/human-loyalists/marshal-crossbow-attack2.png", 376, 106, 0, 38, 52, 16, 9, 72, 72, UNITMAP_HUMANLOYALISTS_MARSHAL);
+addMapEntry("units/human-loyalists/marshal-crossbow-defend.png", 414, 106, 0, 37, 53, 16, 8, 72, 72, UNITMAP_HUMANLOYALISTS_MARSHAL);
+addMapEntry("units/human-loyalists/marshal-crossbow.png", 376, 52, 0, 37, 54, 18, 7, 72, 72, UNITMAP_HUMANLOYALISTS_MARSHAL);
+addMapEntry("units/human-loyalists/marshal-defend-1.png", 338, 52, 0, 38, 53, 16, 7, 72, 72, UNITMAP_HUMANLOYALISTS_MARSHAL);
+addMapEntry("units/human-loyalists/marshal-defend-2.png", 298, 0, 0, 40, 56, 14, 4, 72, 72, UNITMAP_HUMANLOYALISTS_MARSHAL);
+addMapEntry("units/human-loyalists/marshal-die-1.png", 256, 0, 0, 42, 55, 16, 6, 72, 72, UNITMAP_HUMANLOYALISTS_MARSHAL);
+addMapEntry("units/human-loyalists/marshal-die-10.png", 0, 72, 0, 56, 44, 1, 26, 72, 72, UNITMAP_HUMANLOYALISTS_MARSHAL);
+addMapEntry("units/human-loyalists/marshal-die-2.png", 0, 176, 0, 45, 54, 13, 9, 72, 72, UNITMAP_HUMANLOYALISTS_MARSHAL);
+addMapEntry("units/human-loyalists/marshal-die-3.png", 130, 181, 0, 47, 58, 10, 12, 72, 72, UNITMAP_HUMANLOYALISTS_MARSHAL);
+addMapEntry("units/human-loyalists/marshal-die-4.png", 183, 123, 0, 54, 55, 3, 15, 72, 72, UNITMAP_HUMANLOYALISTS_MARSHAL);
+addMapEntry("units/human-loyalists/marshal-die-5.png", 183, 178, 0, 56, 50, 1, 20, 72, 72, UNITMAP_HUMANLOYALISTS_MARSHAL);
+addMapEntry("units/human-loyalists/marshal-die-6.png", 70, 177, 0, 56, 48, 1, 22, 72, 72, UNITMAP_HUMANLOYALISTS_MARSHAL);
+addMapEntry("units/human-loyalists/marshal-die-7.png", 130, 69, 0, 56, 47, 1, 23, 72, 72, UNITMAP_HUMANLOYALISTS_MARSHAL);
+addMapEntry("units/human-loyalists/marshal-die-8.png", 186, 69, 0, 56, 46, 1, 24, 72, 72, UNITMAP_HUMANLOYALISTS_MARSHAL);
+addMapEntry("units/human-loyalists/marshal-die-9.png", 186, 0, 0, 56, 45, 1, 25, 72, 72, UNITMAP_HUMANLOYALISTS_MARSHAL);
+addMapEntry("units/human-loyalists/marshal-leading.png", 70, 0, 0, 70, 69, 2, 0, 72, 72, UNITMAP_HUMANLOYALISTS_MARSHAL);
+//addMapEntry("units/human-loyalists/marshal.png", 0, 0, 0, 70, 72, 2, 0, 72, 72, UNITMAP_HUMANLOYALISTS_MARSHAL);

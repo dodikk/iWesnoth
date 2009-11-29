@@ -1,0 +1,25 @@
+// "filename.png", texOffsetX, texOffsetY, flags, texW, texH, trimmedX, trimmedY, originalW, originalH, UNITMAP_GOBLINS_SPEARMANID
+addMapEntry("units/goblins/spearman-attack-n1.png", 195, 81, 0, 24, 34, 25, 25, 72, 72, UNITMAP_GOBLINS_SPEARMAN);
+addMapEntry("units/goblins/spearman-attack-n2.png", 139, 39, 0, 22, 39, 26, 21, 72, 72, UNITMAP_GOBLINS_SPEARMAN);
+addMapEntry("units/goblins/spearman-attack-ne1.png", 140, 155, 0, 34, 36, 23, 24, 72, 72, UNITMAP_GOBLINS_SPEARMAN);
+addMapEntry("units/goblins/spearman-attack-ne2.png", 106, 81, 0, 37, 36, 24, 23, 72, 72, UNITMAP_GOBLINS_SPEARMAN);
+addMapEntry("units/goblins/spearman-attack-s1.png", 174, 155, 0, 31, 37, 24, 23, 72, 72, UNITMAP_GOBLINS_SPEARMAN);
+addMapEntry("units/goblins/spearman-attack-s2.png", 174, 192, 0, 27, 42, 23, 20, 72, 72, UNITMAP_GOBLINS_SPEARMAN);
+addMapEntry("units/goblins/spearman-attack-se1.png", 106, 117, 0, 34, 37, 22, 22, 72, 72, UNITMAP_GOBLINS_SPEARMAN);
+addMapEntry("units/goblins/spearman-attack-se2.png", 73, 0, 0, 41, 39, 22, 21, 72, 72, UNITMAP_GOBLINS_SPEARMAN);
+addMapEntry("units/goblins/spearman-defend.png", 143, 81, 0, 27, 36, 24, 25, 72, 72, UNITMAP_GOBLINS_SPEARMAN);
+addMapEntry("units/goblins/spearman-idle-1.png", 206, 117, 0, 33, 33, 23, 27, 72, 72, UNITMAP_GOBLINS_SPEARMAN);
+addMapEntry("units/goblins/spearman-idle-10.png", 0, 0, 0, 37, 50, 23, 10, 72, 72, UNITMAP_GOBLINS_SPEARMAN);
+addMapEntry("units/goblins/spearman-idle-11.png", 37, 0, 0, 36, 46, 23, 14, 72, 72, UNITMAP_GOBLINS_SPEARMAN);
+addMapEntry("units/goblins/spearman-idle-12.png", 106, 39, 0, 33, 42, 23, 18, 72, 72, UNITMAP_GOBLINS_SPEARMAN);
+addMapEntry("units/goblins/spearman-idle-2.png", 173, 117, 0, 33, 33, 23, 27, 72, 72, UNITMAP_GOBLINS_SPEARMAN);
+addMapEntry("units/goblins/spearman-idle-3.png", 140, 191, 0, 33, 33, 23, 27, 72, 72, UNITMAP_GOBLINS_SPEARMAN);
+addMapEntry("units/goblins/spearman-idle-4.png", 140, 224, 0, 33, 32, 23, 28, 72, 72, UNITMAP_GOBLINS_SPEARMAN);
+addMapEntry("units/goblins/spearman-idle-5.png", 106, 154, 0, 33, 32, 23, 28, 72, 72, UNITMAP_GOBLINS_SPEARMAN);
+addMapEntry("units/goblins/spearman-idle-6.png", 106, 186, 0, 33, 32, 23, 28, 72, 72, UNITMAP_GOBLINS_SPEARMAN);
+addMapEntry("units/goblins/spearman-idle-7.png", 201, 192, 0, 33, 34, 23, 26, 72, 72, UNITMAP_GOBLINS_SPEARMAN);
+addMapEntry("units/goblins/spearman-idle-8.png", 140, 117, 0, 33, 38, 23, 22, 72, 72, UNITMAP_GOBLINS_SPEARMAN);
+addMapEntry("units/goblins/spearman-idle-9.png", 73, 39, 0, 33, 44, 23, 16, 72, 72, UNITMAP_GOBLINS_SPEARMAN);
+addMapEntry("units/goblins/spearman-ne-defend.png", 170, 81, 0, 25, 33, 24, 26, 72, 72, UNITMAP_GOBLINS_SPEARMAN);
+addMapEntry("units/goblins/spearman-ne.png", 106, 218, 0, 32, 33, 26, 27, 72, 72, UNITMAP_GOBLINS_SPEARMAN);
+//addMapEntry("units/goblins/spearman.png", 205, 155, 0, 33, 33, 23, 27, 72, 72, UNITMAP_GOBLINS_SPEARMAN);
