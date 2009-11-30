@@ -128,7 +128,17 @@ static LEVEL_RESULT playsingle_scenario(const config& game_config,
 	LOG_NG << "created objects... " << (SDL_GetTicks() - playcontroller.get_ticks()) << "\n";
 
 
-	const LEVEL_RESULT res = playcontroller.play_scenario(story, log, skip_replay, end_level);
+	LEVEL_RESULT res;
+	// KP: added try/catch to autosave game on quit (fixes #11)
+	try
+	{
+		res = playcontroller.play_scenario(story, log, skip_replay, end_level);
+	}
+	catch(CVideo::quit&)
+	{
+		playcontroller.autosave();
+		throw CVideo::quit();
+	}
 
 	if (res == DEFEAT) {
 		gui::message_dialog(disp,

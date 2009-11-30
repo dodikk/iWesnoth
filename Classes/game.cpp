@@ -1658,6 +1658,7 @@ void game_controller::load_game_cfg(const bool force)
 
 			game_config_.merge_children("units");
 			// KP: commenting this out is a little tricky... if the terrain cache doesn't already exist, it will make it invalid
+			// ie if precache/terrain.cache.dat does not exist yet, then make sure this line is NOT commented out... 
 			//game_config_.append(core_terrain_rules);
 
 			config& hashes = game_config_.add_child("multiplayer_hashes");
@@ -2340,7 +2341,7 @@ int main(int argc, char** argv)
 		std::string exe_dir(buffer);
 		
 #if TARGET_IPHONE_SIMULATOR
-		exe_dir = "/Users/kyle/desktop/wesnoth/res";
+		exe_dir = "/Users/kyle/iwesnoth/trunk/res";
 #endif
 		
 		
@@ -2386,6 +2387,9 @@ int main(int argc, char** argv)
 		std::cerr << "Could not create button: Image could not be found\n";
 	} catch(CVideo::quit&) {
 		//just means the game should quit
+		
+		// KP: autosave if in a singleplayer game (fixes #11)
+		
 	} catch(end_level_exception&) {
 		std::cerr << "caught end_level_exception (quitting)\n";
 	} catch(std::bad_alloc&) {

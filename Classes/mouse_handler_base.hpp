@@ -164,6 +164,7 @@ protected:
 	unsigned long drag_start_time_;
 	int scroll_velocity_x_;
 	int scroll_velocity_y_;
+	float drag_last_xVelocity_, drag_last_yVelocity_;
 #endif
 
 	/** last highlighted hex */

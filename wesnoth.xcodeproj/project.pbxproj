@@ -243,11 +243,6 @@
 		2738A5DF108EE68D009DC4C9 /* TextureAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2738A5DD108EE68D009DC4C9 /* TextureAtlas.cpp */; };
 		2738A5E3108EE6A6009DC4C9 /* memory_wrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2738A5E1108EE6A6009DC4C9 /* memory_wrapper.mm */; };
 		2738A5E6108EE6BA009DC4C9 /* RenderQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2738A5E4108EE6BA009DC4C9 /* RenderQueue.cpp */; };
-		274043D410B0DF000097A8FC /* sounds in Resources */ = {isa = PBXBuildFile; fileRef = 274043CF10B0DF000097A8FC /* sounds */; };
-		274043D510B0DF000097A8FC /* data in Resources */ = {isa = PBXBuildFile; fileRef = 274043D010B0DF000097A8FC /* data */; };
-		274043D610B0DF000097A8FC /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 274043D110B0DF000097A8FC /* fonts */; };
-		274043D710B0DF000097A8FC /* images in Resources */ = {isa = PBXBuildFile; fileRef = 274043D210B0DF000097A8FC /* images */; };
-		274043D810B0DF000097A8FC /* precache in Resources */ = {isa = PBXBuildFile; fileRef = 274043D310B0DF000097A8FC /* precache */; };
 		27454E86108995FB0075BBD2 /* file_descriptor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27454E45108995FA0075BBD2 /* file_descriptor.cpp */; };
 		27454E87108995FB0075BBD2 /* mapped_file.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27454E46108995FA0075BBD2 /* mapped_file.cpp */; };
 		27454E88108995FB0075BBD2 /* zlib.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27454E47108995FA0075BBD2 /* zlib.cpp */; };
@@ -1005,11 +1000,6 @@
 		2738A5E2108EE6A6009DC4C9 /* memory_wrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = memory_wrapper.h; path = Classes/memory_wrapper.h; sourceTree = "<group>"; };
 		2738A5E4108EE6BA009DC4C9 /* RenderQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RenderQueue.cpp; path = Classes/RenderQueue.cpp; sourceTree = "<group>"; };
 		2738A5E5108EE6BA009DC4C9 /* RenderQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RenderQueue.h; path = Classes/RenderQueue.h; sourceTree = "<group>"; };
-		274043CF10B0DF000097A8FC /* sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; name = sounds; path = res/sounds; sourceTree = "<group>"; };
-		274043D010B0DF000097A8FC /* data */ = {isa = PBXFileReference; lastKnownFileType = folder; name = data; path = res/data; sourceTree = "<group>"; };
-		274043D110B0DF000097A8FC /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = fonts; path = res/fonts; sourceTree = "<group>"; };
-		274043D210B0DF000097A8FC /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = images; path = res/images; sourceTree = "<group>"; };
-		274043D310B0DF000097A8FC /* precache */ = {isa = PBXFileReference; lastKnownFileType = folder; name = precache; path = res/precache; sourceTree = "<group>"; };
 		27454E45108995FA0075BBD2 /* file_descriptor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = file_descriptor.cpp; sourceTree = "<group>"; };
 		27454E46108995FA0075BBD2 /* mapped_file.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mapped_file.cpp; sourceTree = "<group>"; };
 		27454E47108995FA0075BBD2 /* zlib.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = zlib.cpp; sourceTree = "<group>"; };
@@ -3008,11 +2998,6 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				274043CF10B0DF000097A8FC /* sounds */,
-				274043D010B0DF000097A8FC /* data */,
-				274043D110B0DF000097A8FC /* fonts */,
-				274043D210B0DF000097A8FC /* images */,
-				274043D310B0DF000097A8FC /* precache */,
 				FD77A07E0E26BDA900F39101 /* Default.png */,
 				FD77A07C0E26BD8C00F39101 /* Icon.png */,
 				8D1107310486CEB800E47090 /* Info.plist */,
@@ -3090,11 +3075,6 @@
 				FD77A07D0E26BD8C00F39101 /* Icon.png in Resources */,
 				FD77A07F0E26BDA900F39101 /* Default.png in Resources */,
 				27B2A26E1092044800E69353 /* Entitlements.plist in Resources */,
-				274043D410B0DF000097A8FC /* sounds in Resources */,
-				274043D510B0DF000097A8FC /* data in Resources */,
-				274043D610B0DF000097A8FC /* fonts in Resources */,
-				274043D710B0DF000097A8FC /* images in Resources */,
-				274043D810B0DF000097A8FC /* precache in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

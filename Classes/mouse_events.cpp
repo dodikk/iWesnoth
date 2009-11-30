@@ -74,7 +74,8 @@ void mouse_handler::set_team(const int team_number)
 
 int mouse_handler::drag_threshold() const
 {
-	return 14;
+	//return 14;
+	return 8;
 }
 
 void mouse_handler::mouse_motion(int x, int y, const bool browse, bool update)

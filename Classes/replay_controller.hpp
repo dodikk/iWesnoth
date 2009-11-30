@@ -33,6 +33,7 @@ public:
 	virtual bool can_execute_command(hotkey::HOTKEY_COMMAND command, int index=-1) const;
 
 	//event handlers
+	virtual void autosave() {};
 	virtual void preferences();
 	virtual void show_statistics();
 	void play_replay();

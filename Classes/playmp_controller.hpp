@@ -49,6 +49,7 @@ public:
 protected:
 	virtual void handle_generic_event(const std::string& name);
 
+	virtual void autosave() {};
 	virtual void speak();
 	virtual void whisper();
 	virtual void shout();

@@ -52,6 +52,7 @@ public:
 	virtual void handle_generic_event(const std::string& /*name*/) {}
 
 	//event handlers, overriden from command_executor
+	virtual void autosave() {};
 	virtual void objectives();
 	virtual void show_statistics();
 	virtual void unit_list();

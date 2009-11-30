@@ -907,3 +907,9 @@ bool playsingle_controller::can_execute_command(hotkey::HOTKEY_COMMAND command, 
 	}
 	return res;
 }
+
+void playsingle_controller::autosave(void)
+{
+	menu_handler_.autosave(gamestate_.label, status_.turn(), gamestate_.starting_pos);
+}
+
