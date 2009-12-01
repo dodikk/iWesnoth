@@ -47,3 +47,5 @@ addMapEntry("village/hut2.png", 178, 0, 0, 64, 59, 54, 79, 180, 216, MAP_VILLAGE
 addMapEntry("village/swampwater.png", 259, 421, 0, 68, 72, 54, 72, 180, 216, MAP_VILLAGE);
 addMapEntry("village/swampwater2.png", 89, 331, 0, 64, 61, 57, 73, 180, 216, MAP_VILLAGE);
 addMapEntry("village/tropical-forest.png", 442, 52, 0, 61, 50, 61, 85, 180, 216, MAP_VILLAGE);
+addMapEntry("village/hut-snow.png", 0, 315, 0, 72, 72, 0, 0, 72, 72, MAP_VILLAGE);
+addMapEntry("village/hut-snow2.png", 0, 387, 0, 72, 72, 0, 0, 72, 72, MAP_VILLAGE);
