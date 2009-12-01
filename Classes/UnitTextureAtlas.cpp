@@ -352,6 +352,12 @@ void loadUnitMap(unsigned short mapId)
 		case UNITMAP_HUMANLOYALISTS_MARSHAL:
 			filename += "map.humanloyalists.marshal.png";
 			break;
+		case UNITMAP_HUMANLOYALISTS_MASTER_AT_ARMS:
+			filename += "map.humanloyalists.master-at-arms.png";
+			break;
+		case UNITMAP_HUMANLOYALISTS_MASTERBOWMAN:
+			filename += "map.humanloyalists.masterbowman.png";
+			break;
 		case UNITMAP_HUMANLOYALISTS_PALADIN:
 			filename += "map.humanloyalists.paladin.png";
 			break;
@@ -1319,6 +1325,8 @@ void initUnitTextureAtlas(void)
 	#include "map.humanloyalists.lieutenant.h"
 	#include "map.humanloyalists.longbowman.h"
 	#include "map.humanloyalists.marshal.h"
+	#include "map.humanloyalists.master-at-arms.h"
+	#include "map.humanloyalists.masterbowman.h"
 	#include "map.humanloyalists.paladin.h"
 	#include "map.humanloyalists.pikeman.h"
 	#include "map.humanloyalists.royal-warrior.h"
@@ -1709,6 +1717,14 @@ void renderUnitAtlas(int x, int y, const textureAtlasInfo& tinfo, SDL_Rect *srcR
 	dst.y += tinfo.trimmedY*scale;
 	dst.w -= (tinfo.originalW - tinfo.texW)*scale;
 	dst.h -= (tinfo.originalH - tinfo.texH)*scale;
+	
+	// KP: fix #18
+	if ((drawFlags & FLOP) != 0)
+	{
+		int trimmedRight = tinfo.originalW - tinfo.trimmedX - tinfo.texW;
+		dst.x -= tinfo.trimmedX - trimmedRight;
+	}
+	
 	
 	src.x -= tinfo.trimmedX;
 	if (src.x < 0)
