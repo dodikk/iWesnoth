@@ -446,6 +446,7 @@ unit::unit(unit_map* unitmap, const gamemap* map, const gamestatus* game_status,
 	next_idling_ = 0;
 	frame_begin_time_ = 0;
 	unit_halo_ = halo::NO_HALO;
+	slowed_ = false;
 }
 
 unit::unit(const unit_type* t, int side, bool use_traits, bool dummy_unit,
@@ -545,6 +546,7 @@ unit::unit(const unit_type* t, int side, bool use_traits, bool dummy_unit,
 	getsHit_=0;
 	end_turn_ = false;
 	hold_position_ = false;
+	slowed_ = false;
 }
 
 unit::~unit()
@@ -1777,7 +1779,7 @@ const surface unit::still_image(bool scaled) const
 #ifdef LOW_MEM
 	image_loc = image::locator(absolute_image());
 #else
-	std::string mods=image_mods();
+	shared_string mods=image_mods();
 	if(mods.size()){
 		image_loc = image::locator(absolute_image(),mods);
 	} else {
@@ -1899,7 +1901,7 @@ void unit::redraw_unit(game_display& disp, const map_location& loc)
 	params.image_mod = image_mods();
 
 	//params.image= absolute_image();
-	std::string absImg = absolute_image();
+	shared_string absImg = absolute_image();
 	params.image = absImg;
 
 	if(utils::string_bool(get_state("stoned"))) params.image_mod +="~GS()";
@@ -1981,8 +1983,8 @@ void unit::redraw_unit(game_display& disp, const map_location& loc)
 	}
 
 	if(draw_bars) {
-		const std::string* movement_file = NULL;
-		const std::string* energy_file = &game_config::energy_image;
+		const shared_string* movement_file = NULL;
+		const shared_string* energy_file = &game_config::energy_image;
 
 		if(size_t(side()) != disp.viewing_team()+1) {
 			if(disp.team_valid() &&
@@ -2046,7 +2048,7 @@ void unit::redraw_unit(game_display& disp, const map_location& loc)
 		}
 
 		for(std::vector<shared_string>::const_iterator ov = overlays().begin(); ov != overlays().end(); ++ov) {
-			const surface ov_img(image::get_image(ov->get(), image::SCALED_TO_ZOOM));
+			const surface ov_img(image::get_image(*ov, image::SCALED_TO_ZOOM));
 			if(ov_img != NULL) {
 				disp.drawing_buffer_add(display::LAYER_UNIT_BAR,
 					loc, display::tblit(xsrc, ysrc +adjusted_params.y, ov_img));
@@ -3162,7 +3164,7 @@ temporary_unit_placer::~temporary_unit_placer()
 	}
 }
 
-std::string unit::image_mods() const{
+shared_string unit::image_mods() const{
 	std::stringstream modifier;
 	if(flag_rgb_.size()){
 		modifier << "~RC("<< flag_rgb_ << ">" << team::get_side_colour_index(side()) << ")";

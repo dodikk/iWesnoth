@@ -32,6 +32,7 @@
 #include "upload_log.hpp"
 #include "formula_string_utils.hpp"
 #include "events.hpp"
+#include "loadscreen.hpp"
 
 #define ERR_NG LOG_STREAM(err, engine)
 #define LOG_NG LOG_STREAM(info, engine)
@@ -773,6 +774,10 @@ void playsingle_controller::linger(upload_log& log)
 	gui_->set_game_mode(game_display::RUNNING);
 
 	LOG_NG << "ending end-of-scenario linger\n";
+	
+	// KP: show loading screen now, this will also free cache memory
+	loadscreen::global_loadscreen_manager loadscreen(gui_->video());
+	loadscreen::global_loadscreen->set_progress(0, _("Loading data files"));
 }
 
 void playsingle_controller::end_turn_record()

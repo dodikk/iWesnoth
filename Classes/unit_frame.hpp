@@ -33,27 +33,27 @@ class config;
 
 class progressive_string {
 	public:
-		progressive_string(const std::string& data = "",int duration = 0);
+		progressive_string(const shared_string& data = "",int duration = 0);
 		int duration() const;
-		const std::string & get_current_element(int time) const;
+		const shared_string & get_current_element(int time) const;
 		bool does_not_change() const { return data_.size() <= 1; }
-		std::string get_original(){return input_;}
+		shared_string get_original(){return input_;}
 	private:
-		std::vector<std::pair<std::string,int> > data_;
-		std::string input_;
+		std::vector<std::pair<shared_string,int> > data_;
+		shared_string input_;
 };
 
 template <class T>
 class progressive_
 {
 	std::vector<std::pair<std::pair<T, T>, int> > data_;
-	std::string input_;
+	shared_string input_;
 public:
-	progressive_(const std::string& data = "", int duration = 0);
+	progressive_(const shared_string& data = "", int duration = 0);
 	int duration() const;
 	const T get_current_element(int time,T default_val=0) const;
 	bool does_not_change() const;
-		std::string get_original(){return input_;}
+		shared_string get_original(){return input_;}
 };
 
 typedef progressive_<int> progressive_int;
@@ -138,21 +138,21 @@ class frame_builder {
 		y_(""),
 		drawing_layer_(lexical_cast<std::string>(display::LAYER_UNIT_DEFAULT-display::LAYER_UNIT_FIRST))
 	{};
-		frame_builder(const config& cfg,const std::string &frame_string = "");
+		frame_builder(const config& cfg,const shared_string &frame_string = "");
 		/** allow easy chained modifications will raised assert if used after initialization */
-		frame_builder & image(const image::locator image ,const std::string & image_mod="");
-		frame_builder & image_diagonal(const image::locator image_diagonal,const std::string & image_mod="");
-		frame_builder & sound(const std::string& sound);
-		frame_builder & text(const std::string& text,const  Uint32 text_color);
-		frame_builder & halo(const std::string &halo, const std::string &halo_x, const std::string& halo_y,const std::string& halo_mod);
+		frame_builder & image(const image::locator image ,const shared_string & image_mod="");
+		frame_builder & image_diagonal(const image::locator image_diagonal,const shared_string & image_mod="");
+		frame_builder & sound(const shared_string& sound);
+		frame_builder & text(const shared_string& text,const  Uint32 text_color);
+		frame_builder & halo(const shared_string &halo, const shared_string &halo_x, const shared_string& halo_y,const shared_string& halo_mod);
 		frame_builder & duration(const int duration);
-		frame_builder & blend(const std::string& blend_ratio,const Uint32 blend_color);
-		frame_builder & highlight(const std::string& highlight);
-		frame_builder & offset(const std::string& offset);
-		frame_builder & submerge(const std::string& submerge);
-		frame_builder & x(const std::string& x);
-		frame_builder & y(const std::string& y);
-		frame_builder & drawing_layer(const std::string& drawing_layer);
+		frame_builder & blend(const shared_string& blend_ratio,const Uint32 blend_color);
+		frame_builder & highlight(const shared_string& highlight);
+		frame_builder & offset(const shared_string& offset);
+		frame_builder & submerge(const shared_string& submerge);
+		frame_builder & x(const shared_string& x);
+		frame_builder & y(const shared_string& y);
+		frame_builder & drawing_layer(const shared_string& drawing_layer);
 		/** getters for the different parameters */
 		const frame_parameters parameters(int current_time) const ;
 

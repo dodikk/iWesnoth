@@ -339,9 +339,10 @@ LEVEL_RESULT play_game(display& disp, game_state& gamestate, const config& game_
 				if (gamestate.abbrev.empty())
 					gamestate.label = (*scenario)["name"];
 				else {
-					gamestate.label = std::string(gamestate.abbrev);
-					gamestate.label.append("-");
-					gamestate.label.append((*scenario)["name"]);
+					std::string temp = std::string(gamestate.abbrev);
+					temp.append("-");
+					temp.append((*scenario)["name"]);
+					gamestate.label = temp;
 				}
 			}
 
@@ -575,9 +576,10 @@ LEVEL_RESULT play_game(display& disp, game_state& gamestate, const config& game_
 			if (gamestate.abbrev.empty())
 				gamestate.label = (*scenario)["name"];
 			else {
-				gamestate.label = std::string(gamestate.abbrev);
-				gamestate.label.append("-");
-				gamestate.label.append((*scenario)["name"]);
+				std::string temp = std::string(gamestate.abbrev);
+				temp.append("-");
+				temp.append((*scenario)["name"]);
+				gamestate.label = temp;
 			}
 
 			// If this isn't the last scenario, then save the game

@@ -102,10 +102,10 @@ const int
 #endif
 
 // Returns a SDL surface containing the text rendered in a given colour.
-surface get_rendered_text(const std::string& text, int size, const SDL_Color& colour, int style=0);
+surface get_rendered_text(const shared_string& text, int size, const SDL_Color& colour, int style=0);
 
 SDL_Rect draw_text_line(surface gui_surface, const SDL_Rect& area, int size,
-						const SDL_Color& colour, const std::string& text,
+						const SDL_Color& colour, const shared_string& text,
 						int x, int y, bool use_tooltips, int style);
 
 // Returns the maximum height of a font, in pixels
@@ -115,13 +115,13 @@ int get_max_height(int size);
 /// Determine the width of a line of text given a certain font size.
 /// The font type used is the default wesnoth font type.
 ///
-int line_width(const std::string& line, int font_size, int style=TTF_STYLE_NORMAL);
+int line_width(const shared_string& line, int font_size, int style=TTF_STYLE_NORMAL);
 
 ///
 /// Determine the size of a line of text given a certain font size. Similar to
 /// line_width, but for both coordinates.
 ///
-SDL_Rect line_size(const std::string& line, int font_size, int style=TTF_STYLE_NORMAL);
+SDL_Rect line_size(const shared_string& line, int font_size, int style=TTF_STYLE_NORMAL);
 
 ///
 /// If the text excedes the specified max width, end it with an ellipsis (...)
@@ -129,7 +129,7 @@ SDL_Rect line_size(const std::string& line, int font_size, int style=TTF_STYLE_N
 /// If parse_for_style is true we look for the style of the text (bold, etc.)
 /// before deleting its tags.
 ///
-std::string make_text_ellipsis(const std::string& text, int font_size, int max_width,
+shared_string make_text_ellipsis(const shared_string& text, int font_size, int max_width,
 		bool with_tags = true, bool parse_for_style = false);
 
 
@@ -155,7 +155,7 @@ enum LABEL_SCROLL_MODE { ANCHOR_LABEL_SCREEN, ANCHOR_LABEL_MAP };
 /// 'clip_rect': the rectangle to clip the label to.
 ///
 /// @returns a handle to the label which can be used with other label functions
-int add_floating_label(const std::string& text, int font_size, const SDL_Color& colour,
+int add_floating_label(const shared_string& text, int font_size, const SDL_Color& colour,
 		double xpos, double ypos, double xmove, double ymove, int lifetime,
 		const SDL_Rect& clip_rect, ALIGN alignment=CENTER_ALIGN,
 		const SDL_Color* bg_colour=NULL, int border_size=0,
@@ -185,6 +185,7 @@ const t_string& get_font_families();
 
 enum CACHE { CACHE_LOBBY, CACHE_GAME };
 void cache_mode(CACHE mode);
+void clear_text_caches(void);
 
 }
 

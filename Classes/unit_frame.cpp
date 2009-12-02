@@ -24,35 +24,35 @@
 
 #include "UnitTextureAtlas.h"
 
-progressive_string::progressive_string(const std::string & data,int duration) :
+progressive_string::progressive_string(const shared_string & data,int duration) :
 	data_(),
 	input_(data)
 {
-		const std::vector<std::string> first_pass = utils::split(data);
+		const std::vector<shared_string> first_pass = utils::split_shared(data);
 		const int time_chunk = std::max<int>(duration / (first_pass.size()?first_pass.size():1),1);
 
-		std::vector<std::string>::const_iterator tmp;
+		std::vector<shared_string>::const_iterator tmp;
 		for(tmp=first_pass.begin();tmp != first_pass.end() ; tmp++) {
-			std::vector<std::string> second_pass = utils::split(*tmp,':');
+			std::vector<shared_string> second_pass = utils::split_shared(*tmp,':');
 			if(second_pass.size() > 1) {
-				data_.push_back(std::pair<std::string,int>(second_pass[0],atoi(second_pass[1].c_str())));
+				data_.push_back(std::pair<shared_string,int>(second_pass[0],atoi(second_pass[1].c_str())));
 			} else {
-				data_.push_back(std::pair<std::string,int>(second_pass[0],time_chunk));
+				data_.push_back(std::pair<shared_string,int>(second_pass[0],time_chunk));
 			}
 		}
 }
 int progressive_string::duration() const
 {
 	int total =0;
-	std::vector<std::pair<std::string,int> >::const_iterator cur_halo;
+	std::vector<std::pair<shared_string,int> >::const_iterator cur_halo;
 	for(cur_halo = data_.begin() ; cur_halo != data_.end() ; cur_halo++) {
 		total += cur_halo->second;
 	}
 	return total;
 
 }
-static const std::string empty_string ="";
-const std::string& progressive_string::get_current_element(int current_time)const
+static const shared_string empty_string ="";
+const shared_string& progressive_string::get_current_element(int current_time)const
 {
 	int time = 0;
 	unsigned int sub_halo = 0;
@@ -68,26 +68,26 @@ const std::string& progressive_string::get_current_element(int current_time)cons
 }
 
 template <class T>
-progressive_<T>::progressive_(const std::string &data, int duration) :
+progressive_<T>::progressive_(const shared_string &data, int duration) :
 	data_(),
 	input_(data)
 {
-	const std::vector<std::string> first_split = utils::split(data);
+	const std::vector<shared_string> first_split = utils::split_shared(data);
 	const int time_chunk = std::max<int>(duration / (first_split.size()?first_split.size():1),1);
 
-	std::vector<std::string>::const_iterator tmp;
-	std::vector<std::pair<std::string,int> > first_pass;
+	std::vector<shared_string>::const_iterator tmp;
+	std::vector<std::pair<shared_string,int> > first_pass;
 	for(tmp=first_split.begin();tmp != first_split.end() ; tmp++) {
-		std::vector<std::string> second_pass = utils::split(*tmp,':');
+		std::vector<shared_string> second_pass = utils::split_shared(*tmp,':');
 		if(second_pass.size() > 1) {
-			first_pass.push_back(std::pair<std::string,int>(second_pass[0],atoi(second_pass[1].c_str())));
+			first_pass.push_back(std::pair<shared_string,int>(second_pass[0],atoi(second_pass[1].c_str())));
 		} else {
-			first_pass.push_back(std::pair<std::string,int>(second_pass[0],time_chunk));
+			first_pass.push_back(std::pair<shared_string,int>(second_pass[0],time_chunk));
 		}
 	}
-	std::vector<std::pair<std::string,int> >::const_iterator tmp2;
+	std::vector<std::pair<shared_string,int> >::const_iterator tmp2;
 	for(tmp2=first_pass.begin();tmp2 != first_pass.end() ; tmp2++) {
-		std::vector<std::string> range = utils::split(tmp2->first,'~');
+		std::vector<shared_string> range = utils::split_shared(tmp2->first,'~');
 		data_.push_back(std::pair<std::pair<T, T>,int> (
 			std::pair<T, T>(
 				lexical_cast<T>(range[0].c_str()),
@@ -156,7 +156,7 @@ template class progressive_<double>;
 
 
 
-frame_builder::frame_builder(const config& cfg,const std::string& frame_string) :
+frame_builder::frame_builder(const config& cfg,const shared_string& frame_string) :
 	image_(),
 	image_diagonal_(),
 	image_mod_(""),
@@ -180,7 +180,7 @@ frame_builder::frame_builder(const config& cfg,const std::string& frame_string) 
 	image(image::locator(cfg[frame_string+"image"]),cfg[frame_string+"image_mod"]);
 	image_diagonal(image::locator(cfg[frame_string+"image_diagonal"]),cfg[frame_string+"image_mod"]);
 	sound(cfg[frame_string+"sound"]);
-	std::vector<std::string> tmp_string_vect=utils::split(cfg[frame_string+"text_color"]);
+	std::vector<shared_string> tmp_string_vect=utils::split_shared(cfg[frame_string+"text_color"]);
 	if(tmp_string_vect.size() ==3) {
 		text(cfg[frame_string+"text"],
 		 display::rgb(atoi(tmp_string_vect[0].c_str()),atoi(tmp_string_vect[1].c_str()),atoi(tmp_string_vect[2].c_str())));
@@ -194,7 +194,7 @@ frame_builder::frame_builder(const config& cfg,const std::string& frame_string) 
 		duration(atoi(cfg[frame_string+"end"].c_str()) - atoi(cfg[frame_string+"begin"].c_str()));
 	}
 	halo(cfg[frame_string+"halo"],cfg[frame_string+"halo_x"],cfg[frame_string+"halo_y"],cfg[frame_string+"halo_mod"]);
-	 tmp_string_vect=utils::split(cfg[frame_string+"blend_color"]);
+	 tmp_string_vect=utils::split_shared(cfg[frame_string+"blend_color"]);
 	if(tmp_string_vect.size() ==3) {
 		blend(cfg[frame_string+"blend_ratio"],display::rgb(atoi(tmp_string_vect[0].c_str()),atoi(tmp_string_vect[1].c_str()),atoi(tmp_string_vect[2].c_str())));
 	} else {
@@ -233,30 +233,30 @@ const frame_parameters frame_builder::parameters(int current_time) const
 	result.drawing_layer = drawing_layer_.get_current_element(current_time,display::LAYER_UNIT_DEFAULT-display::LAYER_UNIT_FIRST);
 	return result;
 }
-frame_builder & frame_builder::image(const image::locator image ,const std::string & image_mod)
+frame_builder & frame_builder::image(const image::locator image ,const shared_string & image_mod)
 {
 	image_ = image;
 	image_mod_ = image_mod;
 	return *this;
 }
-frame_builder & frame_builder::image_diagonal(const image::locator image_diagonal,const std::string& image_mod)
+frame_builder & frame_builder::image_diagonal(const image::locator image_diagonal,const shared_string& image_mod)
 {
 	image_diagonal_ = image_diagonal;
 	image_mod_ = image_mod;
 	return *this;
 }
-frame_builder & frame_builder::sound(const std::string& sound)
+frame_builder & frame_builder::sound(const shared_string& sound)
 {
 	sound_=sound;
 	return *this;
 }
-frame_builder & frame_builder::text(const std::string& text,const  Uint32 text_color)
+frame_builder & frame_builder::text(const shared_string& text,const  Uint32 text_color)
 {
 	text_=text;
 	text_color_=text_color;
 	return *this;
 }
-frame_builder & frame_builder::halo(const std::string &halo, const std::string &halo_x, const std::string& halo_y,const std::string & halo_mod)
+frame_builder & frame_builder::halo(const shared_string &halo, const shared_string &halo_x, const shared_string& halo_y,const shared_string & halo_mod)
 {
 	halo_ = progressive_string(halo,duration_);
 	halo_x_ = progressive_int(halo_x,duration_);
@@ -283,38 +283,38 @@ void frame_builder::recalculate_duration()
 	y_=progressive_int(y_.get_original(),duration_);
 	drawing_layer_=progressive_int(drawing_layer_.get_original(),duration_);
 }
-frame_builder & frame_builder::blend(const std::string& blend_ratio,const Uint32 blend_color)
+frame_builder & frame_builder::blend(const shared_string& blend_ratio,const Uint32 blend_color)
 {
 	blend_with_=blend_color;
 	blend_ratio_=progressive_double(blend_ratio,duration_);
 	return *this;
 }
-frame_builder & frame_builder::highlight(const std::string& highlight)
+frame_builder & frame_builder::highlight(const shared_string& highlight)
 {
 	highlight_ratio_=progressive_double(highlight,duration_);
 	return *this;
 }
-frame_builder & frame_builder::offset(const std::string& offset)
+frame_builder & frame_builder::offset(const shared_string& offset)
 {
 	offset_=progressive_double(offset,duration_);
 	return *this;
 }
-frame_builder & frame_builder::submerge(const std::string& submerge)
+frame_builder & frame_builder::submerge(const shared_string& submerge)
 {
 	submerge_=progressive_double(submerge,duration_);
 	return *this;
 }
-frame_builder & frame_builder::x(const std::string& x)
+frame_builder & frame_builder::x(const shared_string& x)
 {
 	x_=progressive_int(x,duration_);
 	return *this;
 }
-frame_builder & frame_builder::y(const std::string& y)
+frame_builder & frame_builder::y(const shared_string& y)
 {
 	y_=progressive_int(y,duration_);
 	return *this;
 }
-frame_builder & frame_builder::drawing_layer(const std::string& drawing_layer)
+frame_builder & frame_builder::drawing_layer(const shared_string& drawing_layer)
 {
 	drawing_layer_=progressive_int(drawing_layer,duration_);
 	return *this;

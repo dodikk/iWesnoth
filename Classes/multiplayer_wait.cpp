@@ -90,7 +90,7 @@ void wait::leader_preview_pane::draw_contents()
 
 		unit_type_data::unit_type_map_wrapper& utypes = unit_type_data::types();
 		std::string leader_name;
-		std::string image;
+		shared_string image;
 
 		const unit_type* ut;
 		const unit_type* utg;

@@ -1636,7 +1636,7 @@ namespace {
 				if (has_any_types) {
 					item["type"] = *ti;
 				}
-				std::map<std::string, player_info>::iterator pi,
+				std::map<shared_string, player_info>::iterator pi,
 					pi_end = state_of_game->players.end();
 				for(pi=state_of_game->players.begin(); pi != pi_end; ++pi) {
 					std::string const& player_id = pi->first;
@@ -2159,9 +2159,9 @@ namespace {
 		if((cfg_x.empty() || cfg_x == "recall")
 		&& (cfg_y.empty() || cfg_y == "recall"))
 		{
-			std::map<std::string, player_info>& players=state_of_game->players;
+			std::map<shared_string, player_info>& players=state_of_game->players;
 
-			for(std::map<std::string, player_info>::iterator pi = players.begin();
+			for(std::map<shared_string, player_info>::iterator pi = players.begin();
 					pi!=players.end(); ++pi)
 			{
 				std::vector<unit>& avail_units = pi->second.available_units;
@@ -2307,9 +2307,9 @@ namespace {
 		if((filter_x.empty() || filter_x == "recall")
 		&& (filter_y.empty() || filter_y == "recall"))
 		{
-			std::map<std::string, player_info>& players = state_of_game->players;
+			std::map<shared_string, player_info>& players = state_of_game->players;
 
-			for(std::map<std::string, player_info>::iterator pi = players.begin();
+			for(std::map<shared_string, player_info>::iterator pi = players.begin();
 					pi!=players.end(); ++pi) {
 				std::vector<unit>& avail_units = pi->second.available_units;
 				for(std::vector<unit>::iterator j = avail_units.begin(); j != avail_units.end();) {
@@ -3608,7 +3608,7 @@ namespace game_events {
 			}
 		}
 		int wmi_count = 0;
-		std::map<std::string, wml_menu_item *>::iterator itor = state_of_game->wml_menu_items.begin();
+		std::map<shared_string, wml_menu_item *>::iterator itor = state_of_game->wml_menu_items.begin();
 		while(itor != state_of_game->wml_menu_items.end()) {
 			if(!itor->second->command.empty()) {
 				event_handlers.push_back(game_events::event_handler(vconfig(&itor->second->command,true), true));

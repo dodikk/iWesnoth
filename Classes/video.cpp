@@ -27,6 +27,10 @@
 #include "video.hpp"
 #include "marked-up_text.hpp"
 
+#include "TextureAtlas.h"
+#include "UnitTextureAtlas.h"
+#include "memory_wrapper.h"
+
 extern "C" {
 #include "SDL_RLEaccel_c.h"
 };
@@ -1165,4 +1169,16 @@ void CVideo::clear_help_string(int handle)
 void CVideo::clear_all_help_strings()
 {
 	clear_help_string(help_string_);
+}
+
+void free_all_caches(void)
+{
+	// KP: free all caches now
+	std::cout << "Freeing all caches...\n";
+	memory_stats("Before cache free");
+	freeTextureAtlas();
+	freeUnitTextureAtlas();
+	image::flush_cache();
+	font::clear_text_caches();
+	memory_stats("After cache free");
 }

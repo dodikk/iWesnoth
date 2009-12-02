@@ -210,7 +210,7 @@ public:
 
 	const std::vector<unit_animation>& animations() const;
 
-	const std::string& flag_rgb() const { return flag_rgb_; }
+	const shared_string& flag_rgb() const { return flag_rgb_; }
 
 	std::vector<attack_type> attacks() const;
 	const unit_movement_type& movement_type() const { return movementType_; }

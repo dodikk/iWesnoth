@@ -641,7 +641,7 @@ void set_save_replays(bool value)
 
 bool save_replays()
 {
-	return utils::string_bool(preferences::get("save_replays"), true);
+	return utils::string_bool(preferences::get("save_replays"), false);
 }
 
 void set_delete_saves(bool value)
@@ -885,7 +885,7 @@ void encounter_start_units(unit_map& units){
 }
 
 void encounter_recallable_units(game_state& gamestate){
-	for(std::map<std::string, player_info>::iterator pi = gamestate.players.begin(); pi!=gamestate.players.end(); ++pi) {
+	for(std::map<shared_string, player_info>::iterator pi = gamestate.players.begin(); pi!=gamestate.players.end(); ++pi) {
 		for(std::vector<unit>::iterator help_recall_it = pi->second.available_units.begin(); help_recall_it != pi->second.available_units.end(); help_recall_it++) {
 			encountered_units_set.insert(help_recall_it->type_id());
 		}

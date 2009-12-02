@@ -51,6 +51,7 @@ loadscreen::global_loadscreen_manager::global_loadscreen_manager(CVideo& screen)
 {
 	if(owns) {
 		manager = this;
+		free_all_caches();
 		global_loadscreen = new loadscreen(screen);
 		//global_loadscreen->clear_screen();
 	}

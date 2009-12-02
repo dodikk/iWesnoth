@@ -317,7 +317,8 @@ bool terrain_builder::rule_valid(const building_rule &rule) const
 
 				// we already precached file existence in the constructor
 				// but only for filenames not using ".."
-				if(!image::exists("terrain/" + s + ".png", s.find("..") == std::string::npos))
+				std::string temp = "terrain/" + s + ".png";
+				if(!image::exists(temp.c_str(), s.find("..") == std::string::npos))
 					return false;
 			}
 		}

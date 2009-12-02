@@ -33,10 +33,10 @@ class scoped_wml_variable;
 
 struct wml_menu_item
 {
-	wml_menu_item(const std::string& id, const config* cfg=NULL);
-	std::string name;
-	std::string image;
-	t_string description;
+	wml_menu_item(const shared_string& id, const config* cfg=NULL);
+	shared_string name;
+	shared_string image;
+	shared_string description;
 	bool needs_select;
 	config show_if;
 	config filter_location;
@@ -54,7 +54,7 @@ struct player_info
 		can_recruit()
 	{}
 
-	std::string name;                  /**< Stores the current_player name */
+	shared_string name;                  /**< Stores the current_player name */
 	int gold;                          /**< Amount of gold the player has saved */
 	bool gold_add;                     /**<
 										* Amount of gold is added to the
@@ -76,20 +76,20 @@ public:
 
 	~game_state();
 	game_state& operator=(const game_state& state);
-	std::string label;                               /**< Name of the game (e.g. name of save file). */
-	std::string version;                             /**< Version game was created with. */
-	std::string campaign_type;                       /**< Type of the game - campaign, multiplayer etc. */
+	shared_string label;                               /**< Name of the game (e.g. name of save file). */
+	shared_string version;                             /**< Version game was created with. */
+	shared_string campaign_type;                       /**< Type of the game - campaign, multiplayer etc. */
 
-	std::string campaign_define;                     /**< If there is a define the campaign uses to customize data */
-	std::vector<std::string> campaign_xtra_defines;  /**< more customization of data */
+	shared_string campaign_define;                     /**< If there is a define the campaign uses to customize data */
+	std::vector<shared_string> campaign_xtra_defines;  /**< more customization of data */
 
-	std::string campaign;                            /**< the campaign being played */
-	std::string history;                             /**< ancestral IDs */
-	std::string abbrev;                              /**< the campaign abbreviation */
-	std::string scenario;                            /**< the scenario being played */
-	std::string next_scenario;                       /**< the scenario coming next (for campaigns) */
-	std::string completion;                          /**< running. victory, or defeat */
-	std::string end_text;                            /**< end-of-campaign text */
+	shared_string campaign;                            /**< the campaign being played */
+	shared_string history;                             /**< ancestral IDs */
+	shared_string abbrev;                              /**< the campaign abbreviation */
+	shared_string scenario;                            /**< the scenario being played */
+	shared_string next_scenario;                       /**< the scenario coming next (for campaigns) */
+	shared_string completion;                          /**< running. victory, or defeat */
+	shared_string end_text;                            /**< end-of-campaign text */
 
 	unsigned int end_text_duration;                  /**< for how long the end-of-campaign text is shown */
 
@@ -98,10 +98,10 @@ public:
 	 * levels, indexed by a string identifier (which is the leader name by
 	 * default, but can be set with the "id" attribute of the "side" tag).
 	 */
-	std::map<std::string, player_info> players;
+	std::map<shared_string, player_info> players;
 
 	/** Return the Nth player, or NULL if no such player exists. */
-	player_info* get_player(const std::string& id);
+	player_info* get_player(const shared_string& id);
 
 	/**
 	 * Loads the recall list.
@@ -111,7 +111,7 @@ public:
 	void load_recall_list(const config::child_list& players);
 
 	std::vector<scoped_wml_variable*> scoped_variables;
-	std::map<std::string, wml_menu_item*> wml_menu_items;
+	std::map<shared_string, wml_menu_item*> wml_menu_items;
 
 	const config& get_variables() const { return variables; }
 	void set_variables(const config& vars);
@@ -121,23 +121,23 @@ public:
 	// Variable access
 
 	//t_string& get_variable(const std::string& varname);
-	shared_string& get_variable(const std::string& varname);
+	shared_string& get_variable(const shared_string& varname);
 	//virtual const t_string& get_variable_const(const std::string& varname) const;
 	//virtual const t_string get_variable_const(const std::string& varname) const;
-	virtual const shared_string& get_variable_const(const std::string& varname) const;
-	config& get_variable_cfg(const std::string& varname);
-	variable_info::array_range get_variable_cfgs(const std::string& varname);
+	virtual const shared_string& get_variable_const(const shared_string& varname) const;
+	config& get_variable_cfg(const shared_string& varname);
+	variable_info::array_range get_variable_cfgs(const shared_string& varname);
 
-	void set_variable(const std::string& varname, const t_string& value);
-	config& add_variable_cfg(const std::string& varname, const config& value=config());
+	void set_variable(const shared_string& varname, const shared_string& value);
+	config& add_variable_cfg(const shared_string& varname, const config& value=config());
 
-	void clear_variable(const std::string& varname);
-	void clear_variable_cfg(const std::string& varname); // Clears only the config children
+	void clear_variable(const shared_string& varname);
+	void clear_variable_cfg(const shared_string& varname); // Clears only the config children
 
         const rand_rng::simple_rng& rng() const { return rng_; }
         rand_rng::simple_rng& rng() { return rng_; }
 
-	std::string difficulty; /**< The difficulty level the game is being played on. */
+	shared_string difficulty; /**< The difficulty level the game is being played on. */
 
 	/**
 	 * If the game is saved mid-level, we have a series of replay steps
@@ -209,7 +209,7 @@ public:
 	bool set_time_of_day(int newTime);
 	size_t turn() const;
 	int number_of_turns() const;
-	void modify_turns(const std::string& mod);
+	void modify_turns(const shared_string& mod);
 	void add_turns(int num);
 
 	/** Dynamically change the current turn number. */
@@ -222,7 +222,7 @@ public:
 	 */
 	bool next_turn();
 
-	static bool is_start_ToD(const std::string&);
+	static bool is_start_ToD(const shared_string&);
 
 	/**
 	 * Adds a new local time area from config, making it follow its own
@@ -242,7 +242,7 @@ public:
 	 * @param locs                Set of locations to be affected.
 	 * @param time_cfg            Config object containing [time] information.
 	 */
-	void add_time_area(const std::string& id, const std::set<map_location>& locs,
+	void add_time_area(const shared_string& id, const std::set<map_location>& locs,
 	                   const config& time_cfg);
 
 	/**
@@ -252,7 +252,7 @@ public:
 	 * @param id                  Identifier of time_area to remove. Supply an
 	 *                            empty one to remove all local time areas.
 	 */
-	void remove_time_area(const std::string& id);
+	void remove_time_area(const shared_string& id);
 
 	/**
 	 * @todo FIXME: since gamestatus may be constructed with NULL game_state* (by default),
@@ -284,8 +284,8 @@ private:
 			hexes()
 			{}
 
-		std::string xsrc, ysrc;
-		std::string id;
+		shared_string xsrc, ysrc;
+		shared_string id;
 		std::vector<time_of_day> times;
 		std::set<map_location> hexes;
 	};
@@ -307,43 +307,44 @@ std::string generate_game_uuid();
  * It is also the object which needs to be created to start a new game.
  */
 struct save_info {
-	save_info(const std::string& n, time_t t) : name(n), time_modified(t) {}
-	std::string name;
+	save_info(const shared_string& n, time_t t) : name(n), time_modified(t) {}
+	shared_string name;
 	time_t time_modified;
 };
 
 /** Get a list of available saves. */
-std::vector<save_info> get_saves_list(const std::string* dir = NULL, const std::string* filter = NULL);
+std::vector<save_info> get_saves_list(const shared_string* dir = NULL, const shared_string* filter = NULL);
 
 enum WRITE_GAME_MODE { WRITE_SNAPSHOT_ONLY, WRITE_FULL_GAME };
 
-void read_save_file(const std::string& name, config& cfg, std::string* error_log);
+void read_save_file(const shared_string& name, config& cfg, std::string* error_log);
 
 void write_players(game_state& gamestate, config& cfg);
 void write_game(const game_state& gamestate, config& cfg, WRITE_GAME_MODE mode=WRITE_FULL_GAME);
 void write_game(config_writer &out, const game_state& gamestate, WRITE_GAME_MODE mode=WRITE_FULL_GAME);
 
 /** Returns true iff there is already a savegame with that name. */
-bool save_game_exists(const std::string & name);
+bool save_game_exists(const shared_string & name);
 
 /** Throws game::save_game_failed. */
-scoped_ostream open_save_game(const std::string &label);
-void finish_save_game(config_writer &out, const game_state& gamestate, const std::string &label);
+scoped_ostream open_save_game(const shared_string &label);
+void finish_save_game(config_writer &out, const game_state& gamestate, const shared_string &label);
 
 /** Load/Save games. */
-void load_game(const std::string& name, game_state& gamestate, std::string* error_log);
-void load_game_summary(const std::string& name, config& cfg_summary, std::string* error_log);
+void load_game(const shared_string& name, game_state& gamestate, std::string* error_log);
+void load_game_summary(const shared_string& name, config& cfg_summary, std::string* error_log);
 
 /** Throws gamestatus::save_game_failed. */
 void save_game(const game_state& gamestate);
 
 /** Delete a savegame. */
-void delete_game(const std::string& name);
+void delete_game(const shared_string& name);
 
-config& save_summary(std::string save);
+config& save_summary(shared_string save);
 
 void write_save_index();
 
 void replace_underbar2space(std::string &name);
+void replace_underbar2space(shared_string &name);
 
 #endif

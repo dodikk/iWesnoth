@@ -45,7 +45,7 @@ config::config(const config& cfg) : values(), children()//, ordered_children()
 	append(cfg);
 }
 
-config::config(const std::string& child) : values(), children()//, ordered_children()
+config::config(const shared_string& child) : values(), children()//, ordered_children()
 {
 	add_child(child);
 }
@@ -81,7 +81,7 @@ void config::append(const config& cfg)
 	}
 }
 
-void config::merge_children(const std::string& key)
+void config::merge_children(const shared_string& key)
 {
 	config merged_children;
 	const child_list& children = get_children(key);
@@ -97,7 +97,7 @@ void config::merge_children(const std::string& key)
 	add_child(key,merged_children);
 }
 
-config::child_itors config::child_range(const std::string& key)
+config::child_itors config::child_range(const shared_string& key)
 {
 	child_map::iterator i = children.find(key);
 	if(i != children.end()) {
@@ -108,7 +108,7 @@ config::child_itors config::child_range(const std::string& key)
 	}
 }
 
-config::const_child_itors config::child_range(const std::string& key) const
+config::const_child_itors config::child_range(const shared_string& key) const
 {
 	child_map::const_iterator i = children.find(key);
 	if(i != children.end()) {
@@ -119,7 +119,7 @@ config::const_child_itors config::child_range(const std::string& key) const
 	}
 }
 
-size_t config::child_count(const std::string& key) const
+size_t config::child_count(const shared_string& key) const
 {
 	child_map::const_iterator i = children.find(key);
 	if(i != children.end()) {
@@ -128,7 +128,7 @@ size_t config::child_count(const std::string& key) const
 	return 0;
 }
 
-const config::child_list& config::get_children(const std::string& key) const
+const config::child_list& config::get_children(const shared_string& key) const
 {
 	const child_map::const_iterator i = children.find(key);
 	if(i != children.end()) {
@@ -141,7 +141,7 @@ const config::child_list& config::get_children(const std::string& key) const
 
 const config::child_map& config::all_children() const { return children; }
 
-config* config::child(const std::string& key)
+config* config::child(const shared_string& key)
 {
 	const child_map::const_iterator i = children.find(key);
 	if(i != children.end() && i->second.empty() == false) {
@@ -151,7 +151,7 @@ config* config::child(const std::string& key)
 	}
 }
 
-const config* config::child(const std::string& key) const
+const config* config::child(const shared_string& key) const
 {
 	const child_map::const_iterator i = children.find(key);
 	if(i != children.end() && i->second.empty() == false) {
@@ -161,7 +161,7 @@ const config* config::child(const std::string& key) const
 	}
 }
 
-config& config::add_child(const std::string& key)
+config& config::add_child(const shared_string& key)
 {
 	child_list& v = children[key];
 	v.push_back(new config());
@@ -169,7 +169,7 @@ config& config::add_child(const std::string& key)
 	return *v.back();
 }
 
-config& config::add_child(const std::string& key, const config& val)
+config& config::add_child(const shared_string& key, const config& val)
 {
 	child_list& v = children[key];
 	v.push_back(new config(val));
@@ -177,7 +177,7 @@ config& config::add_child(const std::string& key, const config& val)
 	return *v.back();
 }
 
-config& config::add_child_at(const std::string& key, const config& val, size_t index)
+config& config::add_child_at(const shared_string& key, const config& val, size_t index)
 {
 	child_list& v = children[key];
 	if(index > v.size()) {
@@ -210,16 +210,16 @@ config& config::add_child_at(const std::string& key, const config& val, size_t i
 namespace {
 
 struct remove_ordered {
-	remove_ordered(const std::string& key) : key_(key) {}
+	remove_ordered(const shared_string& key) : key_(key) {}
 
 	bool operator()(const config::child_pos& pos) const { return pos.pos->first == key_; }
 private:
-	std::string key_;
+	shared_string key_;
 };
 
 }
 
-void config::clear_children(const std::string& key)
+void config::clear_children(const shared_string& key)
 {
 	ordered_children.erase(std::remove_if(ordered_children.begin(),ordered_children.end(),remove_ordered(key)),ordered_children.end());
 	
@@ -232,7 +232,7 @@ void config::clear_children(const std::string& key)
 	}
 }
 
-void config::recursive_clear_value(const std::string& key)
+void config::recursive_clear_value(const shared_string& key)
 {
 	values.erase(key);
 	
@@ -268,7 +268,7 @@ config::all_children_iterator config::erase(const config::all_children_iterator&
 	return all_children_iterator(ordered_children.erase(erase_pos));
 }
 
-void config::remove_child(const std::string& key, size_t index)
+void config::remove_child(const shared_string& key, size_t index)
 {
 	// Remove from the ordering
 	const child_pos pos(children.find(key),index);
@@ -305,20 +305,20 @@ const shared_string& config::operator[](const std::string& key) const
 }
 */
 //std::string& config::operator[](const std::string& key)
-shared_string& config::operator[](const std::string& key)
+shared_string& config::operator[](const shared_string& key)
 {
 	return values[key];
 }
 
 //const std::string& config::operator[](const std::string& key) const
-const shared_string& config::operator[](const std::string& key) const 
+const shared_string& config::operator[](const shared_string& key) const 
 {
 	return get_attribute(key);
 }
 
 
 //const std::string& config::get_attribute(const std::string& key) const
-const shared_string& config::get_attribute(const std::string& key) const
+const shared_string& config::get_attribute(const shared_string& key) const
 {
 	const string_map::const_iterator i = values.find(key);
 	if(i != values.end()) {
@@ -334,21 +334,21 @@ const shared_string& config::get_attribute(const std::string& key) const
 namespace {
 
 struct config_has_value {
-	config_has_value(const std::string& name, const std::string& value)
+	config_has_value(const shared_string& name, const shared_string& value)
 	              : name_(name), value_(value)
 	{}
 
 	bool operator()(const config* cfg) const { return (*cfg)[name_] == value_; }
 
 private:
-	const std::string name_, value_;
+	const shared_string name_, value_;
 };
 
 } // end namespace
 
-config* config::find_child(const std::string& key,
-                           const std::string& name,
-                           const std::string& value)
+config* config::find_child(const shared_string& key,
+                           const shared_string& name,
+                           const shared_string& value)
 {
 	const child_map::iterator i = children.find(key);
 	if(i == children.end())
@@ -363,9 +363,9 @@ config* config::find_child(const std::string& key,
 		return NULL;
 }
 
-const config* config::find_child(const std::string& key,
-                                 const std::string& name,
-                                 const std::string& value) const
+const config* config::find_child(const shared_string& key,
+                                 const shared_string& name,
+                                 const shared_string& value) const
 {
 	const child_map::const_iterator i = children.find(key);
 	if(i == children.end())
@@ -685,7 +685,8 @@ void config::apply_diff(const config& diff)
 
 void config::merge_with(const config& c)
 {
-	std::map<std::string, unsigned> visitations;
+	//std::map<std::string, unsigned> visitations;
+	std::map<shared_string, unsigned> visitations;
 
 	// Merge attributes first
 	string_map::const_iterator attrib_it, attrib_end = c.values.end();

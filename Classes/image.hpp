@@ -122,12 +122,15 @@ namespace image {
 			value();
 			value(const value &a);
 			value(const char *filename);
-			value(const char *filename, const std::string& modifications);
-			value(const std::string& filename);
+			value(const char *filename, const shared_string& modifications);
+			value(const shared_string& filename, const shared_string& modifications);
 			value(const std::string& filename, const std::string& modifications);
+			value(const shared_string& filename, const map_location& loc, const shared_string& modifications);
 			value(const std::string& filename, const map_location& loc, const std::string& modifications);
+			value(const shared_string& filename, const map_location& loc, int center_x, int center_y, const shared_string& modifications);
 			value(const std::string& filename, const map_location& loc, int center_x, int center_y, const std::string& modifications);
 			value(const shared_string& filename);
+			value(const std::string& filename);
 
 			bool operator==(const value& a) const;
 			bool operator<(const value& a) const;
@@ -178,15 +181,17 @@ namespace image {
 		// should store locators, and not strings to construct locators
 		// (the second will work, of course, but will be slower)
 	        locator();
-		locator(const locator &a, const std::string &mods ="");
+		locator(const locator &a, const shared_string &mods ="");
 		locator(const char *filename);
-		locator(const char *filename, const std::string& modifications);
+		locator(const char *filename, const shared_string& modifications);
 		locator(const std::string& filename);
 		locator(const shared_string& filename);
 		locator(const std::string& filename, const std::string& modifications);
-		locator(const shared_string& filename, const std::string& modifications);
+		locator(const shared_string& filename, const shared_string& modifications);
 		locator(const std::string& filename, const map_location& loc, const std::string& modifications="");
+		locator(const shared_string& filename, const map_location& loc, const shared_string& modifications="");
 		locator(const std::string& filename, const map_location& loc, int center_x, int center_y, const std::string& modifications="");
+		locator(const shared_string& filename, const map_location& loc, int center_x, int center_y, const shared_string& modifications="");
 
 		locator& operator=(const locator &a);
 		bool operator==(const locator &a) const { return index_ == a.index_; }
@@ -194,11 +199,11 @@ namespace image {
 		bool operator<(const locator &a) const { return index_ < a.index_; }
 
 		//const std::string &get_filename() const { return val_.filename_; }
-		const std::string get_filename() const { return val_.filename_; }
+		const shared_string get_filename() const { return val_.filename_; }
 		//const shared_string &get_filename() const { return val_.filename_; }
 		const map_location& get_loc() const { return val_.loc_ ; }
 		//const std::string& get_modifications() const {return val_.modifications_;}
-		const std::string get_modifications() const {return val_.modifications_;}
+		const shared_string get_modifications() const {return val_.modifications_;}
 		//const shared_string& get_modifications() const {return val_.modifications_;}
 		type get_type() const { return val_.type_; };
 		// const int get_index() const { return index_; };

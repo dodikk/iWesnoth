@@ -221,7 +221,7 @@ void show_objectives(game_display& disp, const config& level, const std::string&
 {
 	static const std::string no_objectives(_("No objectives available"));
 	const std::string& name = level["name"];
-	std::string campaign_name = std::string(level["campaign"]);
+	shared_string campaign_name = level["campaign"];
 	replace_underbar2space(campaign_name);
 
 	gui::message_dialog(disp, "", "*~" + name +

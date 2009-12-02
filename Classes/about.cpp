@@ -174,11 +174,11 @@ void show_about(display &disp, std::string campaign)
 
 	cursor::set(cursor::NORMAL);
 
-	std::vector<std::string> image_list;
+	std::vector<shared_string> image_list;
 	if(campaign.size() && !images[campaign].empty()){
-		image_list=utils::split(images[campaign]);
+		image_list=utils::split_shared(images[campaign]);
 	}else{
-		image_list=utils::split(images_default,',',utils::STRIP_SPACES);
+		image_list=utils::split_shared(images_default,',',utils::STRIP_SPACES);
 	}
 	surface map_image(scale_surface(image::get_image(image_list[0]), video.getx(), video.gety()));
 	if(! map_image){

@@ -30,7 +30,7 @@ public:
 	string_map_variable_set(const string_map& map) : map_(map) {};
 
 	//virtual const t_string& get_variable_const (const std::string& key) const
-	virtual const shared_string& get_variable_const (const std::string& key) const
+	virtual const shared_string& get_variable_const (const shared_string& key) const
 	{
 		//static const t_string empty_string = "";
 		static const shared_string empty_string = "";

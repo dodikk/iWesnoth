@@ -53,7 +53,7 @@ namespace {
 
 void remove_old_auto_saves()
 {
-	const std::string auto_save = _("Auto-Save");
+	const shared_string auto_save = _("Auto-Save");
 	int countdown = preferences::autosavemax();
 	if (countdown == preferences::INFINITE_AUTO_SAVES)
 		return;
@@ -687,7 +687,7 @@ private:
 			}
 			//recall list
 			{
-				for(std::map<std::string, player_info>::const_iterator i=gamestate_.players.begin();
+				for(std::map<shared_string, player_info>::const_iterator i=gamestate_.players.begin();
 				i!=gamestate_.players.end(); ++i) {
 					for(std::vector<unit>::const_iterator j = i->second.available_units.begin();
 						j != i->second.available_units.end(); ++j) {

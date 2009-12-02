@@ -906,6 +906,7 @@ bool game_controller::load_game()
 
 	try {
 		// KP: need to show loading screen right away...
+		
 		loadscreen::global_loadscreen_manager loadscreen(disp().video());
 		loadscreen::global_loadscreen->set_progress(0, _("Loading data files"));
 		
@@ -1212,7 +1213,7 @@ bool game_controller::new_campaign()
 	else
 	{
 		state_.campaign_define = campaign["define"];
-		state_.campaign_xtra_defines = utils::split(campaign["extra_defines"]);
+		state_.campaign_xtra_defines = utils::split_shared(campaign["extra_defines"]);
 	}
 
 	return true;
@@ -1681,11 +1682,6 @@ void game_controller::load_game_cfg(const bool force)
 
 void game_controller::launch_game(RELOAD_GAME_DATA reload)
 {
-	// KP: free all caches now
-	freeTextureAtlas();
-	freeUnitTextureAtlas();
-	image::flush_cache();
-	
 	loadscreen::global_loadscreen_manager loadscreen_manager(disp().video());
 	loadscreen::global_loadscreen->set_progress(0, _("Loading data files"));
 	if(reload == RELOAD_DATA) {
@@ -1693,7 +1689,7 @@ void game_controller::launch_game(RELOAD_GAME_DATA reload)
 
 		typedef boost::shared_ptr<game_config::scoped_preproc_define> define_ptr;
 		std::deque<define_ptr> extra_defines;
-		for(std::vector<std::string>::const_iterator i = state_.campaign_xtra_defines.begin(); i != state_.campaign_xtra_defines.end(); ++i) {
+		for(std::vector<shared_string>::const_iterator i = state_.campaign_xtra_defines.begin(); i != state_.campaign_xtra_defines.end(); ++i) {
 			define_ptr newdefine(new game_config::scoped_preproc_define(*i));
 			extra_defines.push_back(newdefine);
 		}
@@ -2267,6 +2263,7 @@ static int do_gameloop(int argc, char** argv)
 		} 
 		else if(res == gui::RELOAD_GAME_DATA) {
 			loadscreen::global_loadscreen_manager loadscreen(game.disp().video());
+			loadscreen::global_loadscreen->increment_progress(0, "", true);
 			game.reload_changed_game_config();
 			continue;
 #ifndef DISABLE_EDITOR2

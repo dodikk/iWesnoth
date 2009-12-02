@@ -88,7 +88,7 @@ struct text_chunk
 	{
 	}
 
-	text_chunk(subset_id subset, std::string const & text) :
+	text_chunk(subset_id subset, shared_string const & text) :
 		subset(subset),
 		text(text),
 		ucs2_text()
@@ -102,7 +102,7 @@ struct text_chunk
 	{
 	}
 
-	text_chunk(subset_id subset, std::string const & text, ucs2_string const & ucs2_text) :
+	text_chunk(subset_id subset, shared_string const & text, ucs2_string const & ucs2_text) :
 		subset(subset),
 		text(text),
 		ucs2_text(ucs2_text)
@@ -114,14 +114,14 @@ struct text_chunk
 
 	subset_id subset;
 	//FIXME if we don't need the utf8 here remove it
-	std::string text;
+	shared_string text;
 	ucs2_string ucs2_text;
 };
 
 //std::vector<subset_id> font_map;
 
 //cache sizes of small text
-typedef std::map<std::string,SDL_Rect> line_size_cache_map;
+typedef std::map<shared_string,SDL_Rect> line_size_cache_map;
 
 //map of styles -> sizes -> cache
 std::map<int,std::map<int,line_size_cache_map> > line_size_cache;
@@ -431,9 +431,9 @@ static const size_t max_text_line_width = 4096;
 class text_surface
 {
 public:
-	text_surface(std::string const &str, int size, SDL_Color color, int style);
+	text_surface(shared_string const &str, int size, SDL_Color color, int style);
 	text_surface(int size, SDL_Color color, int style);
-	void set_text(std::string const &str);
+	void set_text(shared_string const &str);
 
 	void measure() const;
 	size_t width() const;
@@ -454,7 +454,7 @@ private:
 	SDL_Color color_;
 	int style_;
 	mutable int w_, h_;
-	std::string str_;
+	shared_string str_;
 	mutable bool initialized_;
 	// KP: I don't understand the point of chunks_, can't we just keep the utf8 str_ and use the proper TTF functions??
 //	mutable std::vector<text_chunk> chunks_;
@@ -488,7 +488,7 @@ void text_surface::bidi_cvt()
 }
 #endif
 
-text_surface::text_surface(std::string const &str, int size,
+text_surface::text_surface(shared_string const &str, int size,
 		SDL_Color color, int style) :
 	hash_(0),
 	font_size_(size),
@@ -527,7 +527,7 @@ text_surface::text_surface(int size, SDL_Color color, int style) :
 {
 }
 
-void text_surface::set_text(std::string const &str)
+void text_surface::set_text(shared_string const &str)
 {
 	initialized_ = false;
 	w_ = -1;
@@ -542,7 +542,8 @@ void text_surface::set_text(std::string const &str)
 void text_surface::hash()
 {
 	int h = 0;
-	for(std::string::const_iterator it = str_.begin(), it_end = str_.end(); it != it_end; ++it)
+	std::string str = str_.get();
+	for(std::string::const_iterator it = str.begin(), it_end = str.end(); it != it_end; ++it)
 		h = ((h << 9) | (h >> (sizeof(int) * 8 - 9))) ^ (*it);
 	hash_ = h;
 }
@@ -640,6 +641,10 @@ class text_cache
 public:
 	static text_surface &find(text_surface const &t);
 	static void resize(unsigned int size);
+	static void clear()
+	{
+		cache_.clear();
+	}
 private:
 	typedef std::list< text_surface > text_list;
 	static text_list cache_;
@@ -647,7 +652,7 @@ private:
 };
 
 text_cache::text_list text_cache::cache_;
-unsigned int text_cache::max_size_ = 20;
+unsigned int text_cache::max_size_ = 30;
 
 void text_cache::resize(unsigned int size)
 {
@@ -683,7 +688,7 @@ text_surface &text_cache::find(text_surface const &t)
 
 }
 
-static surface render_text(const std::string& text, int fontsize, const SDL_Color& colour, int style, bool use_markup)
+static surface render_text(const shared_string& text, int fontsize, const SDL_Color& colour, int style, bool use_markup)
 {
 	// we keep blank lines and spaces (may be wanted for indentation)
 	const std::vector<std::string> lines = utils::split(text, '\n', 0);
@@ -756,14 +761,14 @@ static surface render_text(const std::string& text, int fontsize, const SDL_Colo
 }
 
 
-surface get_rendered_text(const std::string& str, int size, const SDL_Color& colour, int style)
+surface get_rendered_text(const shared_string& str, int size, const SDL_Color& colour, int style)
 {
 	// TODO maybe later also to parse markup here, but a lot to check
 	return render_text(str, size, colour, style, false);
 }
 
 SDL_Rect draw_text_line(surface gui_surface, const SDL_Rect& area, int size,
-		   const SDL_Color& colour, const std::string& text,
+		   const SDL_Color& colour, const shared_string& text,
 		   int x, int y, bool use_tooltips, int style)
 {
 	if (gui_surface.null()) {
@@ -841,12 +846,12 @@ int get_max_height(int size)
 	return TTF_FontHeight(font);
 }
 
-int line_width(const std::string& line, int font_size, int style)
+int line_width(const shared_string& line, int font_size, int style)
 {
 	return line_size(line,font_size,style).w;
 }
 
-SDL_Rect line_size(const std::string& line, int font_size, int style)
+SDL_Rect line_size(const shared_string& line, int font_size, int style)
 {
 	line_size_cache_map& cache = line_size_cache[style][font_size];
 
@@ -868,7 +873,7 @@ SDL_Rect line_size(const std::string& line, int font_size, int style)
 	return res;
 }
 
-std::string make_text_ellipsis(const std::string &text, int font_size,
+shared_string make_text_ellipsis(const shared_string &text, int font_size,
 		int max_width, bool with_tags, bool parse_for_style)
 {
 	static const std::string ellipsis = "...";
@@ -878,7 +883,7 @@ std::string make_text_ellipsis(const std::string &text, int font_size,
 	int style = TTF_STYLE_NORMAL;
 	if(parse_for_style) parse_markup(text.begin(), text.end(), &unused_int, &unused_color, &style);
 
-	if(line_width(with_tags ? text : del_tags(text), font_size, style) <= max_width)
+	if(line_width(with_tags ? text : shared_string(del_tags(text)), font_size, style) <= max_width)
 		return text;
 	if(line_width(ellipsis, font_size, style) > max_width)
 		return "";
@@ -910,7 +915,7 @@ namespace {
 class floating_label
 {
 public:
-	floating_label(const std::string& text, int font_size, const SDL_Color& colour, const SDL_Color& bgcolour,
+	floating_label(const shared_string& text, int font_size, const SDL_Color& colour, const SDL_Color& bgcolour,
 			double xpos, double ypos, double xmove, double ymove, int lifetime, const SDL_Rect& clip_rect,
 			font::ALIGN align, int border_size, bool scroll_with_map)
 		: surf_(NULL), buf_(NULL), text_(text), font_size_(font_size), colour_(colour),
@@ -959,7 +964,7 @@ private:
 	int xpos(size_t width) const;
 
 	surface surf_, buf_;
-	std::string text_;
+	shared_string text_;
 	int font_size_;
 	SDL_Color colour_, bgcolour_;
 	int bgalpha_;
@@ -1133,7 +1138,7 @@ void floating_label::undraw(/*surface screen*/)
 }
 
 namespace font {
-int add_floating_label(const std::string& text, int font_size, const SDL_Color& colour,
+int add_floating_label(const shared_string& text, int font_size, const SDL_Color& colour,
 		double xpos, double ypos, double xmove, double ymove, int lifetime, const SDL_Rect& clip_rect, ALIGN align,
 		const SDL_Color* bg_colour, int border_size, LABEL_SCROLL_MODE scroll_mode)
 {
@@ -1380,12 +1385,17 @@ void cache_mode(CACHE mode)
 {
 	if(mode == CACHE_LOBBY) {
 		//text_cache::resize(1000);
-		text_cache::resize(20);
+		text_cache::resize(30);
 	} else {
-		text_cache::resize(20);
+		text_cache::resize(30);
 	}
 }
 
-
+// KP: helper functions to clear caches
+void clear_text_caches(void)
+{
+	text_cache::clear();
+	line_size_cache.clear();
 }
 
+}

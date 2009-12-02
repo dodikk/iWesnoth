@@ -21,6 +21,7 @@ class version_info;
 #include "tstring.hpp"
 
 #include <string>
+#include "shared_string.hpp"
 #include <vector>
 #include <map>
 
@@ -65,7 +66,7 @@ namespace game_config
 	};
 	extern std::vector<server_info> server_list;
 
-	extern std::string game_icon, game_title, game_logo, title_music, lobby_music,
+	extern shared_string game_icon, game_title, game_logo, title_music, lobby_music,
 		moved_ball_image, unmoved_ball_image, partmoved_ball_image,
 		enemy_ball_image, ally_ball_image, energy_image,
 		flag_image, flag_icon_image, cross_image,
@@ -76,7 +77,7 @@ namespace game_config
 
 	extern double hp_bar_scaling, xp_bar_scaling;
 
-	extern std::string flag_rgb;
+	extern shared_string flag_rgb;
 	extern std::vector<Uint32> defense_color_scale;
 
 	extern std::vector<std::string> foot_speed_prefix;

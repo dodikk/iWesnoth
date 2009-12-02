@@ -54,46 +54,46 @@ namespace game_config
 
 	int cache_compression_level = 6;
 
-	std::string game_icon = "wesnoth-icon-small.png", game_title, game_logo, title_music, lobby_music;
+	shared_string game_icon = "wesnoth-icon-small.png", game_title, game_logo, title_music, lobby_music;
 	int title_logo_x = 0, title_logo_y = 0, title_buttons_x = 0, title_buttons_y = 0, title_buttons_padding = 0,
 	    title_tip_x = 0, title_tip_width = 0, title_tip_padding = 0;
 
-	std::string terrain_mask_image = "terrain/alphamask.png";
-	std::string grid_image = "terrain/grid.png";
-	std::string unreachable_image = "terrain/darken.png";    /**< overlay image for unreachable tiles. */
-	std::string linger_image = "terrain/darken-linger.png";  /**< overlay image for tiles in linger mode. */
+	shared_string terrain_mask_image = "terrain/alphamask.png";
+	shared_string grid_image = "terrain/grid.png";
+	shared_string unreachable_image = "terrain/darken.png";    /**< overlay image for unreachable tiles. */
+	shared_string linger_image = "terrain/darken-linger.png";  /**< overlay image for tiles in linger mode. */
 
-	std::string energy_image = "misc/bar-energy.png";
-	std::string moved_ball_image = "misc/ball-moved.png";
-	std::string unmoved_ball_image = "misc/ball-unmoved.png";
-	std::string partmoved_ball_image = "misc/ball-partmoved.png";
-	std::string enemy_ball_image = "misc/ball-enemy.png";
-	std::string ally_ball_image = "misc/ball-ally.png";
-	std::string flag_image = "flags/flag-1.png:150,flags/flag-2.png:150,flags/flag-3.png:150,flags/flag-4.png:150";
-	std::string flag_icon_image = "flags/flag_icon.png";
-	std::string flag_rgb = "flag_green";
+	shared_string energy_image = "misc/bar-energy.png";
+	shared_string moved_ball_image = "misc/ball-moved.png";
+	shared_string unmoved_ball_image = "misc/ball-unmoved.png";
+	shared_string partmoved_ball_image = "misc/ball-partmoved.png";
+	shared_string enemy_ball_image = "misc/ball-enemy.png";
+	shared_string ally_ball_image = "misc/ball-ally.png";
+	shared_string flag_image = "flags/flag-1.png:150,flags/flag-2.png:150,flags/flag-3.png:150,flags/flag-4.png:150";
+	shared_string flag_icon_image = "flags/flag_icon.png";
+	shared_string flag_rgb = "flag_green";
 	std::vector<Uint32> defense_color_scale;
 
 	double hp_bar_scaling = 0.666;
 	double xp_bar_scaling = 0.5;
 
-	std::string cross_image = "misc/cross.png";
+	shared_string cross_image = "misc/cross.png";
 
 	std::vector<std::string> foot_speed_prefix;
 	std::string foot_teleport_enter = "footsteps/teleport-in.png";
 	std::string foot_teleport_exit = "footsteps/teleport-out.png";
 
-	std::string observer_image = "misc/eye.png";
-	std::string tod_bright_image = "misc/tod-bright.png";
-	std::string unchecked_menu_image = "buttons/checkbox.png";
-	std::string checked_menu_image = "buttons/checkbox-pressed.png";
-	std::string wml_menu_image = "buttons/WML-custom.png";
+	shared_string observer_image = "misc/eye.png";
+	shared_string tod_bright_image = "misc/tod-bright.png";
+	shared_string unchecked_menu_image = "buttons/checkbox.png";
+	shared_string checked_menu_image = "buttons/checkbox-pressed.png";
+	shared_string wml_menu_image = "buttons/WML-custom.png";
 
-	std::string level_image;
-	std::string ellipsis_image;
+	shared_string level_image;
+	shared_string ellipsis_image;
 
-	std::string default_victory_music;
-	std::string default_defeat_music;
+	shared_string default_victory_music;
+	shared_string default_defeat_music;
 
 	std::map<std::string, color_range > team_rgb_range;
 	std::map<std::string, t_string > team_rgb_name;

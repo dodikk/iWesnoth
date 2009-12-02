@@ -91,6 +91,14 @@ void shared_string::set(const std::string &str)
 	assert(data_);
 	 */
 	
+	// optimize common case of "" string
+	if (str.length() == 0 && gNullData)
+	{
+		data_ = gNullData;
+		data_->count++;
+		return;
+	}
+	
 	fnd = gStringPool().find(&str);
 	if (fnd == gStringPool().end())
 	{

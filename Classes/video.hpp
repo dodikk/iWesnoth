@@ -36,6 +36,11 @@ bool non_interactive();
 //void update_rect(const SDL_Rect& rect);
 //void update_whole_screen();
 
+
+// KP: helper function to free all cache memory
+extern void free_all_caches(void);
+
+
 class CVideo : private boost::noncopyable {
      public:
 		 enum FAKE_TYPES {

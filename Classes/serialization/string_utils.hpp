@@ -38,7 +38,7 @@ public:
 	virtual ~variable_set();
 
 	//virtual const t_string& get_variable_const(const std::string& id) const = 0;
-	virtual const shared_string& get_variable_const(const std::string& id) const = 0;
+	virtual const shared_string& get_variable_const(const shared_string& id) const = 0;
 };
 
 /** The type we use to represent Unicode strings. */

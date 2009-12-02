@@ -339,8 +339,8 @@ static void draw_background(game_display& screen)
 
 		/*Select a random game_title*/
 		std::string titles = "data/campaigns/Heir_To_The_Throne/images/story/httt_story2.jpg, data/campaigns/Heir_To_The_Throne/images/story/httt_story4.jpg, data/campaigns/Heir_To_The_Throne/images/story/httt_story5.jpg, data/campaigns/Heir_To_The_Throne/images/story/httt_story6.jpg";
-		std::vector<std::string> game_title_list =
-			utils::split(titles /*game_config::game_title*/, ',', utils::STRIP_SPACES | utils::REMOVE_EMPTY);
+		std::vector<shared_string> game_title_list =
+			utils::split_shared(titles /*game_config::game_title*/, ',', utils::STRIP_SPACES | utils::REMOVE_EMPTY);
 
 		if(game_title_list.empty()) {
 			ERR_CONFIG << "No title image defined\n";

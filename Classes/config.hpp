@@ -74,7 +74,7 @@ public:
 	config(const config& cfg);
 
 	// Create a config with an empty child of name 'child'.
-	config(const std::string& child);
+	config(const shared_string& child);
 	~config();
 
 	config& operator=(const config& cfg);
@@ -91,31 +91,31 @@ public:
 	typedef std::pair<child_iterator,child_iterator> child_itors;
 	typedef std::pair<const_child_iterator,const_child_iterator> const_child_itors;
 
-	child_itors child_range(const std::string& key);
-	const_child_itors child_range(const std::string& key) const;
-	size_t child_count(const std::string& key) const;
+	child_itors child_range(const shared_string& key);
+	const_child_itors child_range(const shared_string& key) const;
+	size_t child_count(const shared_string& key) const;
 
-	const child_list& get_children(const std::string& key) const;
+	const child_list& get_children(const shared_string& key) const;
 	const child_map& all_children() const;
 
-	config* child(const std::string& key);
-	const config* child(const std::string& key) const;
-	config& add_child(const std::string& key);
-	config& add_child(const std::string& key, const config& val);
-	config& add_child_at(const std::string& key, const config& val, size_t index);
+	config* child(const shared_string& key);
+	const config* child(const shared_string& key) const;
+	config& add_child(const shared_string& key);
+	config& add_child(const shared_string& key, const config& val);
+	config& add_child_at(const shared_string& key, const config& val, size_t index);
 	//std::string& operator[](const std::string& key);
-	shared_string& operator[](const std::string& key);
+	shared_string& operator[](const shared_string& key);
 	//const std::string& operator[](const std::string& key) const;
-	const shared_string& operator[](const std::string& key) const;
+	const shared_string& operator[](const shared_string& key) const;
 	
 
 	//const std::string& get_attribute(const std::string& key) const;
-	const shared_string& get_attribute(const std::string& key) const;
-	bool has_attribute(const std::string& key) const 
+	const shared_string& get_attribute(const shared_string& key) const;
+	bool has_attribute(const shared_string& key) const 
 	{ 
 		return values.find(key) != values.end();
 	}
-	void remove_attribute(const std::string& key) 
+	void remove_attribute(const shared_string& key) 
 	{ 
 		values.erase(key);
 	}
@@ -126,20 +126,20 @@ public:
 	 * @returns true when it added the key-value pair, false if it already existed
 	 *          (and you probably wanted to use config[key] = value)
 	 */
-	bool init_attribute(const std::string& key, const t_string& value) 
+	bool init_attribute(const shared_string& key, const shared_string& value) 
 	{
 		//return values.insert(std::pair<std::string, std::string>(key, value)).second;
-		return values.insert(std::pair<shared_string, shared_string>(shared_string(key), shared_string(value))).second;
+		return values.insert(std::pair<shared_string, shared_string>(key, value)).second;
 	}
 
-	config* find_child(const std::string& key, const std::string& name,
-	                   const t_string& value);
-	const config* find_child(const std::string& key, const std::string& name,
-	                         const t_string& value) const;
+	config* find_child(const shared_string& key, const shared_string& name,
+	                   const shared_string& value);
+	const config* find_child(const shared_string& key, const shared_string& name,
+	                         const shared_string& value) const;
 	
-	void clear_children(const std::string& key);
-	void remove_child(const std::string& key, size_t index);
-	void recursive_clear_value(const std::string& key);
+	void clear_children(const shared_string& key);
+	void remove_child(const shared_string& key, size_t index);
+	void recursive_clear_value(const shared_string& key);
 
 	void clear();
 	bool empty() const;
@@ -234,7 +234,7 @@ public:
 	 * All children with the given key will be merged
 	 * into the first element with that key.
 	 */
-	void merge_children(const std::string& key);
+	void merge_children(const shared_string& key);
 
 	/** Resets the translated values of all strings contained in this object */
 	void reset_translation() const;

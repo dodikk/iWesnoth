@@ -60,6 +60,10 @@ public:
 	std::string substr(size_t pos = 0, size_t n = std::string::npos) const;
 	
 	size_t size() const;
+	size_t length() const
+	{
+		return size();
+	}
 	
 	std::string::const_iterator begin() const;	
 	std::string::const_iterator end() const;
@@ -152,6 +156,15 @@ public:
 		set(temp);
 	}
 	
+	int compare(int start, int end, std::string &cmpStr) const
+	{
+		return get().compare(start, end, cmpStr);
+	}
+
+	int compare(int start, int end, const char *cmpStr) const
+	{
+		return get().compare(start, end, cmpStr);
+	}
 	
 	const std::string& get() const { assert(data_); return data_->str; }
 

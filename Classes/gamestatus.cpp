@@ -104,8 +104,18 @@ static void replace_space2underbar(std::string &name) {
     LOG_NG << "replace_underbar2space-to:[" << name << "]" << std::endl;
 }
 #else /* ! _WIN32 */
+void replace_underbar2space(shared_string &name) {
+	std::string temp = name;
+    std::replace(temp.begin(),temp.end(),'_',' ');
+	name = temp;
+}
 void replace_underbar2space(std::string &name) {
     std::replace(name.begin(),name.end(),'_',' ');
+}
+static void replace_space2underbar(shared_string &name) {
+	std::string temp = name;
+    std::replace(temp.begin(),temp.end(),' ','_');
+	name = temp;
 }
 static void replace_space2underbar(std::string &name) {
     std::replace(name.begin(),name.end(),' ','_');
@@ -115,8 +125,8 @@ static void replace_space2underbar(std::string &name) {
 static void extract_summary_from_config(config& cfg_save, config& cfg_summary);
 static void extract_summary_data_from_save(const game_state& gamestate, config& out);
 
-player_info* game_state::get_player(const std::string& id) {
-	std::map< std::string, player_info >::iterator found = players.find(id);
+player_info* game_state::get_player(const shared_string& id) {
+	std::map< shared_string, player_info >::iterator found = players.find(id);
 	if (found == players.end()) {
 		LOG_STREAM(warn, engine) << "player " << id << " does not exist.\n";
 		return NULL;
@@ -149,7 +159,7 @@ void gamestatus::add_time_area(const config& cfg)
 	time_of_day::parse_times(cfg, area.times);
 }
 
-void gamestatus::add_time_area(const std::string& id, const std::set<map_location>& locs,
+void gamestatus::add_time_area(const shared_string& id, const std::set<map_location>& locs,
                                const config& time_cfg)
 {
 	areas_.push_back(area_time_of_day());
@@ -159,7 +169,7 @@ void gamestatus::add_time_area(const std::string& id, const std::set<map_locatio
 	time_of_day::parse_times(time_cfg, area.times);
 }
 
-void gamestatus::remove_time_area(const std::string& area_id)
+void gamestatus::remove_time_area(const shared_string& area_id)
 {
 	if(area_id.empty()) {
 		areas_.clear();
@@ -185,9 +195,9 @@ gamestatus::gamestatus(const config& time_cfg, int num_turns, game_state* s_o_g)
 		currentTime_(0),
 		state_of_game_(s_o_g)
 {
-	std::string turn_at = time_cfg["turn_at"];
-	std::string current_tod = time_cfg["current_tod"];
-	std::string random_start_time = time_cfg["random_start_time"];
+	shared_string turn_at = time_cfg["turn_at"];
+	shared_string current_tod = time_cfg["current_tod"];
+	shared_string random_start_time = time_cfg["random_start_time"];
 	if (s_o_g)
 	{
 	    turn_at = utils::interpolate_variables_into_string(turn_at, *s_o_g);
@@ -305,7 +315,7 @@ bool gamestatus::set_time_of_day(int newTime)
 	return true;
 }
 
-bool gamestatus::is_start_ToD(const std::string& random_start_time)
+bool gamestatus::is_start_ToD(const shared_string& random_start_time)
 {
 	return !random_start_time.empty()
 			&& utils::string_bool(random_start_time, true);
@@ -318,15 +328,15 @@ void gamestatus::set_start_ToD(config &level, game_state* s_o_g)
 		set_time_of_day(atoi(level["current_tod"].c_str()));
 		return;
 	}
-	std::string random_start_time = level["random_start_time"];
+	shared_string random_start_time = level["random_start_time"];
 	if (s_o_g)
 	{
 		random_start_time = utils::interpolate_variables_into_string(random_start_time, *s_o_g);
 	}
 	if (gamestatus::is_start_ToD(random_start_time))
 	{
-		std::vector<std::string> start_strings =
-			utils::split(random_start_time, ',', utils::STRIP_SPACES | utils::REMOVE_EMPTY);
+		std::vector<shared_string> start_strings =
+			utils::split_shared(random_start_time, ',', utils::STRIP_SPACES | utils::REMOVE_EMPTY);
 
 		if (utils::string_bool(random_start_time,false))
 		{
@@ -368,7 +378,7 @@ int gamestatus::number_of_turns() const
 {
 	return numTurns_;
 }
-void gamestatus::modify_turns(const std::string& mod)
+void gamestatus::modify_turns(const shared_string& mod)
 {
 	numTurns_ = std::max<int>(utils::apply_modifier(numTurns_,mod,0),-1);
 }
@@ -460,7 +470,7 @@ game_state::game_state(const config& cfg, bool show_replay) :
 		version(cfg["version"]),
 		campaign_type(cfg["campaign_type"]),
 		campaign_define(cfg["campaign_define"]),
-		campaign_xtra_defines(utils::split(cfg["campaign_extra_defines"])),
+		campaign_xtra_defines(utils::split_shared(cfg["campaign_extra_defines"])),
 		campaign(cfg["campaign"]),
 		history(cfg["history"]),
 		abbrev(cfg["abbrev"]),
@@ -599,7 +609,7 @@ static void write_player(const player_info& player, config& cfg)
 
 void write_players(game_state& gamestate, config& cfg)
 {
-	for(std::map<std::string, player_info>::const_iterator i=gamestate.players.begin();
+	for(std::map<shared_string, player_info>::const_iterator i=gamestate.players.begin();
 		i!=gamestate.players.end(); ++i)
 	{
 		config new_cfg;
@@ -673,7 +683,7 @@ void write_game(const game_state& gamestate, config& cfg, WRITE_GAME_MODE mode)
 
 	cfg.add_child("variables",gamestate.get_variables());
 
-	for(std::map<std::string, wml_menu_item *>::const_iterator j=gamestate.wml_menu_items.begin();
+	for(std::map<shared_string, wml_menu_item *>::const_iterator j=gamestate.wml_menu_items.begin();
 	    j!=gamestate.wml_menu_items.end(); ++j) {
 		config new_cfg;
 		new_cfg["id"]=j->first;
@@ -689,7 +699,7 @@ void write_game(const game_state& gamestate, config& cfg, WRITE_GAME_MODE mode)
 		cfg.add_child("menu_item", new_cfg);
 	}
 
-	for(std::map<std::string, player_info>::const_iterator i=gamestate.players.begin();
+	for(std::map<shared_string, player_info>::const_iterator i=gamestate.players.begin();
 	    i!=gamestate.players.end(); ++i) {
 		config new_cfg;
 		write_player(i->second, new_cfg);
@@ -731,7 +741,7 @@ void write_game(config_writer &out, const game_state& gamestate, WRITE_GAME_MODE
 	out.write_key_val("end_text_duration", str_cast<unsigned int>(gamestate.end_text_duration));
 	out.write_child("variables", gamestate.get_variables());
 
-	for(std::map<std::string, wml_menu_item *>::const_iterator j=gamestate.wml_menu_items.begin();
+	for(std::map<shared_string, wml_menu_item *>::const_iterator j=gamestate.wml_menu_items.begin();
 	    j!=gamestate.wml_menu_items.end(); ++j) {
 		out.open_child("menu_item");
 		out.write_key_val("id", j->first);
@@ -747,7 +757,7 @@ void write_game(config_writer &out, const game_state& gamestate, WRITE_GAME_MODE
 		out.close_child("menu_item");
 	}
 
-	for(std::map<std::string, player_info>::const_iterator i=gamestate.players.begin();
+	for(std::map<shared_string, player_info>::const_iterator i=gamestate.players.begin();
 	    i!=gamestate.players.end(); ++i) {
 		out.open_child("player");
 		out.write_key_val("save_id", i->first);
@@ -788,15 +798,15 @@ struct save_info_less_time {
 		} else if (a.name.find(_(" replay"))!=std::string::npos && b.name.find(_(" replay"))==std::string::npos) {
 			return false;
 		} else {
-			return  a.name > b.name;
+			return  a.name.get() > b.name.get();
 		}
 	}
 };
 
-std::vector<save_info> get_saves_list(const std::string *dir, const std::string* filter)
+std::vector<save_info> get_saves_list(const shared_string *dir, const shared_string* filter)
 {
 	// Don't use a reference, it seems to break on arklinux with GCC-4.3.
-	const std::string saves_dir = (dir) ? *dir : get_saves_dir();
+	const std::string saves_dir = (dir) ? (*dir).get() : get_saves_dir();
 
 	std::vector<shared_string> saves;
 	get_files_in_dir(saves_dir,&saves);
@@ -820,7 +830,7 @@ std::vector<save_info> get_saves_list(const std::string *dir, const std::string*
 	return res;
 }
 
-bool save_game_exists(const std::string& name)
+bool save_game_exists(const shared_string& name)
 {
 	std::string fname = name;
 	replace_space2underbar(fname);
@@ -832,7 +842,7 @@ bool save_game_exists(const std::string& name)
 	return file_exists(get_saves_dir() + "/" + fname);
 }
 
-void delete_game(const std::string& name)
+void delete_game(const shared_string& name)
 {
 	std::string modified_name = name;
 	replace_space2underbar(modified_name);
@@ -841,9 +851,9 @@ void delete_game(const std::string& name)
 	remove((get_saves_dir() + "/" + modified_name).c_str());
 }
 
-void read_save_file(const std::string& name, config& cfg, std::string* error_log)
+void read_save_file(const shared_string& name, config& cfg, std::string* error_log)
 {
-	std::string modified_name = name;
+	shared_string modified_name = name;
 	replace_space2underbar(modified_name);
 
 	// Try reading the file both with and without underscores
@@ -881,7 +891,7 @@ static void copy_era(config &cfg)
 	}
 }
 
-void load_game(const std::string& name, game_state& gamestate, std::string* error_log)
+void load_game(const shared_string& name, game_state& gamestate, std::string* error_log)
 {
 	log_scope("load_game");
 
@@ -892,7 +902,7 @@ void load_game(const std::string& name, game_state& gamestate, std::string* erro
 	gamestate = game_state(cfg);
 }
 
-void load_game_summary(const std::string& name, config& cfg_summary, std::string* error_log){
+void load_game_summary(const shared_string& name, config& cfg_summary, std::string* error_log){
 	log_scope("load_game_summary");
 
 	config cfg;
@@ -902,9 +912,9 @@ void load_game_summary(const std::string& name, config& cfg_summary, std::string
 }
 
 // Throws game::save_game_failed
-scoped_ostream open_save_game(const std::string &label)
+scoped_ostream open_save_game(const shared_string &label)
 {
-	std::string name = label;
+	shared_string name = label;
 	replace_space2underbar(name);
 
 	try {
@@ -914,7 +924,7 @@ scoped_ostream open_save_game(const std::string &label)
 	}
 }
 
-void finish_save_game(config_writer &out, const game_state& gamestate, const std::string &label)
+void finish_save_game(config_writer &out, const game_state& gamestate, const shared_string &label)
 {
 	std::string name = label;
 	std::replace(name.begin(),name.end(),' ','_');
@@ -980,7 +990,7 @@ static config& save_index()
 	return save_index_cfg;
 }
 
-config& save_summary(std::string save)
+config& save_summary(shared_string save)
 {
 	/*
 	 * All saves are .gz files now so make sure we use that name when opening
@@ -1040,7 +1050,7 @@ void extract_summary_data_from_save(const game_state& gamestate, config& out)
 	/** @todo Ideally we should grab all leaders if there's more than 1 human player? */
 	std::string leader;
 
-	for(std::map<std::string, player_info>::const_iterator p = gamestate.players.begin();
+	for(std::map<shared_string, player_info>::const_iterator p = gamestate.players.begin();
 	    p!=gamestate.players.end(); ++p) {
 		for(std::vector<unit>::const_iterator u = p->second.available_units.begin(); u != p->second.available_units.end(); ++u) {
 			if(u->can_recruit()) {
@@ -1173,41 +1183,41 @@ void extract_summary_from_config(config& cfg_save, config& cfg_summary)
 }
 
 //t_string& game_state::get_variable(const std::string& key)
-shared_string& game_state::get_variable(const std::string& key)
+shared_string& game_state::get_variable(const shared_string& key)
 {
 	return variable_info(key, true, variable_info::TYPE_SCALAR).as_scalar();
 }
 
 //const t_string& game_state::get_variable_const(const std::string& key) const
-const shared_string& game_state::get_variable_const(const std::string& key) const
+const shared_string& game_state::get_variable_const(const shared_string& key) const
 {
 	variable_info to_get(key, false, variable_info::TYPE_SCALAR);
 	if(!to_get.is_valid) return temporaries[key];
 	return to_get.as_scalar();
 }
 
-config& game_state::get_variable_cfg(const std::string& key)
+config& game_state::get_variable_cfg(const shared_string& key)
 {
 	return variable_info(key, true, variable_info::TYPE_CONTAINER).as_container();
 }
 
-variable_info::array_range game_state::get_variable_cfgs(const std::string& key)
+variable_info::array_range game_state::get_variable_cfgs(const shared_string& key)
 {
 	return variable_info(key, true, variable_info::TYPE_ARRAY).as_array();
 }
 
-void game_state::set_variable(const std::string& key, const t_string& value)
+void game_state::set_variable(const shared_string& key, const shared_string& value)
 {
 	get_variable(key) = value;
 }
 
-config& game_state::add_variable_cfg(const std::string& key, const config& value)
+config& game_state::add_variable_cfg(const shared_string& key, const config& value)
 {
 	variable_info to_add(key, true, variable_info::TYPE_ARRAY);
 	return to_add.vars->add_child(to_add.key, value);
 }
 
-void game_state::clear_variable_cfg(const std::string& varname)
+void game_state::clear_variable_cfg(const shared_string& varname)
 {
 	variable_info to_clear(varname, false, variable_info::TYPE_CONTAINER);
 	if(!to_clear.is_valid) return;
@@ -1218,7 +1228,7 @@ void game_state::clear_variable_cfg(const std::string& varname)
 	}
 }
 
-void game_state::clear_variable(const std::string& varname)
+void game_state::clear_variable(const shared_string& varname)
 {
 	variable_info to_clear(varname, false);
 	if(!to_clear.is_valid) return;
@@ -1246,8 +1256,8 @@ void game_state::load_recall_list(const config::child_list& players)
 	}
 }
 
-static void clear_wmi(std::map<std::string, wml_menu_item*>& gs_wmi) {
-	std::map<std::string, wml_menu_item*>::iterator itor = gs_wmi.begin();
+static void clear_wmi(std::map<shared_string, wml_menu_item*>& gs_wmi) {
+	std::map<shared_string, wml_menu_item*>::iterator itor = gs_wmi.begin();
 	for(itor = gs_wmi.begin(); itor != gs_wmi.end(); ++itor) {
 		delete itor->second;
 	}
@@ -1309,7 +1319,7 @@ game_state& game_state::operator=(const game_state& state)
 	scoped_variables = state.scoped_variables;
 
 	clear_wmi(wml_menu_items);
-	std::map<std::string, wml_menu_item*>::const_iterator itor;
+	std::map<shared_string, wml_menu_item*>::const_iterator itor;
 	for (itor = state.wml_menu_items.begin(); itor != state.wml_menu_items.end(); ++itor) {
 		wml_menu_item*& mref = wml_menu_items[itor->first];
 		mref = new wml_menu_item(*(itor->second));
@@ -1362,7 +1372,7 @@ void player_info::debug(){
 	LOG_NG << "\tEnd available units\n";
 }
 
-wml_menu_item::wml_menu_item(const std::string& id, const config* cfg) :
+wml_menu_item::wml_menu_item(const shared_string& id, const config* cfg) :
 		name(),
 		image(),
 		description(),
