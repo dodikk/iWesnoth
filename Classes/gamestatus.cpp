@@ -983,6 +983,8 @@ static config& save_index()
 			ERR_NG << "error parsing save index config file\n";
 			save_index_cfg.clear();
 		}
+		// KP: clear all "map_data" values, for next save
+		save_index_cfg.recursive_clear_value("map_data");
 
 		save_index_loaded = true;
 	}
@@ -1086,7 +1088,8 @@ void extract_summary_data_from_save(const game_state& gamestate, config& out)
 
 	out["leader"] = leader;
 	out["map_data"] = "";
-
+	// KP: do not save map data summary, because it takes too long to parse
+/*
 	if(!shrouded) {
 		if(has_snapshot) {
 			if(gamestate.snapshot.find_child("side","shroud","yes") == NULL) {
@@ -1098,6 +1101,7 @@ void extract_summary_data_from_save(const game_state& gamestate, config& out)
 			}
 		}
 	}
+ */
 }
 
 void extract_summary_from_config(config& cfg_save, config& cfg_summary)
@@ -1169,6 +1173,8 @@ void extract_summary_from_config(config& cfg_save, config& cfg_summary)
 	cfg_summary["leader"] = leader;
 	cfg_summary["map_data"] = "";
 
+	// KP: do not save map data summary, because it takes too long to parse
+	/*
 	if(!shrouded) {
 		if(has_snapshot) {
 			if(cfg_snapshot->find_child("side","shroud","yes") == NULL) {
@@ -1180,6 +1186,7 @@ void extract_summary_from_config(config& cfg_save, config& cfg_summary)
 			}
 		}
 	}
+	 */
 }
 
 //t_string& game_state::get_variable(const std::string& key)

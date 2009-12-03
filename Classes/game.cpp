@@ -2205,6 +2205,7 @@ static int do_gameloop(int argc, char** argv)
 //		else 
 		if(res == gui::LOAD_GAME) 
 		{
+			draw_wait_cursor();
 			if(game.load_game() == false) {
 				continue;
 			}
@@ -2215,6 +2216,7 @@ static int do_gameloop(int argc, char** argv)
 //			game.set_tutorial();
 //		} 
 		else if(res == gui::NEW_CAMPAIGN) {
+			draw_wait_cursor();
 			if(game.new_campaign() == false) {
 				continue;
 			}

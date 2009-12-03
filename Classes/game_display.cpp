@@ -370,11 +370,17 @@ void game_display::draw_hex(const map_location& loc)
 	}
 	// Draw the attack direction indicator
 	if(on_map && loc == attack_indicator_src_) {
+		textureAtlasInfo tinfo;
+		getTextureAtlasInfo("misc/attack-indicator-src-" + attack_indicator_direction() + ".png", tinfo);
 		drawing_buffer_add(LAYER_ATTACK_INDICATOR, loc, tblit(xpos, ypos,
-			image::get_image("misc/attack-indicator-src-" + attack_indicator_direction() + ".png", image::UNMASKED)));
+			//image::get_image("misc/attack-indicator-src-" + attack_indicator_direction() + ".png", image::UNMASKED)));
+		  tinfo));
 	} else if (on_map && loc == attack_indicator_dst_) {
+		textureAtlasInfo tinfo;
+		getTextureAtlasInfo("misc/attack-indicator-dst-" + attack_indicator_direction() + ".png", tinfo);
 		drawing_buffer_add(LAYER_ATTACK_INDICATOR, loc, tblit(xpos, ypos,
-			image::get_image("misc/attack-indicator-dst-" + attack_indicator_direction() + ".png", image::UNMASKED)));
+			//image::get_image("misc/attack-indicator-dst-" + attack_indicator_direction() + ".png", image::UNMASKED)));
+		  tinfo));
 	}
 
 	// Linger overlay unconditionally otherwise it might give glitches
@@ -624,19 +630,26 @@ void game_display::draw_movement_info(const map_location& loc)
 			int xpos = get_location_x(loc);
 			int ypos = get_location_y(loc);
 
+			textureAtlasInfo tinfo;
             if (w->second.invisible) {
+				getTextureAtlasInfo("misc/hidden.png", tinfo);
 				drawing_buffer_add(LAYER_MOVE_INFO, loc, tblit(xpos, ypos,
-					image::get_image("misc/hidden.png", image::UNMASKED)));
+					//image::get_image("misc/hidden.png", image::UNMASKED)));
+				   tinfo));
 			}
 
 			if (w->second.zoc) {
+				getTextureAtlasInfo("misc/zoc.png", tinfo);
 				drawing_buffer_add(LAYER_MOVE_INFO, loc, tblit(xpos, ypos,
-					image::get_image("misc/zoc.png", image::UNMASKED)));
+					//image::get_image("misc/zoc.png", image::UNMASKED)));
+				   tinfo));
 			}
 
 			if (w->second.capture) {
+				getTextureAtlasInfo("misc/capture.png", tinfo);
 				drawing_buffer_add(LAYER_MOVE_INFO, loc, tblit(xpos, ypos,
-					image::get_image("misc/capture.png", image::UNMASKED)));
+					//image::get_image("misc/capture.png", image::UNMASKED)));
+				   tinfo));
 			}
 
 			//we display turn info only if different from a simple last "1"
@@ -659,9 +672,9 @@ void game_display::draw_movement_info(const map_location& loc)
 	}
 }
 
-std::vector<surface> game_display::footsteps_images(const map_location& loc)
+std::vector<textureAtlasInfo> game_display::footsteps_images(const map_location& loc)
 {
-	std::vector<surface> res;
+	std::vector<textureAtlasInfo> res;
 
 	if (route_.steps.size() < 2) {
 		return res; // no real "route"
@@ -686,7 +699,9 @@ std::vector<surface> game_display::footsteps_images(const map_location& loc)
 	}
 	const std::string foot_speed_prefix = game_config::foot_speed_prefix[image_number-1];
 
-	surface teleport = NULL;
+	//surface teleport = NULL;
+	textureAtlasInfo teleport;
+	bool isTeleport = false;
 
 	// We draw 2 half-hex (with possibly different directions),
 	// but skip the first for the first step.
@@ -700,7 +715,9 @@ std::vector<surface> game_display::footsteps_images(const map_location& loc)
 		if (!tiles_adjacent(*(i+(h-1)), *(i+h))) {
 			std::string teleport_image =
 			h==0 ? game_config::foot_teleport_enter : game_config::foot_teleport_exit;
-			teleport = image::get_image(teleport_image, image::UNMASKED);
+			//teleport = image::get_image(teleport_image, image::UNMASKED);
+			getTextureAtlasInfo(teleport_image, teleport);
+			isTeleport = true;
 			continue;
 		}
 
@@ -716,13 +733,18 @@ std::vector<surface> game_display::footsteps_images(const map_location& loc)
 
 		const std::string image = foot_speed_prefix
 			+ sense + "-" + i->write_direction(dir)
-			+ ".png" + rotate;
+			+ ".png"; // + rotate;
 
-		res.push_back(image::get_image(image, image::UNMASKED));
+		//res.push_back(image::get_image(image, image::UNMASKED));
+		textureAtlasInfo tinfo;
+		getTextureAtlasInfo(image, tinfo);
+		if (rotate.length() > 0)
+			tinfo.flags |= FLOP|FLIP;
+		res.push_back(tinfo);
 	}
 
 	// we draw teleport image (if any) in last
-	if (teleport != NULL) res.push_back(teleport);
+	if (isTeleport) res.push_back(teleport);
 
 	return res;
 }

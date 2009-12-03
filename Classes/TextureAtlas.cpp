@@ -76,6 +76,12 @@ void loadMap(unsigned short mapId)
 			filename += "map.base_transition.pvrtc";
 			pvrtcSize = 1024;
 			break;
+		case MAP_OVERLAY_MISC:
+			filename = game_config::path + "/images/misc/map.misc.png";
+			break;
+		case MAP_FOOTSTEPS:
+			filename = game_config::path + "/images/footsteps/map.footsteps.png";
+			break;
 		case MAP_CASTLE_CASTLE:
 			filename += "map.castle.castle.png";
 			break;
@@ -249,7 +255,9 @@ void loadMap(unsigned short mapId)
 void initTextureAtlas(void)
 {
 	memset(gTexIds, 0, sizeof(gTexIds));
-	
+
+#include "../res/images/misc/map.misc.h"
+#include "../res/images/footsteps/map.footsteps.h"
 #include "../res/data/core/images/terrain/map.base.h"
 #include "../res/data/core/images/terrain/map.base_transition.h"
 #include "../res/data/core/images/terrain/map.castle.castle.h"
@@ -289,6 +297,8 @@ void initTextureAtlas(void)
 	// load the base maps, since they are always used
 	loadMap(MAP_BASE);
 	loadMap(MAP_BASE_TRANSITION);
+	loadMap(MAP_MISC);
+	loadMap(MAP_FOOTSTEPS);
 }
 
 void freeTextureAtlas(void)
@@ -307,12 +317,26 @@ void freeTextureAtlas(void)
 
 bool getTextureAtlasInfo(const std::string& filename, textureAtlasInfo& tinfo)
 {
-	// chop off redundant "terrain/"
-	std::string searchStr = filename.substr(8);
+	std::string searchStr;
+	if (filename[0] == 't')
+	{
+		// chop off redundant "terrain/"
+		searchStr = filename.substr(8);
+	}
+	else
+	{
+		// footsteps, misc, etc
+		searchStr = filename;
+	}
 	std::map<shared_string, textureAtlasInfo>::iterator it;
 	it = gAtlasMap.find(searchStr);
 	if (it == gAtlasMap.end())
+	{
+		tinfo.mapId = 0;
+		tinfo.texW = 0;
+		tinfo.texH = 0;
 		return false;
+	}
 	
 	tinfo = it->second;
 	
@@ -376,6 +400,20 @@ void renderAtlas(int x, int y, const textureAtlasInfo& tinfo, SDL_Rect *srcRect 
 	dst.y += tinfo.trimmedY;
 	dst.w -= (tinfo.originalW - tinfo.texW);
 	dst.h -= (tinfo.originalH - tinfo.texH);
+	
+	
+	// fix flip/flopping cropped images
+	if ((tinfo.flags & FLOP) != 0)
+	{
+		int trimmedRight = tinfo.originalW - tinfo.trimmedX - tinfo.texW;
+		dst.x -= tinfo.trimmedX - trimmedRight;
+	}
+	if ((tinfo.flags & FLIP) != 0)
+	{
+		int trimmedBot = tinfo.originalH - tinfo.trimmedY - tinfo.texH;
+		dst.y -= tinfo.trimmedY - trimmedBot;
+	}
+	
 
 	src.x -= tinfo.trimmedX;
 	if (src.x < 0)

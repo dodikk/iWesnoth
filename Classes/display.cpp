@@ -2443,11 +2443,17 @@ void display::draw_hex(const map_location& loc) {
 	if(shrouded(loc)) {
 		// We apply void also on off-map tiles
 		// to shroud the half-hexes too
-		drawing_buffer_add(LAYER_FOG_SHROUD, loc, tblit(xpos, ypos,
-			image::get_image(shroud_image_, image_type)));
+		textureAtlasInfo tinfo;
+		if (getTextureAtlasInfo(shroud_image_, tinfo))
+			drawing_buffer_add(LAYER_FOG_SHROUD, loc, tblit(xpos, ypos,
+				//image::get_image(shroud_image_, image_type)));
+				tinfo));
 	} else if(fogged(loc)) {
-		drawing_buffer_add(LAYER_FOG_SHROUD, loc, tblit(xpos, ypos,
-			image::get_image(fog_image_, image_type)));
+		textureAtlasInfo tinfo;
+		if (getTextureAtlasInfo(fog_image_, tinfo))
+			drawing_buffer_add(LAYER_FOG_SHROUD, loc, tblit(xpos, ypos,
+				//image::get_image(fog_image_, image_type)));
+				tinfo));
 	}
 
 	if(!shrouded(loc)) {

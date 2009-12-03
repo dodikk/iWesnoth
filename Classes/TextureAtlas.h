@@ -54,7 +54,10 @@
 #define MAP_SWAMP				33
 #define MAP_WALLS				34
 #define MAP_VILLAGE				35
-#define NUM_MAPS				36
+
+#define MAP_OVERLAY_MISC		36
+#define MAP_FOOTSTEPS			37
+#define NUM_MAPS				38
 
 
 struct textureAtlasInfo

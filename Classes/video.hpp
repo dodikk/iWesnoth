@@ -173,4 +173,5 @@ extern void blit_texture_scaled(int x, int y, int w, int h, SDL_TextureID tex, t
 extern void draw_line(Uint32 color, int x1, int y1, int x2, int y2);
 extern void fill_rect(Uint32 color, SDL_Rect *rect);
 extern void convertSurfaceToFill(int x, int y, surface surf);
+extern void draw_wait_cursor(void);
 #endif

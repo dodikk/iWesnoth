@@ -31,6 +31,11 @@
 #include "UnitTextureAtlas.h"
 #include "memory_wrapper.h"
 
+#include <OpenGLES/ES1/gl.h>
+#include <OpenGLES/ES1/glext.h>
+#include <SDL_image.h>
+#include "RenderQueue.h"
+
 extern "C" {
 #include "SDL_RLEaccel_c.h"
 };
@@ -1181,4 +1186,45 @@ void free_all_caches(void)
 	image::flush_cache();
 	font::clear_text_caches();
 	memory_stats("After cache free");
+}
+
+GLuint wait_cursor = 0;
+void draw_wait_cursor(void)
+{
+	if (wait_cursor == 0)
+	{
+		std::string filename = game_config::path + "/images/cursors/wait.png";
+		glGenTextures(1, &wait_cursor);	
+		glBindTexture(GL_TEXTURE_2D, wait_cursor);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+		surface surf = surface(IMG_Load(filename.c_str()));
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surf->w, surf->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, surf->pixels);
+	}
+	
+	GLshort vertices[8];
+	GLfloat texCoords[8];
+	
+	int size = 32;
+	vertices[0] = (480-size)/2;
+	vertices[1] = (320-size)/2;
+	vertices[2] = vertices[0] + size;;
+	vertices[3] = vertices[1];
+	vertices[4] = vertices[0];
+	vertices[5] = vertices[1] + size;
+	vertices[6] = vertices[0] + size;
+	vertices[7] = vertices[1] + size;
+	
+	texCoords[0] = 0;
+	texCoords[1] = 0;
+	texCoords[2] = 1;
+	texCoords[3] = 0;
+	texCoords[4] = 0;
+	texCoords[5] = 1;
+	texCoords[6] = 1;
+	texCoords[7] = 1;
+	renderQueueAddTexture(vertices, texCoords, wait_cursor, 0xFFFFFFFF, 1.0);
+	SDL_RenderPresent();
 }

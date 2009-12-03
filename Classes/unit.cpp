@@ -1944,8 +1944,11 @@ void unit::redraw_unit(game_display& disp, const map_location& loc)
 		draw_bars = rects_overlap(unit_rect, disp.map_outside_area());
 	}
 
-	surface ellipse_front(NULL);
-	surface ellipse_back(NULL);
+	//surface ellipse_front(NULL);
+	//surface ellipse_back(NULL);
+	textureAtlasInfo ellipse_front, ellipse_back;
+	ellipse_front.mapId = 0;
+	ellipse_back.mapId = 0;
 	int ellipse_floating = 0;
 	if(draw_bars && preferences::show_side_colours()) {
 		// The division by 2 seems to have no real meaning,
@@ -1964,19 +1967,25 @@ void unit::redraw_unit(game_display& disp, const map_location& loc)
 		char buf[100];
 		std::string tc=team::get_side_colour_index(side_);
 
-		snprintf(buf,sizeof(buf),"%s-%stop.png~RC(ellipse_red>%s)",ellipse.c_str(),selected,tc.c_str());
-		ellipse_back.assign(image::get_image(image::locator(buf), image::SCALED_TO_ZOOM));
-		snprintf(buf,sizeof(buf),"%s-%sbottom.png~RC(ellipse_red>%s)",ellipse.c_str(),selected,tc.c_str());
-		ellipse_front.assign(image::get_image(image::locator(buf), image::SCALED_TO_ZOOM));
+		//snprintf(buf,sizeof(buf),"%s-%stop.png~RC(ellipse_red>%s)",ellipse.c_str(),selected,tc.c_str());
+		snprintf(buf,sizeof(buf),"%s-%stop.png",ellipse.c_str(),selected);
+		//ellipse_back.assign(image::get_image(image::locator(buf), image::SCALED_TO_ZOOM));
+		getTextureAtlasInfo(buf, ellipse_back);
+		
+		//snprintf(buf,sizeof(buf),"%s-%sbottom.png~RC(ellipse_red>%s)",ellipse.c_str(),selected,tc.c_str());
+		snprintf(buf,sizeof(buf),"%s-%sbottom.png",ellipse.c_str(),selected);
+		//ellipse_front.assign(image::get_image(image::locator(buf), image::SCALED_TO_ZOOM));
+		getTextureAtlasInfo(buf, ellipse_front);
 	}
-
-	if (ellipse_back != NULL) {
+	//if (ellipse_back != NULL) {
+	if (ellipse_back.mapId != 0) {
 		//disp.drawing_buffer_add(display::LAYER_UNIT_BG, loc,
 		disp.drawing_buffer_add(display::LAYER_UNIT_FIRST, loc,
 			display::tblit(xsrc, ysrc +adjusted_params.y-ellipse_floating, ellipse_back));
 	}
 
-	if (ellipse_front != NULL) {
+	//if (ellipse_front != NULL) {
+	if (ellipse_front.mapId != 0) {
 		//disp.drawing_buffer_add(display::LAYER_UNIT_FG, loc,
 		disp.drawing_buffer_add(display::LAYER_UNIT_FIRST, loc,
 			display::tblit(xsrc, ysrc +adjusted_params.y-ellipse_floating, ellipse_front));
@@ -1989,7 +1998,7 @@ void unit::redraw_unit(game_display& disp, const map_location& loc)
 		if(size_t(side()) != disp.viewing_team()+1) {
 			if(disp.team_valid() &&
 			   disp.get_teams()[disp.viewing_team()].is_enemy(side())) {
-				movement_file = &game_config::enemy_ball_image;
+				movement_file = NULL; //&game_config::enemy_ball_image;
 			} else {
 				movement_file = &game_config::ally_ball_image;
 			}
@@ -2004,10 +2013,14 @@ void unit::redraw_unit(game_display& disp, const map_location& loc)
 			}
 		}
 
-		surface orb(image::get_image(*movement_file,image::SCALED_TO_ZOOM));
-		if (orb != NULL) {
-			disp.drawing_buffer_add(display::LAYER_UNIT_BAR,
-				loc, display::tblit(xsrc, ysrc +adjusted_params.y, orb));
+		if (movement_file)
+		{
+			textureAtlasInfo tinfo;
+			if (getTextureAtlasInfo(movement_file->get(), tinfo))
+			{
+				disp.drawing_buffer_add(display::LAYER_UNIT_BAR,
+					loc, display::tblit(xsrc, ysrc +adjusted_params.y, tinfo));
+			}
 		}
 
 		double unit_energy = 0.0;
@@ -2037,11 +2050,12 @@ void unit::redraw_unit(game_display& disp, const map_location& loc)
 		}
 
 		if (can_recruit()) {
-			surface crown(image::get_image("misc/leader-crown.png",image::SCALED_TO_ZOOM));
-			if(!crown.null()) {
-				//if(bar_alpha != ftofxp(1.0)) {
-				//	crown = adjust_surface_alpha(crown, bar_alpha);
-				//}
+			//surface crown(image::get_image("misc/leader-crown.png",image::SCALED_TO_ZOOM));
+			//if(!crown.null()) {
+				
+			textureAtlasInfo crown;
+			if (getTextureAtlasInfo("misc/leader-crown.png", crown)) 
+			{
 				disp.drawing_buffer_add(display::LAYER_UNIT_BAR,
 					loc, display::tblit(xsrc, ysrc +adjusted_params.y, crown));
 			}

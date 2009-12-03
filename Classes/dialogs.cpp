@@ -385,6 +385,7 @@ public:
 		summaries_(&summaries),
 		index_(0),
 		map_cache_(),
+		skip_map_(false),
 		textbox_(textbox)
 	{
 #ifdef __IPHONEOS__
@@ -406,6 +407,7 @@ public:
 private:
 	const config* game_config_;
 	gamemap* map_;
+	bool skip_map_;
 	const std::vector<save_info>* info_;
 	const std::vector<config*>* summaries_;
 	int index_;
@@ -458,8 +460,8 @@ void save_preview_pane::draw_contents()
 		}
 	}
 
-	std::string map_data = summary["map_data"];
-	if(map_data.empty()) {
+	shared_string map_data = summary["map_data"];
+	if(map_data.empty() && !skip_map_) {
 		const config* const scenario = game_config_->find_child(summary["campaign_type"],"id",summary["scenario"]);
 		if(scenario != NULL && scenario->find_child("side","shroud","yes") == NULL) {
 			map_data = (*scenario)["map_data"];
@@ -475,7 +477,7 @@ void save_preview_pane::draw_contents()
 
 	surface map_surf(NULL);
 
-	if(map_data.empty() == false) {
+	if(map_data.empty() == false && !skip_map_) {
 		const std::map<std::string,surface>::const_iterator itor = map_cache_.find(map_data);
 		if(itor != map_cache_.end()) {
 			map_surf = itor->second;
@@ -494,8 +496,10 @@ void save_preview_pane::draw_contents()
 				}
 			} catch(incorrect_map_format_exception& e) {
 				//ERR_CF << "map could not be loaded: " << e.msg_ << '\n';
+				skip_map_ = true;
 			} catch(twml_exception& e) {
 				//ERR_CF << "map could not be loaded: " << e.dev_message << '\n';
+				skip_map_ = true;
 			}
 		}
 	}
