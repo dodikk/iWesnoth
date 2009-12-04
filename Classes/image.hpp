@@ -84,7 +84,7 @@ namespace image {
 		cache_type() :
 			cache_size_(0),
 			//cache_max_size_(2000),
-			cache_max_size_(10),
+			cache_max_size_(40),
 			lru_list_(),
 			content_()
 		{

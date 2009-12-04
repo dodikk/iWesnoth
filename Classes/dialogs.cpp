@@ -1147,7 +1147,7 @@ namespace {
 	static const int campaign_preview_border = font::relative_size(10);
 }
 
-campaign_preview_pane::campaign_preview_pane(CVideo &video,std::vector<std::pair<std::string,std::string> >* desc) : gui::preview_pane(video),descriptions_(desc),index_(0)
+campaign_preview_pane::campaign_preview_pane(CVideo &video,std::vector<std::pair<shared_string,shared_string> >* desc) : gui::preview_pane(video),descriptions_(desc),index_(0)
 {
 // size of the campaign info window with the campaign description and image in pixel
 #if defined(USE_TINY_GUI)
@@ -1155,6 +1155,8 @@ campaign_preview_pane::campaign_preview_pane(CVideo &video,std::vector<std::pair
 #else
 	set_measurements(430, 440);
 #endif
+	index_ = -1;
+	set_selection(0);	
 }
 
 bool campaign_preview_pane::show_above() const { return false; }
@@ -1165,6 +1167,12 @@ void campaign_preview_pane::set_selection(int index)
 	index = std::min<int>(descriptions_->size()-1,index);
 	if(index != index_ && index >= 0) {
 		index_ = index;
+		const SDL_Rect area = {
+			location().x+campaign_preview_border,
+			location().y,
+			location().w-campaign_preview_border*2,
+			location().h };
+		desc_text = font::word_wrap_text((*descriptions_)[index_].first, font::SIZE_SMALL, area.w - 2 * campaign_preview_border);
 		set_dirty();
 	}
 }
@@ -1188,6 +1196,7 @@ void campaign_preview_pane::draw_contents()
 	f.draw_border();
 
 	/* description text */
+/*	
 	std::string desc_text;
 	try {
 		desc_text = font::word_wrap_text((*descriptions_)[index_].first,
@@ -1195,6 +1204,7 @@ void campaign_preview_pane::draw_contents()
 	} catch (utils::invalid_utf8_exception&) {
 		LOG_STREAM(err, engine) << "Invalid utf-8 found, campaign description is ignored.\n";
 	}
+*/ 
 //	const std::vector<std::string> lines = utils::split(desc_text, '\n',utils::STRIP_SPACES);
 	SDL_Rect txt_area = { area.x+campaign_preview_border,area.y+campaign_preview_border,0,0 };
 

@@ -39,7 +39,7 @@ unsigned int gUnitTexIds[NUM_UNITMAPS];
 unsigned int gUnitTexW[NUM_UNITMAPS];
 unsigned int gUnitTexH[NUM_UNITMAPS];
 
-#define MAX_UNIT_ATLAS_TOTAL_SIZE	4*1024*1024
+#define MAX_UNIT_ATLAS_TOTAL_SIZE	3*1024*1024
 
 typedef struct
 {

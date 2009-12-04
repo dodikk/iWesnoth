@@ -252,7 +252,7 @@ int twindow::show(const bool restore, void* /*flip_function*/)
 	 */
 	invalidate_layout();
 	suspend_drawing_ = false;
-
+	
 	// Start our loop drawing will happen here as well.
 	for(status_ = SHOWING; status_ != REQUEST_CLOSE; ) {
 		// KP: always redraw options list
@@ -277,7 +277,6 @@ int twindow::show(const bool restore, void* /*flip_function*/)
 			tbox->set_visible(HIDDEN);
 			tbox->set_visible(VISIBLE);
 		}
-		
 		
 		draw();
 		

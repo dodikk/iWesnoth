@@ -315,12 +315,12 @@ int dialog::show()
 		{
 			// KP: redraw every frame for openGL rendering
 			draw_frame();
-			//update_widget_positions();
+			update_widget_positions();
 			draw_contents();
 			
 			//refresh();
 			
-			SDL_Delay(100);
+			SDL_Delay(50);
 		}
 		action(dp_info);
 		dp_info.cycle();

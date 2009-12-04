@@ -161,7 +161,7 @@ void show_unit_description(game_display &disp, const unit& u);
 class campaign_preview_pane : public gui::preview_pane
 {
 public:
-	campaign_preview_pane(CVideo &video,std::vector<std::pair<std::string,std::string> >* descriptions);
+	campaign_preview_pane(CVideo &video,std::vector<std::pair<shared_string,shared_string> >* descriptions);
 
 	bool show_above() const;
 	bool left_side() const;
@@ -170,7 +170,8 @@ public:
 private:
 	void draw_contents();
 
-	const std::vector<std::pair<std::string,std::string> >* descriptions_;
+	const std::vector<std::pair<shared_string,shared_string> >* descriptions_;
+	std::string desc_text;
 	int index_;
 };
 

@@ -1121,13 +1121,13 @@ bool game_controller::new_campaign()
 	} else {
 
 		std::vector<shared_string> campaign_names;
-		std::vector<std::pair<std::string,std::string> > campaign_desc;
+		std::vector<std::pair<shared_string,shared_string> > campaign_desc;
 
 		for(config::child_list::const_iterator i = campaigns.begin(); i != campaigns.end(); ++i) {
 			std::stringstream str;
 			const std::string& icon = (**i)["icon"];
-			const std::string desc = (**i)["description"];
-			const std::string image = (**i)["image"];
+			const shared_string desc = (**i)["description"];
+			const shared_string image = (**i)["image"];
 			if(icon.empty()) {
 				str << COLUMN_SEPARATOR;
 			} else {
@@ -1137,7 +1137,7 @@ bool game_controller::new_campaign()
 			str << (**i)["name"];
 
 			campaign_names.push_back(str.str());
-			campaign_desc.push_back(std::pair<std::string,std::string>(desc,image));
+			campaign_desc.push_back(std::pair<shared_string,shared_string>(desc,image));
 		}
 
 		if(campaign_names.size() <= 0) {

@@ -1207,7 +1207,7 @@ void draw_wait_cursor(void)
 	GLshort vertices[8];
 	GLfloat texCoords[8];
 	
-	int size = 32;
+	int size = 64;
 	vertices[0] = (480-size)/2;
 	vertices[1] = (320-size)/2;
 	vertices[2] = vertices[0] + size;;
