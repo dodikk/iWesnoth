@@ -90,7 +90,8 @@ void mouse_handler::mouse_motion(int x, int y, const bool browse, bool update)
 	SDL_GetMouseState(0, &x,&y);  // <-- modify x and y
 
 	if (mouse_handler_base::mouse_motion_default(x, y, update)) return;
-
+	// KP: moved to left click up
+/*
 	const map_location new_hex = gui().hex_clicked_on(x,y);
 
 	if(new_hex != last_hex_) {
@@ -227,6 +228,7 @@ void mouse_handler::mouse_motion(int x, int y, const bool browse, bool update)
 			}
 		}
 	}
+ */
 }
 
 unit_map::iterator mouse_handler::selected_unit()
@@ -358,12 +360,157 @@ void mouse_handler::left_mouse_up(int x, int y, const bool browse)
 	undo_ = false;
 
 	bool check_shroud = teams_[team_num_ - 1].auto_shroud_updates();
+	
 
+	// KP: code moved here from mouse move
+	if (didDrag_ == false)
+	{
+		bool update = true;
+		const map_location new_hex = gui().hex_clicked_on(x,y);
+		
+		if(new_hex != last_hex_) {
+			update = true;
+			if (last_hex_.valid()) {
+				// we store the previous hexes used to propose attack direction
+				previous_hex_ = last_hex_;
+				// the hex of the selected unit is also "free"
+				if (last_hex_ == selected_hex_ || find_unit(last_hex_) == units_.end()) {
+					previous_free_hex_ = last_hex_;
+				}
+			}
+			last_hex_ = new_hex;
+		}
+		
+		
+		if (reachmap_invalid_) update = true;
+		
+		if (update) {
+			if (reachmap_invalid_) {
+				reachmap_invalid_ = false;
+				if (!current_paths_.routes.empty() && !show_partial_move_) {
+					unit_map::iterator u = find_unit(selected_hex_);
+					if(selected_hex_.valid() && u != units_.end() ) {
+						// reselect the unit without firing events (updates current_paths_)
+						select_hex(selected_hex_, true);
+					}
+					// we do never deselect here, mainly because of canceled attack-move
+				}
+			}
+			
+			// reset current_route_ and current_paths if not valid anymore
+			// we do it before cursor selection, because it uses current_paths_
+			if(new_hex.valid() == false) {
+				current_route_.steps.clear();
+				gui().set_route(NULL);
+			}
+			
+			if(enemy_paths_) {
+				enemy_paths_ = false;
+				current_paths_ = paths();
+				gui().unhighlight_reach();
+			} else if(over_route_) {
+				over_route_ = false;
+				current_route_.steps.clear();
+				gui().set_route(NULL);
+			}
+			
+			gui().highlight_hex(new_hex);
+			
+			const unit_map::iterator selected_unit = find_unit(selected_hex_);
+			const unit_map::iterator mouseover_unit = find_unit(new_hex);
+			
+			// we search if there is an attack possibility and where
+			map_location attack_from = current_unit_attacks_from(new_hex);
+			
+			//see if we should show the normal cursor, the movement cursor, or
+			//the attack cursor
+			//If the cursor is on WAIT, we don't change it and let the setter
+			//of this state end it
+			if (cursor::get() != cursor::WAIT) {
+				if(selected_unit != units_.end() && selected_unit->second.side() == team_num_
+				   && !selected_unit->second.incapacitated() && !browse) {
+					if (attack_from.valid()) {
+						cursor::set(dragging_started_ ? cursor::ATTACK_DRAG : cursor::ATTACK);
+					} else if (mouseover_unit==units_.end() && current_paths_.routes.count(new_hex)) {
+						cursor::set(dragging_started_ ? cursor::MOVE_DRAG : cursor::MOVE);
+					} else {
+						// selecte unit can't attack or move there
+						cursor::set(cursor::NORMAL);
+					}
+				} else {
+					// no selected unit or we can't move it
+					cursor::set(cursor::NORMAL);
+				}
+			}
+			
+			// show (or cancel) the attack direction indicator
+			if (attack_from.valid() && !browse) {
+				gui().set_attack_indicator(attack_from, new_hex);
+			} else {
+				gui().clear_attack_indicator();
+			}
+			
+			// the destination is the pointed hex or the adjacent hex
+			// used to attack it
+			map_location dest;
+			unit_map::const_iterator dest_un;
+			if (attack_from.valid()) {
+				dest = attack_from;
+				dest_un = find_unit(dest);
+			}	else {
+				dest = new_hex;
+				dest_un = mouseover_unit;
+			}
+			
+			if(dest == selected_hex_ || dest_un != units_.end()) {
+				current_route_.steps.clear();
+				gui().set_route(NULL);
+			} else if(!current_paths_.routes.empty() && map_.on_board(selected_hex_) &&
+					  map_.on_board(new_hex)) {
+				
+				if(selected_unit != units_.end() && !selected_unit->second.incapacitated()) {
+					// the movement_reset is active only if it's not the unit's turn
+					unit_movement_resetter move_reset(selected_unit->second,
+													  selected_unit->second.side() != team_num_);
+					current_route_ = get_route(selected_unit, dest, viewing_team());
+					if(!browse) {
+						gui().set_route(&current_route_);
+					}
+				}
+			}
+			
+			unit_map::iterator un = mouseover_unit;
+			
+			if(un != units_.end() && current_paths_.routes.empty() && !gui().fogged(un->first)) {
+				if (un->second.side() != team_num_) {
+					//unit under cursor is not on our team, highlight reach
+					unit_movement_resetter move_reset(un->second);
+					
+					const bool teleport = un->second.get_ability_bool("teleport",un->first);
+					current_paths_ = paths(map_,units_,new_hex,teams_,
+										   false,teleport,viewing_team(),path_turns_);
+					gui().highlight_reach(current_paths_);
+					enemy_paths_ = true;
+				} else {
+					//unit is on our team, show path if the unit has one
+					const map_location go_to = un->second.get_goto();
+					if(map_.on_board(go_to)) {
+						paths::route route = get_route(un, go_to, current_team());
+						gui().set_route(&route);
+					}
+					over_route_ = true;
+				}
+			}
+		}
+	
+	}
+	
+	// KP: end code move
+	
 	//we use the last registered highlighted hex
 	//since it's what update our global state
-	map_location hex = last_hex_;
-		
-
+	map_location hex = last_hex_;	
+	
 #ifdef __IPHONEOS__
 	if (didDrag_)
 	{

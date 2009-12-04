@@ -1533,13 +1533,13 @@ bool display::draw_init()
 
 void display::draw_wrap(bool update,bool force,bool changed)
 {
-	static const int time_between_draws = preferences::draw_delay();	// defaults to 20ms = 50fps
+	static const int time_between_draws = 50; // KP: 20fps
 	const int current_time = SDL_GetTicks();
 	int wait_time = nextDraw_ - current_time;
 	
 	// KP: ensure responsive map scrolling
-	if (wait_time < 30)
-		wait_time = 30;
+	if (wait_time < 20)
+		wait_time = 20;
 	
 	// KP: update scroll velocity
 	if (scroll_velocity_x_ != 0 || scroll_velocity_y_ != 0)

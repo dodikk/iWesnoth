@@ -133,7 +133,7 @@ bool mouse_handler_base::mouse_motion_default(int x, int y, bool /*update*/)
 		didDrag_ = true;
 		// KP: fixes #5
 		unsigned long curTime = SDL_GetTicks();
-		if (curTime - drag_start_time_ > 250) // update velocity every 1/4 second
+		if ((curTime - drag_start_time_) > 100) // update velocity every 1/10 second
 		{
 			float seconds = (float)(curTime - drag_start_time_) / 1000;
 			float xVelocity = (float)-dragged_x_ / seconds;
@@ -160,7 +160,7 @@ void mouse_handler_base::mouse_press(const SDL_MouseButtonEvent& event, const bo
 		simple_warp_ = true;
 	}
 	show_menu_ = false;
-	mouse_update(browse);
+	//mouse_update(browse);
 	int scrollx = 0;
 	int scrolly = 0;
 
@@ -229,7 +229,7 @@ void mouse_handler_base::mouse_press(const SDL_MouseButtonEvent& event, const bo
 		dragging_started_ = false;
 		cursor::set_dragging(false);
 	}
-	mouse_update(browse);
+//	mouse_update(browse);
 }
 
 bool mouse_handler_base::is_left_click(const SDL_MouseButtonEvent& event)
@@ -276,15 +276,17 @@ void mouse_handler_base::left_drag_end(int x, int y, const bool browse)
 	unsigned long endTime = SDL_GetTicks();
 	float seconds = (float)(endTime - drag_start_time_) / 1000;
 	float xVelocity, yVelocity;
-	if (seconds < 0.1)
+	if (seconds < 0.25)
 	{
 		xVelocity = drag_last_xVelocity_;
 		yVelocity = drag_last_yVelocity_;
 	}
 	else
 	{
-		xVelocity = (float)-dragged_x_ / seconds;
-		yVelocity = (float)-dragged_y_ / seconds;
+		//xVelocity = (float)-dragged_x_ / seconds;
+		//yVelocity = (float)-dragged_y_ / seconds;
+		xVelocity = 0;
+		yVelocity = 0;
 	}
 	gui().set_scroll_velocity(xVelocity, yVelocity);
 	left_click(x, y, browse);
