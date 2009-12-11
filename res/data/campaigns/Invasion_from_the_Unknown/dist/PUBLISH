@@ -1,0 +1,9 @@
+# "Invasion from the Unknown" package automatically generated on 2009-12-04 - 23:14:59 (UTC)
+# running /home/espreon/bin/build-external-archive under GNU/Linux 2.6.31-sabayon i686 by espreon@espsanctum
+
+# version 1.14.3
+# archive tar
+# comp bzip2
+# generator espreon@espsanctum
+
+# command line: "/home/espreon/bin/build-external-archive -x 1.14.2 Invasion_from_the_Unknown ."

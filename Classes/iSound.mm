@@ -210,9 +210,16 @@ void iSound::playMusic(const std::string& filename, int loopCount)
 	NSString *soundFilePath;
 	
 	std::string newFilename;
-	int extPos = filename.rfind('.');
-	newFilename = filename.substr(0, extPos);
-	newFilename += ".mp3";
+	if (filename.rfind('.caf') != std::string::npos)
+	{
+		newFilename = filename;
+	}
+	else
+	{
+		int extPos = filename.rfind('.');
+		newFilename = filename.substr(0, extPos);
+		newFilename += ".mp3";
+	}
 	
 	soundFilePath = [NSString stringWithCString:newFilename.c_str()];
 	

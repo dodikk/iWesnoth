@@ -407,9 +407,10 @@ bool ai_interface::recruit(const std::string& unit_name, location loc)
 	}
 }
 
-void ai_interface::raise_user_interact()
+void ai_interface::raise_user_interact(int interact_time)
 {
-	const int interact_time = 30;
+	// KP: default to update UI at 20fps normally, and only at 4fps during AI thinking
+//	const int interact_time = 0;
 	const int time_since_interact = SDL_GetTicks() - last_interact_;
 	if(time_since_interact < interact_time) {
 		return;

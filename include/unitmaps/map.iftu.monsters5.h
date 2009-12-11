@@ -1,0 +1,19 @@
+// "filename.png", texOffsetX, texOffsetY, flags, texW, texH, trimmedX, trimmedY, originalW, originalH, UNITMAP_IFTU_MONSTERS5ID
+addMapEntry("units/monsters/water-serpent-attack-n-5.png", 110, 110, 0, 30, 108, 12, 3, 72, 160, UNITMAP_IFTU_MONSTERS5);
+addMapEntry("units/monsters/water-serpent-attack-n-6.png", 175, 0, 0, 44, 56, 13, 10, 72, 72, UNITMAP_IFTU_MONSTERS5);
+addMapEntry("units/monsters/water-serpent-attack-ne-1.png", 78, 0, 0, 48, 55, 13, 11, 72, 72, UNITMAP_IFTU_MONSTERS5);
+addMapEntry("units/monsters/water-serpent-attack-ne-2.png", 126, 0, 0, 49, 51, 13, 15, 72, 72, UNITMAP_IFTU_MONSTERS5);
+addMapEntry("units/monsters/water-serpent-attack-ne-3.png", 256, 0, 0, 43, 48, 13, 18, 72, 72, UNITMAP_IFTU_MONSTERS5);
+addMapEntry("units/monsters/water-serpent-attack-ne-4.png", 299, 0, 0, 43, 40, 13, 26, 72, 72, UNITMAP_IFTU_MONSTERS5);
+addMapEntry("units/monsters/water-serpent-attack-ne-5.png", 0, 0, 0, 78, 70, 51, 32, 144, 144, UNITMAP_IFTU_MONSTERS5);
+addMapEntry("units/monsters/water-serpent-attack-ne-6.png", 140, 163, 0, 49, 63, 13, 3, 72, 72, UNITMAP_IFTU_MONSTERS5);
+addMapEntry("units/monsters/water-serpent-attack-s-5.png", 71, 110, 0, 39, 86, 7, 90, 72, 176, UNITMAP_IFTU_MONSTERS5);
+addMapEntry("units/monsters/water-serpent-attack-s-6.png", 200, 110, 0, 52, 51, 4, 29, 72, 80, UNITMAP_IFTU_MONSTERS5);
+addMapEntry("units/monsters/water-serpent-attack-se-1.png", 189, 163, 0, 57, 52, 6, 16, 72, 72, UNITMAP_IFTU_MONSTERS5);
+addMapEntry("units/monsters/water-serpent-attack-se-2.png", 0, 186, 0, 57, 48, 4, 22, 72, 72, UNITMAP_IFTU_MONSTERS5);
+addMapEntry("units/monsters/water-serpent-attack-se-3.png", 189, 215, 0, 54, 41, 4, 28, 72, 72, UNITMAP_IFTU_MONSTERS5);
+addMapEntry("units/monsters/water-serpent-attack-se-4.png", 165, 70, 0, 53, 37, 4, 35, 72, 72, UNITMAP_IFTU_MONSTERS5);
+addMapEntry("units/monsters/water-serpent-attack-se-5.png", 71, 70, 0, 94, 40, 38, 34, 132, 74, UNITMAP_IFTU_MONSTERS5);
+addMapEntry("units/monsters/water-serpent-attack-se-6.png", 0, 70, 0, 71, 57, 8, 7, 80, 72, UNITMAP_IFTU_MONSTERS5);
+addMapEntry("units/monsters/water-serpent-n.png", 0, 127, 0, 47, 59, 13, 7, 72, 72, UNITMAP_IFTU_MONSTERS5);
+addMapEntry("units/monsters/water-serpent.png", 140, 110, 0, 60, 53, 6, 12, 72, 72, UNITMAP_IFTU_MONSTERS5);

@@ -870,8 +870,8 @@ bool playsingle_controller::can_execute_command(hotkey::HOTKEY_COMMAND command, 
 {
 	bool res = true;
 	switch (command){
-		case hotkey::HOTKEY_UNIT_HOLD_POSITION:
-		case hotkey::HOTKEY_END_UNIT_TURN:
+		//case hotkey::HOTKEY_UNIT_HOLD_POSITION:
+		//case hotkey::HOTKEY_END_UNIT_TURN:
 		case hotkey::HOTKEY_RECRUIT:
 		case hotkey::HOTKEY_REPEAT_RECRUIT:
 		case hotkey::HOTKEY_RECALL:

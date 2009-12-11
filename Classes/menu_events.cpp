@@ -49,6 +49,8 @@
 #define LOG_NG LOG_STREAM(info, engine)
 #define DBG_NG LOG_STREAM(info, engine)
 
+extern bool gRedraw;
+
 namespace {
 
 void remove_old_auto_saves()
@@ -846,6 +848,7 @@ private:
 
 		std::vector<const unit_type*> sample_units;
 
+		gRedraw = true;
 		gui_->draw(); //clear the old menu
 		std::vector<std::string> item_keys;
 		std::vector<shared_string> items;
@@ -880,6 +883,7 @@ private:
 		if(sample_units.empty()) {
 			gui::message_dialog to_show(*gui_,"",_("You have no units available to recruit."));
 			to_show.show();
+			gRedraw = true;
 			return;
 		}
 
@@ -906,6 +910,8 @@ private:
 			recruit_res = rmenu.show();
 		}
 
+		gRedraw = true;
+		
 		if(recruit_res != -1) {
 			do_recruit(item_keys[recruit_res], team_num, last_hex);
 		}
@@ -1002,6 +1008,7 @@ private:
 		//so that the most valuable units are shown first
 		sort_units(recall_list);
 
+		gRedraw = true;
 		gui_->draw(); //clear the old menu
 
 		if(recall_list.empty()) {
@@ -1079,7 +1086,7 @@ private:
 #endif
 				delete_recall_unit recall_deleter(*gui_, *filter, recall_list);
 				gui::dialog_button_info delete_button(&recall_deleter,_("Dismiss Unit"));
-				rmenu.add_button(delete_button);
+				rmenu.add_button(delete_button, gui::dialog::BUTTON_HELP);
 #if !defined(__IPHONEOS__)
 				rmenu.add_button(new help::help_button(*gui_,"recruit_and_recall"),
 					gui::dialog::BUTTON_HELP);
@@ -1133,6 +1140,7 @@ private:
 				}
 			}
 		}
+		gRedraw = true;
 	}
 	void menu_handler::undo(const unsigned int team_num)
 	{
@@ -1696,7 +1704,7 @@ private:
 
 	void menu_handler::end_unit_turn(mouse_handler& mousehandler, const unsigned int team_num)
 	{
-		const unit_map::iterator un = units_.find(mousehandler.get_selected_hex());
+		const unit_map::iterator un = current_unit(mousehandler); //units_.find(mousehandler.get_selected_hex());
 		if(un != units_.end() && un->second.side() == team_num && un->second.movement_left() >= 0) {
 			un->second.set_user_end_turn(!un->second.user_end_turn());
 			if(un->second.hold_position() && !un->second.user_end_turn()){

@@ -514,6 +514,11 @@
 		27EEF9B910063B6B0053FBAA /* gzio.c in Sources */ = {isa = PBXBuildFile; fileRef = 27EEF9AD10063B6B0053FBAA /* gzio.c */; };
 		27EEF9BA10063B6B0053FBAA /* inffast.c in Sources */ = {isa = PBXBuildFile; fileRef = 27EEF9AE10063B6B0053FBAA /* inffast.c */; };
 		27EEF9BB10063B6B0053FBAA /* zutil.c in Sources */ = {isa = PBXBuildFile; fileRef = 27EEF9AF10063B6B0053FBAA /* zutil.c */; };
+		27F54F7910D0C44500441FB3 /* sounds in Resources */ = {isa = PBXBuildFile; fileRef = 27F52DFE10D0C44000441FB3 /* sounds */; };
+		27F54F7A10D0C44500441FB3 /* data in Resources */ = {isa = PBXBuildFile; fileRef = 27F52E1310D0C44000441FB3 /* data */; };
+		27F54F7B10D0C44500441FB3 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 27F54CC710D0C44500441FB3 /* fonts */; };
+		27F54F7C10D0C44500441FB3 /* precache in Resources */ = {isa = PBXBuildFile; fileRef = 27F54CCC10D0C44500441FB3 /* precache */; };
+		27F54F7D10D0C44500441FB3 /* images in Resources */ = {isa = PBXBuildFile; fileRef = 27F54D7710D0C44500441FB3 /* images */; };
 		28FD15000DC6FC520079059D /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FD14FF0DC6FC520079059D /* OpenGLES.framework */; };
 		28FD15080DC6FC5B0079059D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FD15070DC6FC5B0079059D /* QuartzCore.framework */; };
 		FD779EDE0E26BA1200F39101 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD779EDD0E26BA1200F39101 /* CoreAudio.framework */; };
@@ -1460,6 +1465,11 @@
 		27F1916110844C3C00AB3EA5 /* tcmalloc_guard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tcmalloc_guard.h; sourceTree = "<group>"; };
 		27F1916210844C3C00AB3EA5 /* thread_cache.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = thread_cache.cc; sourceTree = "<group>"; };
 		27F1916310844C3C00AB3EA5 /* thread_cache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = thread_cache.h; sourceTree = "<group>"; };
+		27F52DFE10D0C44000441FB3 /* sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; name = sounds; path = res/sounds; sourceTree = "<group>"; };
+		27F52E1310D0C44000441FB3 /* data */ = {isa = PBXFileReference; lastKnownFileType = folder; name = data; path = res/data; sourceTree = "<group>"; };
+		27F54CC710D0C44500441FB3 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = fonts; path = res/fonts; sourceTree = "<group>"; };
+		27F54CCC10D0C44500441FB3 /* precache */ = {isa = PBXFileReference; lastKnownFileType = folder; name = precache; path = res/precache; sourceTree = "<group>"; };
+		27F54D7710D0C44500441FB3 /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = images; path = res/images; sourceTree = "<group>"; };
 		28FD14FF0DC6FC520079059D /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		28FD15070DC6FC5B0079059D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -2998,6 +3008,11 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				27F52DFE10D0C44000441FB3 /* sounds */,
+				27F52E1310D0C44000441FB3 /* data */,
+				27F54CC710D0C44500441FB3 /* fonts */,
+				27F54CCC10D0C44500441FB3 /* precache */,
+				27F54D7710D0C44500441FB3 /* images */,
 				FD77A07E0E26BDA900F39101 /* Default.png */,
 				FD77A07C0E26BD8C00F39101 /* Icon.png */,
 				8D1107310486CEB800E47090 /* Info.plist */,
@@ -3075,6 +3090,11 @@
 				FD77A07D0E26BD8C00F39101 /* Icon.png in Resources */,
 				FD77A07F0E26BDA900F39101 /* Default.png in Resources */,
 				27B2A26E1092044800E69353 /* Entitlements.plist in Resources */,
+				27F54F7910D0C44500441FB3 /* sounds in Resources */,
+				27F54F7A10D0C44500441FB3 /* data in Resources */,
+				27F54F7B10D0C44500441FB3 /* fonts in Resources */,
+				27F54F7C10D0C44500441FB3 /* precache in Resources */,
+				27F54F7D10D0C44500441FB3 /* images in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3686,7 +3706,7 @@
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A337F453-3282-4914-8722-11672C283F24";
 				SDKROOT = iphoneos2.2;
 				STRIP_INSTALLED_PRODUCT = YES;
-				USER_HEADER_SEARCH_PATHS = "./res/data/core/images/unitmaps ./Classes ./";
+				USER_HEADER_SEARCH_PATHS = "./include/unitmaps ./Classes ./";
 			};
 			name = Beta;
 		};
@@ -3747,7 +3767,7 @@
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "03EAD56C-BC4A-40FF-8DAE-089C13D6F5AF";
 				SDKROOT = iphoneos2.2;
 				STRIP_INSTALLED_PRODUCT = YES;
-				USER_HEADER_SEARCH_PATHS = "./res/data/core/images/unitmaps ./Classes ./";
+				USER_HEADER_SEARCH_PATHS = "./include/unitmaps ./Classes ./";
 			};
 			name = Distribution;
 		};
@@ -3813,7 +3833,7 @@
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5A110399-8927-45EB-87EC-41FBA296A31E";
 				SDKROOT = iphoneos2.2;
 				STRIP_INSTALLED_PRODUCT = NO;
-				USER_HEADER_SEARCH_PATHS = "./res/data/core/images/unitmaps ./Classes ./";
+				USER_HEADER_SEARCH_PATHS = "./include/unitmaps ./Classes ./";
 			};
 			name = Valgrind;
 		};
@@ -3877,7 +3897,7 @@
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5A110399-8927-45EB-87EC-41FBA296A31E";
 				SDKROOT = iphoneos2.2;
 				STRIP_INSTALLED_PRODUCT = YES;
-				USER_HEADER_SEARCH_PATHS = "./res/data/core/images/unitmaps ./Classes ./";
+				USER_HEADER_SEARCH_PATHS = "./include/unitmaps ./Classes ./";
 			};
 			name = Debug;
 		};
@@ -3921,7 +3941,7 @@
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5A110399-8927-45EB-87EC-41FBA296A31E";
 				SDKROOT = iphoneos2.2;
 				STRIP_INSTALLED_PRODUCT = YES;
-				USER_HEADER_SEARCH_PATHS = "./res/data/core/images/unitmaps ./Classes ./";
+				USER_HEADER_SEARCH_PATHS = "./include/unitmaps ./Classes ./";
 			};
 			name = Release;
 		};

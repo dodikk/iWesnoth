@@ -718,7 +718,7 @@ void write_music_play_list(config& snapshot)
 
 void reposition_sound(int id, unsigned int distance)
 {
-	audio_lock lock;
+//	audio_lock lock;
 	for(unsigned int ch = 0; ch < channel_ids.size(); ++ch) {
 		int& ch_id = channel_ids[ch];
 		if(ch_id == id) {
@@ -735,7 +735,7 @@ void reposition_sound(int id, unsigned int distance)
 
 bool is_sound_playing(int id)
 {
-	audio_lock lock;
+//	audio_lock lock;
 	return std::find(channel_ids.begin(), channel_ids.end(), id) != channel_ids.end();
 }
 

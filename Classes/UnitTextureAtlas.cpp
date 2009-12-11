@@ -39,7 +39,7 @@ unsigned int gUnitTexIds[NUM_UNITMAPS];
 unsigned int gUnitTexW[NUM_UNITMAPS];
 unsigned int gUnitTexH[NUM_UNITMAPS];
 
-#define MAX_UNIT_ATLAS_TOTAL_SIZE	3*1024*1024
+#define MAX_UNIT_ATLAS_TOTAL_SIZE	4*1024*1024
 
 typedef struct
 {
@@ -90,6 +90,9 @@ void loadUnitMap(unsigned short mapId)
 	
 	switch(mapId)
 	{
+		case UNITMAP_ELLIPSE:
+			filename = game_config::path + "/images/misc/map.ellipse.png";
+			break;
 		case UNITMAP_DRAKES_DRAKES:
 			filename += "map.drakes.drakes.png";
 			break;
@@ -1112,6 +1115,164 @@ void loadUnitMap(unsigned short mapId)
 			filename += "map.utbs.undead.png";
 			break;
 			
+			
+		
+		case UNITMAP_IFTU_ALIEN_PSY:
+			filename += "map.iftu.alien-psy.png";
+			break;
+		case UNITMAP_IFTU_ALIEN_VERLISSH:
+			filename += "map.iftu.alien-verlissh.png";
+			break;
+		case UNITMAP_IFTU_DEMONS:
+			filename += "map.iftu.demons.png";
+			break;
+		case UNITMAP_IFTU_DWARVES:
+			filename += "map.iftu.dwarves.png";
+			break;
+		case UNITMAP_IFTU_ELVES:
+			filename += "map.iftu.elves.png";
+			break;
+		case UNITMAP_IFTU_FAIRIES_SYLVAN:
+			filename += "map.iftu.fairies-sylvan.png";
+			break;
+		case UNITMAP_IFTU_FAKE:
+			filename += "map.iftu.fake.png";
+			break;
+		case UNITMAP_IFTU_GOBLINS:
+			filename += "map.iftu.goblins.png";
+			break;
+		case UNITMAP_IFTU_GRYPHONS:
+			filename += "map.iftu.gryphons.png";
+			break;
+		case UNITMAP_IFTU_HUMAN_ARAGWAITHI_ARCHER:
+			filename += "map.iftu.human-aragwaithi.archer.png";
+			break;
+		case UNITMAP_IFTU_HUMAN_ARAGWAITHI_CAPTAIN:
+			filename += "map.iftu.human-aragwaithi.captain.png";
+			break;
+		case UNITMAP_IFTU_HUMAN_ARAGWAITHI_EAGLE_RIDER:
+			filename += "map.iftu.human-aragwaithi.eagle-rider.png";
+			break;
+		case UNITMAP_IFTU_HUMAN_ARAGWAITHI_FLAGBEARER:
+			filename += "map.iftu.human-aragwaithi.flagbearer.png";
+			break;
+		case UNITMAP_IFTU_HUMAN_ARAGWAITHI_GREATBOW:
+			filename += "map.iftu.human-aragwaithi.greatbow.png";
+			break;
+		case UNITMAP_IFTU_HUMAN_ARAGWAITHI_GUARD:
+			filename += "map.iftu.human-aragwaithi.guard.png";
+			break;
+		case UNITMAP_IFTU_HUMAN_ARAGWAITHI_GUARDIAN:
+			filename += "map.iftu.human-aragwaithi.guardian.png";
+			break;
+		case UNITMAP_IFTU_HUMAN_ARAGWAITHI_LANCER:
+			filename += "map.iftu.human-aragwaithi.lancer.png";
+			break;
+		case UNITMAP_IFTU_HUMAN_ARAGWAITHI_LONGSWORDSMAN:
+			filename += "map.iftu.human-aragwaithi.longswordsman.png";
+			break;
+		case UNITMAP_IFTU_HUMAN_ARAGWAITHI_PIKEMAN:
+			filename += "map.iftu.human-aragwaithi.pikeman.png";
+			break;
+		case UNITMAP_IFTU_HUMAN_ARAGWAITHI:
+			filename += "map.iftu.human-aragwaithi.png";
+			break;
+		case UNITMAP_IFTU_HUMAN_ARAGWAITHI_SCOUT:
+			filename += "map.iftu.human-aragwaithi.scout.png";
+			break;
+		case UNITMAP_IFTU_HUMAN_ARAGWAITHI_SHIELD_GUARD:
+			filename += "map.iftu.human-aragwaithi.shield-guard.png";
+			break;
+		case UNITMAP_IFTU_HUMAN_ARAGWAITHI_SILVER_SHIELD:
+			filename += "map.iftu.human-aragwaithi.silver-shield.png";
+			break;
+		case UNITMAP_IFTU_HUMAN_ARAGWAITHI_SLAYER:
+			filename += "map.iftu.human-aragwaithi.slayer.png";
+			break;
+		case UNITMAP_IFTU_HUMAN_ARAGWAITHI_SPEARMAN:
+			filename += "map.iftu.human-aragwaithi.spearman.png";
+			break;
+		case UNITMAP_IFTU_HUMAN_ARAGWAITHI_STRONGBOW:
+			filename += "map.iftu.human-aragwaithi.strongbow.png";
+			break;
+		case UNITMAP_IFTU_HUMAN_ARAGWAITHI_SWORDMAN:
+			filename += "map.iftu.human-aragwaithi.swordman.png";
+			break;
+		case UNITMAP_IFTU_HUMAN_ARAGWAITHI_SWORDMASTER:
+			filename += "map.iftu.human-aragwaithi.swordmaster.png";
+			break;
+		case UNITMAP_IFTU_HUMAN_ARAGWAITHI_WARLOCK:
+			filename += "map.iftu.human-aragwaithi.warlock.png";
+			break;
+		case UNITMAP_IFTU_HUMAN_CHAOS_DARK_KNIGHT:
+			filename += "map.iftu.human-chaos.dark-knight.png";
+			break;
+		case UNITMAP_IFTU_HUMAN_CHAOS_INVADER:
+			filename += "map.iftu.human-chaos.invader.png";
+			break;
+		case UNITMAP_IFTU_HUMAN_CHAOS:
+			filename += "map.iftu.human-chaos.png";
+			break;
+		case UNITMAP_IFTU_HUMAN_CHAOS_RAZERMAN:
+			filename += "map.iftu.human-chaos.razerman.png";
+			break;
+		case UNITMAP_IFTU_HUMAN_PEASANTS:
+			filename += "map.iftu.human-peasants.png";
+			break;
+		case UNITMAP_IFTU_IMPS:
+			filename += "map.iftu.imps.png";
+			break;
+		case UNITMAP_IFTU_MECHANICAL:
+			filename += "map.iftu.mechanical.png";
+			break;
+		case UNITMAP_IFTU_MONSTERS:
+			filename += "map.iftu.monsters.png";
+			break;
+		case UNITMAP_IFTU_MONSTERS2:
+			filename += "map.iftu.monsters2.png";
+			break;
+		case UNITMAP_IFTU_MONSTERS3:
+			filename += "map.iftu.monsters3.png";
+			break;
+		case UNITMAP_IFTU_MONSTERS4:
+			filename += "map.iftu.monsters4.png";
+			break;
+		case UNITMAP_IFTU_MONSTERS5:
+			filename += "map.iftu.monsters5.png";
+			break;
+		case UNITMAP_IFTU_ORCS:
+			filename += "map.iftu.orcs.png";
+			break;
+		case UNITMAP_IFTU_SHAXTHAL:
+			filename += "map.iftu.shaxthal.png";
+			break;
+		case UNITMAP_IFTU_SPIRITS_ANIMATED_ROCK:
+			filename += "map.iftu.spirits.animated-rock.png";
+			break;
+		case UNITMAP_IFTU_SPIRITS_FIRE:
+			filename += "map.iftu.spirits.fire.png";
+			break;
+		case UNITMAP_IFTU_SPIRITS_FIREWISP:
+			filename += "map.iftu.spirits.firewisp.png";
+			break;
+		case UNITMAP_IFTU_SPIRITS_ROCK_GOLEM:
+			filename += "map.iftu.spirits.rock-golem.png";
+			break;
+		case UNITMAP_IFTU_SPIRITS_WATER:
+			filename += "map.iftu.spirits.water.png";
+			break;
+		case UNITMAP_IFTU_TROLLS:
+			filename += "map.iftu.trolls.png";
+			break;
+		case UNITMAP_IFTU_UNDEAD_SKELETAL:
+			filename += "map.iftu.undead-skeletal.png";
+			break;
+		case UNITMAP_IFTU_UNDEAD:
+			filename += "map.iftu.undead.png";
+			break;
+			
+			
+			
 		case UNITMAP_BLANK:
 			filename += "map.blank.png";
 			break;
@@ -1137,8 +1298,19 @@ void loadUnitMap(unsigned short mapId)
 		{
 			std::map<Uint32, Uint32> tmp_rgb, map_rgb;
 			color_range const& new_color = game_config::color_info(std::string(1, '0'+color));
-			std::vector<Uint32> const& old_color = game_config::tc_info("magenta");
-			tmp_rgb = recolor_range(new_color,old_color);
+			
+			if (mapId == UNITMAP_ELLIPSE)
+			{
+				std::vector<Uint32> const& old_color = game_config::tc_info("ellipse_red");
+				tmp_rgb = recolor_range(new_color,old_color);
+			}
+			else
+			{
+				std::vector<Uint32> const& old_color = game_config::tc_info("magenta");;
+				tmp_rgb = recolor_range(new_color,old_color);
+			}
+				
+			
 
 			Uint32* beg = (Uint32*)surf->pixels;
 			Uint32* end = beg + surf->w*surf->h;
@@ -1596,8 +1768,60 @@ void initUnitTextureAtlas(void)
 	#include "map.utbs.orcs.nightstalker.h"
 	#include "map.utbs.undead.h"
 	
-	#include "map.blank.h"
+	#include "map.iftu.alien-psy.h"
+	#include "map.iftu.alien-verlissh.h"
+	#include "map.iftu.demons.h"
+	#include "map.iftu.dwarves.h"
+	#include "map.iftu.elves.h"
+	#include "map.iftu.fairies-sylvan.h"
+	#include "map.iftu.fake.h"
+	#include "map.iftu.goblins.h"
+	#include "map.iftu.gryphons.h"
+	#include "map.iftu.human-aragwaithi.archer.h"
+	#include "map.iftu.human-aragwaithi.captain.h"
+	#include "map.iftu.human-aragwaithi.eagle-rider.h"
+	#include "map.iftu.human-aragwaithi.flagbearer.h"
+	#include "map.iftu.human-aragwaithi.greatbow.h"
+	#include "map.iftu.human-aragwaithi.guard.h"
+	#include "map.iftu.human-aragwaithi.guardian.h"
+	#include "map.iftu.human-aragwaithi.h"
+	#include "map.iftu.human-aragwaithi.lancer.h"
+	#include "map.iftu.human-aragwaithi.longswordsman.h"
+	#include "map.iftu.human-aragwaithi.pikeman.h"
+	#include "map.iftu.human-aragwaithi.scout.h"
+	#include "map.iftu.human-aragwaithi.shield-guard.h"
+	#include "map.iftu.human-aragwaithi.silver-shield.h"
+	#include "map.iftu.human-aragwaithi.slayer.h"
+	#include "map.iftu.human-aragwaithi.spearman.h"
+	#include "map.iftu.human-aragwaithi.strongbow.h"
+	#include "map.iftu.human-aragwaithi.swordman.h"
+	#include "map.iftu.human-aragwaithi.swordmaster.h"
+	#include "map.iftu.human-aragwaithi.warlock.h"
+	#include "map.iftu.human-chaos.dark-knight.h"
+	#include "map.iftu.human-chaos.h"
+	#include "map.iftu.human-chaos.invader.h"
+	#include "map.iftu.human-chaos.razerman.h"
+	#include "map.iftu.human-peasants.h"
+	#include "map.iftu.imps.h"
+	#include "map.iftu.mechanical.h"
+	#include "map.iftu.monsters.h"
+	#include "map.iftu.monsters2.h"
+	#include "map.iftu.monsters3.h"
+	#include "map.iftu.monsters4.h"
+	#include "map.iftu.monsters5.h"
+	#include "map.iftu.orcs.h"
+	#include "map.iftu.shaxthal.h"
+	#include "map.iftu.spirits.animated-rock.h"
+	#include "map.iftu.spirits.fire.h"
+	#include "map.iftu.spirits.firewisp.h"
+	#include "map.iftu.spirits.rock-golem.h"
+	#include "map.iftu.spirits.water.h"
+	#include "map.iftu.trolls.h"
+	#include "map.iftu.undead-skeletal.h"
+	#include "map.iftu.undead.h"
 	
+	#include "map.blank.h"
+	#include "../res/images/misc/map.ellipse.h"
 	
 }
 
@@ -1636,8 +1860,74 @@ bool getUnitTextureAtlasInfo(const std::string& filename, const std::string& mod
 	{
 		// adjust tinfo.mapId based on modifications string
 		rcPos += 12;
-		char colorChar = modifications[rcPos];
-		int colorInt = colorChar - '0';
+		int colorInt = 1;
+		if (modifications.size() > rcPos+2)
+		{
+			// also convert color words
+			if (modifications[rcPos] == 'r')
+				colorInt = 1;	// red
+			else if (modifications[rcPos] == 'b' && modifications[rcPos+2] == 'u')
+				colorInt = 2;	// blue
+			else if (modifications[rcPos] == 'g')
+				colorInt = 3;	// green
+			else if (modifications[rcPos] == 'p')
+				colorInt = 4;	// purple
+			else if (modifications[rcPos] == 'b' && modifications[rcPos+2] == 'a')
+				colorInt = 5;	// black
+			else if (modifications[rcPos] == 'b' && modifications[rcPos+2] == 'o')
+				colorInt = 6;	// brown
+			else if (modifications[rcPos] == 'o')
+				colorInt = 7;	// orange
+			else if (modifications[rcPos] == 'w')
+				colorInt = 8;	// white
+			else if (modifications[rcPos] == 't')
+				colorInt = 9;	// teal
+			
+		}
+		else
+		{
+			char colorChar = modifications[rcPos];
+			colorInt = colorChar - '0';
+		}
+		if (colorInt >= 10)
+			colorInt = 0;
+		tinfo.mapId += colorInt;
+	}
+	// new special case for ellipse graphics
+	rcPos = modifications.find("~RC(ellipse_red>");
+	if (rcPos != std::string::npos)
+	{
+		// adjust tinfo.mapId based on modifications string
+		rcPos += 16;
+		int colorInt = 0;
+		if (modifications.size() > rcPos+2)
+		{
+			// also convert color words
+			if (modifications[rcPos] == 'r')
+				colorInt = 1;	// red
+			else if (modifications[rcPos] == 'b' && modifications[rcPos+2] == 'u')
+				colorInt = 2;	// blue
+			else if (modifications[rcPos] == 'g')
+				colorInt = 3;	// green
+			else if (modifications[rcPos] == 'p')
+				colorInt = 4;	// purple
+			else if (modifications[rcPos] == 'b' && modifications[rcPos+2] == 'a')
+				colorInt = 5;	// black
+			else if (modifications[rcPos] == 'b' && modifications[rcPos+2] == 'o')
+				colorInt = 6;	// brown
+			else if (modifications[rcPos] == 'o')
+				colorInt = 7;	// orange
+			else if (modifications[rcPos] == 'w')
+				colorInt = 8;	// white
+			else if (modifications[rcPos] == 't')
+				colorInt = 9;	// teal
+			
+		}
+		else
+		{
+				char colorChar = modifications[rcPos];
+				colorInt = colorChar - '0';
+		}
 		if (colorInt >= 10)
 			colorInt = 0;
 		tinfo.mapId += colorInt;

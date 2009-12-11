@@ -43,7 +43,7 @@ void ai::do_attack_analysis(
 	                )
 {
 	// This function is called fairly frequently, so interact with the user here.
-	raise_user_interact();
+	raise_user_interact(250);	// KP: 4fps
 
 	if(cur_analysis.movements.size() >= size_t(attack_depth())) {
 		//std::cerr << "ANALYSIS " << cur_analysis.movements.size() << " >= " << attack_depth() << "\n";

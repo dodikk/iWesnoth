@@ -49,7 +49,7 @@ void tmessage::pre_show(CVideo& /*video*/, twindow& window)
 	// The label might not always be a scroll_label but the capturing
 	// shouldn't hurt.
 	window.keyboard_capture(label);
-
+	
 	if(auto_close_) {
 		/*
 		 * Hide the buttton and do the layout, if window.does_easy_close() is

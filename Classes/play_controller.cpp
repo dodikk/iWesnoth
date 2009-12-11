@@ -305,10 +305,12 @@ void play_controller::save_map(){
 }
 
 void play_controller::load_game(){
+	draw_wait_cursor();
 	menu_handler_.load_game();
 }
 
 void play_controller::preferences(){
+	draw_wait_cursor();
 	menu_handler_.preferences();
 }
 
@@ -625,7 +627,13 @@ bool play_controller::can_execute_command(hotkey::HOTKEY_COMMAND command, int in
 			!(menu_handler_.current_unit(mouse_handler_)->second.unrenamable()) &&
 			menu_handler_.current_unit(mouse_handler_)->second.side() == gui_->viewing_team()+1 &&
 			teams_[menu_handler_.current_unit(mouse_handler_)->second.side() - 1].is_human();
-
+	// KP: added
+	case hotkey::HOTKEY_END_UNIT_TURN:
+			return !events::commands_disabled &&
+			menu_handler_.current_unit(mouse_handler_) != units_.end() &&
+			menu_handler_.current_unit(mouse_handler_)->second.side() == gui_->viewing_team()+1 &&
+			teams_[menu_handler_.current_unit(mouse_handler_)->second.side() - 1].is_human();
+			
 	default:
 		return false;
 	}
@@ -896,6 +904,7 @@ void play_controller::show_menu(const std::vector<shared_string>& items_arg, int
 		return;
 
 	command_executor::show_menu(items, xloc, yloc, context_menu, *gui_);
+	gui_->draw();
 }
 
 bool play_controller::in_context_menu(hotkey::HOTKEY_COMMAND command) const

@@ -1,0 +1,19 @@
+// "filename.png", texOffsetX, texOffsetY, flags, texW, texH, trimmedX, trimmedY, originalW, originalH, UNITMAP_IFTU_ORCSID
+addMapEntry("units/orcs-steppe/bladesman.png", 135, 203, 0, 38, 49, 21, 12, 72, 72, UNITMAP_IFTU_ORCS);
+addMapEntry("units/orcs-steppe/drover.png", 215, 153, 0, 41, 47, 22, 13, 72, 72, UNITMAP_IFTU_ORCS);
+addMapEntry("units/orcs-steppe/herder.png", 177, 100, 0, 40, 45, 22, 15, 72, 72, UNITMAP_IFTU_ORCS);
+addMapEntry("units/orcs-steppe/juggernaut.png", 91, 53, 0, 48, 47, 9, 14, 72, 72, UNITMAP_IFTU_ORCS);
+addMapEntry("units/orcs-steppe/khan.png", 135, 100, 0, 42, 53, 13, 8, 72, 72, UNITMAP_IFTU_ORCS);
+addMapEntry("units/orcs-steppe/massif.png", 51, 53, 0, 40, 58, 15, 3, 72, 72, UNITMAP_IFTU_ORCS);
+addMapEntry("units/orcs-steppe/master.png", 215, 200, 0, 41, 47, 18, 12, 72, 72, UNITMAP_IFTU_ORCS);
+addMapEntry("units/orcs-steppe/outcast.png", 51, 111, 0, 28, 48, 21, 12, 72, 72, UNITMAP_IFTU_ORCS);
+addMapEntry("units/orcs-steppe/pariah.png", 217, 100, 0, 36, 49, 21, 11, 72, 72, UNITMAP_IFTU_ORCS);
+addMapEntry("units/orcs-steppe/rigid.png", 91, 100, 0, 44, 51, 14, 11, 72, 72, UNITMAP_IFTU_ORCS);
+addMapEntry("units/orcs-steppe/savage.png", 176, 205, 0, 39, 48, 20, 12, 72, 72, UNITMAP_IFTU_ORCS);
+addMapEntry("units/orcs-steppe/shieldbearer.png", 91, 198, 0, 37, 45, 16, 16, 72, 72, UNITMAP_IFTU_ORCS);
+addMapEntry("units/orcs-steppe/skewer.png", 0, 0, 0, 51, 54, 9, 7, 72, 72, UNITMAP_IFTU_ORCS);
+addMapEntry("units/orcs-steppe/spearhead.png", 91, 151, 0, 37, 47, 22, 14, 72, 72, UNITMAP_IFTU_ORCS);
+addMapEntry("units/orcs-steppe/spearman.png", 51, 0, 0, 44, 53, 11, 9, 72, 72, UNITMAP_IFTU_ORCS);
+addMapEntry("units/orcs-steppe/stoic.png", 176, 153, 0, 39, 52, 21, 10, 72, 72, UNITMAP_IFTU_ORCS);
+addMapEntry("units/orcs-steppe/vanguard.png", 135, 153, 0, 41, 50, 18, 10, 72, 72, UNITMAP_IFTU_ORCS);
+addMapEntry("units/orcs-steppe/warrior.png", 139, 53, 0, 33, 45, 19, 16, 72, 72, UNITMAP_IFTU_ORCS);

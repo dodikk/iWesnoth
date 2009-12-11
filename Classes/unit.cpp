@@ -33,6 +33,7 @@
 #include "terrain_filter.hpp"
 #include "formula_string_utils.hpp"
 
+#include "UnitTextureAtlas.h"
 
 #define DBG_UT LOG_STREAM(debug, engine)
 #define LOG_UT LOG_STREAM(info, engine)
@@ -1965,17 +1966,19 @@ void unit::redraw_unit(game_display& disp, const map_location& loc)
 
 		// Load the ellipse parts recolored to match team color
 		char buf[100];
+		char mods[100];
 		std::string tc=team::get_side_colour_index(side_);
 
 		//snprintf(buf,sizeof(buf),"%s-%stop.png~RC(ellipse_red>%s)",ellipse.c_str(),selected,tc.c_str());
 		snprintf(buf,sizeof(buf),"%s-%stop.png",ellipse.c_str(),selected);
+		snprintf(mods, sizeof(mods), "~RC(ellipse_red>%s)", tc.c_str());
 		//ellipse_back.assign(image::get_image(image::locator(buf), image::SCALED_TO_ZOOM));
-		getTextureAtlasInfo(buf, ellipse_back);
+		getUnitTextureAtlasInfo(buf, mods, ellipse_back);
 		
 		//snprintf(buf,sizeof(buf),"%s-%sbottom.png~RC(ellipse_red>%s)",ellipse.c_str(),selected,tc.c_str());
 		snprintf(buf,sizeof(buf),"%s-%sbottom.png",ellipse.c_str(),selected);
 		//ellipse_front.assign(image::get_image(image::locator(buf), image::SCALED_TO_ZOOM));
-		getTextureAtlasInfo(buf, ellipse_front);
+		getUnitTextureAtlasInfo(buf, mods, ellipse_front);
 	}
 	//if (ellipse_back != NULL) {
 	if (ellipse_back.mapId != 0) {

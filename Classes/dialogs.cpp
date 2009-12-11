@@ -118,7 +118,7 @@ void advance_unit(const gamemap& map,
 
 		gui::dialog advances = gui::dialog(gui,
 				      _("Advance Unit"),
-		                      _("What should our victorious unit become?"),
+		                      _(""),
 		                      gui::OK_ONLY);
 		advances.set_menu(lang_options);
 		advances.set_panes(preview_panes);
@@ -636,6 +636,9 @@ std::string format_time_summary(time_t t)
 
 std::string load_game_dialog(display& disp, const config& game_config, bool* show_replay, bool* cancel_orders)
 {
+	// KP: free all cache memory, to make room for parsing the save summaries
+	free_all_caches();
+	
 	std::vector<save_info> games;
 	{
 		cursor::setter cur(cursor::WAIT);
@@ -772,7 +775,7 @@ unit_preview_pane::unit_preview_pane(game_display& disp, const gamemap* map,
 {
 #ifdef __IPHONEOS__
 	unsigned w = (weapons_ ? 100 : 155);	// weapons_ == true for the recruit/recall screen, otherwise it is the attack choice screen
-	unsigned h = (weapons_ ? 250 : 90);		// the preview panes dictate how big the dialog box should be...
+	unsigned h = (weapons_ ? 280 : 90);		// the preview panes dictate how big the dialog box should be...
 #else	
 	unsigned w = font::relative_size(weapons_ ? 200 : 190);
 	unsigned h = font::relative_size(weapons_ ? 370 : 140);

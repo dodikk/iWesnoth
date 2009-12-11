@@ -239,7 +239,7 @@ void dialog::set_textbox(const std::string& text_widget_label,
 void dialog::set_menu(const std::vector<shared_string> &menu_items, menu::sorter* sorter)
 {
 	// KP: hack to get bigger context and in-game menus
-	if (menu_items[menu_items.size()-1] == "End Turn=" || menu_items[menu_items.size()-1] == "=End Turn=" || menu_items[menu_items.size()-1] == "Quit Game=")
+	if (menu_items[menu_items.size()-1] == "Next Unit=" || menu_items[menu_items.size()-1] == "=Next Unit=" || menu_items[menu_items.size()-1] == "Quit Game=")
 	{
 		set_menu(new gui::menu(disp_.video(), menu_items, (type_==MESSAGE),
 							   -1, dialog::max_menu_width, sorter, &menu::bigger_style, false));
@@ -595,9 +595,9 @@ dialog::dimension_measurements dialog::layout(int xloc, int yloc)
 		dim.menu_height = menu_->height();
 		
 		// recheck
-		int bestHeight = screen.gety() - frame_top_pad - above_preview_pane_height - frame_bottom_pad - check_button_height - padding_height;
-		if (dim.menu_height > bestHeight)
-			dim.menu_height = bestHeight;
+		int bestHeight = screen.gety() - above_preview_pane_height - frame_bottom_pad - check_button_height - padding_height;
+		dim.menu_height = bestHeight;
+		dim.menu_y = dim.interior.h - dim.menu_height;
 	}
 
 	//calculate the positions of the preview panes to the sides of the dialog
@@ -651,20 +651,29 @@ dialog::dimension_measurements dialog::layout(int xloc, int yloc)
 
 #ifdef __IPHONEOS__
 	if (dim.interior.y == 0)
-		dim.menu_y -= 4;
+	{
+		//dim.menu_y -= 4;
+//		dim.menu_y -= 24;
+//		dim.menu_height += 24;
+		dim.menu_y = 14;
+	}
 #endif
 	
 	dim.message.x = dim.x + left_padding;
 	dim.message.y = dim.y + top_padding + caption_height;
 
 	if(image_ != NULL) {
+		// KP: fixed for iphone
 		const int x = dim.x + left_padding;
 		const int y = dim.y + top_padding;
 		dim.message.x += image_width + image_h_padding;
-		dim.image_x = x;
-		dim.image_y = y;
 		dim.caption_x = dim.x + image_width + left_padding + image_h_padding;
 		dim.caption_y = dim.y + top_padding;
+		dim.message.x = dim.caption_x;
+		dim.image_x = dim.caption_x;
+		dim.image_y = dim.y - image_height;
+		if (dim.x < 0)
+			dim.x = 0;
 	}
 
 	//set the position of any tick boxes. by default, they go right below the menu,

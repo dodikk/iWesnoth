@@ -125,14 +125,16 @@ void uncaughtExceptionHandler(NSException *exception) {
 	// exit, passing the return status from the user's application
 	exit(exit_status);
 	*/	
-	
+
+/*	
+	// KP: Flurry analytics disabled because of complaints with network calls costing air time
 	NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
 #ifdef FREE_VERSION
 	[FlurryAPI startSession:@"75UDWZTNGLKTKLNQ8YPG"];
 #else
 	[FlurryAPI startSession:@"ZNJRJHD1DYT8MJV4VME9"];
 #endif
-	
+*/	
 	// KP: using a selector gets around the "failed to launch application in time" if the startup code takes too long
 	// This is easy to see if running with Valgrind
 	[self performSelector:@selector(runSDLMain:) withObject:@"" afterDelay: 0.1f];

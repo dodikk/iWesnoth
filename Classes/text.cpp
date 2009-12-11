@@ -466,7 +466,7 @@ void ttext::recalculate(const bool force) const
 
 //		pango_layout_get_pixel_extents(layout_, NULL, &rect_);
 		
-		if (maximum_width_ < 0)
+		if (maximum_width_ <= 0)
 		{
 			SDL_Rect rect = line_size(text_, font_size_);
 			rect_.width = rect.w;
@@ -477,7 +477,7 @@ void ttext::recalculate(const bool force) const
 			// KP: code from elsewhere
 			std::string wrapped_text;
 			try {
-				wrapped_text = font::word_wrap_text(text_, font_size_, maximum_width_);
+				wrapped_text = font::word_wrap_text(text_, font_size_, maximum_width_+1);
 			} catch (utils::invalid_utf8_exception&) {
 				//LOG_STREAM(err, engine) << "Invalid utf-8 found, campaign description is ignored.\n";
 			}
@@ -602,7 +602,7 @@ void ttext::rerender(const bool force) const
 		clr.b = (foreground_colour_ >> 8)  & 0xFF;
 		clr.unused = (foreground_colour_ & 0xFF);
 		
-		if (maximum_width_ < 0)
+		if (maximum_width_ <= 0)
 		{
 			SDL_Rect rect = line_size(text_, font_size_);
 			rect_.width = rect.w;
@@ -614,7 +614,7 @@ void ttext::rerender(const bool force) const
 			// KP: code from elsewhere
 			std::string wrapped_text;
 			try {
-				wrapped_text = font::word_wrap_text(text_, font_size_, maximum_width_);
+				wrapped_text = font::word_wrap_text(text_, font_size_, maximum_width_+1);
 			} catch (utils::invalid_utf8_exception&) {
 				//LOG_STREAM(err, engine) << "Invalid utf-8 found, campaign description is ignored.\n";
 			}

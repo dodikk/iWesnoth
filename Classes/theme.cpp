@@ -539,25 +539,6 @@ theme::menu::menu(const config& cfg) : object(cfg),
 									   image_(cfg["image"]), type_(cfg["type"]),
 									   items_(utils::split_shared(cfg["items"]))
 {
-	
-// @TODO: re-enable the speak command when it is working properly...
-	std::vector<shared_string>::iterator it = std::find(items_.begin(), items_.end(), "speak");
-	if (it != items_.end())
-	{
-		items_.erase(it);
-	}
-	it = std::find(items_.begin(), items_.end(), "chatlog");
-	if (it != items_.end())
-	{
-		items_.erase(it);
-	}
-//	it = std::find(items_.begin(), items_.end(), "endturn");
-//	if (it != items_.end())
-//	{
-//		items_.erase(it);
-//		items_.insert(items_.begin(), "endturn");
-//	}
-	
 	if (utils::string_bool(cfg["auto_tooltip"]) && tooltip_.empty() && items_.size() == 1) {
 		tooltip_ = hotkey::get_hotkey(items_[0]).get_description();
 	} else if (utils::string_bool(cfg["tooltip_name_prepend"]) && items_.size() == 1) {

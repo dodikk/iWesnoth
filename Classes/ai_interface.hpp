@@ -231,7 +231,7 @@ protected:
 	 * doesn't occur too often, so there is no problem with calling it very
 	 * regularly.
 	 */
-	void raise_user_interact();
+	void raise_user_interact(int interact_time = 50);
 
 	/** Notifies all interested observers of the event respectively. */
 	void raise_unit_recruited() { unit_recruited_.notify_observers(); }

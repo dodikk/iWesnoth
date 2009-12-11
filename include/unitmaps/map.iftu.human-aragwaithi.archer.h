@@ -1,0 +1,24 @@
+// "filename.png", texOffsetX, texOffsetY, flags, texW, texH, trimmedX, trimmedY, originalW, originalH, UNITMAP_IFTU_HUMAN_ARAGWAITHI_ARCHERID
+addMapEntry("units/human-aragwaithi/archer-attack-n.png", 50, 205, 0, 37, 44, 17, 20, 72, 72, UNITMAP_IFTU_HUMAN_ARAGWAITHI_ARCHER);
+addMapEntry("units/human-aragwaithi/archer-attack-ranged1-e.png", 50, 161, 0, 37, 44, 16, 17, 72, 72, UNITMAP_IFTU_HUMAN_ARAGWAITHI_ARCHER);
+addMapEntry("units/human-aragwaithi/archer-attack-ranged1-n.png", 0, 117, 0, 36, 44, 16, 20, 72, 72, UNITMAP_IFTU_HUMAN_ARAGWAITHI_ARCHER);
+addMapEntry("units/human-aragwaithi/archer-attack-ranged1-s.png", 130, 204, 0, 39, 43, 18, 19, 72, 72, UNITMAP_IFTU_HUMAN_ARAGWAITHI_ARCHER);
+addMapEntry("units/human-aragwaithi/archer-attack-ranged2-e.png", 210, 204, 0, 40, 43, 19, 19, 72, 72, UNITMAP_IFTU_HUMAN_ARAGWAITHI_ARCHER);
+addMapEntry("units/human-aragwaithi/archer-attack-ranged2-n.png", 90, 203, 0, 39, 42, 16, 20, 72, 72, UNITMAP_IFTU_HUMAN_ARAGWAITHI_ARCHER);
+addMapEntry("units/human-aragwaithi/archer-attack-ranged2-s.png", 170, 204, 0, 40, 43, 19, 19, 72, 72, UNITMAP_IFTU_HUMAN_ARAGWAITHI_ARCHER);
+addMapEntry("units/human-aragwaithi/archer-attack-ranged3-e.png", 170, 161, 0, 40, 43, 19, 19, 72, 72, UNITMAP_IFTU_HUMAN_ARAGWAITHI_ARCHER);
+addMapEntry("units/human-aragwaithi/archer-attack-ranged3-n.png", 90, 161, 0, 39, 42, 16, 20, 72, 72, UNITMAP_IFTU_HUMAN_ARAGWAITHI_ARCHER);
+addMapEntry("units/human-aragwaithi/archer-attack-ranged3-s.png", 130, 161, 0, 40, 43, 19, 19, 72, 72, UNITMAP_IFTU_HUMAN_ARAGWAITHI_ARCHER);
+addMapEntry("units/human-aragwaithi/archer-attack-ranged4-e.png", 130, 118, 0, 40, 43, 19, 19, 72, 72, UNITMAP_IFTU_HUMAN_ARAGWAITHI_ARCHER);
+addMapEntry("units/human-aragwaithi/archer-attack1.png", 219, 118, 0, 36, 42, 12, 21, 72, 72, UNITMAP_IFTU_HUMAN_ARAGWAITHI_ARCHER);
+addMapEntry("units/human-aragwaithi/archer-attack2.png", 210, 161, 0, 41, 41, 10, 21, 72, 72, UNITMAP_IFTU_HUMAN_ARAGWAITHI_ARCHER);
+addMapEntry("units/human-aragwaithi/archer-attack3.png", 0, 0, 0, 53, 41, 12, 22, 72, 72, UNITMAP_IFTU_HUMAN_ARAGWAITHI_ARCHER);
+addMapEntry("units/human-aragwaithi/archer-bow-draw.png", 90, 118, 0, 40, 43, 19, 19, 72, 72, UNITMAP_IFTU_HUMAN_ARAGWAITHI_ARCHER);
+addMapEntry("units/human-aragwaithi/archer-bow.png", 50, 118, 0, 40, 43, 19, 19, 72, 72, UNITMAP_IFTU_HUMAN_ARAGWAITHI_ARCHER);
+addMapEntry("units/human-aragwaithi/archer-defend1-ranged.png", 148, 81, 0, 47, 34, 11, 29, 72, 72, UNITMAP_IFTU_HUMAN_ARAGWAITHI_ARCHER);
+addMapEntry("units/human-aragwaithi/archer-defend2.png", 170, 118, 0, 49, 35, 12, 25, 72, 72, UNITMAP_IFTU_HUMAN_ARAGWAITHI_ARCHER);
+addMapEntry("units/human-aragwaithi/archer-die1.png", 0, 41, 0, 49, 40, 12, 20, 72, 72, UNITMAP_IFTU_HUMAN_ARAGWAITHI_ARCHER);
+addMapEntry("units/human-aragwaithi/archer-die2.png", 50, 81, 0, 48, 37, 14, 24, 72, 72, UNITMAP_IFTU_HUMAN_ARAGWAITHI_ARCHER);
+addMapEntry("units/human-aragwaithi/archer-die3.png", 0, 81, 0, 50, 36, 14, 25, 72, 72, UNITMAP_IFTU_HUMAN_ARAGWAITHI_ARCHER);
+addMapEntry("units/human-aragwaithi/archer-die4.png", 98, 81, 0, 50, 32, 12, 30, 72, 72, UNITMAP_IFTU_HUMAN_ARAGWAITHI_ARCHER);
+addMapEntry("units/human-aragwaithi/archer-die5.png", 195, 81, 0, 48, 30, 13, 41, 72, 72, UNITMAP_IFTU_HUMAN_ARAGWAITHI_ARCHER);

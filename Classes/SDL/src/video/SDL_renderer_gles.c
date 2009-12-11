@@ -356,6 +356,7 @@ GLES_CreateRenderer(SDL_Window * window, Uint32 flags)
 	data->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	data->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	data->glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST); 
 	data->glClearColor(0.0f,0.0f,0.5f,1.0f);
 	
 	// KP: multitexture support used for effects like greyscale

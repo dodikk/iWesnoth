@@ -439,7 +439,7 @@ size_t menu::max_items_onscreen() const
 	}
 
 #if defined(USE_TINY_GUI) //&& !defined(__IPHONEOS__)
-	const size_t max_height = (max_height_ == -1 ? (video().gety()*77)/100 : max_height_) - heading_height();
+	const size_t max_height = (max_height_ == -1 ? (video().gety()*88)/100 : max_height_) - heading_height();
 #else
 	const size_t max_height = (max_height_ == -1 ? (video().gety()*66)/100 : max_height_) - heading_height();
 #endif

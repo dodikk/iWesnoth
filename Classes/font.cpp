@@ -628,7 +628,7 @@ std::vector<surface> const &text_surface::get_surfaces() const
 //	if (ttfont == NULL)
 //		continue;
 	font_style_setter const style_setter(ttfont, style_);
-	
+
 	surface s = surface(TTF_RenderUTF8_Blended(ttfont, str_.c_str(), color_));
 	if(!s.null())
 		surfs_.push_back(s);
@@ -731,6 +731,8 @@ static surface render_text(const shared_string& text, int fontsize, const SDL_Co
 		return surface();
 	} else if (surfaces.size() == 1 && surfaces.front().size() == 1) {
 		surface surf = surfaces.front().front();
+		// KP: this makes text look ugly?
+		//surface surf(create_compatible_surface(surfaces.front().front(),width,height));
 		SDL_SetAlpha(surf, SDL_SRCALPHA | SDL_RLEACCEL, SDL_ALPHA_OPAQUE);
 		return surf;
 	} else {

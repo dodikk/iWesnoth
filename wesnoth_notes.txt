@@ -740,3 +740,5 @@ switched to boost::unordered_map for shared_string -> memory hog and waaaaay too
 -----
 
 about 50% is spent rendering, to speed up more, we have to switch back to tile invalidation system, and invalidate all on scroll
+
+

@@ -492,7 +492,9 @@ bool tscrollbar_container::does_block_easy_close() const
 			&& !(horizontal_scrollbar_->at_begin()
 					&& horizontal_scrollbar_->at_end());
 
-	return vertical_block || horizontal_block;
+//	return vertical_block || horizontal_block;
+// KP: never block on iPhone
+	return false;
 }
 
 void tscrollbar_container::vertical_scrollbar_click(twidget* caller)

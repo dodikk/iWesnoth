@@ -136,6 +136,7 @@ static LEVEL_RESULT playsingle_scenario(const config& game_config,
 	}
 	catch(CVideo::quit&)
 	{
+		sound::stop_music();
 		playcontroller.autosave();
 		throw CVideo::quit();
 	}

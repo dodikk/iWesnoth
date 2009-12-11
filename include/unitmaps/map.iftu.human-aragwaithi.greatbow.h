@@ -1,0 +1,25 @@
+// "filename.png", texOffsetX, texOffsetY, flags, texW, texH, trimmedX, trimmedY, originalW, originalH, UNITMAP_IFTU_HUMAN_ARAGWAITHI_GREATBOWID
+addMapEntry("units/human-aragwaithi/greatbow-attack-ranged1-e.png", 0, 0, 0, 49, 51, 9, 9, 72, 72, UNITMAP_IFTU_HUMAN_ARAGWAITHI_GREATBOW);
+addMapEntry("units/human-aragwaithi/greatbow-attack-ranged1-n.png", 147, 49, 0, 48, 46, 14, 17, 72, 72, UNITMAP_IFTU_HUMAN_ARAGWAITHI_GREATBOW);
+addMapEntry("units/human-aragwaithi/greatbow-attack-ranged1-s.png", 100, 0, 0, 50, 42, 12, 19, 72, 72, UNITMAP_IFTU_HUMAN_ARAGWAITHI_GREATBOW);
+addMapEntry("units/human-aragwaithi/greatbow-attack-ranged2-e.png", 49, 49, 0, 49, 51, 9, 10, 72, 72, UNITMAP_IFTU_HUMAN_ARAGWAITHI_GREATBOW);
+addMapEntry("units/human-aragwaithi/greatbow-attack-ranged2-n.png", 49, 145, 0, 49, 45, 12, 17, 72, 72, UNITMAP_IFTU_HUMAN_ARAGWAITHI_GREATBOW);
+addMapEntry("units/human-aragwaithi/greatbow-attack-ranged2-s.png", 207, 99, 0, 49, 42, 13, 17, 72, 72, UNITMAP_IFTU_HUMAN_ARAGWAITHI_GREATBOW);
+addMapEntry("units/human-aragwaithi/greatbow-attack-ranged3-e.png", 98, 49, 0, 49, 50, 9, 11, 72, 72, UNITMAP_IFTU_HUMAN_ARAGWAITHI_GREATBOW);
+addMapEntry("units/human-aragwaithi/greatbow-attack-ranged3-n.png", 150, 0, 0, 46, 45, 15, 17, 72, 72, UNITMAP_IFTU_HUMAN_ARAGWAITHI_GREATBOW);
+addMapEntry("units/human-aragwaithi/greatbow-attack-ranged3-s.png", 156, 99, 0, 51, 42, 12, 18, 72, 72, UNITMAP_IFTU_HUMAN_ARAGWAITHI_GREATBOW);
+addMapEntry("units/human-aragwaithi/greatbow-attack-ranged4-e.png", 49, 0, 0, 51, 49, 7, 11, 72, 72, UNITMAP_IFTU_HUMAN_ARAGWAITHI_GREATBOW);
+addMapEntry("units/human-aragwaithi/greatbow-attack-ranged4-s.png", 0, 51, 0, 48, 41, 13, 18, 72, 72, UNITMAP_IFTU_HUMAN_ARAGWAITHI_GREATBOW);
+addMapEntry("units/human-aragwaithi/greatbow-attack1.png", 98, 141, 0, 59, 41, 13, 22, 72, 72, UNITMAP_IFTU_HUMAN_ARAGWAITHI_GREATBOW);
+addMapEntry("units/human-aragwaithi/greatbow-attack2.png", 0, 136, 0, 47, 36, 11, 25, 72, 72, UNITMAP_IFTU_HUMAN_ARAGWAITHI_GREATBOW);
+addMapEntry("units/human-aragwaithi/greatbow-bow-defend.png", 195, 49, 0, 48, 46, 13, 16, 72, 72, UNITMAP_IFTU_HUMAN_ARAGWAITHI_GREATBOW);
+addMapEntry("units/human-aragwaithi/greatbow-defend-attack1-melee.png", 98, 182, 0, 59, 40, 9, 20, 72, 72, UNITMAP_IFTU_HUMAN_ARAGWAITHI_GREATBOW);
+addMapEntry("units/human-aragwaithi/greatbow-die1.png", 49, 100, 0, 49, 45, 10, 16, 72, 72, UNITMAP_IFTU_HUMAN_ARAGWAITHI_GREATBOW);
+addMapEntry("units/human-aragwaithi/greatbow-die2.png", 0, 92, 0, 44, 44, 13, 16, 72, 72, UNITMAP_IFTU_HUMAN_ARAGWAITHI_GREATBOW);
+addMapEntry("units/human-aragwaithi/greatbow-die3.png", 196, 0, 0, 53, 39, 10, 21, 72, 72, UNITMAP_IFTU_HUMAN_ARAGWAITHI_GREATBOW);
+addMapEntry("units/human-aragwaithi/greatbow-die4.png", 157, 182, 0, 57, 40, 8, 21, 72, 72, UNITMAP_IFTU_HUMAN_ARAGWAITHI_GREATBOW);
+addMapEntry("units/human-aragwaithi/greatbow-die5.png", 157, 141, 0, 55, 38, 15, 22, 72, 72, UNITMAP_IFTU_HUMAN_ARAGWAITHI_GREATBOW);
+addMapEntry("units/human-aragwaithi/greatbow-die6.png", 256, 0, 0, 55, 37, 15, 23, 72, 72, UNITMAP_IFTU_HUMAN_ARAGWAITHI_GREATBOW);
+addMapEntry("units/human-aragwaithi/greatbow-die7.png", 157, 222, 0, 63, 31, 7, 40, 72, 72, UNITMAP_IFTU_HUMAN_ARAGWAITHI_GREATBOW);
+addMapEntry("units/human-aragwaithi/greatbow-ranged-bow1.png", 49, 190, 0, 49, 45, 9, 16, 72, 72, UNITMAP_IFTU_HUMAN_ARAGWAITHI_GREATBOW);
+addMapEntry("units/human-aragwaithi/greatbow-ranged-draw.png", 98, 99, 0, 58, 42, 11, 18, 72, 72, UNITMAP_IFTU_HUMAN_ARAGWAITHI_GREATBOW);

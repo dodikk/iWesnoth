@@ -290,7 +290,7 @@ loadscreen::loadscreen(CVideo &screen, const int &percent):
 	pby_offset_(0),
 	prcnt_(percent)
 {
-	int randNum = (rand() % 6) + 1;
+	int randNum = (rand() % 7) + 1;
 	char num[3];
 	sprintf(num, "%d", randNum);
 	std::string file = "misc/loading";

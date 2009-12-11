@@ -1,0 +1,23 @@
+// "filename.png", texOffsetX, texOffsetY, flags, texW, texH, trimmedX, trimmedY, originalW, originalH, UNITMAP_IFTU_HUMAN_CHAOSID
+addMapEntry("units/human-chaos/bowman.png", 256, 0, 0, 34, 45, 16, 16, 72, 72, UNITMAP_IFTU_HUMAN_CHAOS);
+addMapEntry("units/human-chaos/cataphract.png", 106, 68, 0, 50, 60, 14, 0, 72, 72, UNITMAP_IFTU_HUMAN_CHAOS);
+addMapEntry("units/human-chaos/cavalier.png", 155, 128, 0, 44, 60, 14, 0, 72, 72, UNITMAP_IFTU_HUMAN_CHAOS);
+addMapEntry("units/human-chaos/crossbowman-advanced.png", 54, 183, 0, 43, 46, 16, 15, 72, 72, UNITMAP_IFTU_HUMAN_CHAOS);
+addMapEntry("units/human-chaos/crossbowman.png", 108, 0, 0, 42, 46, 16, 15, 72, 72, UNITMAP_IFTU_HUMAN_CHAOS);
+addMapEntry("units/human-chaos/dark-knight.png", 150, 0, 0, 37, 52, 18, 9, 72, 72, UNITMAP_IFTU_HUMAN_CHAOS);
+addMapEntry("units/human-chaos/doom-guard.png", 187, 0, 0, 39, 48, 16, 13, 72, 72, UNITMAP_IFTU_HUMAN_CHAOS);
+addMapEntry("units/human-chaos/headhunter.png", 198, 68, 0, 41, 50, 15, 12, 72, 72, UNITMAP_IFTU_HUMAN_CHAOS);
+addMapEntry("units/human-chaos/hell-guardian.png", 156, 68, 0, 42, 49, 15, 12, 72, 72, UNITMAP_IFTU_HUMAN_CHAOS);
+addMapEntry("units/human-chaos/invader.png", 0, 166, 0, 32, 48, 19, 13, 72, 72, UNITMAP_IFTU_HUMAN_CHAOS);
+addMapEntry("units/human-chaos/invoker.png", 290, 0, 0, 32, 43, 20, 16, 72, 72, UNITMAP_IFTU_HUMAN_CHAOS);
+addMapEntry("units/human-chaos/longbowman-heavy.png", 0, 68, 0, 37, 49, 16, 12, 72, 72, UNITMAP_IFTU_HUMAN_CHAOS);
+addMapEntry("units/human-chaos/longbowman.png", 0, 117, 0, 35, 49, 15, 12, 72, 72, UNITMAP_IFTU_HUMAN_CHAOS);
+addMapEntry("units/human-chaos/lore+female.png", 54, 0, 0, 54, 68, 9, 0, 72, 72, UNITMAP_IFTU_HUMAN_CHAOS);
+addMapEntry("units/human-chaos/lore.png", 0, 0, 0, 54, 68, 9, 0, 72, 72, UNITMAP_IFTU_HUMAN_CHAOS);
+addMapEntry("units/human-chaos/magus+female.png", 106, 182, 0, 39, 56, 16, 9, 72, 72, UNITMAP_IFTU_HUMAN_CHAOS);
+addMapEntry("units/human-chaos/magus.png", 155, 188, 0, 39, 56, 16, 9, 72, 72, UNITMAP_IFTU_HUMAN_CHAOS);
+addMapEntry("units/human-chaos/marauder.png", 199, 128, 0, 45, 51, 14, 12, 72, 72, UNITMAP_IFTU_HUMAN_CHAOS);
+addMapEntry("units/human-chaos/overlord.png", 54, 68, 0, 52, 64, 7, 7, 72, 72, UNITMAP_IFTU_HUMAN_CHAOS);
+addMapEntry("units/human-chaos/raider.png", 54, 132, 0, 40, 51, 16, 11, 72, 72, UNITMAP_IFTU_HUMAN_CHAOS);
+addMapEntry("units/human-chaos/razerman.png", 199, 179, 0, 40, 55, 17, 6, 72, 72, UNITMAP_IFTU_HUMAN_CHAOS);
+addMapEntry("units/human-chaos/soulhunter.png", 106, 128, 0, 49, 54, 14, 10, 72, 72, UNITMAP_IFTU_HUMAN_CHAOS);

@@ -2236,6 +2236,7 @@ static int do_gameloop(int argc, char** argv)
 //			continue;
 //		} 
 		else if(res == gui::EDIT_PREFERENCES) {
+			draw_wait_cursor();
 			game.show_preferences();
 			if (game.disp().video().modeChanged()) {
 				gui::set_background_dirty();
