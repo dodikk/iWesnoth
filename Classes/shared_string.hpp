@@ -237,5 +237,7 @@ inline std::istream& operator>>(std::istream& stream, shared_string& o) {
 }
 
 size_t shared_count(const std::string &str);
+void shared_cleanup(void);
+
 #endif
 

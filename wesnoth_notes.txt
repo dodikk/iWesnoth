@@ -742,3 +742,51 @@ switched to boost::unordered_map for shared_string -> memory hog and waaaaay too
 about 50% is spent rendering, to speed up more, we have to switch back to tile invalidation system, and invalidate all on scroll
 
 
+Memory reduction test:
+
+HttT Easy:
+
+Finished loading level
+------------------------------------------------
+MALLOC:     20832256 (   19.9 MB) Heap size
+MALLOC:     17084936 (   16.3 MB) Bytes in use by application
+MALLOC:      2994176 (    2.9 MB) Bytes free in page heap
+MALLOC:       267776 (    0.3 MB) Bytes free in central cache
+MALLOC:            0 (    0.0 MB) Bytes free in transfer cache
+MALLOC:       485368 (    0.5 MB) Bytes free in thread caches
+MALLOC:         3815              Spans in use
+MALLOC:            1              Thread heaps in use
+MALLOC:       524288 (    0.5 MB) Metadata allocated
+------------------------------------------------
+
+(had a crash during AI turn, in tcmalloc code??)
+
+Start of Turn 2: 25 mb
+			3: 27 mb
+			4: 27 mb
+			5: 28 mb
+---
+
+Removed replay code, freed strings
+
+Turn 2: 25 mb
+	3: 26 mb
+	4: 27 mb
+	5: 28 mb
+	
+Halo maps, better elves map
+Turn 2: 24mb
+	3: 26mb
+	4: 26mb
+	5: 26mb (-2mb!)
+
+	
+-------
+MUSIC:
+mp3 = 82.4mb
+caf = 248.7mb (+166mb)
+If the fps improvement is significant, we can cut some music... like 1/2....
+
+terrain builder cache is 3mb, compressed down to 87k!!!
+Title screen, load game, back to title screen.... 9.3mb in use... but of course, we have loaded the full wml, which must be 8mb big!
+

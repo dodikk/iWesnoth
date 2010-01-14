@@ -300,7 +300,8 @@ private:
 	void draw_game_status();
 
 	// This surface must be freed by the caller
-	surface get_flag(const map_location& loc);
+	//surface get_flag(const map_location& loc);
+	textureAtlasInfo get_flag(const map_location& loc);
 
 	unit_map& units_;
 

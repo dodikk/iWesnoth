@@ -211,8 +211,10 @@ twindow::tretval twindow::get_retval_by_id(const std::string& id)
 	 */
 	else if(id == "campaign") {
 		return static_cast<tretval>(gui::NEW_CAMPAIGN);
+#ifndef FREE_VERSION
 	} else if(id == "multiplayer") {
 		return static_cast<tretval>(gui::MULTIPLAYER);
+#endif
 	} else if(id == "load") {
 		return static_cast<tretval>(gui::LOAD_GAME);
 //	} else if(id == "addons") {

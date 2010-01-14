@@ -54,6 +54,8 @@
 
 #include "memory_wrapper.h"
 
+#include "achievements.h"
+
 /** Log info-messages to stdout during the game, mainly for debugging */
 #define LOG_DP LOG_STREAM(info, display)
 /** Log error-messages to stdout during the game, mainly for debugging */
@@ -349,7 +351,7 @@ static void draw_background(game_display& screen)
 				bgNum = rand()%game_title_list.size();
 				// KP: do not cache this
 				//surface const title_surface(scale_opaque_surface(image::get_image(game_title_list[bgNum], image::UNSCALED, false),screen.w(), screen.h()));
-				surface const title_surface(image::get_image(game_title_list[bgNum], image::UNSCALED, false));
+				surface title_surface(image::get_image(game_title_list[bgNum], image::UNSCALED, false));
 
 			if (title_surface.null()) {
 				ERR_DP << "Could not find title image\n";
@@ -357,6 +359,7 @@ static void draw_background(game_display& screen)
 				//screen.video().blit_surface(0, 0, title_surface);
 				title_tex = SDL_CreateTextureFromSurface(SDL_PIXELFORMAT_ABGR8888, title_surface);
 				// (surface is freed when it goes out of scope...)
+				title_surface.assign(NULL);
 				//update_rect(screen_area());
 				LOG_DP << "displayed title image\n";
 			}
@@ -444,6 +447,8 @@ TITLE_RESULT show_title(game_display& screen, config& tips_of_day)
 {
 	disableTerrainCache();
 	
+	free_all_caches();
+	
 	cursor::set(cursor::NORMAL);
 
 	const preferences::display_manager disp_manager(&screen);
@@ -474,6 +479,9 @@ TITLE_RESULT show_title(game_display& screen, config& tips_of_day)
 //#endif
 					       //N_("TitleScreen button^Language"),
 					       N_("TitleScreen button^Preferences"),
+#ifndef FREE_VERSION
+							N_("TitleScreen button^OpenFeint"),
+#endif
 					       N_("TitleScreen button^Help"),
 					       //N_("TitleScreen button^Quit"),
 								// Only the above buttons go into the menu-frame
@@ -488,8 +496,10 @@ TITLE_RESULT show_title(game_display& screen, config& tips_of_day)
 	static const char* help_button_labels[] = { 
 							//N_("Start a tutorial to familiarize yourself with the game"),
 						    N_("Start a new single player campaign"),
+#ifndef FREE_VERSION
 							N_("Play a single scenario against the AI"),
 						    N_("Play multiplayer (hotseat or Internet)"),
+#endif
 						    N_("Load a saved game"),
 //						    N_("Download usermade campaigns, eras, or map packs"),
 //#ifndef DISABLE_EDITOR2
@@ -497,6 +507,10 @@ TITLE_RESULT show_title(game_display& screen, config& tips_of_day)
 //#endif
 						    //N_("Change the language"),
 						    N_("Configure the game's settings"),
+//#ifndef FREE_VERSION
+							N_("Launch the OpenFeint dashboard"),
+//#endif
+
 							N_("Show Battle for Wesnoth help"),
 							//N_("Quit the game"),
 						    N_("Show next tip of the day"),
@@ -610,6 +624,9 @@ TITLE_RESULT show_title(game_display& screen, config& tips_of_day)
 	
 	
 	memory_stats("At titlescreen");
+	
+	// Initialize OpenFeint now
+	of_init();
 
 	
 	for(;;) {

@@ -34,7 +34,7 @@
 #include "shared_string.hpp"
 
 std::map<shared_string, textureAtlasInfo> gAtlasMap;
-unsigned int gTexIds[NUM_MAPS];
+GLuint gTexIds[NUM_MAPS];
 unsigned int gTexW[NUM_MAPS];
 unsigned int gTexH[NUM_MAPS];
 

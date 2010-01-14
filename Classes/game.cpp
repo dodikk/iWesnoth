@@ -101,6 +101,8 @@
 
 #include "memory_wrapper.h"
 
+#include "achievements.h"
+
 
 // Minimum stack cookie to prevent stack overflow on AmigaOS4
 #ifdef __amigaos4__
@@ -2220,6 +2222,7 @@ static int do_gameloop(int argc, char** argv)
 			if(game.new_campaign() == false) {
 				continue;
 			}
+#ifndef FREE_VERSION			
 		} else if (res == gui::SKIRMISH) {
 			if(game.play_multiplayer(3) == false) {
 				continue;
@@ -2228,6 +2231,7 @@ static int do_gameloop(int argc, char** argv)
 			if(game.play_multiplayer(0) == false) {
 				continue;
 			}
+#endif
 		} 
 //		else if(res == gui::CHANGE_LANGUAGE) {
 //			if(game.change_language() == true) {
@@ -2245,6 +2249,12 @@ static int do_gameloop(int argc, char** argv)
 //		} else if(res == gui::SHOW_ABOUT) {
 //			about::show_about(game.disp());
 //			continue;
+#ifndef FREE_VERSION
+		} else if (res == gui::SHOW_OPENFEINT) {
+			of_dashboard();
+			gui::set_background_dirty();
+			continue;
+#endif
 		} else if(res == gui::SHOW_HELP) {
 			loadscreen::global_loadscreen_manager loadscreen(game.disp().video());
 			loadscreen::global_loadscreen->set_progress(0, _("Loading data files"));
@@ -2298,8 +2308,9 @@ void init_custom_malloc();
 //}
 //#endif
 
+extern "C" int SDL_main(int argc, char *argv[]);
 	
-int main(int argc, char** argv)
+int SDL_main(int argc, char** argv)
 {			
 //#ifndef DISABLE_POOL_ALLOC
 	init_custom_malloc();
@@ -2341,9 +2352,12 @@ int main(int argc, char** argv)
 		std::string exe_dir(buffer);
 		
 #if TARGET_IPHONE_SIMULATOR
+  #ifdef FREE_VERSION
+		exe_dir = "/Users/kyle/Desktop/wesnoth FREE/res";
+  #else
 		exe_dir = "/Users/kyle/iwesnoth/trunk/res";
-#endif
-		
+  #endif
+#endif		
 		
 		std::cerr << buffer;
 		if(offset != std::string::npos) {

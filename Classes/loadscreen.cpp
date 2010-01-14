@@ -290,7 +290,7 @@ loadscreen::loadscreen(CVideo &screen, const int &percent):
 	pby_offset_(0),
 	prcnt_(percent)
 {
-	int randNum = (rand() % 7) + 1;
+	int randNum = (rand() % 8) + 1;
 	char num[3];
 	sprintf(num, "%d", randNum);
 	std::string file = "misc/loading";
@@ -365,6 +365,7 @@ void loadscreen::set_progress(const int percentage, const std::string &text, con
 	
 	// Draw logo if it was succesfully loaded.
 //	if (logo_surface_ && !logo_drawn_) 
+	if (!logo_drawn_)
 	{
 /*		
 		area.x = (screen_.getx () - logo_surface_->w) / 2;
@@ -414,10 +415,13 @@ void loadscreen::set_progress(const int percentage, const std::string &text, con
 		//SDL_RenderCopy(logo_texture_, NULL, NULL,DRAW);
 		//SDL_RenderPresent();
 		//SDL_UpdateRect(gdis, area.x, area.y, area.w, area.h);
-	}
-	
-//	if (!logo_drawn_)
-	{
+		
+		// draw logo over everything
+		std::string path = game_config::path + "/data/core/images/misc/logo_small.png";
+		surface logo_surface = IMG_Load(path.c_str());
+		blit_surface((480-logo_surface.get()->w)/2, -10, logo_surface);
+		
+
 		SDL_Rect tip_area = {242, 100, 225, 140};
 		draw_tip_of_day(screen_, tips_of_day, gui::dialog_frame::titlescreen_style,&tip_area);
 
@@ -521,6 +525,8 @@ void loadscreen::increment_progress(const int percentage, const std::string &tex
 
 void loadscreen::clear_screen(const bool commit)
 {
+	return;
+/*	
 	int scrx = screen_.getx();					//< Screen width.
 	int scry = screen_.gety();					//< Screen height.
 	SDL_Rect area = {0, 0, scrx, scry};		// Screen area.
@@ -534,6 +540,7 @@ void loadscreen::clear_screen(const bool commit)
 		//SDL_Flip(disp);						// Flip the double buffering.
 		SDL_RenderPresent();
 	} 
+*/ 
 }
 loadscreen *loadscreen::global_loadscreen = 0;
 

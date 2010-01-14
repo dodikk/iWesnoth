@@ -7,7 +7,6 @@ MISSING FEATURES:
 BUGS:
 
 - clicking on a dialog should not move the mouse or update the hover spot
-- a way not to handle mouse moves on clicking, but only tap-up?
 - double click should execute move, if unit is active and move is valid
 - ask for id/pw before logging in to mp server?
 - stop music when we start loading screen

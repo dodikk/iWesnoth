@@ -144,7 +144,8 @@ replay::replay() :
 	current_(NULL),
 	saveInfo_(),
 	skip_(false),
-	message_locations()
+	message_locations(),
+	ignore_replays(true)
 {}
 
 replay::replay(const config& cfg) :
@@ -153,7 +154,8 @@ replay::replay(const config& cfg) :
 	current_(NULL),
 	saveInfo_(),
 	skip_(false),
-	message_locations()
+	message_locations(),
+	ignore_replays(true)
 {}
 
 void replay::throw_error(const std::string& msg)
@@ -243,12 +245,20 @@ void replay::add_unit_checksum(const map_location& loc,config* const cfg)
 
 void replay::add_start()
 {
+	// KP: added flag to ignore replay data
+	if (ignore_replays)
+		return;
+	
 	config* const cmd = add_command(true);
 	cmd->add_child("start");
 }
 
 void replay::add_recruit(int value, const map_location& loc)
 {
+	// KP: added flag to ignore replay data
+	if (ignore_replays)
+		return;
+	
 	config* const cmd = add_command();
 
 	config val;
@@ -264,6 +274,10 @@ void replay::add_recruit(int value, const map_location& loc)
 
 void replay::add_recall(int value, const map_location& loc)
 {
+	// KP: added flag to ignore replay data
+	if (ignore_replays)
+		return;
+
 	config* const cmd = add_command();
 
 	config val;
@@ -279,6 +293,11 @@ void replay::add_recall(int value, const map_location& loc)
 
 void replay::add_disband(int value)
 {
+	// KP: added flag to ignore replay data
+	if (ignore_replays)
+		return;
+	
+	
 	config* const cmd = add_command();
 
 	config val;
@@ -292,6 +311,10 @@ void replay::add_disband(int value)
 
 void replay::add_countdown_update(int value, int team)
 {
+	// KP: added flag to ignore replay data
+	if (ignore_replays)
+		return;
+	
 	config* const cmd = add_command();
 	config val;
 
@@ -304,6 +327,10 @@ void replay::add_countdown_update(int value, int team)
 
 void replay::add_movement(const std::vector<map_location>& steps)
 {
+	// KP: added flag to ignore replay data
+	if (ignore_replays)
+		return;
+	
 	if(steps.empty()) { // no move, nothing to record
 		return;
 	}
@@ -318,6 +345,10 @@ void replay::add_movement(const std::vector<map_location>& steps)
 
 void replay::add_attack(const map_location& a, const map_location& b, int att_weapon, int def_weapon)
 {
+	// KP: added flag to ignore replay data
+	if (ignore_replays)
+		return;
+	
 	add_pos("attack",a,b);
 	char buf[100];
 	snprintf(buf,sizeof(buf),"%d",att_weapon);
@@ -331,6 +362,10 @@ void replay::add_attack(const map_location& a, const map_location& b, int att_we
 void replay::add_pos(const std::string& type,
                      const map_location& a, const map_location& b)
 {
+	// KP: added flag to ignore replay data
+	if (ignore_replays)
+		return;
+	
 	config* const cmd = add_command();
 
 	config move, src, dst;
@@ -344,6 +379,10 @@ void replay::add_pos(const std::string& type,
 
 void replay::add_value(const std::string& type, int value)
 {
+	// KP: added flag to ignore replay data
+	if (ignore_replays)
+		return;
+	
 	config* const cmd = add_command();
 
 	config val;
@@ -357,11 +396,19 @@ void replay::add_value(const std::string& type, int value)
 
 void replay::choose_option(int index)
 {
+	// KP: added flag to ignore replay data
+	if (ignore_replays)
+		return;
+	
 	add_value("choose",index);
 }
 
 void replay::text_input(std::string input)
 {
+	// KP: added flag to ignore replay data
+	if (ignore_replays)
+		return;
+	
 	config* const cmd = add_command();
 
 	config val;
@@ -372,6 +419,10 @@ void replay::text_input(std::string input)
 
 void replay::set_random_value(const std::string& choice)
 {
+	// KP: added flag to ignore replay data
+	if (ignore_replays)
+		return;
+	
 	config* const cmd = add_command();
 	config val;
 	val["value"] = choice;
@@ -380,6 +431,10 @@ void replay::set_random_value(const std::string& choice)
 
 void replay::add_label(const terrain_label* label)
 {
+	// KP: added flag to ignore replay data
+	if (ignore_replays)
+		return;
+	
 	assert(label);
 	config* const cmd = add_command(false);
 
@@ -394,6 +449,10 @@ void replay::add_label(const terrain_label* label)
 
 void replay::clear_labels(const std::string& team_name)
 {
+	// KP: added flag to ignore replay data
+	if (ignore_replays)
+		return;
+	
 	config* const cmd = add_command(false);
 
 	(*cmd)["undo"] = "no";
@@ -404,6 +463,10 @@ void replay::clear_labels(const std::string& team_name)
 
 void replay::add_rename(const std::string& name, const map_location& loc)
 {
+	// KP: added flag to ignore replay data
+	if (ignore_replays)
+		return;
+	
 	config* const cmd = add_command(false);
 	(*cmd)["async"] = "yes"; // Not undoable, but depends on moves/recruits that are
 	config val;
@@ -414,12 +477,20 @@ void replay::add_rename(const std::string& name, const map_location& loc)
 
 void replay::end_turn()
 {
+	// KP: added flag to ignore replay data
+	if (ignore_replays)
+		return;
+	
 	config* const cmd = add_command();
 	cmd->add_child("end_turn");
 }
 
 void replay::add_event(const std::string& name, const map_location& loc)
 {
+	// KP: added flag to ignore replay data
+	if (ignore_replays)
+		return;
+	
 	config* const cmd = add_command();
 	config& ev = cmd->add_child("fire_event");
 	ev["raise"] = name;
@@ -432,6 +503,10 @@ void replay::add_event(const std::string& name, const map_location& loc)
 
 void replay::add_checksum_check(const map_location& loc)
 {
+	// KP: added flag to ignore replay data
+	if (ignore_replays)
+		return;
+	
 	if(! game_config::mp_debug) {
 		return;
 	}
@@ -441,6 +516,10 @@ void replay::add_checksum_check(const map_location& loc)
 
 void replay::add_advancement(const map_location& loc)
 {
+	// KP: added flag to ignore replay data
+	if (ignore_replays)
+		return;
+	
 	config* const cmd = add_command(false);
 
 	config val;
@@ -456,6 +535,10 @@ void replay::add_chat_message_location()
 
 void replay::speak(const config& cfg)
 {
+	// KP: added flag to ignore replay data
+	if (ignore_replays)
+		return;
+	
 	config* const cmd = add_command(false);
 	if(cmd != NULL) {
 		cmd->add_child("speak",cfg);
@@ -466,6 +549,10 @@ void replay::speak(const config& cfg)
 
 void replay::add_chat_log_entry(const config* speak, std::stringstream& str) const
 {
+	// KP: added flag to ignore replay data
+	if (ignore_replays)
+		return;
+	
 	if (!speak)
 	{
 		return;
@@ -498,6 +585,10 @@ std::stringstream message_log;
 
 std::string replay::build_chat_log()
 {
+	// KP: added flag to ignore replay data
+	if (ignore_replays)
+		return "";
+	
 	const config::child_list& cmd = commands();
 	std::vector<int>::iterator loc_it;
 	int last_location = 0;
@@ -547,6 +638,10 @@ config replay::get_data_range(int cmd_start, int cmd_end, DATA_TYPE data_type)
 
 void replay::undo()
 {
+	// KP: added flag to ignore replay data
+	if (ignore_replays)
+		return;
+	
 	config::child_itors cmd = cfg_.child_range("command");
 	std::vector<config::child_iterator> async_cmds;
 	// Remember commands not yet synced and skip over them.

@@ -35,11 +35,11 @@
 #include "shared_string.hpp"
 
 std::map<shared_string, textureAtlasInfo> gUnitAtlasMap;
-unsigned int gUnitTexIds[NUM_UNITMAPS];
+GLuint gUnitTexIds[NUM_UNITMAPS];
 unsigned int gUnitTexW[NUM_UNITMAPS];
 unsigned int gUnitTexH[NUM_UNITMAPS];
 
-#define MAX_UNIT_ATLAS_TOTAL_SIZE	4*1024*1024
+#define MAX_UNIT_ATLAS_TOTAL_SIZE	3*1024*1024
 
 typedef struct
 {
@@ -92,6 +92,24 @@ void loadUnitMap(unsigned short mapId)
 	{
 		case UNITMAP_ELLIPSE:
 			filename = game_config::path + "/images/misc/map.ellipse.png";
+			break;
+		case MAP_BLACK_FLAG:
+			filename = game_config::path + "/images/flags/map.black-flag.png";
+			break;
+		case MAP_FLAG:
+			filename = game_config::path + "/images/flags/map.flag.png";
+			break;
+		case MAP_KNALGAN_FLAG:
+			filename = game_config::path + "/images/flags/map.knalgan-flag.png";
+			break;
+		case MAP_LOYALIST_FLAG:
+			filename = game_config::path + "/images/flags/map.loyalist-flag.png";
+			break;
+		case MAP_SG_FLAG:
+			filename = game_config::path + "/images/flags/map.SG-flag.png";
+			break;
+		case MAP_UNDEAD_FLAG:
+			filename = game_config::path + "/images/flags/map.undead-flag.png";
 			break;
 		case UNITMAP_DRAKES_DRAKES:
 			filename += "map.drakes.drakes.png";
@@ -194,8 +212,11 @@ void loadUnitMap(unsigned short mapId)
 			filename += "map.dwarves.ulfserker.png";
 			break;
 			
-		case UNITMAP_ELVES_ELVES:
-			filename += "map.elves.elves.png";
+		case UNITMAP_ELVES_ELVES1:
+			filename += "map.elves.elves1.png";
+			break;
+		case UNITMAP_ELVES_ELVES2:
+			filename += "map.elves.elves2.png";
 			break;
 		case UNITMAP_ELVES_ARCHER:
 			filename += "map.elves.archer.png";
@@ -1271,11 +1292,182 @@ void loadUnitMap(unsigned short mapId)
 			filename += "map.iftu.undead.png";
 			break;
 			
+		case UNITMAP_DEADWATER_BRAWLER:
+			filename += "map.dw.brawler.png";
+			break;
+		case UNITMAP_DEADWATER_CHILD_KING:
+			filename += "map.dw.child_king.png";
+			break;
+		case UNITMAP_DEADWATER_CITIZEN:
+			filename += "map.dw.citizen.png";
+			break;
+		case UNITMAP_DEADWATER_DARK_SHAPE:
+			filename += "map.dw.dark_shape.png";
+			break;
+		case UNITMAP_DEADWATER_FIREGHOST:
+			filename += "map.dw.fireghost.png";
+			break;
+		case UNITMAP_DEADWATER_KRAKEN:
+			filename += "map.dw.kraken.png";
+			break;
+		case UNITMAP_DEADWATER_SOLDIER_KING:
+			filename += "map.dw.soldier_king.png";
+			break;
+		case UNITMAP_DEADWATER_WARRIOR_KING:
+			filename += "map.dw.warrior_king.png";
+			break;
+		case UNITMAP_DEADWATER_YOUNG_KING:
+			filename += "map.dw.young_king.png";
+			break;
+			
 			
 			
 		case UNITMAP_BLANK:
 			filename += "map.blank.png";
 			break;
+			
+			
+			
+		case HALOMAP_ELVEN_DRUID_HEALING:
+			filename = game_config::path + "/data/core/images/halo/map.elven.druid-healing.pvrtc";
+			pvrtcSize = 256;
+			break;
+		case HALOMAP_ELVEN_ELVEN_SHIELD:
+			filename = game_config::path + "/data/core/images/halo/map.elven.elven-shield.pvrtc";
+			pvrtcSize = 512;
+			break;
+		case HALOMAP_ELVEN_FAERIE_FIRE:
+			filename = game_config::path + "/data/core/images/halo/map.elven.faerie-fire.pvrtc";
+			pvrtcSize = 256;
+			break;
+		case HALOMAP_ELVEN_ICE_HALO:
+			filename = game_config::path + "/data/core/images/halo/map.elven.ice-halo.pvrtc";
+			pvrtcSize = 256;
+			break;
+		case HALOMAP_ELVEN_NATURE_HALO:
+			filename = game_config::path + "/data/core/images/halo/map.elven.nature-halo.pvrtc";
+			pvrtcSize = 256;
+			break;
+		case HALOMAP_ELVEN_SHAMAN_HEAL:
+			filename = game_config::path + "/data/core/images/halo/map.elven.shaman-heal.pvrtc";
+			pvrtcSize = 256;
+			break;
+		case HALOMAP_ELVEN_SHYDE:
+			filename = game_config::path + "/data/core/images/halo/map.elven.shyde.pvrtc";
+			pvrtcSize = 256;
+			break;
+		case HALOMAP_FIRE_AURA:
+			filename = game_config::path + "/data/core/images/halo/map.fire-aura.pvrtc";
+			pvrtcSize = 512;
+			break;
+		case HALOMAP_FLAME_BURST:
+			filename = game_config::path + "/data/core/images/halo/map.flame-burst.pvrtc";
+			pvrtcSize = 256;
+			break;
+		case HALOMAP_HOLY_HALO:
+			filename = game_config::path + "/data/core/images/halo/map.holy.halo.pvrtc";
+			pvrtcSize = 256;
+			break;
+		case HALOMAP_HOLY_LIGHTBEAM:
+			filename = game_config::path + "/data/core/images/halo/map.holy.lightbeam.pvrtc";
+			pvrtcSize = 512;
+			break;
+		case HALOMAP_IFTU_AVATAR:
+			filename = game_config::path + "/data/core/images/halo/map.iftu.avatar.pvrtc";
+			pvrtcSize = 128;
+			break;
+		case HALOMAP_IFTU_BOMB_EXPLODE:
+			filename = game_config::path + "/data/core/images/halo/map.iftu.bomb-explode.pvrtc";
+			pvrtcSize = 256;
+			break;
+		case HALOMAP_IFTU_CHAOS:
+			filename = game_config::path + "/data/core/images/halo/map.iftu.chaos.pvrtc";
+			pvrtcSize = 256;
+			break;
+		case HALOMAP_IFTU_DARKNESS_BEAM:
+			filename = game_config::path + "/data/core/images/halo/map.iftu.darkness-beam.pvrtc";
+			pvrtcSize = 512;
+			break;
+		case HALOMAP_IFTU_ELYNIA_NOILLUM:
+			filename = game_config::path + "/data/core/images/halo/map.iftu.elynia-noillum.pvrtc";
+			pvrtcSize = 256;
+			break;
+		case HALOMAP_IFTU_ELYNIA:
+			filename = game_config::path + "/data/core/images/halo/map.iftu.elynia.pvrtc";
+			pvrtcSize = 256;
+			break;
+		case HALOMAP_IFTU_ILLUMINATES:
+			filename = game_config::path + "/data/core/images/halo/map.iftu.illuminates.pvrtc";
+			pvrtcSize = 256;
+			break;
+		case HALOMAP_IFTU_OBSCURES:
+			filename = game_config::path + "/data/core/images/halo/map.iftu.obscures.pvrtc";
+			pvrtcSize = 256;
+			break;
+		case HALOMAP_IFTU_WOSE_RANGED:
+			filename = game_config::path + "/data/core/images/halo/map.iftu.wose-ranged.pvrtc";
+			pvrtcSize = 128;
+			break;
+		case HALOMAP_IFTU_WOSE:
+			filename = game_config::path + "/data/core/images/halo/map.iftu.wose.pvrtc";
+			pvrtcSize = 128;
+			break;
+		case HALOMAP_ILLUMINATES_AURA:
+			filename = game_config::path + "/data/core/images/halo/map.illuminates-aura.pvrtc";
+			pvrtcSize = 256;
+			break;
+		case HALOMAP_LIBERTY_SHADOW_MAGE:
+			filename = game_config::path + "/data/core/images/halo/map.liberty.shadow-mage.pvrtc";
+			pvrtcSize = 256;
+			break;
+		case HALOMAP_LIGHTHOUSE_AURA:
+			filename = game_config::path + "/data/core/images/halo/map.lighthouse-aura.pvrtc";
+			pvrtcSize = 512;
+			break;
+		case HALOMAP_LIGHTNING_BOLT:
+			filename = game_config::path + "/data/core/images/halo/map.lightning-bolt.pvrtc";
+			pvrtcSize = 512;
+			break;
+		case HALOMAP_MAGE_HALO_BIG:
+			filename = game_config::path + "/data/core/images/halo/map.mage-halo-big.pvrtc";
+			pvrtcSize = 256;
+			break;
+		case HALOMAP_MAGE_HALO:
+			filename = game_config::path + "/data/core/images/halo/map.mage-halo.pvrtc";
+			pvrtcSize = 256;
+			break;
+		case HALOMAP_MAGE_PREPARATION:
+			filename = game_config::path + "/data/core/images/halo/map.mage-preparation.pvrtc";
+			pvrtcSize = 128;
+			break;
+		case HALOMAP_MERFOLK_STAFF_FLARE:
+			filename = game_config::path + "/data/core/images/halo/map.merfolk.staff-flare.pvrtc";
+			pvrtcSize = 128;
+			break;
+		case HALOMAP_MERFOLK_WATER:
+			filename = game_config::path + "/data/core/images/halo/map.merfolk.water.pvrtc";
+			pvrtcSize = 256;
+			break;
+		case HALOMAP_SAURIAN_MAGIC_HALO:
+			filename = game_config::path + "/data/core/images/halo/map.saurian-magic-halo.pvrtc";
+			pvrtcSize = 256;
+			break;
+		case HALOMAP_TELEPORT:
+			filename = game_config::path + "/data/core/images/halo/map.teleport.pvrtc";
+			pvrtcSize = 256;
+			break;
+		case HALOMAP_THOT_KARRAG:
+			filename = game_config::path + "/data/core/images/halo/map.thot.karrag.pvrtc";
+			pvrtcSize = 256;
+			break;
+		case HALOMAP_UNDEAD:
+			filename = game_config::path + "/data/core/images/halo/map.undead.pvrtc";
+			pvrtcSize = 256;
+			break;
+			
+			
+			
+			
 			
 		default:
 			assert(false);
@@ -1294,6 +1486,14 @@ void loadUnitMap(unsigned short mapId)
 	if (pvrtcSize == 0)
 	{
 		surface surf = surface(IMG_Load(filename.c_str()));
+		
+		if (surf == NULL)
+		{
+			std::cerr << "\n\n*** ERROR loading texture altas " << filename.c_str() << "\n\n";
+			assert(false);
+			return;
+		}
+		
 		if (color != 0)
 		{
 			std::map<Uint32, Uint32> tmp_rgb, map_rgb;
@@ -1304,6 +1504,11 @@ void loadUnitMap(unsigned short mapId)
 				std::vector<Uint32> const& old_color = game_config::tc_info("ellipse_red");
 				tmp_rgb = recolor_range(new_color,old_color);
 			}
+			else if (mapId >= MAP_BLACK_FLAG && mapId <= MAP_UNDEAD_FLAG + 9)
+			{
+				std::vector<Uint32> const& old_color = game_config::tc_info("flag_green");
+				tmp_rgb = recolor_range(new_color,old_color);
+			}			
 			else
 			{
 				std::vector<Uint32> const& old_color = game_config::tc_info("magenta");;
@@ -1344,7 +1549,7 @@ void loadUnitMap(unsigned short mapId)
 		
 		if (surf == NULL)
 		{
-			std::cerr << "\n\n*** ERROR loading texture altas " << filename.c_str() << "\n\n";
+			std::cerr << "\n\n*** ERROR (stage2) loading texture altas " << filename.c_str() << "\n\n";
 			assert(false);
 			return;
 		}
@@ -1400,6 +1605,26 @@ void loadUnitMap(unsigned short mapId)
 		
 		gUnitTexW[mapId+color] = pvrtcSize;
 		gUnitTexH[mapId+color] = pvrtcSize;
+		
+		
+		// add to LRU list
+		unitAtlasData uad;
+		uad.mapId = mapId+color;
+		uad.size = dataSize;
+		gUnitAtlasTotalSize += uad.size;
+		std::cerr << "UnitTextureAtlas: creating PVRTC atlas ID " << mapId+color << " " << pvrtcSize << "x" << pvrtcSize << ", " << uad.size << " bytes, total " << gUnitAtlasTotalSize << " bytes\n";
+		gUnitAtlasLRU.push_back(uad);
+		
+		while(gUnitAtlasTotalSize >= MAX_UNIT_ATLAS_TOTAL_SIZE && gUnitAtlasLRU.size() > 0)
+		{
+			uad = gUnitAtlasLRU.front();
+			gUnitAtlasLRU.pop_front();
+			glDeleteTextures(1, &gUnitTexIds[uad.mapId]);
+			gUnitTexIds[uad.mapId] = 0;
+			gUnitAtlasTotalSize -= uad.size;
+			std::cerr << "UnitTextureAtlas: FREED atlas ID " << uad.mapId << " size " << uad.size << " bytes, total now " << gUnitAtlasTotalSize << " bytes\n";
+		}			
+		
 	}
 }
 
@@ -1442,7 +1667,8 @@ void initUnitTextureAtlas(void)
 	#include "map.dwarves.thunderguard.h"
 	#include "map.dwarves.ulfserker.h"
 	
-	#include "map.elves.elves.h"
+	#include "map.elves.elves1.h"
+	#include "map.elves.elves2.h"
 	#include "map.elves.archer.h"
 	#include "map.elves.archer+female.h"
 	#include "map.elves.avenger.h"
@@ -1820,8 +2046,63 @@ void initUnitTextureAtlas(void)
 	#include "map.iftu.undead-skeletal.h"
 	#include "map.iftu.undead.h"
 	
+	#include "map.dw.brawler.h"
+	#include "map.dw.child_king.h"
+	#include "map.dw.citizen.h"
+	#include "map.dw.dark_shape.h"
+	#include "map.dw.fireghost.h"
+	#include "map.dw.kraken.h"
+	#include "map.dw.soldier_king.h"
+	#include "map.dw.warrior_king.h"
+	#include "map.dw.young_king.h"
+	
 	#include "map.blank.h"
 	#include "../res/images/misc/map.ellipse.h"
+	
+	// FLAGS
+	#include "map.black-flag.h"
+	#include "map.flag.h"
+	#include "map.knalgan-flag.h"
+	#include "map.loyalist-flag.h"
+	#include "map.SG-flag.h"
+	#include "map.undead-flag.h"
+	
+	// HALOS
+	#include "map.elven.druid-healing.h"
+	#include "map.elven.elven-shield.h"
+	#include "map.elven.faerie-fire.h"
+	#include "map.elven.ice-halo.h"
+	#include "map.elven.nature-halo.h"
+	#include "map.elven.shaman-heal.h"
+	#include "map.elven.shyde.h"
+	#include "map.fire-aura.h"
+	#include "map.flame-burst.h"
+	#include "map.holy.halo.h"
+	#include "map.holy.lightbeam.h"
+	#include "map.iftu.avatar.h"
+	#include "map.iftu.bomb-explode.h"
+	#include "map.iftu.chaos.h"
+	#include "map.iftu.darkness-beam.h"
+	#include "map.iftu.elynia-noillum.h"
+	#include "map.iftu.elynia.h"
+	#include "map.iftu.illuminates.h"
+	#include "map.iftu.obscures.h"
+	#include "map.iftu.wose-ranged.h"
+	#include "map.iftu.wose.h"
+	#include "map.illuminates-aura.h"
+	#include "map.liberty.shadow-mage.h"
+	#include "map.lighthouse-aura.h"
+	#include "map.lightning-bolt.h"
+	#include "map.mage-halo-big.h"
+	#include "map.mage-halo.h"
+	#include "map.mage-preparation.h"
+	#include "map.merfolk.staff-flare.h"
+	#include "map.merfolk.water.h"
+	#include "map.saurian-magic-halo.h"
+	#include "map.teleport.h"
+	#include "map.thot.karrag.h"
+	#include "map.undead.h"
+		
 	
 }
 
@@ -1842,15 +2123,38 @@ void freeUnitTextureAtlas(void)
 
 bool getUnitTextureAtlasInfo(const std::string& filename, const std::string& modifications, textureAtlasInfo& tinfo)
 {
+	std::string searchStr;
+	if (filename.compare(0, 5, "halo/") == 0)
+	{
+		// chop off redundant "halo/"
+		searchStr = filename.substr(5);
+		// check for imbedded ~ character
+		int pos = searchStr.find('~', 0);
+		if (pos != std::string::npos)
+		{
+			searchStr[pos] = 0;
+		}
+	}
+	else
+	{
+		// normal unit images
+		searchStr = filename;
+	}
+	
 	std::map<shared_string, textureAtlasInfo>::iterator it;
-	it = gUnitAtlasMap.find(filename);
+	it = gUnitAtlasMap.find(searchStr);
 	if (it == gUnitAtlasMap.end())
 	{
-		std::cerr << "\n\n** ERROR: UnitTextureAtlas - could not find map for file " << filename << "\n\n";
+		if (filename != "")
+		{
+			std::cerr << "\n\n** ERROR: UnitTextureAtlas - could not find map for file " << filename << "\n\n";
+		}
 		//assert(false);
 		//return false;
 		// in non-debug mode, well... at least show the wrong unit instead of nothing...
-		it = gUnitAtlasMap.begin();
+		//it = gUnitAtlasMap.begin();
+		tinfo.mapId = 0;
+		return false;
 	}
 	
 	tinfo = it->second;
@@ -1860,7 +2164,7 @@ bool getUnitTextureAtlasInfo(const std::string& filename, const std::string& mod
 	{
 		// adjust tinfo.mapId based on modifications string
 		rcPos += 12;
-		int colorInt = 1;
+		int colorInt = 0;
 		if (modifications.size() > rcPos+2)
 		{
 			// also convert color words
@@ -1927,6 +2231,45 @@ bool getUnitTextureAtlasInfo(const std::string& filename, const std::string& mod
 		{
 				char colorChar = modifications[rcPos];
 				colorInt = colorChar - '0';
+		}
+		if (colorInt >= 10)
+			colorInt = 0;
+		tinfo.mapId += colorInt;
+	}
+	// new case for flags
+	rcPos = modifications.find("~RC(flag_green>");
+	if (rcPos != std::string::npos)
+	{
+		// adjust tinfo.mapId based on modifications string
+		rcPos += 15;
+		int colorInt = 0;
+		if (modifications.size() > rcPos+2)
+		{
+			// also convert color words
+			if (modifications[rcPos] == 'r')
+				colorInt = 1;	// red
+			else if (modifications[rcPos] == 'b' && modifications[rcPos+2] == 'u')
+				colorInt = 2;	// blue
+			else if (modifications[rcPos] == 'g')
+				colorInt = 3;	// green
+			else if (modifications[rcPos] == 'p')
+				colorInt = 4;	// purple
+			else if (modifications[rcPos] == 'b' && modifications[rcPos+2] == 'a')
+				colorInt = 5;	// black
+			else if (modifications[rcPos] == 'b' && modifications[rcPos+2] == 'o')
+				colorInt = 6;	// brown
+			else if (modifications[rcPos] == 'o')
+				colorInt = 7;	// orange
+			else if (modifications[rcPos] == 'w')
+				colorInt = 8;	// white
+			else if (modifications[rcPos] == 't')
+				colorInt = 9;	// teal
+			
+		}
+		else
+		{
+			char colorChar = modifications[rcPos];
+			colorInt = colorChar - '0';
 		}
 		if (colorInt >= 10)
 			colorInt = 0;

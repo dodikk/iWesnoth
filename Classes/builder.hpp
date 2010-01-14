@@ -213,7 +213,8 @@ public:
 	 */
 	//typedef std::map<std::string, rule_image_variant> rule_image_variantlist;
 	//typedef std::map<shared_string, rule_image_variant> rule_image_variantlist;
-	typedef skiplist_map<shared_string, rule_image_variant> rule_image_variantlist;
+	//typedef skiplist_map<shared_string, rule_image_variant> rule_image_variantlist;
+	typedef AssocVector<shared_string, rule_image_variant> rule_image_variantlist;
 	
 
 	/**
@@ -278,6 +279,7 @@ public:
 			short size;
 			mread(&size, sizeof(size), 1, file);
 			//variants.rehash(size);	// boost:unordered_map optimization
+			variants.reserve(size);
 			for (int i=0; i < size; i++)
 			{
 				//std::string str;
@@ -310,7 +312,6 @@ public:
 	 */
 	typedef std::vector<rule_image> rule_imagelist;
 
-//#define USE_TC_POINTERS
 	
 	/**
 	 * The in-memory representation of a [tile] WML rule
@@ -321,130 +322,27 @@ public:
 		terrain_constraint() :
 			loc(),
 			terrain_types_match(),
-#ifdef USE_TC_POINTERS		
-			set_flag(NULL),
-			no_flag(NULL),
-			has_flag(NULL),
-			images(NULL)
-#else		
 		set_flag(),
 		no_flag(),
 		has_flag(),
 		images()
-#endif
 		{};
 
 		terrain_constraint(map_location loc) :
 			loc(loc),
 			terrain_types_match(),
-#ifdef USE_TC_POINTERS		
 			set_flag(NULL),
 			no_flag(NULL),
 			has_flag(NULL),
 			images(NULL)
-#else
-			set_flag(NULL),
-			no_flag(NULL),
-			has_flag(NULL),
-			images(NULL)
-#endif
 			{};
-#ifdef USE_TC_POINTERS
-		// KP: need copy constructor and destructor to use pointers
-		terrain_constraint(const terrain_constraint& tc)
-		{
-			loc = tc.loc;
-			terrain_types_match = tc.terrain_types_match;
-			set_flag = NULL;
-			no_flag = NULL;
-			has_flag = NULL;
-			images = NULL;
-			if (tc.set_flag)
-			{
-				assert(tc.set_flag->size() > 0 && tc.set_flag->size() < 100);
-				set_flag = new std::vector<shared_string>;
-				*set_flag = *tc.set_flag;
-			}
-			if (tc.no_flag)
-			{
-				assert(tc.no_flag->size() > 0 && tc.no_flag->size() < 100);
-				no_flag = new std::vector<shared_string>;
-				*no_flag = *tc.no_flag;
-			}
-			if (tc.has_flag)
-			{
-				assert(tc.has_flag->size() > 0 && tc.has_flag->size() < 100);
-				has_flag = new std::vector<shared_string>;
-				*has_flag = *tc.has_flag;
-			}
-			if (tc.images)
-			{
-				assert(tc.images->size() > 0 && tc.images->size() < 100);
-				images = new rule_imagelist;
-				*images = *tc.images;
-			}
-		}
-		
-		terrain_constraint& operator =(const terrain_constraint &tc)
-		{
-			loc = tc.loc;
-			terrain_types_match = tc.terrain_types_match;
-			set_flag = NULL;
-			no_flag = NULL;
-			has_flag = NULL;
-			images = NULL;
-			if (tc.set_flag)
-			{
-				assert(tc.set_flag->size() > 0 && tc.set_flag->size() < 100);
-				set_flag = new std::vector<shared_string>;
-				*set_flag = *tc.set_flag;
-			}
-			if (tc.no_flag)
-			{
-				assert(tc.no_flag->size() > 0 && tc.no_flag->size() < 100);
-				no_flag = new std::vector<shared_string>;
-				*no_flag = *tc.no_flag;
-			}
-			if (tc.has_flag)
-			{
-				assert(tc.has_flag->size() > 0 && tc.has_flag->size() < 100);
-				has_flag = new std::vector<shared_string>;
-				*has_flag = *tc.has_flag;
-			}
-			if (tc.images)
-			{
-				assert(tc.images->size() > 0 && tc.images->size() < 100);
-				images = new rule_imagelist;
-				*images = *tc.images;
-			}
-			return *this;
-		}
-		
-		~terrain_constraint()
-		{
-			if (set_flag)
-				delete set_flag;
-			if (no_flag)
-				delete no_flag;
-			if (has_flag)
-				delete has_flag;
-			if (images)
-				delete images;
-		}
-#endif
 		map_location loc;
 		t_translation::t_match terrain_types_match;
-#ifdef USE_TC_POINTERS
-		std::vector<shared_string> *set_flag;
-		std::vector<shared_string> *no_flag;
-		std::vector<shared_string> *has_flag;
-		rule_imagelist *images;
-#else
+
 		std::vector<shared_string> set_flag;
 		std::vector<shared_string> no_flag;
 		std::vector<shared_string> has_flag;
 		rule_imagelist images;
-#endif
 		
 		
 		
@@ -456,55 +354,27 @@ public:
 			terrain_types_match.saveCache(file);
 			
 			short size;
-#ifdef USE_TC_POINTERS			
-			if (set_flag)
-				size = set_flag->size();
-			else
-				size = 0;
-#else
 			size = set_flag.size();
-#endif
 			fwrite(&size, sizeof(size), 1, file);
 			for (int i=0; i < size; i++)
 			{
 				cacheSaveString(file, (set_flag)[i]);
 			}
 			
-#ifdef USE_TC_POINTERS
-			if (no_flag)
-				size = no_flag->size();
-			else
-				size = 0;
-#else
 			size = no_flag.size();
-#endif
 			fwrite(&size, sizeof(size), 1, file);
 			for (int i=0; i < size; i++)
 			{
 				cacheSaveString(file, (no_flag)[i]);
 			}
 			
-#ifdef USE_TC_POINTERS
-			if (has_flag)
-				size = has_flag->size();
-			else
-				size = 0;
-#else
 			size = has_flag.size();
-#endif
 			fwrite(&size, sizeof(size), 1, file);
 			for (int i=0; i < size; i++)
 			{
 				cacheSaveString(file, (has_flag)[i]);
 			}
-#ifdef USE_TC_POINTERS
-			if (images)
-				size = images->size();
-			else
-				size = 0;
-#else
 			size = images.size();
-#endif
 			fwrite(&size, sizeof(size), 1, file);
 			for (int i=0; i < size; i++)
 			{
@@ -521,61 +391,7 @@ public:
 			
 			char *str;
 			unsigned long strSize;
-#ifdef USE_TC_POINTERS
-			mread(&size, sizeof(size), 1, file);
-			if (size > 0)
-			{
-				set_flag = new std::vector<shared_string>;
-				set_flag->reserve(size);
-			}
-			for (int i=0; i < size; i++)
-			{
-				cacheLoadString(file, &str, &strSize);
-				gTempStr.assign(str, strSize);
-				set_flag->push_back(gTempStr);
-			}
-			
-			mread(&size, sizeof(size), 1, file);
-			if (size > 0)
-			{
-				no_flag = new std::vector<shared_string>;
-				no_flag->reserve(size);
-			}
-			for (int i=0; i < size; i++)
-			{
-				cacheLoadString(file, &str, &strSize);
-				gTempStr.assign(str, strSize);
-				no_flag->push_back(gTempStr);
-			}
-			
-			mread(&size, sizeof(size), 1, file);
-			if (size > 0)
-			{
-				has_flag = new std::vector<shared_string>;
-				//has_flag = new std::vector<std::string>;
-				has_flag->reserve(size);
-			}
-			for (int i=0; i < size; i++)
-			{
-				cacheLoadString(file, &str, &strSize);
-				gTempStr.assign(str, strSize);
-				has_flag->push_back(gTempStr);
-			}
-			
-			mread(&size, sizeof(size), 1, file);
-			if (size > 0)
-			{
-				images = new std::vector<rule_image>;
-				images->reserve(size);
-			}
-			for (int i=0; i < size; i++)
-			{
-				rule_image ri;
-				ri.loadCache(file, loadBuffer);
-				
-				images->push_back(ri);
-			}
-#else
+
 			mread(&size, sizeof(size), 1, file);
 			if (size > 0)
 			{
@@ -624,7 +440,6 @@ public:
 				
 				images.push_back(ri);
 			}
-#endif
 
 		}
 	};
@@ -695,7 +510,8 @@ private:
 	 * The list of constraints attached to a terrain_graphics WML rule.
 	 */
 	//typedef std::map<map_location, terrain_constraint> constraint_set;
-	typedef skiplist_map<map_location, terrain_constraint> constraint_set;
+	//typedef skiplist_map<map_location, terrain_constraint> constraint_set;
+	typedef AssocVector<map_location, terrain_constraint> constraint_set;
 	
 
 	/**
@@ -758,6 +574,7 @@ private:
 			short numConstraints;
 			mread(&numConstraints, sizeof(numConstraints), 1, file);
 			//constraints.rehash(numConstraints);		// boost:unordered_map optimization
+			constraints.reserve(numConstraints);
 			for(int i=0; i < numConstraints; i++)
 			{
 				// typedef std::map<map_location, terrain_constraint> constraint_set;
@@ -1163,7 +980,8 @@ private:
 	/**
 	 * Shorthand typedef for a map associating a list of locations to a terrain type.
 	 */
-	typedef std::map<t_translation::t_terrain, std::vector<map_location> > terrain_by_type_map;
+	//typedef std::map<t_translation::t_terrain, std::vector<map_location> > terrain_by_type_map;
+	typedef AssocVector<t_translation::t_terrain, std::vector<map_location> > terrain_by_type_map;
 
 	/**
 	 * A map representing all locations whose terrain is of a given type.

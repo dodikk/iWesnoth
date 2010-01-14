@@ -268,12 +268,24 @@ void renderQueueRender(void)
 				{
 					if (mTextureQueue[j].type == QUEUE_TYPE_FILL /*&& mTextureQueue[j].z == curLayer*/)
 					{
-						glColor4f(mTextureQueue[j].texCoords[0],mTextureQueue[j].texCoords[1],mTextureQueue[j].texCoords[2],mTextureQueue[j].texCoords[3]);								
-						glVertexPointer(2, GL_SHORT, 0, mTextureQueue[j].vertices);
-						glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+						float color1, color2, color3, color4;
+						color1 = mTextureQueue[j].texCoords[0];
+						color2 = mTextureQueue[j].texCoords[1];
+						color3 = mTextureQueue[j].texCoords[2];
+						color4 = mTextureQueue[j].texCoords[3];
+						glColor4f(color1,color2,color3,color4);
+						// do all of some color together (minimize glColor4f calls too)
+						for (int k=j; k < mTextureQueue.size(); k++)
+						{
+							if (mTextureQueue[k].type == QUEUE_TYPE_FILL && mTextureQueue[k].textCoords[0] == color1 && mTextureQueue[k].textCoords[1] == color2 && mTextureQueue[k].textCoords[2] == color3 && mTextureQueue[k].textCoords[3] == color4)
+							{
+								glVertexPointer(2, GL_SHORT, 0, mTextureQueue[j].vertices);
+								glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 						
-						mTextureQueue[j].type = QUEUE_TYPE_DONE;
-						renderCount++;
+								mTextureQueue[k].type = QUEUE_TYPE_DONE;
+								renderCount++;
+							}
+						}
 					}
 				}
 				

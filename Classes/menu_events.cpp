@@ -894,7 +894,7 @@ private:
 			std::vector<gui::preview_pane*> preview_panes;
 			preview_panes.push_back(&unit_preview);
 
-			gui::dialog rmenu(*gui_,_("Recruit") + get_title_suffix(team_num),
+			gui::dialog rmenu(*gui_,_("Recruit"), // + get_title_suffix(team_num),
 #ifdef __IPHONEOS__
 							  "",
 #else							  

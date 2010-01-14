@@ -252,12 +252,13 @@ void init_custom_malloc()
 	char cStr[256];
 	if (freeMemF < 24.0f)
 	{
-		sprintf(cStr, "Low memory detected, performance problems or crashes may occur. Please reset your device to free up memory!", freeMemF);
+/*		sprintf(cStr, "Low memory detected, performance problems or crashes may occur. Please reset your device to free up memory!", freeMemF);
 		str = [NSString stringWithUTF8String: cStr];
 		
 		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Memory Warning!" message:str delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
 		[alert show];
 		[alert release];		
+ */
 	}
 /*	else
 	{

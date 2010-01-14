@@ -24,6 +24,7 @@
 #include "game_preferences.hpp"
 #include "halo.hpp"
 
+#include "UnitTextureAtlas.h"
 
 namespace halo
 {
@@ -58,7 +59,7 @@ private:
 	ORIENTATION orientation_;
 
 	int x_, y_;
-	surface surf_, buffer_;
+//	surface surf_, buffer_;
 	SDL_Rect rect_;
 
 	/** The location of the center of the halo. */
@@ -104,8 +105,8 @@ effect::effect(int xpos, int ypos, const animated<std::string>::anim_description
 	orientation_(orientation),
 	x_(xpos),
 	y_(ypos),
-	surf_(NULL),
-	buffer_(NULL),
+//	surf_(NULL),
+//	buffer_(NULL),
 	rect_(empty_rect),
 	loc_(loc),
 	overlayed_hexes_()
@@ -126,7 +127,7 @@ void effect::set_location(int x, int y)
 	if (new_x != x_ || new_y != y_) {
 		x_ = new_x;
 		y_ = new_y;
-		buffer_.assign(NULL);
+//		buffer_.assign(NULL);
 		overlayed_hexes_.clear();
 	}
 }
@@ -155,6 +156,7 @@ bool effect::render()
 	}
 
 	images_.update_last_draw_time();
+/*	
 	surf_.assign(image::get_image(current_image(),image::SCALED_TO_ZOOM));
 	if(surf_ == NULL) {
 		return false;
@@ -165,15 +167,39 @@ bool effect::render()
 	if(orientation_ == VREVERSE || orientation_ == HVREVERSE) {
 		surf_.assign(flop_surface(surf_));
 	}
-
+*/
+	textureAtlasInfo tinfo;
+	getUnitTextureAtlasInfo(current_image(), "", tinfo);
+	surface surf_;
+	if (tinfo.mapId == 0)
+	{
+		//return false;
+		// fallback to normal image, eg scenery/signpost.png
+		surf_.assign(image::get_image(current_image(),image::SCALED_TO_ZOOM));
+		if(surf_ == NULL) {
+			return false;
+		}
+		if(orientation_ == HREVERSE || orientation_ == HVREVERSE) {
+			surf_.assign(image::reverse_image(surf_));
+		}
+		if(orientation_ == VREVERSE || orientation_ == HVREVERSE) {
+			surf_.assign(flop_surface(surf_));
+		}
+		tinfo.originalW = surf_->w;
+		tinfo.originalH = surf_->h;
+	}
+	
 	const map_location zero_loc(0,0);
 	const int screenx = disp->get_location_x(zero_loc);
 	const int screeny = disp->get_location_y(zero_loc);
 
-	const int xpos = x_ + screenx - surf_->w/2;
-	const int ypos = y_ + screeny - surf_->h/2;
+	//const int xpos = x_ + screenx - surf_->w/2;
+	const int xpos = x_ + screenx - tinfo.originalW/2;
+	//const int ypos = y_ + screeny - surf_->h/2;
+	const int ypos = y_ + screeny - tinfo.originalH/2;
 
-	SDL_Rect rect = {xpos,ypos,surf_->w,surf_->h};
+//	SDL_Rect rect = {xpos,ypos,surf_->w,surf_->h};
+	SDL_Rect rect = {xpos,ypos,tinfo.originalW,tinfo.originalH};
 	rect_ = rect;
 	SDL_Rect clip_rect = disp->map_outside_area();
 
@@ -188,7 +214,7 @@ bool effect::render()
 	}
 
 	if(rects_overlap(rect,clip_rect) == false) {
-		buffer_.assign(NULL);
+//		buffer_.assign(NULL);
 		return false;
 	}
 
@@ -204,7 +230,16 @@ bool effect::render()
 //	}
 
 //	SDL_BlitSurface(surf_,NULL,screen,&rect);
-	blit_surface(rect.x, rect.y, surf_);
+
+//	blit_surface(rect.x, rect.y, surf_);
+	if (tinfo.mapId == 0)
+	{
+		blit_surface(rect.x, rect.y, surf_);
+	}
+	else
+	{
+		renderAtlas(rect.x, rect.y, tinfo);
+	}
 
 //	update_rect(rect_);
 
@@ -213,6 +248,7 @@ bool effect::render()
 
 void effect::unrender()
 {
+/*	
 	if(buffer_ == NULL) {
 		return;
 	}
@@ -220,7 +256,7 @@ void effect::unrender()
 //	surface const screen = disp->get_screen_surface();
 
 	SDL_Rect clip_rect = disp->map_outside_area();
-	const clip_rect_setter clip_setter(/*screen,*/clip_rect);
+	const clip_rect_setter clip_setter(screen,clip_rect);
 
 	// Due to scrolling, the location of the rendered halo
 	// might have changed; recalculate
@@ -235,6 +271,7 @@ void effect::unrender()
 //	SDL_BlitSurface(buffer_,NULL,screen,&rect);
 	blit_surface(rect.x, rect.y, buffer_);
 //	update_rect(rect_);
+*/	
 }
 
 bool effect::on_location(const std::set<map_location>& locations) const

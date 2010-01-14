@@ -320,7 +320,7 @@ int dialog::show()
 			
 			//refresh();
 			
-			SDL_Delay(50);
+			SDL_Delay(80);
 		}
 		action(dp_info);
 		dp_info.cycle();
@@ -597,7 +597,17 @@ dialog::dimension_measurements dialog::layout(int xloc, int yloc)
 		// recheck
 		int bestHeight = screen.gety() - above_preview_pane_height - frame_bottom_pad - check_button_height - padding_height;
 		dim.menu_height = bestHeight;
-		dim.menu_y = dim.interior.h - dim.menu_height;
+		dim.menu_y = dim.interior.h - dim.menu_height - frame_bottom_pad;
+		
+		// KP: dirty hack
+		if (title_ == "Attack Enemy")
+		{
+			dim.y = 126;
+			dim.menu_y = 149;
+			dim.interior.y = 36;
+			dim.interior.h = 248;
+			dim.menu_height = 135;
+		}
 	}
 
 	//calculate the positions of the preview panes to the sides of the dialog
@@ -650,7 +660,7 @@ dialog::dimension_measurements dialog::layout(int xloc, int yloc)
 	dim.menu_y = dim.y+top_padding+text_and_image_height+menu_hpadding+ (use_textbox ? text_widget_->location().h + top_padding : 0);
 
 #ifdef __IPHONEOS__
-	if (dim.interior.y == 0)
+	if (dim.interior.y == 0 && dim.menu_y < 100)	// KP: make sure not to adjust for the attack selection with 3 attacks...
 	{
 		//dim.menu_y -= 4;
 //		dim.menu_y -= 24;
@@ -706,6 +716,7 @@ dialog::dimension_measurements dialog::layout(int xloc, int yloc)
 			}
 		}
 	}
+	
 	set_layout(dim);
 	return dim;
 }

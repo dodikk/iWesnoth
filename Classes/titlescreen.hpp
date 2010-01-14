@@ -40,6 +40,9 @@ enum TITLE_RESULT { //TUTORIAL = 1,		/**< Start special campaign 'tutorial' */
 //#endif
                     //CHANGE_LANGUAGE, 
 					EDIT_PREFERENCES,
+//#ifndef FREE_VERSION
+					SHOW_OPENFEINT,
+//#endif
 					SHOW_HELP,			/**< Show credits */
 					//QUIT_GAME,
 					TIP_PREVIOUS,		/**< Show previous tip-of-the-day */

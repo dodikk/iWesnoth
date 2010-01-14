@@ -1638,14 +1638,8 @@ SDL_Surface *TTF_RenderUNICODE_Blended(TTF_Font *font,
 	xstart = 0;
 	swapped = TTF_byteswapped;
 	pixel = (fg.r<<16)|(fg.g<<8)|fg.b;
-	//SDL_FillRect(textbuf, NULL, pixel);	/* Initialize with fg and 0 alpha */
+	SDL_FillRect(textbuf, NULL, pixel);	/* Initialize with fg and 0 alpha */
 	
-	// KP: SDL_FillRect was optimized not to fill 0 alpha, so the above doesn't work as intended...
-	Uint32 *p = textbuf->pixels;
-	for (int y=0; y < textbuf->h; y++)
-		for (int x=0; x < textbuf->w; x++)
-			*p++ = pixel;
-
 	for ( ch=text; *ch; ++ch ) {
 		Uint16 c = *ch;
 		if ( c == UNICODE_BOM_NATIVE ) {
@@ -1707,18 +1701,8 @@ SDL_Surface *TTF_RenderUNICODE_Blended(TTF_Font *font,
 			 * */
 			src = (Uint8*) (glyph->pixmap.buffer + glyph->pixmap.pitch * row);
 			for ( col = width; col>0 && dst < dst_check; --col) {
-//				alpha = *src++;
-//				*dst++ |= pixel | (alpha << 24);
 				alpha = *src++;
-				if (alpha != 0)
-				{
-					alpha = (alpha << 24);
-					*dst++ |= alpha;
-				}
-				else
-				{
-					dst++;
-				}
+				*dst++ |= pixel | (alpha << 24);
 			}
 		}
 

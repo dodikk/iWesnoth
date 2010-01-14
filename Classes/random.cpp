@@ -94,7 +94,10 @@ int rng::get_random()
 
 const config* rng::get_random_results()
 {
-	assert(random_ != NULL);
+	// KP: changed to support no replay data
+//	assert(random_ != NULL);
+	if (random_ == NULL)
+		return NULL;
 
 	const config::child_list random(random_->get_children("random"));
 	if (random_child_ <= 0 ||random_child_ > random.size()) return NULL;
@@ -103,7 +106,10 @@ const config* rng::get_random_results()
 
 void rng::set_random_results(const config& cfg)
 {
-	assert(random_ != NULL);
+	// KP: changed to support no replay data
+	//assert(random_ != NULL);
+	if (random_ == NULL)
+		return;
 
 	const config::child_list random(random_->get_children("random"));
 	if (random_child_ <= 0 || random_child_ > random.size()) return;

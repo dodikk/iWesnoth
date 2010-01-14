@@ -1,0 +1,19 @@
+// "filename.png", texOffsetX, texOffsetY, flags, texW, texH, trimmedX, trimmedY, originalW, originalH, UNITMAP_ELVES_ELVES1ID
+addMapEntry("units/elves-wood/archer+female.png", 222, 205, 0, 34, 47, 20, 14, 72, 72, UNITMAP_ELVES_ELVES1);
+addMapEntry("units/elves-wood/archer.png", 46, 112, 0, 35, 47, 20, 14, 72, 72, UNITMAP_ELVES_ELVES1);
+addMapEntry("units/elves-wood/avenger+female.png", 180, 157, 0, 46, 48, 16, 12, 72, 72, UNITMAP_ELVES_ELVES1);
+addMapEntry("units/elves-wood/avenger.png", 180, 109, 0, 46, 48, 16, 12, 72, 72, UNITMAP_ELVES_ELVES1);
+addMapEntry("units/elves-wood/druid.png", 46, 159, 0, 34, 46, 19, 18, 72, 72, UNITMAP_ELVES_ELVES1);
+addMapEntry("units/elves-wood/fighter.png", 210, 56, 0, 35, 48, 18, 13, 72, 72, UNITMAP_ELVES_ELVES1);
+addMapEntry("units/elves-wood/marksman+female.png", 138, 56, 0, 36, 49, 18, 12, 72, 72, UNITMAP_ELVES_ELVES1);
+addMapEntry("units/elves-wood/marksman.png", 174, 56, 0, 36, 49, 18, 12, 72, 72, UNITMAP_ELVES_ELVES1);
+addMapEntry("units/elves-wood/outrider-moving.png", 46, 0, 0, 46, 56, 11, 7, 72, 72, UNITMAP_ELVES_ELVES1);
+addMapEntry("units/elves-wood/outrider.png", 46, 56, 0, 45, 56, 12, 7, 72, 72, UNITMAP_ELVES_ELVES1);
+addMapEntry("units/elves-wood/ranger+female.png", 180, 205, 0, 42, 48, 16, 13, 72, 72, UNITMAP_ELVES_ELVES1);
+addMapEntry("units/elves-wood/ranger.png", 91, 163, 0, 42, 48, 16, 13, 72, 72, UNITMAP_ELVES_ELVES1);
+addMapEntry("units/elves-wood/rider-moving.png", 0, 0, 0, 46, 56, 11, 8, 72, 72, UNITMAP_ELVES_ELVES1);
+addMapEntry("units/elves-wood/rider.png", 137, 109, 0, 43, 56, 13, 7, 72, 72, UNITMAP_ELVES_ELVES1);
+addMapEntry("units/elves-wood/scout-moving.png", 91, 109, 0, 46, 54, 10, 10, 72, 72, UNITMAP_ELVES_ELVES1);
+addMapEntry("units/elves-wood/scout.png", 137, 165, 0, 40, 52, 15, 10, 72, 72, UNITMAP_ELVES_ELVES1);
+addMapEntry("units/elves-wood/shaman.png", 226, 157, 0, 26, 42, 25, 19, 72, 72, UNITMAP_ELVES_ELVES1);
+addMapEntry("units/elves-wood/shyde.png", 91, 56, 0, 47, 53, 7, 13, 72, 72, UNITMAP_ELVES_ELVES1);

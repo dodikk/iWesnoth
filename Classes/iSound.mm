@@ -256,7 +256,9 @@ void iSound::playSound(const std::string& filename, int channel)
 	checkChannelSize(channel);
 	
 	pthread_mutex_lock(&mutex);
-	
+
+	// KP: we no longer stop the old sound, let it mix!
+/*	
 	if (mPlayingSound[channel] != nil)
 	{
 		if ([mPlayingSound[channel] isPlaying])
@@ -264,6 +266,7 @@ void iSound::playSound(const std::string& filename, int channel)
 		[mPlayingSound[channel] release];
 		mPlayingSound[channel] = nil;
 	}
+*/
 	
 	NSString *soundFilePath;
 	

@@ -46,7 +46,9 @@ class loadscreen {
 			if (logo_texture_)
 			{
 				//SDL_DestroyTexture(logo_texture_);
-				renderQueueDeleteTexture(logo_texture_);
+				//renderQueueDeleteTexture(logo_texture_);
+				glDeleteTextures(1, &logo_texture_);
+				logo_texture_ = 0;
 				std::cerr << "Loadscreen: freed loadscreen texture...\n";
 			}
 		}

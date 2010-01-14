@@ -30,6 +30,7 @@
 #include "gamestatus.hpp"
 #include "sound.hpp"
 
+#include "UnitTextureAtlas.h"
 
 
 #define ERR_DP LOG_STREAM(err, display)
@@ -117,7 +118,7 @@ game_display::game_display(unit_map& units, CVideo& video, const gamemap& map,
 		flags_.back().start_animation(rand()%flags_.back().get_end_time(), true);
 	}
 	image::set_team_colors(&side_colors);
-	clear_screen();
+//	clear_screen();
 }
 
 game_display* game_display::create_dummy_display(CVideo& video)
@@ -335,7 +336,14 @@ void game_display::draw_hex(const map_location& loc)
 		}
 		// village-control flags.
 		//drawing_buffer_add(LAYER_TERRAIN_BG, loc, tblit(xpos, ypos, get_flag(loc)));
-		drawing_buffer_add(LAYER_UNIT_FG, loc, tblit(xpos, ypos, get_flag(loc)));
+		
+		textureAtlasInfo tinfo = get_flag(loc);
+		if (tinfo.mapId != 0)
+		{
+			drawing_buffer_add(LAYER_UNIT_FG, loc, tblit(xpos, ypos, tinfo));
+		}
+		
+		
 	}
 
 	// Draw the time-of-day mask on top of the terrain in the hex.
@@ -749,12 +757,17 @@ std::vector<textureAtlasInfo> game_display::footsteps_images(const map_location&
 	return res;
 }
 
-surface game_display::get_flag(const map_location& loc)
+//surface game_display::get_flag(const map_location& loc)
+textureAtlasInfo game_display::get_flag(const map_location& loc)
 {
+	textureAtlasInfo tinfo;
+	tinfo.mapId = 0;
+
 	t_translation::t_terrain terrain = get_map().get_terrain(loc);
 
 	if(!get_map().is_village(terrain)) {
-		return surface(NULL);
+		//return surface(NULL);
+		return tinfo;
 	}
 
 	for(size_t i = 0; i != teams_.size(); ++i) {
@@ -764,11 +777,14 @@ surface game_display::get_flag(const map_location& loc)
 			flags_[i].update_last_draw_time();
 			image::locator image_flag = preferences::animate_map() ?
 				flags_[i].get_current_frame() : flags_[i].get_first_frame();
-			return image::get_image(image_flag, image::SCALED_TO_HEX);
+			//return image::get_image(image_flag, image::SCALED_TO_HEX);
+			getUnitTextureAtlasInfo(image_flag.get_filename(), image_flag.get_modifications(), tinfo);
+			return tinfo;
 		}
 	}
 
-	return surface(NULL);
+	//return surface(NULL);
+	return tinfo;
 }
 
 void game_display::highlight_reach(const paths &paths_list)

@@ -1154,7 +1154,11 @@ campaign_preview_pane::campaign_preview_pane(CVideo &video,std::vector<std::pair
 {
 // size of the campaign info window with the campaign description and image in pixel
 #if defined(USE_TINY_GUI)
+  #ifdef FREE_VERSION	
+	set_measurements(230, 157);
+  #else
 	set_measurements(180, 234);
+  #endif
 #else
 	set_measurements(430, 440);
 #endif

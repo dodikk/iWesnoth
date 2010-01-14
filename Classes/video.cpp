@@ -1185,6 +1185,7 @@ void free_all_caches(void)
 	freeUnitTextureAtlas();
 	image::flush_cache();
 	font::clear_text_caches();
+	shared_cleanup();
 	memory_stats("After cache free");
 }
 

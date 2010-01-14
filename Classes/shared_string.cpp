@@ -258,3 +258,21 @@ size_t shared_count(const std::string &str)
 	return fnd->second->count;
 }
 
+void shared_cleanup(void)
+{
+#ifdef DONT_CLEAR_STRINGS
+	ITERATOR fnd;
+	for(fnd = gStringPool().begin(); fnd != gStringPool().end(); )
+	{
+		if (fnd->second->count <= 0 && fnd->second != gNullData)
+		{
+			string_node *dataPtr = fnd->second;
+			gStringPool().erase(fnd++);
+			delete dataPtr;
+		}
+		else
+			++fnd;
+	}
+#endif // DONT_CLEAR_STRINGS
+}
+
