@@ -27,6 +27,8 @@ class unit_map;
 #include <utility>
 #include <set>
 
+#include "achievements.h"
+
 namespace preferences {
 
 	struct manager
@@ -234,6 +236,14 @@ namespace preferences {
 	void encounter_recallable_units(game_state& gamestate);
 	// Add all terrains on the map as encountered terrains.
 	void encounter_map_terrain(gamemap& map);
+	
+	
+	bool achievement_earned(int achievement);
+	void achievement_add(int achievement);
+	void set_player_side(int side);
+	int get_player_side();
+	void add_kill();
+	void reset_turn_kills();
 }
 
 #endif

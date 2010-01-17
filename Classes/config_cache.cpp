@@ -38,6 +38,16 @@
 #define LOG_CACHE std::cerr //LOG_STREAM(info, cache)
 #define DBG_CACHE std::cerr //LOG_STREAM(debug, cache)
 
+
+extern "C" {
+	void* dlmalloc(size_t size);
+	void* dlcalloc(size_t count, size_t size);
+	void* dlvalloc(size_t size);
+	void* dlmemalign(size_t alignment, size_t size);
+	void* dlrealloc(void* ptr, size_t size);
+	void dlfree(void* ptr);
+};
+
 namespace game_config {
 
 	config_cache& config_cache::instance()
@@ -616,7 +626,8 @@ void cacheLoadString(MEMFILE *file, char **charPtr, unsigned long *strSize)
  *	@param filename - the name of the compressed file to load
  *  @return unsigned char * - pointer to uncompressed data
  *
- *  NOTE: make sure to free() the returned pointer!
+ *  NOTE: it uses dlmalloc to get memory, avoiding increasing the tcmalloc pool, which is never released to the OS
+ *  NOTE: make sure to dlfree() the returned pointer!
  */
 unsigned char *cacheUncompress(std::string &filename)
 {
@@ -632,8 +643,8 @@ unsigned char *cacheUncompress(std::string &filename)
 	fread(&compressedSize, sizeof(compressedSize), 1, infile);
 	
 	// uncompress the data
-	unsigned char *compressedData = (unsigned char *) malloc(compressedSize);
-	unsigned char *originalData = (unsigned char *) malloc(originalSize);
+	unsigned char *compressedData = (unsigned char *) dlmalloc(compressedSize);
+	unsigned char *originalData = (unsigned char *) dlmalloc(originalSize);
 	assert(compressedData);
 	assert(originalData);
 	fread(compressedData, compressedSize, 1, infile);
@@ -642,7 +653,7 @@ unsigned char *cacheUncompress(std::string &filename)
 	int z_result = uncompress(originalData, &originalSize, compressedData, compressedSize);
 	assert(z_result == Z_OK);
 	
-	free(compressedData);
+	dlfree(compressedData);
 	return originalData;
 }
 

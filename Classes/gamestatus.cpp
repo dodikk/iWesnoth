@@ -985,7 +985,6 @@ static config& save_index()
 		}
 		// KP: clear all "map_data" values, for next save
 		save_index_cfg.recursive_clear_value("map_data");
-
 		save_index_loaded = true;
 	}
 

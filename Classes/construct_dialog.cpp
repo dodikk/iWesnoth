@@ -684,6 +684,11 @@ dialog::dimension_measurements dialog::layout(int xloc, int yloc)
 		dim.image_y = dim.y - image_height;
 		if (dim.x < 0)
 			dim.x = 0;
+		else
+		{
+			dim.image_x = dim.x + left_padding;
+			dim.image_y = dim.y + top_padding;
+		}
 	}
 
 	//set the position of any tick boxes. by default, they go right below the menu,

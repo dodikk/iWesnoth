@@ -69,7 +69,6 @@ static const size_t kNumClasses = 61;
 // should not hurt to make this list somewhat big because the
 // scavenging code will shrink it down when its contents are not in use.
 static const int kMaxDynamicFreeListLength = 8192;
-//static const int kMaxDynamicFreeListLength = 256;
 
 static const Length kMaxValidPages = (~static_cast<Length>(0)) >> kPageShift;
 

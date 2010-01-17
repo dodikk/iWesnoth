@@ -618,6 +618,7 @@ void save_sample_rate(const unsigned int rate)
 	// If audio is open, we have to re set sample rate
 	sound::reset_sound();
 }
+	
 
 } // end namespace preferences
 

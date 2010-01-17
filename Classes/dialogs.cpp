@@ -696,8 +696,8 @@ std::string load_game_dialog(display& disp, const config& game_config, bool* sho
 	lmenu.add_pane(&save_preview);
 	// create an option for whether the replay should be shown or not
 	if(show_replay != NULL) {
-		lmenu.add_option(_("Show replay"), false,
-			game_config::small_gui ? gui::dialog::BUTTON_CHECKBOX : gui::dialog::BUTTON_STANDARD);
+//		lmenu.add_option(_("Show replay"), false,
+//			game_config::small_gui ? gui::dialog::BUTTON_CHECKBOX : gui::dialog::BUTTON_STANDARD);
 	}
 #ifndef __IPHONEOS__
 	if(cancel_orders != NULL) {

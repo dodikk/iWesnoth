@@ -34,6 +34,8 @@
 #include "events.hpp"
 #include "loadscreen.hpp"
 
+#include "memory_wrapper.h"
+
 #define ERR_NG LOG_STREAM(err, engine)
 #define LOG_NG LOG_STREAM(info, engine)
 
@@ -661,6 +663,9 @@ void playsingle_controller::before_human_turn(bool save)
 	gui_->recalculate_minimap();
 	gui_->invalidate_all();
 	gui_->draw(true,true);
+	
+	draw_wait_cursor();
+	free_all_caches();
 
 	if (save) {
 		menu_handler_.autosave(gamestate_.label, status_.turn(), gamestate_.starting_pos);
@@ -669,6 +674,28 @@ void playsingle_controller::before_human_turn(bool save)
 	if(preferences::turn_bell()) {
 		sound::play_bell(game_config::sounds::turn_bell);
 	}
+	
+	// KP: achievement stuff
+	preferences::set_player_side(player_number_);
+	preferences::reset_turn_kills();
+	
+	
+	int gold = teams_manager::get_teams()[player_number_ - 1].gold();
+	if (gold >= 500)
+		earn_achievement(ACHIEVEMENT_MONEY_HOARDER);
+	else if (gold >= 300)
+		earn_achievement(ACHIEVEMENT_PENNY_PINCHER);
+	
+	int units = 0;
+	for (unit_map::const_iterator it = units_.begin(); it != units_.end(); it++)
+	{
+		if ((*it).second.side() == player_number_)
+			units++;
+	}
+	if (units >= 30)
+		earn_achievement(ACHIEVEMENT_GREAT_GENERAL);
+	else if (units >= 20)
+		earn_achievement(ACHIEVEMENT_PROFICIENT_COMMANDER);
 }
 
 void playsingle_controller::show_turn_dialog(){
@@ -726,7 +753,7 @@ struct set_completion
 	const std::string completion_;
 };
 
-void playsingle_controller::linger(upload_log& log)
+void playsingle_controller::linger(upload_log& log, LEVEL_RESULT res)
 {
 	LOG_NG << "beginning end-of-scenario linger\n";
 	browse_ = true;
@@ -745,11 +772,25 @@ void playsingle_controller::linger(upload_log& log)
 	gui_->get_theme().refresh_title2(std::string("button-endturn"), std::string("title2"));
 	gui_->invalidate_theme();
 	gui_->redraw_everything();
-
+	
 	// End all unit moves
 	for (unit_map::iterator u = units_.begin(); u != units_.end(); u++) {
 		u->second.set_user_end_turn(true);
 	}
+	
+	
+	// KP: check mission achievements here
+	int early = status_.number_of_turns() - status_.turn();
+	if (res == VICTORY && early >= 10)
+	{
+		earn_achievement(ACHIEVEMENT_DIVINE_BLESSING);
+	}
+	if (res == VICTORY && early >= 15)
+	{
+		earn_achievement(ACHIEVEMENT_LIGHTNING_QUICK_BLADES);
+	}
+	
+	
 	try {
 		// Same logic as single-player human turn, but
 		// *not* the same as multiplayer human turn.
@@ -806,6 +847,8 @@ void playsingle_controller::after_human_turn(){
 
 	gui_->set_route(NULL);
 	gui_->unhighlight_reach();
+	
+	preferences::reset_turn_kills();
 }
 
 void playsingle_controller::play_ai_turn(){

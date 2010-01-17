@@ -129,7 +129,7 @@ namespace {
 
 class game_controller
 {
-public:
+public:	
 	game_controller(int argc, char** argv);
 	~game_controller();
 
@@ -1718,7 +1718,32 @@ void game_controller::launch_game(RELOAD_GAME_DATA reload)
 		// don't show The End for multiplayer scenario
 		// change this if MP campaigns are implemented
 		if(result == VICTORY && (state_.campaign_type.empty() || state_.campaign_type != "multiplayer")) {
+			// KP: achievements @TODO: we can't display the in-game dialog at this point, but OpenFeint will still pop up...
+			if (state_.campaign_type == "tutorial")
+			{
+				earn_achievement(ACHIEVEMENT_RECRUIT_OF_WESNOTH, false);
+			}
+			else
+			{
+				if (state_.difficulty == "EASY")
+				{
+					earn_achievement(ACHIEVEMENT_DEFENDER_OF_WESNOTH, false);
+				}
+				else if (state_.difficulty == "NORMAL")
+				{
+					earn_achievement(ACHIEVEMENT_HERO_OF_WESNOTH, false);
+				}
+				else
+				{
+					earn_achievement(ACHIEVEMENT_CHAMPION_OF_WESNOTH, false);
+				}
+			}
+			
+			
 			the_end(disp(), state_.end_text, state_.end_text_duration);
+			
+
+			
 //			about::show_about(disp(),state_.campaign);
 		}
 	} catch(game::load_game_exception& e) {

@@ -345,8 +345,8 @@ preferences_dialog::preferences_dialog(display& disp, const config& game_cfg)
 	show_ai_moves_button_.set_check(!show_ai_moves());
 	show_ai_moves_button_.set_help_string(_("Do not animate AI units moving"));
 
-	save_replays_button_.set_check(save_replays());
-	save_replays_button_.set_help_string(_("Save Replay on SP/MP Victory or MP Defeat"));
+//	save_replays_button_.set_check(save_replays());
+//	save_replays_button_.set_help_string(_("Save Replay on SP/MP Victory or MP Defeat"));
 
 	delete_saves_button_.set_check(delete_saves());
 	delete_saves_button_.set_help_string(_("Delete Auto-Saves on SP/MP Victory or MP Defeat"));
@@ -427,7 +427,7 @@ handler_vector preferences_dialog::handler_members()
 	h.push_back(&turbo_button_);
 	h.push_back(&idle_anim_button_);
 	h.push_back(&show_ai_moves_button_);
-	h.push_back(&save_replays_button_);
+//	h.push_back(&save_replays_button_);
 	h.push_back(&delete_saves_button_);
 	h.push_back(&show_grid_button_);
 	h.push_back(&sort_list_by_group_button_);
@@ -526,8 +526,8 @@ void preferences_dialog::update_location(SDL_Rect const &rect)
 	ypos += short_interline; turn_dialog_button_.set_location(rect.x, ypos);
 	ypos += item_interline; show_team_colours_button_.set_location(rect.x, ypos);
 	ypos += short_interline; show_grid_button_.set_location(rect.x, ypos);
-	ypos += item_interline; save_replays_button_.set_location(rect.x, ypos);
-	ypos += short_interline; delete_saves_button_.set_location(rect.x, ypos);
+//	ypos += item_interline; save_replays_button_.set_location(rect.x, ypos);
+	ypos += item_interline; delete_saves_button_.set_location(rect.x, ypos);
 	ypos += short_interline; autosavemax_slider_label_.set_location(rect.x, ypos+5);
 	SDL_Rect autosavemax_rect = { rect.x + 90, ypos,
 	rect.w - 90 - right_border, 0};
@@ -552,8 +552,8 @@ void preferences_dialog::update_location(SDL_Rect const &rect)
 	ypos += short_interline; turn_dialog_button_.set_location(rect.x, ypos);
 	ypos += item_interline; show_team_colours_button_.set_location(rect.x, ypos);
 	ypos += short_interline; show_grid_button_.set_location(rect.x, ypos);
-	ypos += item_interline; save_replays_button_.set_location(rect.x, ypos);
-	ypos += short_interline; delete_saves_button_.set_location(rect.x, ypos);
+//	ypos += item_interline; save_replays_button_.set_location(rect.x, ypos);
+	ypos += item_interline; delete_saves_button_.set_location(rect.x, ypos);
 	ypos += short_interline; autosavemax_slider_label_.set_location(rect.x, ypos);
 	SDL_Rect autosavemax_rect = { rect.x, ypos+short_interline,
 				  rect.w - right_border, 0};
@@ -709,8 +709,8 @@ void preferences_dialog::process_event()
 			set_show_ai_moves(!show_ai_moves_button_.checked());
 		if (show_grid_button_.pressed())
 			set_grid(show_grid_button_.checked());
-		if (save_replays_button_.pressed())
-			set_save_replays(save_replays_button_.checked());
+//		if (save_replays_button_.pressed())
+//			set_save_replays(save_replays_button_.checked());
 		if (delete_saves_button_.pressed())
 			set_delete_saves(delete_saves_button_.checked());
 		if (turn_dialog_button_.pressed())
@@ -1075,7 +1075,7 @@ void preferences_dialog::set_selection(int index)
 	hotkeys_button_.hide(hide_general);
 	show_team_colours_button_.hide(hide_general);
 	show_grid_button_.hide(hide_general);
-	save_replays_button_.hide(hide_general);
+//	save_replays_button_.hide(hide_general);
 	delete_saves_button_.hide(hide_general);
 	autosavemax_slider_label_.hide(hide_general);
 	autosavemax_slider_label_.enable(!hide_general);

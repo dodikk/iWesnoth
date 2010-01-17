@@ -277,9 +277,9 @@ void renderQueueRender(void)
 						// do all of some color together (minimize glColor4f calls too)
 						for (int k=j; k < mTextureQueue.size(); k++)
 						{
-							if (mTextureQueue[k].type == QUEUE_TYPE_FILL && mTextureQueue[k].textCoords[0] == color1 && mTextureQueue[k].textCoords[1] == color2 && mTextureQueue[k].textCoords[2] == color3 && mTextureQueue[k].textCoords[3] == color4)
+							if (mTextureQueue[k].type == QUEUE_TYPE_FILL && mTextureQueue[k].texCoords[0] == color1 && mTextureQueue[k].texCoords[1] == color2 && mTextureQueue[k].texCoords[2] == color3 && mTextureQueue[k].texCoords[3] == color4)
 							{
-								glVertexPointer(2, GL_SHORT, 0, mTextureQueue[j].vertices);
+								glVertexPointer(2, GL_SHORT, 0, mTextureQueue[k].vertices);
 								glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 						
 								mTextureQueue[k].type = QUEUE_TYPE_DONE;

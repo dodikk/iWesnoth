@@ -36,6 +36,10 @@ bool haloes = true;
 
 std::set<shared_string> encountered_units_set;
 std::set<t_translation::t_terrain> encountered_terrains_set;
+std::set<std::string> achievements_set;
+int player_side;
+int turn_kills;
+int total_kills;
 
 std::map<std::string, std::vector<std::string> > history_map;
 const unsigned max_history_saved = 50;
@@ -67,6 +71,13 @@ manager::manager() :
 	const std::vector<std::string> v = utils::split(preferences::get("encountered_units"));
 	std::copy(v.begin(), v.end(),
 			std::inserter(encountered_units_set, encountered_units_set.begin()));
+	
+	const std::vector<std::string> a = utils::split(preferences::get("achievements"));
+	std::copy(a.begin(), a.end(),
+			  std::inserter(achievements_set, achievements_set.begin()));
+	total_kills = lexical_cast_default<unsigned int>(preferences::get("kills"), 0);
+	turn_kills = 0;
+	player_side = 0;
 
 	const t_translation::t_list terrain =
 			t_translation::read_list(preferences::get("encountered_terrain_list"));
@@ -109,6 +120,13 @@ manager::~manager()
 	std::vector<std::string> v;
 	std::copy(encountered_units_set.begin(), encountered_units_set.end(), std::back_inserter(v));
 	preferences::set("encountered_units", utils::join(v));
+	
+	// KP: added for saving achievements
+	std::vector<std::string> a;
+	std::copy(achievements_set.begin(), achievements_set.end(), std::back_inserter(a));
+	preferences::set("achievements", utils::join(a));
+	preferences::set("kills", lexical_cast<std::string>(total_kills));
+	
 	t_translation::t_list terrain;
 	std::copy(encountered_terrains_set.begin(), encountered_terrains_set.end(),
 			  std::back_inserter(terrain));
@@ -139,6 +157,9 @@ manager::~manager()
 
 	history_map.clear();
 	encountered_units_set.clear();
+	achievements_set.clear();
+	total_kills = 0;
+	turn_kills = 0;
 	encountered_terrains_set.clear();
 	set_ping_timeout(network::ping_timeout);
 }
@@ -360,10 +381,12 @@ std::string login()
 		//}
 		
 		NSString *nsName = [[UIDevice currentDevice] name];
-		std::string res2 = [nsName cStringUsingEncoding:[NSString defaultCStringEncoding]];
+		if (!nsName)
+			return ("Player");
+		std::string res2 = [nsName cStringUsingEncoding:NSASCIIStringEncoding];
 
 		if(res2.empty()) {
-			return _("player");
+			return _("Player");
 		}
 		return res2;
 	}
@@ -641,7 +664,9 @@ void set_save_replays(bool value)
 
 bool save_replays()
 {
-	return utils::string_bool(preferences::get("save_replays"), false);
+	// KP: no saving replays on iPhone
+	//return utils::string_bool(preferences::get("save_replays"), false);
+	return false;
 }
 
 void set_delete_saves(bool value)
@@ -826,7 +851,7 @@ std::set<shared_string> &encountered_units() {
 std::set<t_translation::t_terrain> &encountered_terrains() {
 	return encountered_terrains_set;
 }
-
+	
 std::string custom_command() {
 	return preferences::get("custom_command");
 }
@@ -905,4 +930,65 @@ void encounter_map_terrain(gamemap& map){
 	}
 }
 
+	
+// KP: checks if the achievement has been earned already
+bool achievement_earned(int achievement)
+{
+	if (achievements_set.find(achievement_name(achievement)) != achievements_set.end())
+		return true;
+	
+	return false;
+}
+
+// KP: records the achievement
+void achievement_add(int achievement)
+{
+	achievements_set.insert(achievement_name(achievement));
+	
+	// keep prefs up to date
+	std::vector<std::string> a;
+	std::copy(achievements_set.begin(), achievements_set.end(), std::back_inserter(a));
+	preferences::set("achievements", utils::join(a));
+	preferences::set("kills", lexical_cast<std::string>(total_kills));
+	preferences::write_preferences();
+}
+
+void add_kill()
+{
+	total_kills++;
+	if (total_kills >= 1000 && !achievement_earned(ACHIEVEMENT_BATTLE_MASTER))
+		earn_achievement(ACHIEVEMENT_BATTLE_MASTER);
+	else if (total_kills >= 500 && !achievement_earned(ACHIEVEMENT_BONE_CRUSHER))
+		earn_achievement(ACHIEVEMENT_BONE_CRUSHER);
+	else if (total_kills >= 100 && !achievement_earned(ACHIEVEMENT_PREDATOR))
+		earn_achievement(ACHIEVEMENT_PREDATOR);
+	else if (total_kills >= 50 && !achievement_earned(ACHIEVEMENT_SLAYER))
+		earn_achievement(ACHIEVEMENT_SLAYER);
+	else if (total_kills >= 25 && !achievement_earned(ACHIEVEMENT_BLOODIED))
+		earn_achievement(ACHIEVEMENT_BLOODIED);
+		
+	turn_kills++;
+	if (turn_kills >= 5 && !achievement_earned(ACHIEVEMENT_RAMPAGE))
+		earn_achievement(ACHIEVEMENT_RAMPAGE);
+	else if (turn_kills >= 3 && !achievement_earned(ACHIEVEMENT_BESERK))
+		earn_achievement(ACHIEVEMENT_BESERK);
+	
+}
+	
+void reset_turn_kills()
+{
+	turn_kills = 0;
+}
+	
+void set_player_side(int side)
+{
+	player_side = side;
+}
+
+int get_player_side()
+{
+	return player_side;
+}
+
+	
 } // preferences namespace

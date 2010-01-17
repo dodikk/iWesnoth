@@ -212,7 +212,7 @@ void PageHeap::Delete(Span* span) {
     Event(span, 'L', len);
   }
   Span* next = GetDescriptor(p+n);
-  if (next != NULL && next->location != Span::IN_USE) {
+  if (next != NULL && next->location != Span::IN_USE) {		// KP: crashes on this line???
     // Merge next span into this span
     ASSERT(next->start == p+n);
     const Length len = next->length;

@@ -1147,6 +1147,10 @@ attack::attack(game_display& gui, const gamemap& map,
 			}
 
 			if(dies) { // attacker kills defender
+				// KP: add kills for player
+				if (a_.get_unit().side() == preferences::get_player_side())
+					preferences::add_kill();
+				
 				a_.xp_ = game_config::kill_experience * d_.get_unit().level();
 				if(d_.get_unit().level() == 0)
 					a_.xp_ = game_config::kill_experience / 2;
@@ -1416,6 +1420,9 @@ attack::attack(game_display& gui, const gamemap& map,
 			}
 
 			if(dies) { // defender kills attacker
+				if (d_.get_unit().side() == preferences::get_player_side())
+					preferences::add_kill();
+
 				d_.xp_ = game_config::kill_experience * a_.get_unit().level();
 				if(a_.get_unit().level() == 0)
 					d_.xp_ = game_config::kill_experience / 2;
@@ -1897,6 +1904,19 @@ void advance_unit(unit_map& units,
 	units.replace(loc, new_unit);
 	LOG_NG << "firing post_advance event at " << loc << "\n";
 	game_events::fire("post_advance",loc);
+	
+	// KP: check for achievements
+	if (new_unit.side() == preferences::get_player_side())
+	{
+		if (new_unit.level() == 4)
+			earn_achievement(ACHIEVEMENT_HEROIC_UNIT);
+		else if (new_unit.level() == 3)
+			earn_achievement(ACHIEVEMENT_VETERAN_UNIT);
+		if (new_unit.can_recruit() && new_unit.name() != "Galas")	// IftU part 2 advances you for free right at the start...
+			earn_achievement(ACHIEVEMENT_FEARLESS_LEADER);
+	}
+		
+		
 }
 
 void check_victory(unit_map& units, std::vector<team>& teams, display& disp)

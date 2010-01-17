@@ -84,7 +84,7 @@ void CentralFreeList::ReleaseToSpans(void* object) {
   }
 
   counter_++;
-  span->refcount--;
+  span->refcount--;	// KP: tends to crash here????
   if (span->refcount == 0) {
     Event(span, '#', 0);
     counter_ -= ((span->length<<kPageShift) /

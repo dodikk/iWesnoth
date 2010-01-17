@@ -18,27 +18,24 @@
 #include "OFAchievementService.h"
 #include "OFAchievement.h"
 
+#include "game_preferences.hpp"
 
-#define KILLS_25 @"112754"
-#define KILLS_50 @"112764"
-#define KILLS_100 @"112774"
-#define KILLS_500 @"112784"
-#define KILLS_1000 @"112794"
-#define RICH_ARMY @"112804"
-#define MONEY_HOARDER @"112814"
-#define VETERAN_UNIT @"112824"
-#define HEROIC_UNIT @"112844"
-#define FEARLESS_LEADER @"112904"
-#define RAMPAGE @"113334"
-#define DOMINATING @"113344"
-#define LARGE_ARMY @"113354"
-#define MASSIVE_ARMY @"113364"
-#define EFFICIENT_ARMY @"113374"
-#define PERFECT_STRATEGY @"113384"
-#define EDUCATED_PLAYER @"113394"
-#define VETERAN_PLAYER @"113404"
-#define HEROIC_PLAYER @"113414"
-#define CHAMPION_PLAYER @"113424" 
+#include "construct_dialog.hpp"
+#include "game_display.hpp"
+#include "stdio.h"
+
+std::string names[] = { "Bloodied", "Slayer", "Battle Master", "Bone Crusher", "Predator", "Penny Pincher", "Money Hoarder", "Veteran Unit",
+	"Heroic Unit", "Fearless Leader", "Beserk", "Rampage", "Proficient Commander", "Great General", "Divine Blessing", "Lightning Quick Blades",
+	"Recruit of Wesnoth", "Defender of Wesnoth", "Hero of Wesnoth", "Champion of Wesnoth"};
+
+NSString* ids[] = { @"112754", @"112764", @"112774", @"112784", @"112794", @"112804", @"112814", @"112824", @"112844", @"112904", @"113334",
+	@"113344", @"113354", @"113364", @"113374", @"113384", @"113394", @"113404", @"113414", @"113424"};
+
+std::string desc[] = { "Kill 25 enemy units", "Kill 50 enemy units", "Kill 100 enemy units", "Kill 500 enemy units", "Kill 1000 enemy units",
+"Collect 300 gold", "Collect 500 gold", "Level up a unit to level 3", "Level up a unit to level 4", "Level up your leader", "Kill 3 units in a turn",
+"Kill 5 units in a turn", "Control 20 units", "Control 30 units", "Finish a mission 10 turns early", "Finish a mission 15 turns early",
+"Complete the tutorial", "Complete a full campaign on easy difficulty", "Complete a full campaign on normal difficulty",
+"Complete a full campaign on hard difficulty"};
 
 bool gInitialized = false;
 
@@ -65,9 +62,36 @@ void of_dashboard(void)
 	[OpenFeint launchDashboard];
 }
 
-void earn_achievement(int achievement)
+std::string achievement_name(int achievement)
 {
-	[OFAchievementService unlockAchievement:KILLS_25];
+	return names[achievement];
 }
 
-
+void earn_achievement(int achievement, bool show_dlg)
+{
+	if (preferences::achievement_earned(achievement))
+		return;
+	
+	preferences::achievement_add(achievement);
+	
+	// display dialog
+	if (show_dlg == true)
+	{
+		char img_str[50];
+		sprintf(img_str, "data/core/images/achievements/%02d.png", achievement+1);
+		surface surf(image::get_image(img_str, image::UNSCALED, false));
+		std::string text, caption;
+		caption = "Achievement Unlocked: ";
+		caption += names[achievement];
+		//wml_event_dialog to_show(*screen,"",desc[achievement]);
+		gui::message_dialog dlg(*(game_display::get_singleton()), "", desc[achievement]);
+		if(!surf.null()) {
+			dlg.set_image(surf, caption);
+		}
+		dlg.layout();
+		dlg.show(300);
+	}
+	
+	// do OpenFeint stuff
+	[OFAchievementService unlockAchievement:ids[achievement]];
+}

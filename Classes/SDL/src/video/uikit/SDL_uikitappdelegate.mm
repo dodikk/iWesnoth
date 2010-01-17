@@ -47,10 +47,10 @@ int main(int argc, char **argv) {
 	if (argc < 2 || (argc >= 2 && strcmp(argv[1], "-valgrind") != 0)) 
 	{
 		// memory access checking
-		//execl(VALGRIND_PATH, VALGRIND_PATH, "--gen-suppressions=all", argv[0], "-valgrind", NULL);
+		execl(VALGRIND_PATH, VALGRIND_PATH, "--gen-suppressions=all", argv[0], "-valgrind", NULL);
 		
 		// memory profiling
-		execl(VALGRIND_PATH, VALGRIND_PATH, "--tool=massif", "--massif-out-file=/Users/kyle/wesnoth.massif", argv[0], "-valgrind", NULL);
+		//execl(VALGRIND_PATH, VALGRIND_PATH, "--tool=massif", "--massif-out-file=/Users/kyle/wesnoth.massif", argv[0], "-valgrind", NULL);
     }
 #endif
 	
@@ -156,9 +156,12 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application  
 {	
-//	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Low Memory" message:@"Detected low memory warning! Try resetting device to free more memory. Game will now exit..." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-//	[alert show];
-//	[alert release];
+	/*
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Low Memory" message:@"Detected low memory warning! Try restarting device to free more memory. Game will now exit..." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+	[alert show];
+	[alert release];
+	SDL_SendQuit();
+	 */
 }  
 
 -(void)dealloc {

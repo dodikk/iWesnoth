@@ -881,14 +881,17 @@ void convertSurfaceToFill(int x, int y, surface surf)
 	
 	
 	SDL_Rect outside = {x-1, y-1, w+2, h+2};
-	fill_rect(0xffffffff, &outside);
+	fill_rect(0xffffffff, &outside);	// white outline
 	outside.x++;
 	outside.y++;
 	outside.w -= 2;
-	outside.h -= 2;
-	fill_rect(0x505050, &outside);
-	SDL_Rect inside = {x, y+fillStart, w, h-fillStart};
-	fill_rect(fillColor, &inside);
+	outside.h = fillStart;
+	fill_rect(0x505050, &outside);		// unfilled area
+	if (fillColor != 0xff000000)				// (fix totally unfilled...)
+	{
+		SDL_Rect inside = {x, y+fillStart, w, h-fillStart};
+		fill_rect(fillColor, &inside);		// filled area
+	}
 }
 
 void draw_line(Uint32 color, int x1, int y1, int x2, int y2)

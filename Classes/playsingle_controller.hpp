@@ -60,7 +60,7 @@ public:
 	virtual void user_command_2();
 	virtual void user_command_3();
 #endif
-	void linger(upload_log& log);
+	void linger(upload_log& log, LEVEL_RESULT res);
 
 protected:
 	virtual void play_turn(bool no_save);

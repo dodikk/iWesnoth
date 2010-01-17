@@ -969,11 +969,6 @@
 		27454EC0108995FB0075BBD2 /* xml_wiarchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27454E82108995FB0075BBD2 /* xml_wiarchive.cpp */; };
 		27454EC1108995FB0075BBD2 /* xml_woarchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27454E83108995FB0075BBD2 /* xml_woarchive.cpp */; };
 		2759B24210D4E1310074F50A /* achievements.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2759B24110D4E1310074F50A /* achievements.mm */; };
-		2764949E10FDC9E9002EABBA /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 2764949910FDC9E9002EABBA /* fonts */; };
-		2764949F10FDC9E9002EABBA /* sounds in Resources */ = {isa = PBXBuildFile; fileRef = 2764949A10FDC9E9002EABBA /* sounds */; };
-		276494A010FDC9E9002EABBA /* data in Resources */ = {isa = PBXBuildFile; fileRef = 2764949B10FDC9E9002EABBA /* data */; };
-		276494A110FDC9E9002EABBA /* precache in Resources */ = {isa = PBXBuildFile; fileRef = 2764949C10FDC9E9002EABBA /* precache */; };
-		276494A210FDC9E9002EABBA /* images in Resources */ = {isa = PBXBuildFile; fileRef = 2764949D10FDC9E9002EABBA /* images */; };
 		2782D28D100DB08A00C5386D /* cdjpeg.c in Sources */ = {isa = PBXBuildFile; fileRef = 2782D24C100DB08A00C5386D /* cdjpeg.c */; };
 		2782D291100DB08A00C5386D /* jaricom.c in Sources */ = {isa = PBXBuildFile; fileRef = 2782D251100DB08A00C5386D /* jaricom.c */; };
 		2782D292100DB08A00C5386D /* jcapimin.c in Sources */ = {isa = PBXBuildFile; fileRef = 2782D252100DB08A00C5386D /* jcapimin.c */; };
@@ -2819,11 +2814,6 @@
 		27454F581089D5C20075BBD2 /* low_level_alloc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = low_level_alloc.h; sourceTree = "<group>"; };
 		2759B24010D4E1310074F50A /* achievements.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = achievements.h; path = Classes/achievements.h; sourceTree = "<group>"; };
 		2759B24110D4E1310074F50A /* achievements.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = achievements.mm; path = Classes/achievements.mm; sourceTree = "<group>"; };
-		2764949910FDC9E9002EABBA /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = fonts; path = res/fonts; sourceTree = "<group>"; };
-		2764949A10FDC9E9002EABBA /* sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; name = sounds; path = res/sounds; sourceTree = "<group>"; };
-		2764949B10FDC9E9002EABBA /* data */ = {isa = PBXFileReference; lastKnownFileType = folder; name = data; path = res/data; sourceTree = "<group>"; };
-		2764949C10FDC9E9002EABBA /* precache */ = {isa = PBXFileReference; lastKnownFileType = folder; name = precache; path = res/precache; sourceTree = "<group>"; };
-		2764949D10FDC9E9002EABBA /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = images; path = res/images; sourceTree = "<group>"; };
 		2782D24B100DB08A00C5386D /* cderror.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cderror.h; path = include/jpeglib/cderror.h; sourceTree = "<group>"; };
 		2782D24C100DB08A00C5386D /* cdjpeg.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = cdjpeg.c; path = include/jpeglib/cdjpeg.c; sourceTree = "<group>"; };
 		2782D24D100DB08A00C5386D /* cdjpeg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cdjpeg.h; path = include/jpeglib/cdjpeg.h; sourceTree = "<group>"; };
@@ -7563,11 +7553,6 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				2764949910FDC9E9002EABBA /* fonts */,
-				2764949A10FDC9E9002EABBA /* sounds */,
-				2764949B10FDC9E9002EABBA /* data */,
-				2764949C10FDC9E9002EABBA /* precache */,
-				2764949D10FDC9E9002EABBA /* images */,
 				FD77A07E0E26BDA900F39101 /* Default.png */,
 				FD77A07C0E26BD8C00F39101 /* Icon.png */,
 				8D1107310486CEB800E47090 /* Info.plist */,
@@ -7943,11 +7928,6 @@
 				2738F75B10E78EFC006BE9F2 /* OFDashboardTabNowPlayingLandscape.png in Resources */,
 				2738F75C10E78EFC006BE9F2 /* OFDashboardTabNowPlayingLandscapeHit.png in Resources */,
 				2738F7F010E78F99006BE9F2 /* openfeint_offline_config.xml in Resources */,
-				2764949E10FDC9E9002EABBA /* fonts in Resources */,
-				2764949F10FDC9E9002EABBA /* sounds in Resources */,
-				276494A010FDC9E9002EABBA /* data in Resources */,
-				276494A110FDC9E9002EABBA /* precache in Resources */,
-				276494A210FDC9E9002EABBA /* images in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

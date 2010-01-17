@@ -255,8 +255,19 @@ int twindow::show(const bool restore, void* /*flip_function*/)
 	invalidate_layout();
 	suspend_drawing_ = false;
 	
+	// KP: make sure we don't close by mistake
+	add_easy_close_blocker("waitasec");
+	unsigned long easy_time = SDL_GetTicks() + 500;
+	bool block = true;
+	
 	// Start our loop drawing will happen here as well.
 	for(status_ = SHOWING; status_ != REQUEST_CLOSE; ) {
+		if (block == true && SDL_GetTicks() >= easy_time)
+		{
+			remove_easy_close_blocker("waitasec");
+			block = false;
+		}
+		
 		// KP: always redraw options list
 		tlistbox* options = dynamic_cast<tlistbox*>(find_widget("input_list", true));
 		if (options && options->visible_ == VISIBLE)

@@ -150,7 +150,7 @@ static LEVEL_RESULT playsingle_scenario(const config& game_config,
 
 	if (!disp.video().faked() && res != QUIT && end_level->linger_mode)
 		try {
-			playcontroller.linger(log);
+			playcontroller.linger(log, res);
 		} catch(end_level_exception& e) {
 			if (e.result == QUIT) {
 				return QUIT;

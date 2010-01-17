@@ -100,9 +100,8 @@
 + (void)sendWithAchievement:(OFUnlockedAchievement*)achievement
 {
 	NSString* notificationText = [NSString 
-		stringWithFormat:@"I unlocked \"%@\" in \"%@\"!",
-		achievement.achievement.title,
-		[OpenFeint applicationShortDisplayName]];
+		stringWithFormat:@"I unlocked \"%@\" in \"Battle for Wesnoth\" for iPhone!",
+		achievement.achievement.title];
 
 	OFSocialNotification* notice = [[[OFSocialNotification alloc] 
 		initWithText:notificationText 
@@ -117,9 +116,9 @@
 + (void)sendWithAchievements:(OFPaginatedSeries*)page
 {
 	NSString* notificationText = [NSString 
-								  stringWithFormat:@"I unlocked %i achievements in \"%@\"!",
-								  [page count],
-								  [OpenFeint applicationShortDisplayName]];
+								  stringWithFormat:@"I unlocked %i achievements in \"Battle for Wesnoth\" for iPhone!",
+								  [page count]
+								  ];
 	
 	OFSocialNotification* notice = [[[OFSocialNotification alloc] 
 									 initWithText:notificationText 

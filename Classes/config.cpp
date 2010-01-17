@@ -34,7 +34,14 @@ extern "C" Uint32 SDL_GetTicks(void);
 #define ERR_CF LOG_STREAM(err, config)
 
 
-
+extern "C" {
+	void* dlmalloc(size_t size);
+	void* dlcalloc(size_t count, size_t size);
+	void* dlvalloc(size_t size);
+	void* dlmemalign(size_t alignment, size_t size);
+	void* dlrealloc(void* ptr, size_t size);
+	void dlfree(void* ptr);
+};
 
 config::config() : values(), children()//, ordered_children()
 {
@@ -890,7 +897,7 @@ void config::loadCache(std::string filename)
 		unsigned char *data = cacheUncompress(newFilename);
 		MEMFILE mf(data);
 		cacheLoadStringTable(&mf, loadBuffer);
-		free(data);
+		dlfree(data);
 	}
 	
 	{
@@ -898,7 +905,7 @@ void config::loadCache(std::string filename)
 		unsigned char *data = cacheUncompress(newFilename);
 		MEMFILE mf(data);	
 		loadCache(&mf, loadBuffer);
-		free(data);
+		dlfree(data);
 	}
 	
 	free(loadBuffer);

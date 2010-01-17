@@ -196,7 +196,7 @@ SDL_COMPILE_TIME_ASSERT(enum, sizeof(SDL_DUMMY_ENUM) == sizeof(int));
 extern "C" {
 /* *INDENT-ON* */
 #endif
-
+	
 #ifdef HAVE_MALLOC
 #define SDL_malloc	malloc
 #else

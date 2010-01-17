@@ -39,6 +39,15 @@
 #define ERR_NG LOG_STREAM(err, engine)
 #define DEBUG_NG LOG_STREAM(info, engine)
 
+extern "C" {
+	void* dlmalloc(size_t size);
+	void* dlcalloc(size_t count, size_t size);
+	void* dlvalloc(size_t size);
+	void* dlmemalign(size_t alignment, size_t size);
+	void* dlrealloc(void* ptr, size_t size);
+	void dlfree(void* ptr);
+};
+
 /** The tile width used when using basex and basey. This is not,
  * necessarily, the tile width in pixels, this is totally
  * arbitrary. However, it will be set to 72 for convenience.
@@ -506,26 +515,22 @@ void terrain_builder::replace_token(terrain_builder::building_rule &rule, const 
 	for(cons = rule.constraints.begin(); cons != rule.constraints.end(); ++cons) {
 		// Transforms attributes
 		//std::vector<std::string>::iterator flag;
+		/*
 		std::vector<shared_string>::iterator flag;
-//		if (cons->second.set_flag)
-//		{
 		for(flag = cons->second.set_flag.begin(); flag != cons->second.set_flag.end(); flag++) {
 			replace_token(*flag, token, replacement);
 		}
-//		}
-//		if (cons->second.no_flag)
-//		{
 		for(flag = cons->second.no_flag.begin(); flag != cons->second.no_flag.end(); flag++) {
 			replace_token(*flag, token, replacement);
 		}
-//		}
-//		if (cons->second.has_flag)
-//		{
 		for(flag = cons->second.has_flag.begin(); flag != cons->second.has_flag.end(); flag++) {
 			replace_token(*flag, token, replacement);
 		}
-//		}
-//		if (cons->second.images)
+		 */
+		std::vector<tc_flag>::iterator fit;
+		for (fit = cons->second.flags.begin(); fit != cons->second.flags.end(); fit++) {
+			replace_token((*fit).str, token, replacement);
+		}
 			replace_token(cons->second.images, token, replacement);
 	}
 
@@ -666,30 +671,46 @@ void terrain_builder::add_constraints(terrain_builder::constraint_set &constrain
 	std::vector<std::string> item_string = utils::split(cfg["set_flag"]);
 	if (item_string.size() > 0)
 	{
-//		if (!constraint.set_flag)
-//			constraint.set_flag = new std::vector<shared_string>;
-		constraint.set_flag.insert(constraint.set_flag.end(),
-			item_string.begin(), item_string.end());
+		//constraint.set_flag.insert(constraint.set_flag.end(),
+		//	item_string.begin(), item_string.end());
+		tc_flag tcf;
+		tcf.flag_type = FLAG_TYPE_SET;
+		for (int i=0; i < item_string.size(); i++)
+		{
+			tcf.str = item_string[i];
+			constraint.flags.push_back(tcf);
+		}
 	}
 
 	item_string = utils::split(cfg["has_flag"]);
 	if (item_string.size() > 0)
 	{
-//		if (!constraint.has_flag)
-//			constraint.has_flag = new std::vector<shared_string>;
-		constraint.has_flag.insert(constraint.has_flag.end(),
-			item_string.begin(), item_string.end());
+		//constraint.has_flag.insert(constraint.has_flag.end(),
+		//	item_string.begin(), item_string.end());
+		tc_flag tcf;
+		tcf.flag_type = FLAG_TYPE_HAS;
+		for (int i=0; i < item_string.size(); i++)
+		{
+			tcf.str = item_string[i];
+			constraint.flags.push_back(tcf);
+		}
+		
 	}
 	
 	item_string = utils::split(cfg["no_flag"]);
 	if (item_string.size() > 0)
 	{
-//		if (!constraint.no_flag)
-//			constraint.no_flag = new std::vector<shared_string>;
-		constraint.no_flag.insert(constraint.no_flag.end(),
-			item_string.begin(), item_string.end());
+		//constraint.no_flag.insert(constraint.no_flag.end(),
+		//	item_string.begin(), item_string.end());
+		tc_flag tcf;
+		tcf.flag_type = FLAG_TYPE_NO;
+		for (int i=0; i < item_string.size(); i++)
+		{
+			tcf.str = item_string[i];
+			constraint.flags.push_back(tcf);
+		}
+		
 	}
-//	if (constraint.images)
 		add_images_from_config(constraint.images, cfg, false);
 }
 
@@ -837,23 +858,29 @@ void terrain_builder::parse_config(const config &cfg)
 
 			if(global_set_flag.size())
 			{
-//				if (!constraint->second.set_flag)
-//					constraint->second.set_flag = new std::vector<shared_string>;
-				constraint->second.set_flag.push_back(global_set_flag);
+				//constraint->second.set_flag.push_back(global_set_flag);
+				tc_flag tcf;
+				tcf.flag_type = FLAG_TYPE_SET;
+				tcf.str = global_set_flag;
+				constraint->second.flags.push_back(tcf);
 			}
 
 			if(global_no_flag.size())
 			{
-//				if (!constraint->second.no_flag)
-//					constraint->second.no_flag = new std::vector<shared_string>;
-				constraint->second.no_flag.push_back(global_no_flag);
+				//constraint->second.no_flag.push_back(global_no_flag);
+				tc_flag tcf;
+				tcf.flag_type = FLAG_TYPE_NO;
+				tcf.str = global_no_flag;
+				constraint->second.flags.push_back(tcf);				
 			}
 
 			if(global_has_flag.size())
 			{
-//				if (!constraint->second.has_flag)
-//					constraint->second.has_flag = new std::vector<shared_string>;
-				constraint->second.has_flag.push_back(global_has_flag);
+				//constraint->second.has_flag.push_back(global_has_flag);
+				tc_flag tcf;
+				tcf.flag_type = FLAG_TYPE_HAS;
+				tcf.str = global_has_flag;
+				constraint->second.flags.push_back(tcf);				
 			}
 
 		}
@@ -964,10 +991,9 @@ bool terrain_builder::rule_matches(const terrain_builder::building_rule &rule,
 
 		const tile& btile = tile_map_[tloc];
 
+		/*
 		//std::vector<std::string>::const_iterator itor;
 		std::vector<shared_string>::const_iterator itor;
-//		if (cons->second.no_flag)
-//		{
 		for(itor = cons->second.no_flag.begin(); itor != cons->second.no_flag.end(); ++itor) {
 
 			// If a flag listed in "no_flag" is present, the rule does not match
@@ -975,9 +1001,6 @@ bool terrain_builder::rule_matches(const terrain_builder::building_rule &rule,
 				return false;
 			}
 		}
-//		}
-//		if (cons->second.has_flag)
-//		{
 		for(itor = cons->second.has_flag.begin(); itor != cons->second.has_flag.end(); ++itor) {
 
 			// If a flag listed in "has_flag" is not present, this rule does not match
@@ -985,7 +1008,25 @@ bool terrain_builder::rule_matches(const terrain_builder::building_rule &rule,
 				return false;
 			}
 		}
-//		}
+		 */
+		std::vector<tc_flag>::const_iterator itor;
+		for(itor = cons->second.flags.begin(); itor != cons->second.flags.end(); ++itor) 
+		{
+			if ((*itor).flag_type == FLAG_TYPE_NO)
+			{
+				// If a flag listed in "no_flag" is present, the rule does not match
+				if(btile.flags.find((*itor).str) != btile.flags.end()) {
+					return false;
+				}
+			}
+			else if ((*itor).flag_type == FLAG_TYPE_HAS)
+			{
+				// If a flag listed in "has_flag" is not present, this rule does not match
+				if(btile.flags.find((*itor).str) == btile.flags.end()) {
+					return false;
+				}
+			}
+		}		
 	}
 
 	return true;
@@ -1007,22 +1048,26 @@ void terrain_builder::apply_rule(const terrain_builder::building_rule &rule, con
 		// We want to order the images by layer first and base-y second,
 		// so we sort by layer*BASE_Y_INTERVAL + BASE_Y_INTERVAL/2 + basey
 		// Thus, allowed values for basey are from -50000 to 49999
-//		if (constraint->second.images)
-//		{
 		for(img = constraint->second.images.begin(); img != constraint->second.images.end(); ++img) {
 			btile.images.insert(std::pair<int, const rule_image*>(
 									img->layer*BASE_Y_INTERVAL + BASE_Y_INTERVAL/2 + img->basey, &*img));
 		}
-//		}
 
 		// Sets flags
-//		if (constraint->second.set_flag)
-//		{
+		/*
 		for(std::vector<shared_string>::const_iterator itor = constraint->second.set_flag.begin();
 				itor != constraint->second.set_flag.end(); itor++) {
 			btile.flags.insert(*itor);
 		}
-//		}
+		 */
+		for(std::vector<tc_flag>::const_iterator itor = constraint->second.flags.begin(); itor != constraint->second.flags.end(); itor++) 
+		{
+			if ((*itor).flag_type == FLAG_TYPE_SET)
+			{
+				btile.flags.insert((*itor).str);
+			}
+		}
+		
 
 	}
 }
@@ -1138,7 +1183,7 @@ void terrain_builder::loadCache(std::string filename)
 		unsigned char *data = cacheUncompress(newFilename);
 		MEMFILE mf(data);
 		cacheLoadStringTable(&mf, loadBuffer);
-		free(data);
+		dlfree(data);
 	}
 	
 	{
@@ -1146,7 +1191,7 @@ void terrain_builder::loadCache(std::string filename)
 		unsigned char *data = cacheUncompress(newFilename);
 		MEMFILE mf(data);
 		loadCache(&mf, loadBuffer);
-		free(data);
+		dlfree(data);
 	}
 
 	free(loadBuffer);

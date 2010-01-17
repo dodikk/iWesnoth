@@ -162,6 +162,7 @@ namespace preferences {
 
 	bool grid();
 	void _set_grid(bool ison);
+		
 } // end namespace preferences
 
 #endif

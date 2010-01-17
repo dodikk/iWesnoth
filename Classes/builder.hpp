@@ -228,11 +228,11 @@ public:
 		rule_image(int layer, int x, int y, bool global_image=false, int center_x=-1, int center_y=-1);
 
 		/** The layer of the image for horizontal layering */
-		int layer;
+		short layer;
 		/** The position of the image base (that is, the point where
 		 * the image reaches the floor) for vertical layering
 		 */
-		int basex, basey;
+		short basex, basey;
 
 		/** A list of Time-Of-Day-related variants for this image
 		 */
@@ -245,7 +245,7 @@ public:
 
 		/** The position where the center of the image base should be
 		 */
-		int center_x, center_y;
+		short center_x, center_y;
 		
 		// KP: added cache functions
 		rule_image() {};
@@ -312,6 +312,15 @@ public:
 	 */
 	typedef std::vector<rule_image> rule_imagelist;
 
+#define FLAG_TYPE_SET	0
+#define FLAG_TYPE_NO	1
+#define FLAG_TYPE_HAS	2
+	
+	struct tc_flag
+	{
+		unsigned char flag_type;
+		shared_string str;
+	};
 	
 	/**
 	 * The in-memory representation of a [tile] WML rule
@@ -322,26 +331,32 @@ public:
 		terrain_constraint() :
 			loc(),
 			terrain_types_match(),
-		set_flag(),
-		no_flag(),
-		has_flag(),
+		//set_flag(),
+		//no_flag(),
+		//has_flag(),
+		flags(NULL),
 		images()
 		{};
 
 		terrain_constraint(map_location loc) :
 			loc(loc),
 			terrain_types_match(),
-			set_flag(NULL),
-			no_flag(NULL),
-			has_flag(NULL),
+			//set_flag(NULL),
+			//no_flag(NULL),
+			//has_flag(NULL),
+			flags(NULL),
 			images(NULL)
 			{};
 		map_location loc;
 		t_translation::t_match terrain_types_match;
 
+		// combining these saves 24 bytes per terrain constraint, which certainly adds up...
+		/*
 		std::vector<shared_string> set_flag;
 		std::vector<shared_string> no_flag;
 		std::vector<shared_string> has_flag;
+		 */
+		std::vector<tc_flag> flags;
 		rule_imagelist images;
 		
 		
@@ -354,6 +369,7 @@ public:
 			terrain_types_match.saveCache(file);
 			
 			short size;
+			/*
 			size = set_flag.size();
 			fwrite(&size, sizeof(size), 1, file);
 			for (int i=0; i < size; i++)
@@ -374,6 +390,16 @@ public:
 			{
 				cacheSaveString(file, (has_flag)[i]);
 			}
+			 */
+
+			size = flags.size();
+			fwrite(&size, sizeof(size), 1, file);
+			for (int i=0; i < size; i++)
+			{
+				fwrite(&flags[i].flag_type, sizeof(flags[i].flag_type), 1, file);
+				cacheSaveString(file, flags[i].str);
+			}
+			
 			size = images.size();
 			fwrite(&size, sizeof(size), 1, file);
 			for (int i=0; i < size; i++)
@@ -391,7 +417,9 @@ public:
 			
 			char *str;
 			unsigned long strSize;
-
+			
+			
+			/*
 			mread(&size, sizeof(size), 1, file);
 			if (size > 0)
 			{
@@ -426,6 +454,22 @@ public:
 				cacheLoadString(file, &str, &strSize);
 				gTempStr.assign(str, strSize);
 				has_flag.push_back(gTempStr);
+			}
+			 */
+
+			mread(&size, sizeof(size), 1, file);
+			if (size > 0)
+			{
+				flags.reserve(size);
+			}
+			for (int i=0; i < size; i++)
+			{
+				tc_flag tcf;
+				mread(&tcf.flag_type, sizeof(tcf.flag_type), 1, file);
+				cacheLoadString(file, &str, &strSize);
+				tcf.str.assign(str, strSize);
+				
+				flags.push_back(tcf);
 			}
 			
 			mread(&size, sizeof(size), 1, file);
@@ -543,7 +587,7 @@ private:
 		 * are met. Defined if the "probability" parameter of the
 		 * [terrain_graphics] element is set.
 		 */
-		int probability;
+		short probability;
 
 		/**
 		 * The precedence of this rule. Used to order rules differently
@@ -551,7 +595,7 @@ private:
 		 * Defined if the "precedence" parameter of the
 		 * [terrain_graphics] element is set.
 		 */
-		int precedence;
+		short precedence;
 		
 		// KP: added cache functions
 		void saveCache(FILE *file) const
@@ -650,9 +694,9 @@ private:
 		/** The map */
 		std::vector<tile> tiles_;
 		/** The x dimension of the map */
-		int x_;
+		short x_;
 		/** The y dimension of the map */
-		int y_;
+		short y_;
 	};
 
 	/**

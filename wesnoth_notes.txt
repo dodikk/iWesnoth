@@ -790,3 +790,65 @@ If the fps improvement is significant, we can cut some music... like 1/2....
 terrain builder cache is 3mb, compressed down to 87k!!!
 Title screen, load game, back to title screen.... 9.3mb in use... but of course, we have loaded the full wml, which must be 8mb big!
 
+Finished loading level
+------------------------------------------------
+MALLOC:     19562496 (   18.7 MB) Heap size
+MALLOC:     15904632 (   15.2 MB) Bytes in use by application
+MALLOC:      2965504 (    2.8 MB) Bytes free in page heap
+MALLOC:       156672 (    0.1 MB) Bytes free in central cache
+MALLOC:            0 (    0.0 MB) Bytes free in transfer cache
+MALLOC:       535688 (    0.5 MB) Bytes free in thread caches
+MALLOC:         3521              Spans in use
+MALLOC:            1              Thread heaps in use
+MALLOC:       524288 (    0.5 MB) Metadata allocated
+------------------------------------------------
+
+- saved 1mb by optimizing builder cache data structures
+Turn 2: 23mb
+	3: 25mb
+	4: 26mb
+	
+------------
+There needs to be a way for tcmalloc to scavange at will:
+For example, after completing a level,
+
+After cache free
+------------------------------------------------
+MALLOC:     26902528 (   25.7 MB) Heap size
+MALLOC:     14694128 (   14.0 MB) Bytes in use by application
+MALLOC:      8912896 (    8.5 MB) Bytes free in page heap
+MALLOC:      2311928 (    2.2 MB) Bytes free in central cache
+MALLOC:        76800 (    0.1 MB) Bytes free in transfer cache
+MALLOC:       906776 (    0.9 MB) Bytes free in thread caches
+MALLOC:         4141              Spans in use
+MALLOC:            1              Thread heaps in use
+MALLOC:       524288 (    0.5 MB) Metadata allocated
+------------------------------------------------
+iPhone system memory used: 54927360 free: 7450624 total: 62377984
+initialized teams... 712
+loading units...3556
+initializing display... 3568
+TCMALLOC: alloc size 2785280 (Bytes); Total : 28 (Mb)
+iPhone system memory used: 55660544 free: 7012352 total: 62672896
+TCMALLOC: alloc size 131072 (Bytes); Total : 28 (Mb)
+iPhone system memory used: 55660544 free: 7012352 total: 62672896
+
+Took 5964 ms to read cached file /var/mobile/Applications/19B7E670-09FB-43B4-877F-CB6B7392B0B9/wesnoth.app/precache/terrain
+done initializing display... 12550
+initializing managers... 12550
+done initializing managers... 12559
+
+
+Finished loading level
+------------------------------------------------
+MALLOC:     29687808 (   28.3 MB) Heap size
+MALLOC:     20835832 (   19.9 MB) Bytes in use by application
+MALLOC:      8151040 (    7.8 MB) Bytes free in page heap
+MALLOC:       196976 (    0.2 MB) Bytes free in central cache
+MALLOC:            0 (    0.0 MB) Bytes free in transfer cache
+MALLOC:       503960 (    0.5 MB) Bytes free in thread caches
+MALLOC:         4456              Spans in use
+MALLOC:            1              Thread heaps in use
+MALLOC:       655360 (    0.6 MB) Metadata allocated
+------------------------------------------------
+
