@@ -50,6 +50,8 @@ bool friends_initialized = false;
 bool ignores_initialized = false;
 
 bool authenticated = false;
+	
+bool isMultiplayer = false;
 } // anon namespace
 
 namespace preferences {
@@ -987,8 +989,19 @@ void set_player_side(int side)
 
 int get_player_side()
 {
+	if (isMultiplayer)
+		return -1;
 	return player_side;
 }
 
+void set_multiplayer(bool isMult)
+{
+	isMultiplayer = isMult;
+}
+
+bool is_multiplayer(void)
+{
+	return isMultiplayer;
+}
 	
 } // preferences namespace

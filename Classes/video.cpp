@@ -1232,3 +1232,5 @@ void draw_wait_cursor(void)
 	renderQueueAddTexture(vertices, texCoords, wait_cursor, 0xFFFFFFFF, 1.0);
 	SDL_RenderPresent();
 }
+
+

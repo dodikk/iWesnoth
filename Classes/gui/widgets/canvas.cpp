@@ -29,6 +29,8 @@
 #include "../../text.hpp"
 #include "wml_exception.hpp"
 
+#include <stdio.h>
+
 extern void blit_surface_scaled(int x, int y, int w, int h, surface surf, textureRenderFlags flags=DRAW);
 extern void blit_surface(int x, int y, surface surf, SDL_Rect* srcrect=NULL, SDL_Rect* clip_rect=NULL, textureRenderFlags flags=DRAW);
 extern void blit_texture_scaled(int x, int y, int w, int h, SDL_TextureID tex, textureRenderFlags flags=DRAW);
@@ -36,6 +38,122 @@ extern void blit_texture(int x, int y, SDL_TextureID tex, SDL_Rect* srcrect=NULL
 extern void draw_line(Uint32 color, int x1, int y1, int x2, int y2);
 extern void fill_rect(Uint32 color, SDL_Rect *rect);
 
+// KP: added timage caching
+SDL_TextureID last_timage = 0;
+
+std::string timage_cache_files[] = {
+"buttons/downarrow-button.png",
+"buttons/downarrow-button-disabled.png",
+"buttons/downarrow-button-pressed.png",
+"buttons/downarrow-button-active.png",
+"buttons/uparrow-button.png",
+"buttons/uparrow-button-disabled.png",
+"buttons/uparrow-button-pressed.png",
+"buttons/uparrow-button-active.png",
+"buttons/left_arrow-button.png",
+"buttons/left_arrow-button-disabled.png",
+"buttons/left_arrow-button-pressed.png",
+"buttons/left_arrow-button-active.png",
+"buttons/right_arrow-button.png",
+"buttons/right_arrow-button-disabled.png",
+"buttons/right_arrow-button-pressed.png",
+"buttons/right_arrow-button-active.png",
+"buttons/button.png",
+"buttons/button-disabled.png",
+"buttons/button-pressed.png",
+"buttons/button-active.png",
+"buttons/scrollgroove-left.png",
+"buttons/scrollgroove-horizontal.png",
+"buttons/scrollgroove-right.png",
+"buttons/scrollleft.png",
+"buttons/scrollhorizontal.png",
+"buttons/scrollright.png",
+"buttons/scrollleft-disabled.png",
+"buttons/scrollhorizontal-disabled.png",
+"buttons/scrollright-disabled.png",
+"buttons/scrollleft-pressed.png",
+"buttons/scrollhorizontal-pressed.png",
+"buttons/scrollright-pressed.png",
+"buttons/scrollleft-active.png",
+"buttons/scrollhorizontal-active.png",
+"buttons/scrollright-active.png",
+"dialogs/translucent65-border-top.png",
+"dialogs/translucent65-border-bottom.png",
+"dialogs/translucent65-background.png",
+"buttons/slider.png",
+"buttons/slider-disabled.png",
+"buttons/slider-selected.png",
+"buttons/slider-active.png",
+"buttons/checkbox.png",
+"buttons/checkbox.png",
+"buttons/checkbox-active.png",
+"buttons/checkbox-pressed.png",
+"buttons/checkbox-pressed.png",
+"buttons/checkbox-active-pressed.png",
+"misc/selection2-border-topleft.png",
+"misc/selection2-border-topright.png",
+"misc/selection2-border-botleft.png",
+"misc/selection2-border-botright.png",
+"misc/selection2-border-top.png",
+"misc/selection2-border-bottom.png",
+"misc/selection2-border-left.png",
+"misc/selection2-border-right.png",
+"misc/selection2-background.png",
+"misc/selection-border-topleft.png",
+"misc/selection-border-topright.png",
+"misc/selection-border-botleft.png",
+"misc/selection-border-botright.png",
+"misc/selection-border-top.png",
+"misc/selection-border-bottom.png",
+"misc/selection-border-left.png",
+"misc/selection-border-right.png",
+"misc/selection-background.png",
+"buttons/scrollgroove-top.png",
+"buttons/scrollgroove-mid.png",
+"buttons/scrollgroove-bottom.png",
+"buttons/scrolltop.png",
+"buttons/scrollmid.png",
+"buttons/scrollbottom.png",
+"buttons/scrolltop-disabled.png",
+"buttons/scrollmid-disabled.png",
+"buttons/scrollbottom-disabled.png",
+"buttons/scrolltop-pressed.png",
+"buttons/scrollmid-pressed.png",
+"buttons/scrollbottom-pressed.png",
+"buttons/scrolltop-active.png",
+"buttons/scrollmid-active.png",
+"buttons/scrollbottom-active.png",
+"dialogs/opaque-border-topleft.png",
+"dialogs/opaque-border-top.png",
+"dialogs/opaque-border-topright.png",
+"dialogs/opaque-border-right.png",
+"dialogs/opaque-border-botright.png",
+"dialogs/opaque-border-bottom.png",
+"dialogs/opaque-border-botleft.png",
+"dialogs/opaque-border-left.png",
+"dialogs/opaque-background.png",
+"dialogs/translucent65-border-topleft.png",
+"dialogs/translucent65-border-top.png",
+"dialogs/translucent65-border-topright.png",
+"dialogs/translucent65-border-right.png",
+"dialogs/translucent65-border-botright.png",
+"dialogs/translucent65-border-bottom.png",
+"dialogs/translucent65-border-botleft.png",
+"dialogs/translucent65-border-left.png",
+"dialogs/translucent65-background.png",
+"dialogs/translucent54-border-topleft.png",
+"dialogs/translucent54-border-top.png",
+"dialogs/translucent54-border-topright.png",
+"dialogs/translucent54-border-right.png",
+"dialogs/translucent54-border-botright.png",
+"dialogs/translucent54-border-bottom.png",
+"dialogs/translucent54-border-botleft.png",
+"dialogs/translucent54-border-left.png",
+"dialogs/translucent54-background.png",
+""
+};
+
+std::map<std::string, SDL_TextureID> timage_cache;
 
 namespace gui2 {
 
@@ -539,13 +657,17 @@ public:
 		const game_logic::map_formula_callable& variables);
 	
 	// KP: need to do this to free the texture
-	~timage()
+	/*
+	virtual ~timage()
 	{
+		printf("~timage()\n");
 		if (image_texture_ != 0)
 		{
 			SDL_DestroyTexture(image_texture_);
 		}
 	}
+	 */
+	// could never get the destructor to actually be called.... memory leaks somewhere??
 
 private:
 	tformula<unsigned>
@@ -643,22 +765,63 @@ timage::timage(const config& cfg) :
  *
  */
 	if(!image_name_.has_formula()) {
-		std::string str = image_name_();
-		// KP: do not cache this
-		surface tmp(image::get_image(image::locator(str), image::UNSCALED, false));
-
-		if(!tmp) {
-			ERR_G_D << "Image: '" << str
-				<< "'not found and won't be drawn.\n";
-			return;
+		
+		if(timage_cache.size() == 0)
+		{
+			// build the cache for the first time
+			int i=0;
+			while (timage_cache_files[i] != "")
+			{
+				// KP: do not cache this
+				surface tmp(image::get_image(image::locator(timage_cache_files[i]), image::UNSCALED, false));				
+				
+				surface image_;
+				image_.assign(make_neutral_surface(tmp));
+				assert(image_);
+				std::cerr << "Caching texture for timage " << timage_cache_files[i] << "\n";
+				SDL_TextureID tid = SDL_CreateTextureFromSurface(SDL_PIXELFORMAT_ABGR8888, image_);
+				timage_cache.insert(std::pair<std::string, SDL_TextureID>(timage_cache_files[i], tid));
+				i++;
+			}
 		}
+		
+				
+		std::string str = image_name_();
+		
+		std::map<std::string, SDL_TextureID>::iterator it;
+		it = timage_cache.find(str);
+		if (it != timage_cache.end())
+		{
+			image_texture_ = (*it).second;
+			std::cerr << "Loaded from cache for timage " << str << "\n";
+		}
+		else
+		{
+			// KP: avoid texture leaks
+			if (last_timage != 0)
+			{
+				SDL_DestroyTexture(last_timage);
+				last_timage = 0;
+			}
+			
+			
+			// KP: do not cache this
+			surface tmp(image::get_image(image::locator(str), image::UNSCALED, false));
 
-		surface image_;
-		image_.assign(make_neutral_surface(tmp));
-		assert(image_);
-		std::cerr << "Creating texture for timage " << str << "\n";
-		image_texture_ = SDL_CreateTextureFromSurface(SDL_PIXELFORMAT_ABGR8888, image_);
-		src_clip_ = ::create_rect(0, 0, image_->w, image_->h);
+			if(!tmp) {
+				ERR_G_D << "Image: '" << str
+					<< "'not found and won't be drawn.\n";
+				return;
+			}
+
+			surface image_;
+			image_.assign(make_neutral_surface(tmp));
+			assert(image_);
+			std::cerr << "Creating texture for timage " << str << "\n";
+			image_texture_ = SDL_CreateTextureFromSurface(SDL_PIXELFORMAT_ABGR8888, image_);
+			src_clip_ = ::create_rect(0, 0, image_->w, image_->h);
+			last_timage = image_texture_;
+		}
 	}
 
 	const std::string& debug = (cfg["debug"]);
@@ -696,12 +859,21 @@ void timage::draw(//surface& canvas,
 			return;
 		}
 
+		// KP: avoid texture leaks
+		if (last_timage != 0)
+		{
+			SDL_DestroyTexture(last_timage);
+			last_timage = 0;
+		}
+		
 		surface image_;
 		image_.assign(make_neutral_surface(tmp));
 		assert(image_);
 		std::cerr << "Creating texture for FORMULA timage " << name << "\n";
 		image_texture_ = SDL_CreateTextureFromSurface(SDL_PIXELFORMAT_ABGR8888, image_);
 		src_clip_ = ::create_rect(0, 0, image_->w, image_->h);
+		last_timage = image_texture_;
+		
 	} else if(!image_texture_){
 		// The warning about no image should already have taken place
 		// so leave silently.

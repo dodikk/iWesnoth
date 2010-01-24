@@ -849,6 +849,8 @@ void playsingle_controller::after_human_turn(){
 	gui_->unhighlight_reach();
 	
 	preferences::reset_turn_kills();
+	
+	free_all_caches();
 }
 
 void playsingle_controller::play_ai_turn(){

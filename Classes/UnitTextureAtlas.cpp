@@ -2132,7 +2132,8 @@ bool getUnitTextureAtlasInfo(const std::string& filename, const std::string& mod
 		int pos = searchStr.find('~', 0);
 		if (pos != std::string::npos)
 		{
-			searchStr[pos] = 0;
+			//searchStr[pos] = 0;
+			searchStr = searchStr.substr(0, pos);
 		}
 	}
 	else

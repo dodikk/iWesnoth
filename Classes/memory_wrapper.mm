@@ -26,7 +26,8 @@ size_t iPhoneMemory(void);
 // KP: using a project setting define, eg DISABLE_POOL_ALLOC, causes it to recompile the whole project, which takes very long...
 // this way, we can just set the #if statement below to 1 or 0 to enable/disable the allocators
 
-#if !(TARGET_IPHONE_SIMULATOR)
+//#if !(TARGET_IPHONE_SIMULATOR)
+#if 0
 
 
 // Use Google's tcmalloc - fast and minimum overhead, and also useful for memory profiling
@@ -219,7 +220,7 @@ void operator delete[] (void *p, const std::nothrow_t&)
 
 
 #else
-
+#include "google/tcmalloc.h"
 
 
 void memory_profiler_start(const char *path)
@@ -232,7 +233,7 @@ void memory_stats(const char *reason)
 {
 	// get general overall iPhone memory stats
 	printf("%s\n", reason);
-
+	tc_malloc_stats();
 	iPhoneMemory();
 }
 
@@ -272,8 +273,39 @@ void init_custom_malloc()
 */	
 }
 
+
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <sys/sysctl.h>
+#include <mach/task.h>
+#include <mach/mach_init.h>
+
+void getres(task_t task, unsigned int *rss, unsigned int *vs)
+{
+	struct task_basic_info t_info;
+	mach_msg_type_number_t t_info_count = TASK_BASIC_INFO_COUNT;
+	
+	task_info(task, TASK_BASIC_INFO, (task_info_t)&t_info, &t_info_count);
+	*rss = t_info.resident_size;
+	*vs = t_info.virtual_size;
+}
+
+
 size_t iPhoneMemory(void)
 {
+	// report process memory
+	unsigned int rss, vs, psize;
+	task_t task = MACH_PORT_NULL;
+	if (task_for_pid(current_task(), getpid(), &task) == KERN_SUCCESS)
+	{
+		getres(task, &rss, &vs);
+		psize = getpagesize();
+		printf("iPhone process memory used: %u KiB, VS: %u KiB.\n", rss, vs);
+	}	
+	
+	// now report overall system memory
 	mach_port_t host_port;
 	mach_msg_type_number_t host_size;
 	vm_size_t pagesize;

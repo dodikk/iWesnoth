@@ -29,7 +29,7 @@
 // Compile with -O3 -DBENCHMARK for speed testing,
 // -DCHECK for testing correctness
 // (run tools/wesnoth-attack-sim.c --check on output)
-#if defined(BENCHMARK) || defined(CHECK)
+#if defined(BENCHMARK) || defined(WESCHECK)
 #include <time.h>
 #include <sys/time.h>
 #include <stdio.h>
@@ -219,7 +219,7 @@ const double &prob_matrix::val(unsigned p, unsigned row, unsigned col) const
 	return plane_[p][row * cols_ + col];
 }
 
-#ifdef CHECK
+#ifdef WESCHECK
 void prob_matrix::dump() const
 {
 	unsigned int row, col, m;
@@ -877,7 +877,7 @@ double combatant::average_hp(unsigned int healing) const
 	return total;
 }
 
-#if defined(BENCHMARK) || defined(CHECK)
+#if defined(BENCHMARK) || defined(WESCHECK)
 // We create a significant number of nasty-to-calculate units,
 // and test each one against the others.
 #define NUM_UNITS 50
@@ -893,7 +893,7 @@ double combatant::average_hp(unsigned int healing) const
     }									      \
   } while (0)
 
-#ifdef CHECK
+#ifdef WESCHECK
 void combatant::print(const char label[], unsigned int battle) const
 {
 	printf("#%u: %s: %u %u %u %2g%% ", battle,

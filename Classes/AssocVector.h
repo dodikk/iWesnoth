@@ -21,6 +21,10 @@
 #include <vector>
 #include <utility>
 
+// KP: default allocator changed to tcmalloc!
+#include "base/stl_allocator.h"
+
+
 //namespace Loki
 //{
 ////////////////////////////////////////////////////////////////////////////////
@@ -77,7 +81,8 @@
         class K,
         class V,
         class C = std::less<K>,
-        class A = std::allocator< std::pair<K, V> >
+        //class A = std::allocator< std::pair<K, V> >
+		class A = STL_Allocator< std::pair<K, V>, tcmallocAllocator>
     >
     class AssocVector 
         : private std::vector< std::pair<K, V>, A >

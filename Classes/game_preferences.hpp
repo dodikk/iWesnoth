@@ -244,6 +244,8 @@ namespace preferences {
 	int get_player_side();
 	void add_kill();
 	void reset_turn_kills();
+	void set_multiplayer(bool isMultiplayer);
+	bool is_multiplayer();
 }
 
 #endif

@@ -16,7 +16,12 @@
 
 #include "skiplist.hpp"
 
-template <typename Key, typename Value, typename Compare = std::less<Key>, typename Alloc = std::allocator<Value> >
+// KP: default allocator changed to tcmalloc!
+
+#include "base/stl_allocator.h"
+
+//template <typename Key, typename Value, typename Compare = std::less<Key>, typename Alloc = std::allocator<Value> >
+template <typename Key, typename Value, typename Compare = std::less<Key>, typename Alloc = STL_Allocator<Value, tcmallocAllocator> >
 class skiplist_map : private skiplist<std::pair<const Key, Value>, Key, key_extractor<std::pair<const Key, Value> >, Compare, Alloc> {
 private:
 typedef skiplist<std::pair<const Key, Value>, Key, key_extractor<std::pair<const Key, Value> >, Compare, Alloc> super;

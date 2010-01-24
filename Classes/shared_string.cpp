@@ -15,9 +15,13 @@
 #include "shared_string.hpp"
 
 #include <map>
-//#include "skiplist_map.hpp"
+#include "skiplist_map.hpp"
 //#include <boost/unordered_map.hpp>
 //#include "AssocVector.h"
+
+// KP: default allocator changed to tcmalloc!
+#include "base/stl_allocator.h"
+
 
 class string_compare
 {
@@ -57,8 +61,8 @@ typedef std::map<const std::string*, string_node*, string_compare> MAP;
 //typedef skiplist_map<const std::string*, string_node*, string_compare> MAP;
 //typedef boost::unordered_map<const std::string*, string_node*, string_hasher> MAP;
 //typedef AssocVector<const std::string*, string_node*, string_compare> MAP;
-typedef MAP::iterator ITERATOR;
 typedef std::pair<const std::string*, string_node*> PAIR;
+typedef MAP::iterator ITERATOR;
 
 string_node* gNullData;
 MAP* gMap = NULL;
@@ -276,3 +280,26 @@ void shared_cleanup(void)
 #endif // DONT_CLEAR_STRINGS
 }
 
+// there is a BIG memory leak at program exit, but it would be slow to free everything...
+// actually... I think iPhone OS automatically cleans up when the app exits...
+void destroy_all_strings(void)
+{
+/*	
+	if (gMap == NULL)
+		return;
+	
+	ITERATOR it;
+	for(it = gStringPool().begin(); it != gStringPool().end(); )
+	{
+		//if (it->second != gNullData)
+		{
+			string_node *dataPtr = it->second;
+			gStringPool().erase(it++);
+			delete dataPtr;
+		}
+	}	
+	delete gMap;
+	gMap = NULL;
+	gNullData = NULL;
+*/ 
+}

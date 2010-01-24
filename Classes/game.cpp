@@ -1018,6 +1018,13 @@ bool game_controller::load_game()
 		e.show(disp());
 		return false;
 	}
+	
+	if(state_.campaign_type == "multiplayer")
+		preferences::set_multiplayer(true);
+	else
+		preferences::set_multiplayer(false);
+	
+	
 	recorder = replay(state_.replay_data);
 	recorder.start_replay();
 	recorder.set_skip(false);
@@ -1807,6 +1814,8 @@ static void safe_exit(int res) {
 #ifdef OS2 /* required to correctly shutdown SDL on OS/2 */
         SDL_Quit();
 #endif
+	
+	destroy_all_strings();
 	exit(res);
 }
 
@@ -2244,15 +2253,18 @@ static int do_gameloop(int argc, char** argv)
 //		} 
 		else if(res == gui::NEW_CAMPAIGN) {
 			draw_wait_cursor();
+			preferences::set_multiplayer(false);
 			if(game.new_campaign() == false) {
 				continue;
 			}
 #ifndef FREE_VERSION			
 		} else if (res == gui::SKIRMISH) {
+			preferences::set_multiplayer(true);
 			if(game.play_multiplayer(3) == false) {
 				continue;
 			}			
 		} else if(res == gui::MULTIPLAYER) {
+			preferences::set_multiplayer(true);
 			if(game.play_multiplayer(0) == false) {
 				continue;
 			}
@@ -2442,6 +2454,8 @@ int SDL_main(int argc, char** argv)
 			<< "\nError: " << e.type
 			<< "\n\nGame will be aborted.\n";
 	}
+	
+	destroy_all_strings();
 
 	return 0;
 } // end main

@@ -150,11 +150,7 @@ private:
 
 	bool skip_;
 
-	std::vector<int> message_locations;
-	
-	// KP: flag to turn off all replay saving
-public:
-	bool ignore_replays;
+	std::vector<int> message_locations;	
 };
 
 replay& get_replay_source();

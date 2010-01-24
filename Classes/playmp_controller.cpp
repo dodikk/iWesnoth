@@ -147,6 +147,9 @@ void playmp_controller::play_side(const unsigned int team_index, bool save){
 void playmp_controller::before_human_turn(bool save){
 	LOG_NG << "playmp::before_human_turn...\n";
 	playsingle_controller::before_human_turn(save);
+	// KP: disable achievement stuff
+	preferences::set_player_side(player_number_);
+
 
 	turn_data_ = new turn_info(gamestate_,status_,
 		*gui_,map_,teams_,player_number_,units_,replay_sender_, undo_stack_);
