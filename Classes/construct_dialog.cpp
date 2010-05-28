@@ -144,6 +144,13 @@ dialog::dialog(display &disp, const std::string& title, const std::string& messa
 	try {
 //		std::string msg = font::word_wrap_text(message, message_font_size, screen.getx() / 2, screen.gety() / 2);
 		std::string msg = font::word_wrap_text(message, message_font_size, screen.getx() - 22, screen.gety() - 22);
+#ifdef __IPAD__
+		// KP: looks ugly when too big...
+		if (title == "Choose an option...")
+		{
+			msg = font::word_wrap_text(message, message_font_size, 480 - 22, screen.gety() - 22);
+		}
+#endif
 		message_ = new label(screen, msg, message_font_size, font::NORMAL_COLOUR, false);
 	} catch(utils::invalid_utf8_exception&) {
 		ERR_DP << "Problem handling utf8 in message '" << message << "'\n";
@@ -315,12 +322,12 @@ int dialog::show()
 		{
 			// KP: redraw every frame for openGL rendering
 			draw_frame();
-			update_widget_positions();
+//			update_widget_positions();
 			draw_contents();
 			
 			//refresh();
 			
-			SDL_Delay(80);
+			SDL_Delay(20);
 		}
 		action(dp_info);
 		dp_info.cycle();
@@ -523,9 +530,12 @@ dialog::dimension_measurements dialog::layout(int xloc, int yloc)
 		text_width = caption_width;
 
 	// Prevent the menu to be larger than the screen
+	
+	int maxX = screen.getx();
+	
 	dim.menu_width = menu_->width();
-	if(dim.menu_width + image_width + padding_width + left_preview_pane_width + right_preview_pane_width > static_cast<size_t>(screen.getx()))
-		dim.menu_width = screen.getx() - image_width - padding_width - left_preview_pane_width - right_preview_pane_width;
+	if(dim.menu_width + image_width + padding_width + left_preview_pane_width + right_preview_pane_width > static_cast<size_t>(maxX))
+		dim.menu_width = maxX - image_width - padding_width - left_preview_pane_width - right_preview_pane_width;
 	if(dim.menu_width > text_width)
 		text_width = dim.menu_width;
 
@@ -595,19 +605,22 @@ dialog::dimension_measurements dialog::layout(int xloc, int yloc)
 		dim.menu_height = menu_->height();
 		
 		// recheck
-		int bestHeight = screen.gety() - above_preview_pane_height - frame_bottom_pad - check_button_height - padding_height;
+		int bestHeight = screen.gety() - above_preview_pane_height - frame_bottom_pad - check_button_height - padding_height - dim.y;
 		dim.menu_height = bestHeight;
-		dim.menu_y = dim.interior.h - dim.menu_height - frame_bottom_pad;
+		dim.menu_y = dim.y; //dim.interior.h - dim.menu_height - frame_bottom_pad;
 		
-		// KP: dirty hack
+		// KP: dirty hacks
+#ifdef __IPAD__		
+#else
 		if (title_ == "Attack Enemy")
 		{
-			dim.y = 126;
+			dim.y = 126-10;
 			dim.menu_y = 149;
 			dim.interior.y = 36;
-			dim.interior.h = 248;
+			dim.interior.h = 248-10;
 			dim.menu_height = 135;
 		}
+#endif
 	}
 
 	//calculate the positions of the preview panes to the sides of the dialog
@@ -665,7 +678,13 @@ dialog::dimension_measurements dialog::layout(int xloc, int yloc)
 		//dim.menu_y -= 4;
 //		dim.menu_y -= 24;
 //		dim.menu_height += 24;
-		dim.menu_y = 14;
+		dim.menu_y -= 8;//4;
+		dim.menu_height += 4;
+		if (left_preview_pane_width > 0)
+		{
+			dim.menu_y -= 8;
+			dim.menu_height += 8;
+		}
 	}
 #endif
 	
@@ -721,6 +740,27 @@ dialog::dimension_measurements dialog::layout(int xloc, int yloc)
 			}
 		}
 	}
+/*	
+	// KP: dirty hacks for custom layouts
+	if (title_ == "Load Game")
+	{
+		dim.x = 0;
+		dim.interior.x = 0;
+		//dim.height = 480;
+		dim.interior.w = 480;
+		dim.menu_height += 8;
+		dim.menu_x = 15; //-1;
+		dim.menu_width = 480-30;
+		
+	}
+*/	
+
+#ifdef __IPAD__	
+	if (title_ == "Attack Enemy")
+	{
+		dim.menu_y -= 12;
+	}
+#endif
 	
 	set_layout(dim);
 	return dim;

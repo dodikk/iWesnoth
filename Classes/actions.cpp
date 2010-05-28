@@ -1894,6 +1894,8 @@ void advance_unit(unit_map& units,
 	u->second.write(test);
 	std::cerr << test;*/
 
+	int oldLevel = u->second.level();
+	
 	loc = u->first;
 	const unit& new_unit = get_advanced_unit(units,loc,advance_to);
 	statistics::advance_unit(new_unit);
@@ -1908,15 +1910,15 @@ void advance_unit(unit_map& units,
 	// KP: check for achievements
 	if (new_unit.side() == preferences::get_player_side())
 	{
-		if (new_unit.level() == 4)
+		if (new_unit.level() == 4 || oldLevel == 3)
 			earn_achievement(ACHIEVEMENT_HEROIC_UNIT);
 		else if (new_unit.level() == 3)
 			earn_achievement(ACHIEVEMENT_VETERAN_UNIT);
 		if (new_unit.can_recruit() && new_unit.name() != "Galas")	// IftU part 2 advances you for free right at the start...
 			earn_achievement(ACHIEVEMENT_FEARLESS_LEADER);
 	}
-		
-		
+
+
 }
 
 void check_victory(unit_map& units, std::vector<team>& teams, display& disp)

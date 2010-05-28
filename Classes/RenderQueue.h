@@ -31,6 +31,16 @@ extern "C"
 	void renderQueueDisable(void);
 	void renderQueueSetZ(int z);
 	
+	void cacheBindTexture(GLenum texType, GLuint texture, unsigned char forceBind);
+	void cacheColor4f(GLfloat aR, GLfloat aG, GLfloat aB, GLfloat aA);
+
+	void renderQueueClean(void);
+	
+	void renderQueueMarkDirty(int x, int y);
+	
+	void renderMaskTile(int x, int y);
+	void renderMaskOff(void);
+	
 #ifdef __cplusplus	
 };
 #endif

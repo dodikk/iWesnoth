@@ -113,8 +113,8 @@ void parser::operator()(std::string* error_log)
 	cfg_.clear();
 	elements.push(element(&cfg_, ""));
 	
-	leading_spaces_buffer.reserve(1024);
-	value_buffer.reserve(10*1024);
+	//leading_spaces_buffer.reserve(1024);
+	//value_buffer.reserve(10*1024);
 
 	do {
 		try 
@@ -185,6 +185,7 @@ void parser::parse_element()
 	switch(tok_->current_token().type) {
 	case token::STRING: // [element]
 		elname = tok_->current_token().value;
+		//elname.assign(tok_->current_token().value_ptr, tok_->current_token().value_size);
 		if (tok_->next_token().type != ']')
 			error(_("Unterminated [element] tag"));
 
@@ -198,6 +199,7 @@ void parser::parse_element()
 		if (tok_->next_token().type != token::STRING)
 			error(_("Invalid tag name"));
 		elname = tok_->current_token().value;
+		//elname.assign(tok_->current_token().value_ptr, tok_->current_token().value_size);
 		if (tok_->next_token().type != ']')
 			error(_("Unterminated [+element] tag"));
 
@@ -217,6 +219,7 @@ void parser::parse_element()
 		if(tok_->next_token().type != token::STRING)
 			error(_("Invalid closing tag name"));
 		elname = tok_->current_token().value;
+		//elname.assign(tok_->current_token().value_ptr, tok_->current_token().value_size);
 		if(tok_->next_token().type != ']')
 			error(_("Unterminated closing tag"));
 		if(elements.size() <= 1)
@@ -250,6 +253,7 @@ void parser::parse_variable()
 			if(!variables.back().empty())
 				variables.back() += ' ';
 			variables.back() += tok_->current_token().value;
+			//variables.back().append(tok_->current_token().value_ptr, tok_->current_token().value_size);
 			break;
 		case ',':
 			if(variables.back().empty()) {
@@ -298,10 +302,24 @@ void parser::parse_variable()
 				break;
 			case token::QSTRING:
 				cfg[*curvar] += tok_->current_token().value;
+				/*	
+				{
+					std::string tempStr = cfg[*curvar];
+					tempStr.append(tok_->current_token().value_ptr, tok_->current_token().value_size);
+					cfg[*curvar] = tempStr;
+				}
+				 */
 				break;
 			default:
 				cfg[*curvar] += "_";
 				cfg[*curvar] += tok_->current_token().value;
+					/*
+				{
+					std::string tempStr = cfg[*curvar] + "_";
+					tempStr.append(tok_->current_token().value_ptr, tok_->current_token().value_size);
+					cfg[*curvar] = tempStr;
+				}
+					 */
 				break;
 			case token::END:
 			case token::LF:
@@ -313,9 +331,24 @@ void parser::parse_variable()
 			break;
 		default:
 			cfg[*curvar] += tok_->current_token().leading_spaces + tok_->current_token().value;
+				/*
+			{
+				std::string tempStr = cfg[*curvar];
+				//tempStr.append(tok_->current_token().leading_spaces_ptr, tok_->current_token().leading_spaces_size);
+				tempStr.append(tok_->current_token().value_ptr, tok_->current_token().value_size);
+				cfg[*curvar] = tempStr;
+			}
+				 */
 			break;
 		case token::QSTRING:
 			cfg[*curvar] += tok_->current_token().value;
+				/*
+			{
+				std::string tempStr = cfg[*curvar];
+				tempStr.append(tok_->current_token().value_ptr, tok_->current_token().value_size);
+				cfg[*curvar] = tempStr;
+			}
+				 */
 			break;
 		case token::UNTERMINATED_QSTRING:
 			error(_("Unterminated quoted string"));
@@ -354,10 +387,12 @@ void parser::error(const std::string& error_type)
 	utils::string_map i18n_symbols;
 	i18n_symbols["error"] = error_type;
 	i18n_symbols["value"] = tok_->current_token().value;
+	//i18n_symbols["value"].assign(tok_->current_token().value_ptr, tok_->current_token().value_size);
 	std::stringstream ss;
 	ss << tok_->get_start_line() << " " << tok_->get_file();
 #ifdef DEBUG
 	i18n_symbols["previous_value"] = tok_->previous_token().value;
+	//i18n_symbols["previous_value"].assign(tok_->previous_token().value_ptr, tok_->previous_token().value_size);
 	throw config::error(
 		lineno_string(i18n_symbols, ss.str(),
 		              N_("$error, value '$value', previous '$previous_value' at $pos")));

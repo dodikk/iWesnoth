@@ -154,8 +154,10 @@ dialog_frame::dimension_measurements dialog_frame::layout(int x, int y, int w, i
 		dim_.button_row.x = -dim_.button_row.w;
 		dim_.button_row.y = y + h;
 #ifdef __IPHONEOS__
+	#ifndef __IPAD__
 		if (dim_.button_row.y > 320-30)
 			dim_.button_row.y = 320-30;
+	#endif
 #endif
 
 		dim_.button_row.w += ButtonHPadding;

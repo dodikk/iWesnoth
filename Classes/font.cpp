@@ -29,6 +29,8 @@
 #include "marked-up_text.hpp"
 #include "foreach.hpp"
 
+#include "display.hpp"
+
 #include <list>
 #include <set>
 #include <stack>
@@ -960,6 +962,8 @@ public:
 	void show(const bool value) { visible_ = value; }
 
 	bool scroll() const { return scroll_; }
+	
+	void get_rect(SDL_Rect& rect);
 
 private:
 
@@ -1099,6 +1103,25 @@ void floating_label::draw(/*surface screen*/)
 //	update_rect(rect);
 }
 
+	
+void floating_label::get_rect(SDL_Rect& rect)
+{
+	// KP: fix crash bug
+	if (!surf_)
+	{
+		rect.x = 0;
+		rect.y = 0;
+		rect.w = 0;
+		rect.h = 0;
+		return;
+	}
+	
+	rect.x = xpos(surf_->w);
+	rect.y = int(ypos_);
+	rect.w = surf_->w;
+	rect.h = surf_->h;
+}
+	
 void floating_label::undraw(/*surface screen*/)
 {
 
@@ -1235,7 +1258,7 @@ floating_label_context::~floating_label_context()
 
 //	surface const screen = SDL_GetVideoSurface();
 //	if(screen != NULL) {
-		undraw_floating_labels(/*screen*/);
+		undraw_floating_labels(NULL);
 //	}
 }
 
@@ -1256,7 +1279,7 @@ void draw_floating_labels(/*surface screen*/)
 	}
 }
 
-void undraw_floating_labels(/*surface screen*/)
+void undraw_floating_labels(display* disp)
 {
 	if(label_contexts.empty()) {
 		return;
@@ -1266,8 +1289,14 @@ void undraw_floating_labels(/*surface screen*/)
 
 	//undraw labels in reverse order, so that a LIFO process occurs, and the screen is restored
 	//into the exact state it started in.
+	SDL_Rect rect;
 	for(label_map::reverse_iterator i = labels.rbegin(); i != labels.rend(); ++i) {
 		if(context.count(i->first) > 0) {
+			if (disp != NULL)
+			{
+				i->second.get_rect(rect);
+				disp->invalidate_locations_in_rect(rect);	// KP: added for OpenGL
+			}
 			i->second.undraw(/*screen*/);
 		}
 	}

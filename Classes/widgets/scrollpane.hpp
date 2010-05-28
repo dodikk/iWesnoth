@@ -62,7 +62,7 @@ public:
 	void clear();
 
 protected:
-	//virtual void handle_event(const SDL_Event& event);
+	virtual void handle_event(const SDL_Event& event);
 	//virtual void process_event();
 	virtual void draw();
 	virtual void set_inner_location(SDL_Rect const &rect);

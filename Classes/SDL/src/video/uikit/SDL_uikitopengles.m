@@ -31,6 +31,11 @@
 
 static int UIKit_GL_Initialize(_THIS);
 
+extern UIView *gLandscapeView;
+UIView *gLandscapeView;
+
+extern unsigned char gFlippedGL;
+
 void *
 UIKit_GL_GetProcAddress(_THIS, const char *proc)
 {	
@@ -85,7 +90,7 @@ void UIKit_GL_SwapWindow(_THIS, SDL_Window * window)
 	[data->view swapBuffers];
 	/* since now we've got something to draw
 	   make the window visible */
-	[data->uiwindow makeKeyAndVisible];
+//	[data->uiwindow makeKeyAndVisible];
 
 	/* we need to let the event cycle run, or the OS won't update the OpenGL view! */
 	SDL_PumpEvents();
@@ -110,6 +115,7 @@ SDL_GLContext UIKit_GL_CreateContext(_THIS, SDL_Window * window)
 	
 	data->view = view;
 	
+	
 	/* add the view to our window */
 	[data->uiwindow addSubview: view ];
 	
@@ -120,6 +126,35 @@ SDL_GLContext UIKit_GL_CreateContext(_THIS, SDL_Window * window)
         UIKit_GL_DeleteContext(_this, view);
         return NULL;
     }
+	
+	// KP: added here
+	
+#ifdef __IPAD__
+	CGRect frameRect = CGRectMake(0.0, 0.0, 1024.0, 768.0);
+#else
+	CGRect frameRect = CGRectMake(0.0, 0.0, 480.0, 320.0);
+#endif
+	data->landscapeView = [[UIView alloc] initWithFrame: frameRect];
+	CGAffineTransform tr = data->landscapeView.transform; // get current transform (portrait)
+	if (gFlippedGL)
+		tr = CGAffineTransformRotate(tr, -(M_PI / 2.0)); // rotate 90 degrees to go landscape
+	else
+		tr = CGAffineTransformRotate(tr, (M_PI / 2.0)); // rotate 90 degrees to go landscape
+
+	data->landscapeView.transform = tr; // set current transform (landscape)
+	data->landscapeView.center = data->uiwindow.center;
+	
+	
+	UIView* clearView = [[UIView alloc] initWithFrame:frameRect];
+	clearView.backgroundColor = [UIColor colorWithRed:0.1f green:0.1f blue:0.1f alpha:0.75f];
+	[data->landscapeView addSubview:clearView];
+	
+	[data->uiwindow addSubview:data->landscapeView];
+	
+	[data->uiwindow makeKeyAndVisible];
+	
+	gLandscapeView = data->landscapeView;
+	gLandscapeView.hidden = YES;
 		
 	return view;
 }

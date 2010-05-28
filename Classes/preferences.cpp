@@ -240,7 +240,7 @@ void _set_idle_anim(const bool ison)
 
 int idle_anim_rate()
 {
-	return lexical_cast_default<int>(get("idle_anim_rate"), 0);
+	return lexical_cast_default<int>(get("idle_anim_rate"), -20);
 }
 
 void _set_idle_anim_rate(const int rate)
@@ -377,8 +377,8 @@ bool set_turn_bell(bool ison)
 	} else if(turn_bell() && !ison) {
 		preferences::set("turn_bell", "no");
 		sound::stop_bell();
-		if(!music_on() && !sound_on() && !UI_sound_on())
-			sound::close_sound();
+//		if(!music_on() && !sound_on() && !UI_sound_on())
+//			sound::close_sound();
 	}
 	return true;
 }
@@ -401,8 +401,8 @@ bool set_UI_sound(bool ison)
 	} else if(UI_sound_on() && !ison) {
 		preferences::set("UI_sound", "no");
 		sound::stop_UI_sound();
-		if(!music_on() && !sound_on() && !turn_bell())
-			sound::close_sound();
+//		if(!music_on() && !sound_on() && !turn_bell())
+//			sound::close_sound();
 	}
 	return true;
 }
@@ -429,8 +429,8 @@ bool set_sound(bool ison) {
 	} else if(sound_on() && !ison) {
 		preferences::set("sound", "no");
 		sound::stop_sound();
-		if(!music_on() && !turn_bell() && !UI_sound_on())
-			sound::close_sound();
+//		if(!music_on() && !turn_bell() && !UI_sound_on())
+//			sound::close_sound();
 	}
 	return true;
 }
@@ -453,9 +453,9 @@ bool set_music(bool ison) {
 			sound::play_music();
 	} else if(music_on() && !ison) {
 		preferences::set("music", "no");
-		if(!sound_on() && !turn_bell() && !UI_sound_on())
-			sound::close_sound();
-		else
+//		if(!sound_on() && !turn_bell() && !UI_sound_on())
+//			sound::close_sound();
+//		else
 			sound::stop_music();
 	}
 	return true;
@@ -510,7 +510,7 @@ int editor_b()
 
 int scroll_speed()
 {
-	const int value = lexical_cast_in_range<int>(get("scroll"), 50, 1, 100);
+	const int value = lexical_cast_in_range<int>(get("scroll"), 100, 1, 100);
 	scroll = value/100.0;
 
 	return value;

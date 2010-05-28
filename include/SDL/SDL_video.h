@@ -1251,6 +1251,7 @@ typedef enum
 	FLOP = 1,	// mirror horizontally
 	FLIP = 2,	// flip upside down
 	ROT = 4,	// rotate cw 90 degrees
+	MASK = 8,	// image must be masked
 	FLIPFLOP = FLIP | FLOP
 } textureRenderFlags;
 extern DECLSPEC int SDLCALL SDL_RenderCopy(SDL_TextureID textureID,

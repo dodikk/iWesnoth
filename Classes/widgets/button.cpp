@@ -30,7 +30,7 @@
 
 namespace gui {
 
-const int font_size = font::SIZE_SMALL;
+///*const*/ int font_size = font::SIZE_SMALL;
 const int horizontal_padding = font::SIZE_SMALL;
 const int checkbox_horizontal_padding = font::SIZE_SMALL / 2;
 const int vertical_padding = font::SIZE_SMALL / 2;
@@ -42,8 +42,12 @@ button::button(CVideo& video, const std::string& label, button::TYPE type,
 	  button_(true), state_(NORMAL), pressed_(false),
 	  spacing_(spacing), base_height_(0), base_width_(0)
 {
+	font_size = font::SIZE_SMALL;
 	if(button_image_name.empty() && type == TYPE_PRESS) {
-		button_image_name = "button";
+		//button_image_name = "button";
+		button_image_name = "button2";
+		//font_size = font::SIZE_TITLE;
+		font_size = 12;
 	} else if(button_image_name.empty() && type == TYPE_CHECK) {
 		button_image_name = "checkbox";
 	}
@@ -120,8 +124,11 @@ void button::calculate_size()
 	}
 
 	if (type_ != TYPE_IMAGE){
-		textRect_ = font::draw_text(NULL, screen_area(), font_size,
-		                            font::BUTTON_COLOUR, label_, 0, 0);
+		//textRect_ = font::draw_text(NULL, screen_area(), font_size, font::BUTTON_COLOUR, label_, 0, 0);
+		if (font_size == font::SIZE_SMALL)
+			textRect_ = font::draw_text(NULL, screen_area(), font_size, font::BUTTON_COLOUR, label_, 0, 0);
+		else
+			textRect_ = font::draw_text(NULL, screen_area(), font_size, font::BUTTON_COLOUR, label_, 0, 0, false, TTF_STYLE_BOLD);
 	}
 
 	if (!change_size)
@@ -245,7 +252,11 @@ void button::draw_contents()
 		clipArea.y += offset;
 		clipArea.w -= 2*offset;
 		clipArea.h -= 2*offset;
-		font::draw_text(&video(), clipArea, font_size, button_colour, label_, textx, texty);
+		//font::draw_text(&video(), clipArea, font_size, button_colour, label_, textx, texty);
+		if (font_size == font::SIZE_SMALL)
+			font::draw_text(&video(), clipArea, font_size, button_colour, label_, textx, texty);
+		else
+			font::draw_text(&video(), clipArea, font_size, button_colour, label_, textx, texty, false, TTF_STYLE_BOLD);
 	}
 
 //	update_rect(loc);

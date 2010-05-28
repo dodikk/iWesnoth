@@ -35,6 +35,7 @@
 #define ACHIEVEMENT_HERO_OF_WESNOTH	18
 #define ACHIEVEMENT_CHAMPION_OF_WESNOTH	19
 
+#include <string>
 
 void of_init(void);					// Initialize OpenFeint
 void of_dashboard(void);			// Open the OpenFeint dashboard

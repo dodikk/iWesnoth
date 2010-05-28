@@ -49,12 +49,18 @@
 
 #include <SDL_image.h>
 
+#import "CoreFoundation/CoreFoundation.h"
+
 //#include "SDL_ttf.h"
 #include "font.hpp"
 
 #include "memory_wrapper.h"
 
 #include "achievements.h"
+
+#include <OpenGLES/ES1/gl.h>
+extern GLuint gScrollTex;
+#include "RenderQueue.h"
 
 /** Log info-messages to stdout during the game, mainly for debugging */
 #define LOG_DP LOG_STREAM(info, display)
@@ -479,7 +485,8 @@ TITLE_RESULT show_title(game_display& screen, config& tips_of_day)
 //#endif
 					       //N_("TitleScreen button^Language"),
 					       N_("TitleScreen button^Preferences"),
-#ifndef FREE_VERSION
+							N_("Sync Saves"),
+#ifndef DISABLE_OPENFEINT
 							N_("TitleScreen button^OpenFeint"),
 #endif
 					       N_("TitleScreen button^Help"),
@@ -507,9 +514,10 @@ TITLE_RESULT show_title(game_display& screen, config& tips_of_day)
 //#endif
 						    //N_("Change the language"),
 						    N_("Configure the game's settings"),
-//#ifndef FREE_VERSION
+							N_("Sync saved games"),
+#ifndef DISABLE_OPENFEINT
 							N_("Launch the OpenFeint dashboard"),
-//#endif
+#endif
 
 							N_("Show Battle for Wesnoth help"),
 							//N_("Quit the game"),
@@ -517,16 +525,35 @@ TITLE_RESULT show_title(game_display& screen, config& tips_of_day)
 						    //N_("Upload statistics") 
 							};
 
-	static const size_t nbuttons = sizeof(button_labels)/sizeof(*button_labels);
-	const int menu_xbase = 380; //(game_config::title_buttons_x*screen.w())/1024;
+	//static const size_t nbuttons = sizeof(button_labels)/sizeof(*button_labels);
+#ifdef FREE_VERSION	
+	int nbuttons = 10;
+#else
+	int nbuttons = 8;
+#endif
+	
+#ifdef DISABLE_OPENFEINT
+	nbuttons--;
+#endif
+	
+#ifndef __IPAD__
+	nbuttons--;	// because help is off to the left now
+#endif
+	
+	int menu_xbase = CVideo::getx()-108-10; //380; //(game_config::title_buttons_x*screen.w())/1024;
 	const int menu_xincr = 0;
 
 #ifdef USE_TINY_GUI
-	const int menu_ybase = (330*screen.h())/768 - 50; //15;
-	const int menu_yincr = (35*3)/4;//15;
+	//const int menu_ybase = 15; //(330*screen.h())/768 - 50; //15;
+	const int menu_yincr = 36+5; //(35*3)/4;//15;
+	const int menu_ybase = (screen.h() - (36+5)*nbuttons - 5) / 2 + 4;
 #else
-	const int menu_ybase = (game_config::title_buttons_y*screen.h())/768;
-	const int menu_yincr = 35;
+	const int menu_ybase = (screen.h() - (36+5)*nbuttons - 5) / 2 + 4;
+	const int menu_yincr = 36+5;
+#endif
+	
+#ifdef __IPAD__
+	menu_xbase -= 10;
 #endif
 
 	const int padding = 4; //game_config::title_buttons_padding;
@@ -545,7 +572,11 @@ TITLE_RESULT show_title(game_display& screen, config& tips_of_day)
 		max_width = std::max<size_t>(max_width,buttons.back().width());
 
 		n_menubuttons = b;
-		if(b + NEW_CAMPAIGN == SHOW_HELP) break;	// Menu-frame ends at the help-button
+#ifdef __IPAD__
+		if(b + NEW_CAMPAIGN == SHOW_HELP) break;
+#else
+		if(b + NEW_CAMPAIGN == SHOW_OPENFEINT) break;		
+#endif
 	}
 
 	SDL_Rect main_dialog_area = {menu_xbase-padding, menu_ybase-padding, max_width+padding*2,
@@ -570,17 +601,28 @@ TITLE_RESULT show_title(game_display& screen, config& tips_of_day)
 //#endif		
 		buttons[i].set_width(max_width);
 		buttons[i].set_location(menu_xbase + i*menu_xincr, menu_ybase + i*menu_yincr);
+#ifdef __IPAD__
 		if(b + NEW_CAMPAIGN == SHOW_HELP) break;
+#else
+		if(b + NEW_CAMPAIGN == SHOW_OPENFEINT) break;		
+#endif
 		i++;
 	}
+	
+#ifndef __IPAD__
+	buttons.push_back(button(screen.video(),sgettext(button_labels[i+1])));
+	buttons.back().set_help_string(sgettext(help_button_labels[i+1]));
+	buttons[i+1].set_width(max_width);
+	buttons[i+1].set_location(5, 320-menu_yincr);	
+#endif
 
-	b = TIP_PREVIOUS - NEW_CAMPAIGN;
-	gui::button previous_tip_button(screen.video(),sgettext(button_labels[b]),button::TYPE_PRESS,"lite_small");
-	previous_tip_button.set_help_string( sgettext(button_labels[b] ));
+//	b = TIP_PREVIOUS - NEW_CAMPAIGN;
+//	gui::button previous_tip_button(screen.video(),sgettext(button_labels[b]),button::TYPE_PRESS,"lite_small");
+//	previous_tip_button.set_help_string( sgettext(button_labels[b] ));
 
-	b = TIP_NEXT - NEW_CAMPAIGN;
-	gui::button next_tip_button(screen.video(),sgettext(button_labels[b]),button::TYPE_PRESS,"lite_small");
-	next_tip_button.set_help_string( sgettext(button_labels[b] ));
+//	b = TIP_NEXT - NEW_CAMPAIGN;
+//	gui::button next_tip_button(screen.video(),sgettext(button_labels[b]),button::TYPE_PRESS,"lite_small");
+//	next_tip_button.set_help_string( sgettext(button_labels[b] ));
 
 //	b = SHOW_HELP - NEW_CAMPAIGN;
 //	gui::button help_tip_button(screen.video(),sgettext(button_labels[b]),button::TYPE_PRESS,"lite_small");
@@ -605,9 +647,14 @@ TITLE_RESULT show_title(game_display& screen, config& tips_of_day)
 	
 	
 	// draw logo over everything
+#ifdef __IPAD__	
+	std::string path = game_config::path + "/data/core/images/misc/logo.png";
+#else
 	std::string path = game_config::path + "/data/core/images/misc/logo_small.png";
+#endif	
 	surface logo_surface = IMG_Load(path.c_str());
-	blit_surface(480-logo_surface.get()->w, 0, logo_surface);
+	//blit_surface(480-logo_surface.get()->w, 0, logo_surface);
+	
 	
 
 	CKey key;
@@ -689,8 +736,12 @@ TITLE_RESULT show_title(game_display& screen, config& tips_of_day)
 		main_frame.draw_background();
 		main_frame.draw_border();
 		events::raise_draw_event();
-		blit_surface(480-logo_surface.get()->w, 0, logo_surface);
-
+		//blit_surface(480-logo_surface.get()->w, 0, logo_surface);
+#ifdef __IPAD__
+		blit_surface(-10, 0, logo_surface);
+#else
+		blit_surface(-15, -10, logo_surface);
+#endif
 		
 		screen.flip();
 
@@ -710,9 +761,8 @@ TITLE_RESULT show_title(game_display& screen, config& tips_of_day)
 		if(screen.video().modeChanged()) {
 			return REDRAW_BACKGROUND;
 		}
-
-		// KP: limit framerate
-		screen.delay(20);
+		
+		screen.delay(10);
 	}
 
 	free_title();

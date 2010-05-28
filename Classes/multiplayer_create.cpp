@@ -80,8 +80,8 @@ create::create(game_display& disp, const config &cfg, chat& c, config& gamelist)
 	fog_game_(disp.video(), _("Fog Of War"), gui::button::TYPE_CHECK),
 	shroud_game_(disp.video(), _("Shroud"), gui::button::TYPE_CHECK),
 	observers_game_(disp.video(), _("Observers"), gui::button::TYPE_CHECK),
-	cancel_game_(disp.video(), _("Cancel")),
-	launch_game_(disp.video(), _("OK")),
+	cancel_game_(disp.video(), _("Cancel"), gui::button::TYPE_PRESS, "button"),
+	launch_game_(disp.video(), _("OK"), gui::button::TYPE_PRESS, "button"),
 	regenerate_map_(disp.video(), _("Regenerate")),
 	generator_settings_(disp.video(), _("Settings...")),
 	password_button_(disp.video(), _("Set Password...")),
@@ -200,6 +200,7 @@ create::create(game_display& disp, const config &cfg, chat& c, config& gamelist)
 	vision_combo_.set_selected(0);
 
 	// The possible eras to play
+
 	const config::child_list& era_list = cfg.get_children("era");
 	std::vector<shared_string> eras;
 	for(config::child_list::const_iterator er = era_list.begin(); er != era_list.end(); ++er) {
@@ -217,6 +218,7 @@ create::create(game_display& disp, const config &cfg, chat& c, config& gamelist)
 		era_combo_.set_selected(0);
 	}
 
+	era_combo_.hide();
 
 	utils::string_map i18n_symbols;
 	i18n_symbols["login"] = preferences::login();
@@ -512,7 +514,7 @@ void create::process_event()
 		if(map.get() != NULL) {
 			const surface mini(image::getMinimap(minimap_rect_.w,minimap_rect_.h,*map,0));
 			SDL_Color back_color = {0,0,0,255};
-			draw_centered_on_background(mini, minimap_rect_, back_color, video().getSurface());
+			draw_centered_on_background(mini, minimap_rect_, back_color/*, video().getSurface()*/);
 		}
 #endif
 
@@ -640,12 +642,14 @@ void create::hide_children(bool hide)
 		const std::string& map_data = parameters_.scenario_data["map_data"];
 
 		try {
-			gamemap map(game_config(), map_data);
+//			gamemap map(game_config(), map_data);
 
 #ifndef USE_TINY_GUI
+			gamemap map(game_config(), map_data);
+			
 			const surface mini(image::getMinimap(minimap_rect_.w,minimap_rect_.h,map,0));
 			SDL_Color back_color = {0,0,0,255};
-			draw_centered_on_background(mini, minimap_rect_, back_color, video().getSurface());
+			draw_centered_on_background(mini, minimap_rect_, back_color/*, video().getSurface()*/);
 #endif
 		} catch(incorrect_map_format_exception& e) {
 			ERR_CF << "map could not be loaded: " << e.msg_ << "\n";
@@ -839,7 +843,7 @@ void create::layout_children(const SDL_Rect& rect)
 	ypos += map_label_.height() + border_size;
 
 	maps_menu_.set_max_width(235);
-	maps_menu_.set_max_height(110);
+	maps_menu_.set_max_height(170); //110
 
 	maps_menu_.set_location(xpos, ypos);
 	// Menu dimensions are only updated when items are set. So do this now.
@@ -847,22 +851,21 @@ void create::layout_children(const SDL_Rect& rect)
 	maps_menu_.set_items(map_options_);
 	maps_menu_.move_selection(mapsel_save);
 
-	ypos += 110 + border_size;
+	ypos += 170 + border_size;
 
 	era_label_.set_location(xpos, ypos);
 	era_combo_.set_location(xpos + era_label_.width() + border_size, ypos);
 	ypos += era_combo_.height() + border_size;
 
+	use_map_settings_.set_location(xpos, ypos);
+	ypos += use_map_settings_.height() + border_size;
+	
 	regenerate_map_.set_location(xpos, ypos);
 	regenerate_map_.hide(true);
 	ypos += regenerate_map_.height() + border_size;
 	generator_settings_.set_location(xpos, ypos);
 	ypos += generator_settings_.height() + border_size;
-
-	use_map_settings_.set_location(xpos, ypos);
-	ypos += use_map_settings_.height() + border_size;
-	random_start_time_.set_location(xpos, ypos);
-	ypos += random_start_time_.height() + border_size;
+	
 
 #ifdef MP_VISION_OPTIONAL
 	vision_combo_.set_location(xpos, ypos);
@@ -876,7 +879,11 @@ void create::layout_children(const SDL_Rect& rect)
 	ypos = ypos_columntop;
 
 #ifdef __IPHONEOS__
-	xpos += 240;
+	#ifdef __IPAD__
+		xpos += 93 + column_border_size;
+	#else
+		xpos += 240;
+	#endif
 #else	
 	xpos += 93 + column_border_size;
 #endif
@@ -912,10 +919,18 @@ void create::layout_children(const SDL_Rect& rect)
 	countdown_reservoir_time_slider_.set_width(100);
 	countdown_reservoir_time_slider_.set_location(xpos, ypos);
 	ypos += countdown_reservoir_time_slider_.height() + border_size;
+	
+	random_start_time_.set_location(xpos, ypos);
+	ypos += random_start_time_.height() + border_size;
+
 
 	ypos = ypos_columntop;
 #ifdef __IPHONEOS__
-	xpos += 120;
+	#ifdef __IPAD__
+		xpos += 75;
+	#else
+		xpos += 120;
+	#endif
 #else
 	xpos += 75;
 #endif	

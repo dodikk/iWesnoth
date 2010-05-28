@@ -30,6 +30,10 @@
 #import <Foundation/Foundation.h>
 #include "jumphack.h"
 
+#ifndef DISABLE_OPENFEINT
+extern bool gPauseForOpenFeint;
+#endif
+
 void
 UIKit_PumpEvents(_THIS)
 {
@@ -46,6 +50,15 @@ UIKit_PumpEvents(_THIS)
 	 */	
 	if (setjmp(*jump_env()) == 0) {
 		/* if we're setting the jump, rather than jumping back */
+		
+#ifndef DISABLE_OPENFEINT
+		// KP: limit framerate when OF is up
+		while (gPauseForOpenFeint)
+		{
+			CFRunLoopRunInMode(kCFRunLoopDefaultMode, 1, TRUE); 
+		}
+#endif		
+		
 		SInt32 result;
 		do {
 			result = CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0, TRUE);

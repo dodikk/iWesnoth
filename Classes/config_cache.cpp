@@ -535,10 +535,12 @@ std::vector<std::string> stringTable;
 std::vector<unsigned long> stringOffsets;
 char *loadStringTable = NULL;
 unsigned long totalStringSize=0;
+std::map<std::string, int> stringTableHelper;
 
 void cacheFreeStringTable(void)
 {
 	stringTable.clear();
+	stringTableHelper.clear();
 	stringOffsets.clear();
 	if (loadStringTable)
 		free(loadStringTable);
@@ -554,18 +556,23 @@ void cacheSaveString(FILE *file, const std::string &str)
 	unsigned short pos;
 	
 	// check if vector contains element
-	std::vector<std::string>::iterator it;
-	it = std::find(stringTable.begin(), stringTable.end(), str);
-	if (it == stringTable.end())
+	//std::vector<std::string>::iterator it;
+	//it = std::find(stringTable.begin(), stringTable.end(), str);
+	std::map<std::string, int>::iterator fnd;
+	fnd = stringTableHelper.lower_bound(str);
+	
+	if (fnd != stringTableHelper.end() && !(stringTableHelper.key_comp()(str, fnd->first)))
+	{
+		//pos = it - stringTable.begin();
+		pos = fnd->second;
+	}
+	else
 	{
 		stringTable.push_back(str);
 		stringOffsets.push_back(totalStringSize);
 		pos = stringTable.size() - 1;
 		totalStringSize += str.size();
-	}
-	else
-	{
-		pos = it - stringTable.begin();
+		stringTableHelper.insert(fnd, std::make_pair<std::string, int>(str, pos));
 	}
 	
 	fwrite(&pos, sizeof(pos), 1, file);

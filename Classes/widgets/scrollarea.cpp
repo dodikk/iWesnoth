@@ -149,6 +149,7 @@ unsigned scrollarea::scrollbar_width() const
 
 void scrollarea::handle_event(const SDL_Event& event)
 {
+	
 	if (mouse_locked() || hidden() || event.type != SDL_MOUSEBUTTONDOWN)
 		return;
 
@@ -160,6 +161,79 @@ void scrollarea::handle_event(const SDL_Event& event)
 			scrollbar_.scroll_up();
 		}
 	}
+	
+}
+	
+bool scrollarea::handle_drag_event(const SDL_Event& event)
+{
+	// KP: added content dragging for iPhone
+	static bool isDragging = false;
+	static int startDrag = 0;
+	static int startPos = 0;
+	static bool didDrag = false;
+	SDL_MouseButtonEvent const &e = event.button;
+	if (point_in_rect(e.x, e.y, inner_location()))
+	{
+		switch(event.type)
+		{
+			case SDL_MOUSEBUTTONUP:
+			{
+				isDragging = false;
+				break;
+			}
+			case SDL_MOUSEBUTTONDOWN:
+			{
+				isDragging = true;
+				startDrag = e.y;
+				startPos = get_position();
+				didDrag = false;
+				break;
+			}
+			case SDL_MOUSEMOTION:
+			{
+				if (isDragging)
+				{
+					int changeY = startDrag - e.y;
+					//SDL_Rect inner_loc = inner_location();
+					//float pixelsPerScroll = item_height_ / ((float) (item_height_ * nitems()) / inner_loc.h);
+					//int move = changeY / pixelsPerScroll;
+					int move = changeY;
+					if (move != 0)
+					{
+						int newPos = startPos + move;
+						if (newPos < 0)
+							newPos = 0;
+						if (newPos > get_max_position())
+							newPos = get_max_position();
+						set_position(newPos);
+						didDrag = true;
+						
+						// fixes dragging off of control
+						startDrag = e.y;
+						startPos = newPos;
+					}
+				}
+				break;
+			}
+			default:
+				break;
+		}
+	}
+	else if (event.type == SDL_MOUSEBUTTONUP)
+	{
+		isDragging = false;
+	}
+	
+	// do not select after dragging
+	if (didDrag == true && isDragging == false)
+	{
+		didDrag = false;
+		return true;
+	}
+	
+	return false;
+	// END iPhone content dragging
+	
 }
 
 } // end namespace gui

@@ -25,7 +25,7 @@ pthread_mutex_t mutex;
 
 - (void) audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL) flag
 {
-		// TODO: do some sort of callback with player ptr
+	[player release];
 }
 
 @end
@@ -92,9 +92,9 @@ iSound::~iSound()
 	{
 		if (mPlayingSound[i] != nil)
 		{
-			player = mPlayingSound[i];
-			[player stop];
-			[player release];
+//			player = mPlayingSound[i];
+//			[player stop];
+//			[player release];
 			mPlayingSound[i] = nil;
 		}
 	}
@@ -167,9 +167,10 @@ void iSound::stopSound(int channel)
 	pthread_mutex_lock(&mutex);
 	if (mPlayingSound[channel] != nil)
 	{
-		if ([mPlayingSound[channel] isPlaying])
-			[mPlayingSound[channel] stop];
-		[mPlayingSound[channel] release];
+		// KP: don't release here, just let it complete...
+//		if ([mPlayingSound[channel] isPlaying])
+//			[mPlayingSound[channel] stop];
+//		[mPlayingSound[channel] release];
 		mPlayingSound[channel] = nil;
 	}
 	pthread_mutex_unlock(&mutex);
@@ -240,7 +241,7 @@ void iSound::playMusic(const std::string& filename, int loopCount)
 		mPlayingMusic.numberOfLoops = loopCount;
 		mPlayingMusic.volume = ((float)mVolumeMusic)/100;
 		
-		[mPlayingMusic prepareToPlay];
+		//[mPlayingMusic prepareToPlay];
 		[mPlayingMusic play];
 	}
 	else
@@ -258,15 +259,15 @@ void iSound::playSound(const std::string& filename, int channel)
 	pthread_mutex_lock(&mutex);
 
 	// KP: we no longer stop the old sound, let it mix!
-/*	
+
 	if (mPlayingSound[channel] != nil)
 	{
-		if ([mPlayingSound[channel] isPlaying])
-			[mPlayingSound[channel] stop];
-		[mPlayingSound[channel] release];
+//		if ([mPlayingSound[channel] isPlaying])
+//			[mPlayingSound[channel] stop];
+//		[mPlayingSound[channel] release];
 		mPlayingSound[channel] = nil;
 	}
-*/
+
 	
 	NSString *soundFilePath;
 	
@@ -295,7 +296,8 @@ void iSound::playSound(const std::string& filename, int channel)
 		mPlayingSound[channel].volume = ((float)mVolumeSound[channel])/100;
 		mPlayingSound[channel].numberOfLoops = 0;
 		
-		[mPlayingSound[channel] prepareToPlay];
+		//[mPlayingSound[channel] prepareToPlay];
+		[mPlayingSound[channel] setDelegate:mSoundDelegate];
 		[mPlayingSound[channel] play];
 	}
 	

@@ -31,7 +31,9 @@
 
 namespace font {
 
-const char LARGE_TEXT='*', SMALL_TEXT='`',
+const char /*LARGE_TEXT='*', */
+			EXTRA_LARGE_TEXT=']',
+		   LARGE_TEXT='*', SMALL_TEXT='`',
 		   BOLD_TEXT='~',  NORMAL_TEXT='{',
 		   NULL_MARKUP='^',
 		   BLACK_TEXT='}', GRAY_TEXT='|',
@@ -69,6 +71,9 @@ std::string::const_iterator parse_markup(std::string::const_iterator i1,
 			break;
 		case GRAY_TEXT:
 			if (colour) *colour = GRAY_COLOUR;
+			break;
+		case EXTRA_LARGE_TEXT:
+			if (font_size) *font_size += 4;
 			break;
 		case LARGE_TEXT:
 			if (font_size) *font_size += 2;
@@ -302,15 +307,69 @@ SDL_Rect draw_text(CVideo* gui, const SDL_Rect& area, int size,
 	
 	
 	SDL_Rect dst = {x, y, w, h};
-	SDL_RenderCopy(tex, NULL, &dst, DRAW);
+	//SDL_RenderCopy(tex, NULL, &dst, DRAW);
+	
+	// KP: 20100228: obey clipping rectangle
+	SDL_Rect src = {0, 0, w, h};
+	
+	SDL_Rect clip;
+	
+	getClipRect(&clip);
+	
+	// perform clipping
+	SDL_Rect clippedDst;
+	SDL_Rect clippedSrc;
+	bool result = SDL_IntersectRect(&dst, &clip, &clippedDst);
+	if (!result)
+		return clippedDst;	// outside clip area
+	
+	clippedSrc = src;
+	
+	SDL_Rect clipAmount;
+	clipAmount.x = clippedDst.x - dst.x;
+	clipAmount.y = clippedDst.y - dst.y;
+	clipAmount.w = dst.w - clippedDst.w;
+	clipAmount.h = dst.h - clippedDst.h;
+	
+	textureRenderFlags flags = DRAW;	// KP: maybe this will change later for text...
+	
+	if ((flags & FLOP) != 0)
+	{
+		clippedSrc.x += (clipAmount.w-clipAmount.x);
+		clippedSrc.w -= clipAmount.x;
+	}
+	else
+	{
+		clippedSrc.x += clipAmount.x;
+		clippedSrc.w -= clipAmount.w;
+	}
+	if ((flags & FLIP) != 0)
+	{
+		clippedSrc.y += (clipAmount.h-clipAmount.y);
+		clippedSrc.h -= clipAmount.y;
+	}
+	else
+	{
+		clippedSrc.y += clipAmount.y;
+		clippedSrc.h -= clipAmount.h;
+	}
+	
+	static unsigned long renderCount = 0;
+	renderCount++;
+	
+	SDL_RenderCopy(tex, &clippedSrc, &clippedDst, flags);
+	
+	
 	//SDL_DestroyTexture(tex);
 	
-	return dst;
+	//return dst;
+	return clippedDst;
 }
 
 bool is_format_char(char c)
 {
 	switch(c) {
+	case EXTRA_LARGE_TEXT:
 	case LARGE_TEXT:
 	case SMALL_TEXT:
 	case GOOD_TEXT:

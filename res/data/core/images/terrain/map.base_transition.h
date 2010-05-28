@@ -231,7 +231,8 @@ addMapEntry("fog-s-sw-nw.png",			4*78,	5*78,	FLIP|FLOP,	72, 72, 0, 0, 72, 72, MA
 addMapEntry("fog-s-sw.png",				5*78,	5*78,	FLIP|FLOP,	72, 72, 0, 0, 72, 72, MAP_BASE_TRANSITION);
 addMapEntry("fog-s.png",				6*78,	5*78,	FLIP,	72, 72, 0, 0, 72, 72, MAP_BASE_TRANSITION);
 addMapEntry("fog-se-s-sw.png",			9*78,	5*78,	FLIP,	72, 72, 0, 0, 72, 72, MAP_BASE_TRANSITION);
-addMapEntry("fog-se-s.png",				4*78,	5*78,	FLIP,	72, 72, 0, 0, 72, 72, MAP_BASE_TRANSITION);
+//addMapEntry("fog-se-s.png",				4*78,	5*78,	FLIP,	72, 72, 0, 0, 72, 72, MAP_BASE_TRANSITION);
+addMapEntry("fog-se-s.png",				5*78,	5*78,	FLIP,	72, 72, 0, 0, 72, 72, MAP_BASE_TRANSITION);
 addMapEntry("fog-se.png",				8*78,	5*78,	FLIP,	72, 72, 0, 0, 72, 72, MAP_BASE_TRANSITION);
 addMapEntry("fog-sw-nw-n.png",			4*78,	5*78,	FLOP,	72, 72, 0, 0, 72, 72, MAP_BASE_TRANSITION);
 addMapEntry("fog-sw-nw.png",			7*78,	5*78,	FLOP,	72, 72, 0, 0, 72, 72, MAP_BASE_TRANSITION);
@@ -366,7 +367,8 @@ addMapEntry("swamp/water-s.png",			3*78,	9*78,	FLIP,	72, 72, 0, 0, 72, 72, MAP_B
 addMapEntry("swamp/water-se-s-sw.png",		6*78,	9*78,	FLIP,	72, 72, 0, 0, 72, 72, MAP_BASE_TRANSITION);
 addMapEntry("swamp/water-se-s.png",			2*78,	9*78,	FLIP,	72, 72, 0, 0, 72, 72, MAP_BASE_TRANSITION);
 addMapEntry("swamp/water-se.png",			5*78,	9*78,	FLIP,	72, 72, 0, 0, 72, 72, MAP_BASE_TRANSITION);
-addMapEntry("swamp/water-sw-nw-n.png",		78,		9*78,	FLIP|FLOP,	72, 72, 0, 0, 72, 72, MAP_BASE_TRANSITION);
+//addMapEntry("swamp/water-sw-nw-n.png",		78,		9*78,	FLIP|FLOP,	72, 72, 0, 0, 72, 72, MAP_BASE_TRANSITION);
+addMapEntry("swamp/water-sw-nw-n.png",		78,		9*78,	FLOP,	72, 72, 0, 0, 72, 72, MAP_BASE_TRANSITION);
 addMapEntry("swamp/water-sw-nw.png",		4*78,	9*78,	FLOP,	72, 72, 0, 0, 72, 72, MAP_BASE_TRANSITION);
 addMapEntry("swamp/water-sw.png",			5*78,	9*78,	FLIP|FLOP,	72, 72, 0, 0, 72, 72, MAP_BASE_TRANSITION);
 

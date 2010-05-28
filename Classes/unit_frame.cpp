@@ -480,9 +480,6 @@ void unit_frame::redraw(const int frame_time,bool first_time,const map_location 
 }
 bool unit_frame::invalidate(const bool force,const int frame_time,const map_location & src,const map_location & dst,const frame_parameters & animation_val,const frame_parameters & engine_val,const bool primary) const
 {
-	// KP: under openGL, everything is drawn every frame, so don't waste time here
-	
-	/*
 	game_display* disp = game_display::get_singleton();
 	const int xsrc = disp->get_location_x(src);
 	const int ysrc = disp->get_location_y(src);
@@ -505,6 +502,7 @@ bool unit_frame::invalidate(const bool force,const int frame_time,const map_loca
 		image_fit_hex = image::is_in_hex(image_loc);
 	}
 
+	/*
 	surface image;
 	if(!image_loc.is_void() && image_loc.get_filename() != "") { // invalid diag image, or not diagonal
 		//
@@ -515,13 +513,24 @@ bool unit_frame::invalidate(const bool force,const int frame_time,const map_loca
 				image::SCALED_TO_ZOOM
 				);
 	}
+	 */
+	
+	// KP: use our texture map info
+	textureAtlasInfo tinfo;
+	getUnitTextureAtlasInfo(image_loc.get_filename(), image_loc.get_modifications(), tinfo);
+	
 	// we always invalidate our own hex because we need to be called at redraw time even
 	// if we don't draw anything in the hex itself
 	bool result = false;
-	if (image != NULL) {
-		const int x = static_cast<int>(tmp_offset * xdst + (1.0-tmp_offset) * xsrc)+current_data.x+d2-(image->w/2);
-		const int y = static_cast<int>(tmp_offset * ydst + (1.0-tmp_offset) * ysrc)+current_data.y+d2-(image->h/2);
-		const SDL_Rect r = {x,y,image->w,image->h};
+	//if (image != NULL) {
+	if (tinfo.mapId != 0) 
+	{
+		//const int x = static_cast<int>(tmp_offset * xdst + (1.0-tmp_offset) * xsrc)+current_data.x+d2-(image->w/2);
+		const int x = static_cast<int>(tmp_offset * xdst + (1.0-tmp_offset) * xsrc)+current_data.x+d2-(tinfo.originalW/2);
+		//const int y = static_cast<int>(tmp_offset * ydst + (1.0-tmp_offset) * ysrc)+current_data.y+d2-(image->h/2);
+		const int y = static_cast<int>(tmp_offset * ydst + (1.0-tmp_offset) * ysrc)+current_data.y+d2-(tinfo.originalH/2);
+		//const SDL_Rect r = {x,y,image->w,image->h};
+		const SDL_Rect r = {x,y,tinfo.originalW,tinfo.originalH};
 		// check if the unit fit in a hex
 		bool in_hex = image_fit_hex && r.x==xsrc && r.y==ysrc
 				&& r.w==disp->hex_size() && r.h==disp->hex_size();
@@ -547,9 +556,8 @@ bool unit_frame::invalidate(const bool force,const int frame_time,const map_loca
 			result |= disp->invalidate(dst);
 		}
 	}
+
 	return result;
-	 */
-	return true;
 }
 
 

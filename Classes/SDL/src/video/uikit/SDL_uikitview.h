@@ -32,10 +32,12 @@
 #define MAX_SIMULTANEOUS_TOUCHES 1
 #endif
 
-/* *INDENT-OFF* */
+
 @interface SDL_uikitview : UIView<UITextFieldDelegate> {
 		
 	SDL_Mouse mice[MAX_SIMULTANEOUS_TOUCHES];
+	
+	CGFloat initialDistance;
 
 #if SDL_IPHONE_KEYBOARD
 	UITextField *textField;
@@ -46,6 +48,7 @@
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event;
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event;
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event;
+- (CGFloat)distanceBetweenTwoPoints:(CGPoint)fromPoint toPoint:(CGPoint)toPoint;
 
 #if SDL_IPHONE_KEYBOARD
 - (void)showKeyboard;
@@ -55,4 +58,4 @@
 #endif 
 
 @end
-/* *INDENT-ON* */
+

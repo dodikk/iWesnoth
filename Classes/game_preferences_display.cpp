@@ -154,7 +154,7 @@ preferences_dialog::preferences_dialog(display& disp, const config& game_cfg)
 	  show_ai_moves_button_(disp.video(), _("Skip AI Moves"), gui::button::TYPE_CHECK),
 	  show_grid_button_(disp.video(), _("Show Grid"), gui::button::TYPE_CHECK),
 	  save_replays_button_(disp.video(), _("Save Replay on SP/MP Victory or MP Defeat"), gui::button::TYPE_CHECK),
-	  delete_saves_button_(disp.video(), _("Delete Auto-Saves on SP/MP Victory or MP Defeat"), gui::button::TYPE_CHECK),
+	  delete_saves_button_(disp.video(), _("Delete Auto-Saves on SP/MP Victory"), gui::button::TYPE_CHECK),
 	  show_lobby_joins_button1_(disp.video(), _("Do Not Show Lobby Joins"), gui::button::TYPE_CHECK),
 	  show_lobby_joins_button2_(disp.video(), _("Show Lobby Joins Of Friends Only"), gui::button::TYPE_CHECK),
 	  show_lobby_joins_button3_(disp.video(), _("Show All Lobby Joins"), gui::button::TYPE_CHECK),
@@ -509,7 +509,11 @@ void preferences_dialog::update_location(SDL_Rect const &rect)
 
 	// General tab
 #ifdef __IPHONEOS__
-	const int bottom_row_y = 245;
+	#ifdef __IPAD__
+		const int bottom_row_y = 500;
+	#else
+		const int bottom_row_y = 245;
+	#endif
 
 	int ypos = rect.y + top_border;
 	scroll_label_.set_location(rect.x, ypos);
@@ -660,7 +664,7 @@ void preferences_dialog::update_location(SDL_Rect const &rect)
 	ypos += short_interline; show_lobby_joins_button2_.set_location(rect.x, ypos);
 	ypos += short_interline; show_lobby_joins_button3_.set_location(rect.x, ypos);
 
-	friends_list_button_.set_location(rect.x, bottom_row_y - friends_list_button_.height());
+	friends_list_button_.set_location(rect.x, ypos+short_interline); //bottom_row_y - friends_list_button_.height());
 
 	mp_server_search_button_.set_location(rect.x + horizontal_padding + friends_list_button_.width(), bottom_row_y - mp_server_search_button_.height());
 
@@ -681,8 +685,8 @@ void preferences_dialog::update_location(SDL_Rect const &rect)
 	friends_.set_max_width(friends_xpos - rect.x - 1);
 
 	friends_add_friend_button_.set_location(friends_xpos,ypos);
-	ypos += short_interline+3; friends_add_ignore_button_.set_location(friends_xpos,ypos);
-	ypos += short_interline+3; friends_remove_button_.set_location(friends_xpos,ypos);
+	ypos += friends_add_friend_button_.height() + 3; friends_add_ignore_button_.set_location(friends_xpos,ypos);
+	ypos += friends_add_friend_button_.height() + 3; friends_remove_button_.set_location(friends_xpos,ypos);
 	friends_back_button_.set_location(rect.x, bottom_row_y - friends_back_button_.height());
 
 	//Advanced tab
@@ -1165,10 +1169,10 @@ void show_preferences_dialog(display& disp, const config& game_cfg)
 
 	std::string const pre = IMAGE_PREFIX + std::string("icons/icon-");
 	char const sep = COLUMN_SEPARATOR;
-	items.push_back(pre + "general.png" + sep + sgettext("Prefs section^General"));
-	items.push_back(pre + "display.png" + sep + sgettext("Prefs section^Display"));
-	items.push_back(pre + "music.png" + sep + sgettext("Prefs section^Sound"));
-	items.push_back(pre + "multiplayer.png" + sep + sgettext("Prefs section^Multiplayer"));
+	items.push_back(pre + "general.png");// + sep + sgettext("Prefs section^General"));
+	items.push_back(pre + "display.png");// + sep + sgettext("Prefs section^Display"));
+	items.push_back(pre + "music.png");// + sep + sgettext("Prefs section^Sound"));
+	items.push_back(pre + "multiplayer.png");// + sep + sgettext("Prefs section^Multiplayer"));
 //	items.push_back(pre + "advanced.png" + sep + sgettext("Advanced section^Advanced"));
 
 	for(;;) {

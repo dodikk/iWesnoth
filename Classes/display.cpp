@@ -12,10 +12,16 @@
    See the COPYING file for more details.
 */
 
+
+//#define SHOW_FPS	
+
+
 /**
  * @file display.cpp
  * Routines to set up the display, scroll and zoom the map.
  */
+
+#include <OpenGLES/ES1/glext.h>
 
 #include "global.hpp"
 
@@ -40,8 +46,10 @@
 #include "preferences.hpp"
 #include "sdl_utils.hpp"
 #include "tooltips.hpp"
+#include "show_dialog.hpp"
 
 #include "SDL_image.h"
+#include "video.hpp"
 
 #include <algorithm>
 #include <cassert>
@@ -63,9 +71,27 @@
 #define DBG_DP LOG_STREAM(debug, display)
 
 // how fast the scrolling should decellerate, in pixels/second^2
+#ifdef __IPAD__
+#define SCROLL_FRICTION	1400.0f
+#else
 #define SCROLL_FRICTION	700.0f
+#endif
+
+// use glCopyTexImage2D? or if not, just invalidate the full screen
+//#define SCROLL_COPY
+// use the unmasked full-screen redraw?
+//#define QUICK_REDRAW
+// use the minimal drawing when scrolling?
+#ifdef __IPAD__
+	#define QUICK_SCROLL
+#endif
 
 extern bool gRedraw;
+extern bool gMegamap;
+extern bool gIsDragging;
+
+GLuint megamap_bg = 0;
+GLuint gScrollTex = 0;
 
 namespace {
 #if defined(USE_TINY_GUI) && !defined(__IPHONEOS__)
@@ -75,14 +101,12 @@ namespace {
 	const int DefaultZoom = 72;
 	const int SmallZoom   = 36;
 #endif
-	const int MinZoom = 18;
-	const int MaxZoom = 72;
+	const int MinZoom = 36; //18;
+	const int MaxZoom = 144; //72;
 	size_t sunset_delay = 0;
 	size_t sunset_timer = 0;
 
-	// +d+ @TODO: KP: it doesn't work if benchmark is off....
-	//bool benchmark = false;
-	bool benchmark = true;
+	bool benchmark = false;
 }
 
 int display::last_zoom_ = SmallZoom;
@@ -469,6 +493,39 @@ map_location display::minimap_location_on(int x, int y)
 	return loc;
 }
 
+map_location display::megamap_location_on(int x, int y)
+{
+	//TODO: don't return location for this,
+	// instead directly scroll to the clicked pixel position
+	
+	SDL_Rect megamap_loc = {(480-minimap_->w)/2, (320-minimap_->h)/2, minimap_->w, minimap_->h};
+	
+	if (!point_in_rect(x, y, megamap_loc)) {
+		return map_location();
+	}
+	
+	// we transfom the coordinates from minimap to the full map image
+	// probably more adjustements to do (border, minimap shift...)
+	// but the mouse and human capacity to evaluate the rectangle center
+	// is not pixel precise.
+	int px = (x - megamap_loc.x) * get_map().w()*hex_width() / megamap_loc.w;
+	int py = (y - megamap_loc.y) * get_map().h()*hex_size() / megamap_loc.h;
+	
+	map_location loc = pixel_position_to_hex(px, py);
+	if (loc.x < 0)
+		loc.x = 0;
+	else if (loc.x >= get_map().w())
+		loc.x = get_map().w() - 1;
+	
+	if (loc.y < 0)
+		loc.y = 0;
+	else if (loc.y >= get_map().h())
+		loc.y = get_map().h() - 1;
+	
+	return loc;
+}
+
+
 int display::screenshot(std::string filename, bool map_screenshot)
 {
 	int size = 0;
@@ -544,7 +601,9 @@ void display::create_buttons()
 	DBG_DP << "creating buttons...\n";
 	const std::vector<theme::menu>& buttons = theme_.menus();
 	for(std::vector<theme::menu>::const_iterator i = buttons.begin(); i != buttons.end(); ++i) {
-		gui::button b(screen_,i->title(),string_to_button_type(i->type()),i->image());
+		//gui::button b(screen_,i->title(),string_to_button_type(i->type()),i->image());
+		// KP: make sure the GUI uses the normal small buttons
+		gui::button b(screen_,i->title(),string_to_button_type(i->type()), "button");
 		DBG_DP << "drawing button " << i->get_id() << "\n";
 		b.set_id(i->get_id());
 		const SDL_Rect& loc = i->location(screen_area());
@@ -755,6 +814,9 @@ std::vector<textureAtlasInfo> display::get_terrain_images(const map_location &lo
 				{
 					// the original file is chopped into 72x72 pieces, so pick the right one
 					// code below is from image::load_image_sub_file()
+					
+					tinfo.flags |= MASK;
+					
 					SDL_Rect srcrect;
 					int tile_size = 72;
 					if(image.val_.loc_.x > -1 && image.val_.loc_.y > -1 && image.val_.center_x_ > -1 && image.val_.center_y_ > -1)
@@ -765,6 +827,19 @@ std::vector<textureAtlasInfo> display::get_terrain_images(const map_location &lo
 						srcrect.y =  tile_size * image.val_.loc_.y + (tile_size/2) * (image.val_.loc_.x % 2) + offset_y;
 						srcrect.w = tile_size;
 						srcrect.h = tile_size;
+						
+						
+						// @TODO: KP: make sure to only draw once, not multiple times!
+//						if (image.val_.center_x_ == 90 && image.val_.center_y_ == 144)
+//						{
+//							if (image.val_.loc_.x != 1 || image.val_.loc_.y != 2)
+//								continue;
+//							srcrect.x = 0;
+//							srcrect.y = 0;
+//							srcrect.w = tinfo.originalW;
+//							srcrect.h = tinfo.originalH;
+//						}
+
 					}
 					else if(image.val_.loc_.x > -1 && image.val_.loc_.y > -1 )
 					{
@@ -773,6 +848,8 @@ std::vector<textureAtlasInfo> display::get_terrain_images(const map_location &lo
 						srcrect.w = tile_size;
 						srcrect.h = tile_size;
 					}
+					
+					
 					if (srcrect.w > 0)
 					{
 						SDL_Rect tex = {tinfo.trimmedX, tinfo.trimmedY, tinfo.texW, tinfo.texH};
@@ -812,12 +889,28 @@ std::vector<textureAtlasInfo> display::get_terrain_images(const map_location &lo
 }
 
 void display::drawing_buffer_commit()
-{
+{		
 	SDL_Rect clip_rect = map_area();
 //	surface const dst(get_screen_surface());
 	clip_rect_setter set_clip_rect(/*dst,*/ clip_rect);
 
-	renderQueueEnable();
+#ifdef QUICK_REDRAW	
+	if (invalidateAll_ == true)
+		renderQueueEnable();
+#endif
+	
+	// KP: support for TOD coloring
+	int todR = 0xff + (tod_.red*2);
+	if (todR > 0xff)
+		todR = 0xff;
+	int todG = 0xff + (tod_.green*2);
+	if (todG > 0xff)
+		todG = 0xff;
+	int todB = 0xff + (tod_.blue*2);
+	if (todB > 0xff)
+		todB = 0xff;
+	// ARGB
+	int todColor = (0xff << 24) | (todR << 16) | (todG << 8) | todB;
 	
 	/*
 	 * Info regarding the rendering algorithm.
@@ -839,12 +932,13 @@ void display::drawing_buffer_commit()
 	// The drawing is done per layer_group, the range per group is [low, high).
 	static const tdrawing_layer layer_groups[] = {
 		LAYER_TERRAIN_BG,
-		LAYER_TERRAIN_TMP_BG,	// KP: added this pass
+		LAYER_TERRAIN_TMP_BG,	// KP: added this pass, for things like footsteps
 		LAYER_UNIT_FIRST,
 		LAYER_UNIT_MOVE_DEFAULT,
 		// Make sure the movement doesn't show above fog and reachmap.
 		LAYER_REACHMAP,
 		LAYER_LAST_LAYER };
+	
 
 	for(size_t z = 1; z < sizeof(layer_groups)/sizeof(layer_groups[0]); ++z) {
 
@@ -889,6 +983,8 @@ void display::drawing_buffer_commit()
 						// The current row is not the row to render, skip.
 						continue;
 					}
+					
+					renderMaskOff();
 
 					for(std::vector<tblit>::const_iterator
 							blit_itor = drawing_iterator->second.begin(),
@@ -899,19 +995,87 @@ void display::drawing_buffer_commit()
 						renderQueueSetZ(curZ);
 
 
-						for(std::vector<surface>::const_iterator
-								surface_itor = blit_itor->surf.begin(),
-								surface_itor_end = blit_itor->surf.end();
-								surface_itor != surface_itor_end; ++surface_itor) {
+						// KP: added terrain atlas rendering
+						bool masked = false;
+						int curLayer = layer_itor->first;
 
+/*
+#ifdef QUICK_REDRAW						
+						if (invalidateAll_ == false)
+#endif
+						{
+							if(curLayer < LAYER_UNIT_FIRST || (curLayer >= LAYER_TERRAIN_FG && curLayer < LAYER_UNIT_MOVE_DEFAULT))
+							{
+								masked = true;
+								renderMaskTile(blit_itor->x, blit_itor->y);
+								//renderMaskTile(800, 400);
+							}
+						}
+*/
+						for(std::vector<textureAtlasInfo>::const_iterator
+							atlas_itor = blit_itor->atlas.begin(),
+							atlas_itor_end = blit_itor->atlas.end();
+							atlas_itor != atlas_itor_end; ++atlas_itor) {
+							
 							// Note that dstrect can be changed by SDL_BlitSurface
 							// and so a new instance should be initialized
 							// to pass to each call to SDL_BlitSurface.
 							SDL_Rect dstrect = { blit_itor->x, blit_itor->y, 0, 0 };
-
+							
+							if(/*masked == false && (*atlas_itor).mapId > MAP_BASE_TRANSITION && */ (curLayer < LAYER_UNIT_FIRST || (curLayer >= LAYER_TERRAIN_FG && curLayer < LAYER_UNIT_MOVE_DEFAULT)))
+							{
+#ifdef QUICK_SCROLL
+								if (gIsDragging == false)
+								{
+									masked = true;
+									renderMaskTile(blit_itor->x, blit_itor->y);
+								}
+#else
+								masked = true;
+								renderMaskTile(blit_itor->x, blit_itor->y);
+#endif
+							}
+							
+							int drawColor = blit_itor->drawColor;
+							if (curLayer == LAYER_TERRAIN_BG || curLayer == LAYER_TERRAIN_FG)
+								drawColor = todColor;
+							
 							if(blit_itor->clip.x || blit_itor->clip.y
-									||blit_itor->clip.w ||blit_itor->clip.h) {
-
+							   ||blit_itor->clip.w ||blit_itor->clip.h) {
+								
+								SDL_Rect srcrect = blit_itor->clip;
+								//SDL_BlitSurface(*surface_itor, &srcrect, dst, &dstrect);
+								//blit_surface(dstrect.x, dstrect.y, *surface_itor, &srcrect, &clip_rect);
+								renderAtlas(dstrect.x, dstrect.y, *atlas_itor, &srcrect, NULL, blit_itor->drawFlags, drawColor, blit_itor->drawBrightness);
+							} else {
+								//SDL_BlitSurface(*surface_itor, NULL, dst, &dstrect);
+								//blit_surface(dstrect.x, dstrect.y, *surface_itor, NULL, &clip_rect);
+								renderAtlas(dstrect.x, dstrect.y, *atlas_itor, NULL, NULL, blit_itor->drawFlags, drawColor, blit_itor->drawBrightness);
+							}
+							curZ++;
+							renderQueueSetZ(curZ);
+						}
+//						update_rect(blit_itor->x, blit_itor->y, zoom_, zoom_);
+						if (masked)
+						{
+							renderMaskOff();
+							masked = false;
+						}
+						
+						
+						for(std::vector<surface>::const_iterator
+							surface_itor = blit_itor->surf.begin(),
+							surface_itor_end = blit_itor->surf.end();
+							surface_itor != surface_itor_end; ++surface_itor) {
+							
+							// Note that dstrect can be changed by SDL_BlitSurface
+							// and so a new instance should be initialized
+							// to pass to each call to SDL_BlitSurface.
+							SDL_Rect dstrect = { blit_itor->x, blit_itor->y, 0, 0 };
+							
+							if(blit_itor->clip.x || blit_itor->clip.y
+							   ||blit_itor->clip.w ||blit_itor->clip.h) {
+								
 								SDL_Rect srcrect = blit_itor->clip;
 								//SDL_BlitSurface(*surface_itor, &srcrect, dst, &dstrect);
 								blit_surface(dstrect.x, dstrect.y, *surface_itor, &srcrect, &clip_rect, blit_itor->drawFlags);
@@ -930,33 +1094,7 @@ void display::drawing_buffer_commit()
 							curZ++;
 							renderQueueSetZ(curZ);
 						}
-						// KP: added terrain atlas rendering
-						for(std::vector<textureAtlasInfo>::const_iterator
-							atlas_itor = blit_itor->atlas.begin(),
-							atlas_itor_end = blit_itor->atlas.end();
-							atlas_itor != atlas_itor_end; ++atlas_itor) {
-							
-							// Note that dstrect can be changed by SDL_BlitSurface
-							// and so a new instance should be initialized
-							// to pass to each call to SDL_BlitSurface.
-							SDL_Rect dstrect = { blit_itor->x, blit_itor->y, 0, 0 };
-							
-							if(blit_itor->clip.x || blit_itor->clip.y
-							   ||blit_itor->clip.w ||blit_itor->clip.h) {
-								
-								SDL_Rect srcrect = blit_itor->clip;
-								//SDL_BlitSurface(*surface_itor, &srcrect, dst, &dstrect);
-								//blit_surface(dstrect.x, dstrect.y, *surface_itor, &srcrect, &clip_rect);
-								renderAtlas(dstrect.x, dstrect.y, *atlas_itor, &srcrect, NULL, blit_itor->drawFlags, blit_itor->drawColor, blit_itor->drawBrightness);
-							} else {
-								//SDL_BlitSurface(*surface_itor, NULL, dst, &dstrect);
-								//blit_surface(dstrect.x, dstrect.y, *surface_itor, NULL, &clip_rect);
-								renderAtlas(dstrect.x, dstrect.y, *atlas_itor, NULL, NULL, blit_itor->drawFlags, blit_itor->drawColor, blit_itor->drawBrightness);
-							}
-							curZ++;
-							renderQueueSetZ(curZ);
-						}
-//						update_rect(blit_itor->x, blit_itor->y, zoom_, zoom_);
+						
 					} // for blit_itor
 				} // for drawing_iterator
 			} // for layer_itor
@@ -965,7 +1103,13 @@ void display::drawing_buffer_commit()
 
 	drawing_buffer_clear();
 	
-	renderQueueDisable();
+	if (invalidateAll_ == true)
+	{
+#ifdef QUICK_REDRAW
+		renderQueueDisable();
+#endif
+		invalidateAll_ = false;
+	}
 }
 
 void display::drawing_buffer_clear()
@@ -1015,7 +1159,7 @@ void display::flip()
 //		update_rect(r);
 	}
 	
-	
+	if (gMegamap == false)
 	{
 		// KP: make sure labels are clipped to the map area, so floating dmg doesn't go up into status bar
 		SDL_Rect clip_rect = map_area();
@@ -1029,10 +1173,11 @@ void display::flip()
 
 //	video().flip();
 	SDL_RenderPresent();
+	renderQueueClean();
 
 //	cursor::undraw(frameBuffer);
 	events::raise_volatile_undraw_event();
-	font::undraw_floating_labels(/*frameBuffer*/);
+	font::undraw_floating_labels(this);
 }
 
 void display::update_display()
@@ -1041,7 +1186,9 @@ void display::update_display()
 		return;
 	}
 
-	if(preferences::show_fps() /*|| benchmark*/) {
+#ifdef SHOW_FPS	
+//	if(preferences::show_fps()) //|| benchmark) 
+	{
 		static int last_sample = SDL_GetTicks();
 		static int frames = 0;
 		++frames;
@@ -1063,10 +1210,12 @@ void display::update_display()
 				benchmark ? font::BAD_COLOUR : font::NORMAL_COLOUR,
 				10,100,0,0,-1,screen_area(),font::LEFT_ALIGN);
 		}
-	} else if(fps_handle_ != 0) {
-		font::remove_floating_label(fps_handle_);
-		fps_handle_ = 0;
 	}
+#endif
+//	else if(fps_handle_ != 0) {
+//		font::remove_floating_label(fps_handle_);
+//		fps_handle_ = 0;
+//	}
 
 	flip();
 }
@@ -1182,6 +1331,7 @@ void display::draw_all_panels()
 	
 	// KP: make sure status is redrawn
 	invalidateGameStatus_ = true;
+	redrawMinimap_ = true;
 }
 
 static void draw_background(/*surface screen,*/ const SDL_Rect& area, const std::string& image)
@@ -1524,6 +1674,7 @@ bool display::draw_init()
 		// toggle invalidateAll_ first to allow regular invalidations
 		invalidateAll_ = false;
 		invalidate_locations_in_rect(map_area());
+		invalidateAll_ = true;
 
 		redrawMinimap_ = true;
 	}
@@ -1533,14 +1684,15 @@ bool display::draw_init()
 
 void display::draw_wrap(bool update,bool force,bool changed)
 {
-	static const int time_between_draws = 50; // KP: 20fps
+	static const int time_between_draws = 20; // KP: 30fps
 	const int current_time = SDL_GetTicks();
 	int wait_time = nextDraw_ - current_time;
 	
 	// KP: ensure responsive map scrolling
-	if (wait_time < 20)
-		wait_time = 20;
+	if (wait_time < 10)
+		wait_time = 10;
 	
+#ifndef __IPAD__	
 	// KP: update scroll velocity
 	if (scroll_velocity_x_ != 0 || scroll_velocity_y_ != 0)
 	{
@@ -1593,7 +1745,8 @@ void display::draw_wrap(bool update,bool force,bool changed)
 		yposf_ = newY;
 		scroll_velocity_last_update_ = current_time;
 	}
-
+#endif
+	
 	if(redrawMinimap_) {
 		redrawMinimap_ = false;
 		draw_minimap();
@@ -1606,6 +1759,11 @@ void display::draw_wrap(bool update,bool force,bool changed)
 				// If it's not time yet to draw, delay until it is
 				SDL_Delay(wait_time);
 			}
+			
+			// KP: draw megamap if needed
+			if (gMegamap == true)
+				draw_megamap();
+			
 			update_display();
 		}
 
@@ -1767,13 +1925,22 @@ void display::draw_border(const map_location& loc, const int xpos, const int ypo
 
 void display::draw_minimap()
 {
+	// KP: iPhone keeps a fullscreen minimap
 	const SDL_Rect& area = minimap_area();
-	if(minimap_ == NULL || minimap_->w > area.w || minimap_->h > area.h) {
-		minimap_ = image::getMinimap(area.w, area.h, get_map(), viewpoint_);
+	const SDL_Rect bigArea = {0,0,309,256}; //{0,0,386,320};
+	
+	if(minimap_ == NULL) { //|| minimap_->w > area.w || minimap_->h > area.h) {
+		//minimap_ = image::getMinimap(area.w, area.h, get_map(), viewpoint_);
+		minimap_ = image::getMinimap(bigArea.w, bigArea.h, get_map(), viewpoint_);
 		if(minimap_ == NULL) {
 			return;
 		}
 	}
+	double wratio = area.w*1.0 / minimap_->w;
+	double hratio = area.h*1.0 / minimap_->h;
+	double ratio = std::min<double>(wratio, hratio);
+	SDL_Rect smallArea = {0,0,ratio*minimap_->w, ratio*minimap_->h};
+	
 
 //	const surface screen(screen_.getSurface());
 	clip_rect_setter clip_setter(/*screen,*/ area);
@@ -1784,19 +1951,27 @@ void display::draw_minimap()
 	SDL_RenderFill(&area);
 	
 	//update the minimap location for mouse and units functions
-	minimap_location_.x = area.x + (area.w - minimap_->w) / 2;
-	minimap_location_.y = area.y + (area.h - minimap_->h) / 2;
-	minimap_location_.w = minimap_->w;
-	minimap_location_.h = minimap_->h;
+	minimap_location_.x = area.x + (area.w - smallArea.w) / 2; //area.x + (area.w - minimap_->w) / 2;
+	minimap_location_.y = area.y + (area.h - smallArea.h) / 2; //area.y + (area.h - minimap_->h) / 2;
+	minimap_location_.w = smallArea.w; //minimap_->w;
+	minimap_location_.h = smallArea.h; //minimap_->h;
 
-	blit_surface(minimap_location_.x, minimap_location_.y, minimap_);
+	//blit_surface(minimap_location_.x, minimap_location_.y, minimap_);
+	{	// +D+ temp
+		//clip_rect_setter clip_setter(bigArea);
+		//blit_surface(0, 0, minimap_);
+		
+		blit_surface_scaled(minimap_location_.x, minimap_location_.y, minimap_location_.w, minimap_location_.h, minimap_);
+		
+		//SDL_RenderPresent();
+	}
 	
-	draw_minimap_units();
+	draw_minimap_units(minimap_location_);
 
 	// calculate the visible portion of the map:
 	// scaling between minimap and full map images
-	double xscaling = 1.0*minimap_->w / (get_map().w()*hex_width());
-	double yscaling = 1.0*minimap_->h / (get_map().h()*hex_size());
+	double xscaling = 1.0*smallArea.w / (get_map().w()*hex_width());
+	double yscaling = 1.0*smallArea.h / (get_map().h()*hex_size());
 
 	// we need to shift with the border size
 	// and the 0.25 from the minimap balanced drawing
@@ -1819,6 +1994,88 @@ void display::draw_minimap()
                    box_color/*, screen*/);
 
 }
+
+void display::draw_megamap()
+{
+	if (megamap_bg == 0)
+	{
+		std::string path = game_config::path + "/data/core/images/misc/megamap.pvrtc"; 
+		
+		int pvrtcSize = 512;
+		GLsizei dataSize = (pvrtcSize * pvrtcSize * 4) / 8;
+		FILE *fp = fopen(path.c_str(), "rb");
+		if (!fp)
+		{
+			std::cerr << "\n\n*** ERROR loading megamap bg " << path.c_str() << "\n\n";
+			return;
+		}
+		unsigned char *data = (unsigned char*) malloc(dataSize);
+		int bytesRead = fread(data, 1, dataSize, fp);
+		assert(bytesRead == dataSize);
+		fclose(fp);
+		
+		glGenTextures(1, &megamap_bg);	
+		cacheBindTexture(GL_TEXTURE_2D, megamap_bg, 1);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+		glCompressedTexImage2D(GL_TEXTURE_2D, 0, GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG, pvrtcSize, pvrtcSize, 0, dataSize, data);
+		
+#ifndef NDEBUG		
+		GLenum err = glGetError();
+		if (err != GL_NO_ERROR)
+		{
+			char buffer[512];
+			sprintf(buffer, "\n\n*** ERROR uploading compressed texture %s:  glError: 0x%04X\n\n", path.c_str(), err);
+			std::cerr << buffer;
+		}
+#endif
+		
+		free(data);		
+	}
+	
+	GLshort vertices[12];
+	GLfloat texCoords[8];
+	
+	vertices[0] = 0;
+	vertices[1] = 0;
+	vertices[2] = 0;
+	vertices[3] = 512;
+	vertices[4] = 0;
+	vertices[5] = 0;
+	vertices[6] = 0;
+	vertices[7] = 512;
+	vertices[8] = 0;
+	vertices[9] = 512;
+	vertices[10] = 512;
+	vertices[11] = 0;
+	
+	texCoords[0] = 0;
+	texCoords[1] = 0;
+	texCoords[2] = 1;
+	texCoords[3] = 0;
+	texCoords[4] = 0;
+	texCoords[5] = 1;
+	texCoords[6] = 1;
+	texCoords[7] = 1;
+	renderQueueAddTexture(vertices, texCoords, megamap_bg, 0xFFFFFFFF, 1.0);
+	
+	SDL_Rect megamap_loc = {(480-minimap_->w)/2, (320-minimap_->h)/2, minimap_->w, minimap_->h};
+	
+	SDL_Rect main_dialog_area = {megamap_loc.x, megamap_loc.y, megamap_loc.w, megamap_loc.h};
+	
+	gui::dialog_frame frame(video(), "", /*gui::dialog_frame::titlescreen_style*/ gui::dialog_frame::default_style, false);
+	frame.layout(main_dialog_area);
+	
+	frame.draw_background();
+	frame.draw_border();
+	
+	blit_surface(megamap_loc.x, megamap_loc.y, minimap_);
+	
+	draw_minimap_units(megamap_loc);	
+}
+
 
 void display::set_scroll_velocity(float xVelocity, float yVelocity)
 {
@@ -1861,8 +2118,87 @@ void display::scroll(int xmove, int ymove)
 //	if (!screen_.update_locked())
 //		SDL_BlitSurface(screen,&srcrect,screen,&dstrect);
 	
+#ifdef __IPAD__	
+#ifdef SCROLL_COPY	
+	if (gScrollTex == 0)
+	{
+		glGenTextures(1, &gScrollTex);
+	}
+
+	// the x,y values are kinda funky, but they were manually verified
+	
+	cacheBindTexture(GL_TEXTURE_2D, gScrollTex, 1);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);	
+	glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, CVideo::gety()-srcrect.y-srcrect.h, CVideo::getx()-srcrect.x-srcrect.w, nextPowerOf2(srcrect.h), nextPowerOf2(srcrect.w), 0); 
+	
+#ifndef NDEBUG
+	GLenum error = glGetError();	 
+	assert(error == 0);
+#endif
+	
+	GLshort vertices[12];
+	GLfloat texCoords[8];
+	
+	GLfloat maxu = (GLfloat) srcrect.h / nextPowerOf2(srcrect.h);
+	GLfloat maxv = (GLfloat) srcrect.w / nextPowerOf2(srcrect.w);
+	
+	vertices[0] = dstrect.x;
+	vertices[1] = dstrect.y;
+	vertices[2] = 0;
+	vertices[3] = dstrect.x+dstrect.w;
+	vertices[4] = dstrect.y;
+	vertices[5] = 0;
+	vertices[6] = dstrect.x;
+	vertices[7] = dstrect.y+dstrect.h;
+	vertices[8] = 0;
+	vertices[9] = dstrect.x+dstrect.w;
+	vertices[10] = dstrect.y+dstrect.h;
+	vertices[11] = 0;
+	
+	texCoords[0] = maxu;
+	texCoords[1] = maxv;
+	texCoords[2] = maxu;
+	texCoords[3] = 0;
+	texCoords[4] = 0;
+	texCoords[5] = maxv;
+	texCoords[6] = 0;
+	texCoords[7] = 0;
+	
+	
+	renderQueueAddTexture(vertices, texCoords, gScrollTex, 0xFFFFFFFF, 1.0);
+	
+	
+	// Invalidate locations in the newly visible rects
+	if (dy != 0) 
+	{
+		SDL_Rect r = map_area();
+		if(dy < 0)
+			r.y = r.y + r.h + dy;
+		r.h = abs(dy);
+		invalidate_locations_in_rect(r);
+	}
+	
+	if (dx != 0) 
+	{
+		SDL_Rect r = map_area();
+		if (dx < 0)
+			r.x = r.x + r.w + dx;
+		r.w = abs(dx);
+		invalidate_locations_in_rect(r);
+	}
+#else
+	// glCopyTexImage2D is actually pretty slow on the device...
+	invalidate_all();
+#endif // SCROLL_COPY
+	
+#else
 	// KP: invalidate instead
-	invalidate_locations_in_rect(map_area());
+	invalidate_all();
+#endif
+	
 /*
 //This is necessary to avoid a crash in some SDL versions on some systems
 //see http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=462794
@@ -1873,23 +2209,7 @@ void display::scroll(int xmove, int ymove)
     asm("cld");
 #endif
 */
-	// Invalidate locations in the newly visible rects
-/*
-	if (dy != 0) {
-		SDL_Rect r = map_area();
-		if(dy < 0)
-			r.y = r.y + r.h + dy;
-		r.h = abs(dy);
-		invalidate_locations_in_rect(r);
-	}
-	if (dx != 0) {
-		SDL_Rect r = map_area();
-		if (dx < 0)
-			r.x = r.x + r.w + dx;
-		r.w = abs(dx);
-		invalidate_locations_in_rect(r);
-	}
-*/ 
+
 	scroll_event_.notify_observers();
 //	update_rect(map_area());
 
@@ -1898,7 +2218,14 @@ void display::scroll(int xmove, int ymove)
 
 void display::set_zoom(int amount)
 {
-	int new_zoom = zoom_ + amount;
+	int new_zoom; // = zoom_ + amount;
+	if (amount > 0)
+		new_zoom = zoom_ * 2;
+	else if (amount < 0)
+		new_zoom = zoom_ / 2;
+	else
+		new_zoom = 72;
+
 	if (new_zoom < MinZoom) {
 		new_zoom = MinZoom;
 	}
@@ -2382,7 +2709,22 @@ void display::draw_invalidated() {
 	SDL_Rect clip_rect = get_clip_rect();
 //	surface screen = get_screen_surface();
 	clip_rect_setter set_clip_rect(/*screen,*/ clip_rect);
+	
+/*	
+	// KP: okay... here we go...
+	// The first pass invalidated tiles that need to be drawn
+	// But that is just to gather dirty rects
+	// Now we draw everything, to put it in the render buffer that will be clipped to the dirty rects
+	std::set<map_location> all_hexes;
+	rect_of_hexes hexes = hexes_under_rect(map_area());
+	rect_of_hexes::iterator i = hexes.begin(), end = hexes.end();
+	for (;i != end; ++i) {
+		//invalidate(*i);
+		all_hexes.insert(*i);
+	}
+*/	
 	foreach (map_location loc, invalidated_) {
+//	foreach (map_location loc, all_hexes) {
 		int xpos = get_location_x(loc);
 		int ypos = get_location_y(loc);
 		const bool on_map = get_map().on_board(loc);
@@ -2408,10 +2750,10 @@ void display::draw_hex(const map_location& loc) {
 	if(!shrouded(loc)) {
 		// unshrouded terrain (the normal case)
 		drawing_buffer_add(LAYER_TERRAIN_BG, loc, tblit(xpos, ypos,
-			get_terrain_images(loc,tod_.id, image_type, ADJACENT_BACKGROUND)));
+														get_terrain_images(loc,tod_.id, image_type, ADJACENT_BACKGROUND)));
 
 		 drawing_buffer_add(LAYER_TERRAIN_FG, loc, tblit(xpos, ypos,
-			get_terrain_images(loc,tod_.id,image_type,ADJACENT_FOREGROUND)));
+														 get_terrain_images(loc,tod_.id,image_type,ADJACENT_FOREGROUND)));
 
 	// Draw the grid, if that's been enabled
 		if(grid_ && on_map && !off_map_tile) {
@@ -2546,8 +2888,13 @@ void display::draw_image_for_report(surface& img, SDL_Rect& rect)
 			visible_area.w = img->w;
 			visible_area.h = img->h;
 		} else {
+#ifdef __IPAD__
+			target.x = rect.x;
+			target.y = rect.y;
+#else
 			target.x = rect.x - (img->w - visible_area.w)/2;
 			target.y = rect.y - (img->h - visible_area.h)/2;
+#endif
 			target.w = visible_area.w;
 			target.h = visible_area.h;
 		}
@@ -2779,6 +3126,8 @@ void display::invalidate_all()
 	invalidateAll_ = true;
 	invalidated_.clear();
 //	update_rect(map_area());
+	
+//	renderQueueMarkDirty(0, 0, CVideo::getx(), CVideo::gety());
 }
 
 bool display::invalidate(const map_location& loc)
@@ -2786,7 +3135,11 @@ bool display::invalidate(const map_location& loc)
 	if(invalidateAll_)
 		return false;
 
-	return invalidated_.insert(loc).second;
+	bool result = invalidated_.insert(loc).second;
+	int x = get_location_x(loc);
+	int y = get_location_y(loc);
+	renderQueueMarkDirty(x,y);
+	return result;
 }
 
 bool display::invalidate(const std::set<map_location>& locs)
@@ -2796,6 +3149,9 @@ bool display::invalidate(const std::set<map_location>& locs)
 	bool ret = false;
 	foreach (const map_location& loc, locs) {
 		ret = invalidated_.insert(loc).second || ret;
+		int x = get_location_x(loc);
+		int y = get_location_y(loc);
+		renderQueueMarkDirty(x,y);		
 	}
 	return ret;
 }

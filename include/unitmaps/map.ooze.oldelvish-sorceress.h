@@ -1,0 +1,23 @@
+// "filename.png", texOffsetX, texOffsetY, flags, texW, texH, trimmedX, trimmedY, originalW, originalH, UNITMAP_OOZE_OLDELVISH_SORCERESSID
+addMapEntry("oldelvish-sorceress-attack1.png", 193, 63, 0, 59, 53, 2, 8, 72, 72, UNITMAP_OOZE_OLDELVISH_SORCERESS);
+addMapEntry("oldelvish-sorceress-attack2.png", 0, 124, 0, 64, 49, 0, 8, 72, 72, UNITMAP_OOZE_OLDELVISH_SORCERESS);
+addMapEntry("oldelvish-sorceress-attack3.png", 129, 63, 0, 64, 50, 0, 8, 72, 72, UNITMAP_OOZE_OLDELVISH_SORCERESS);
+addMapEntry("oldelvish-sorceress-attack4.png", 0, 173, 0, 56, 49, 5, 8, 72, 72, UNITMAP_OOZE_OLDELVISH_SORCERESS);
+addMapEntry("oldelvish-sorceress-attack5.png", 162, 0, 0, 49, 49, 9, 8, 72, 72, UNITMAP_OOZE_OLDELVISH_SORCERESS);
+addMapEntry("oldelvish-sorceress-attack6.png", 63, 0, 0, 50, 50, 9, 7, 72, 72, UNITMAP_OOZE_OLDELVISH_SORCERESS);
+addMapEntry("oldelvish-sorceress-attack7.png", 113, 0, 0, 49, 50, 11, 7, 72, 72, UNITMAP_OOZE_OLDELVISH_SORCERESS);
+addMapEntry("oldelvish-sorceress-defend.png", 256, 0, 0, 50, 44, 20, 13, 72, 72, UNITMAP_OOZE_OLDELVISH_SORCERESS);
+addMapEntry("oldelvish-sorceress-entangle1.png", 191, 124, 0, 61, 58, 5, 1, 72, 72, UNITMAP_OOZE_OLDELVISH_SORCERESS);
+addMapEntry("oldelvish-sorceress-entangle2.png", 128, 185, 0, 64, 60, 4, 1, 72, 72, UNITMAP_OOZE_OLDELVISH_SORCERESS);
+addMapEntry("oldelvish-sorceress-entangle3.png", 0, 63, 0, 65, 61, 3, 0, 72, 72, UNITMAP_OOZE_OLDELVISH_SORCERESS);
+addMapEntry("oldelvish-sorceress-entangle4.png", 65, 63, 0, 64, 61, 4, 0, 72, 72, UNITMAP_OOZE_OLDELVISH_SORCERESS);
+addMapEntry("oldelvish-sorceress-entangle5.png", 128, 124, 0, 63, 61, 5, 0, 72, 72, UNITMAP_OOZE_OLDELVISH_SORCERESS);
+addMapEntry("oldelvish-sorceress-entangle6.png", 65, 124, 0, 63, 61, 5, 0, 72, 72, UNITMAP_OOZE_OLDELVISH_SORCERESS);
+addMapEntry("oldelvish-sorceress-entangle7.png", 192, 185, 0, 61, 59, 5, 0, 72, 72, UNITMAP_OOZE_OLDELVISH_SORCERESS);
+addMapEntry("oldelvish-sorceress-melee1.png", 256, 44, 0, 33, 54, 24, 3, 72, 72, UNITMAP_OOZE_OLDELVISH_SORCERESS);
+addMapEntry("oldelvish-sorceress-melee2.png", 211, 0, 0, 41, 57, 17, 0, 72, 72, UNITMAP_OOZE_OLDELVISH_SORCERESS);
+addMapEntry("oldelvish-sorceress-melee3.png", 65, 185, 0, 57, 58, 14, 0, 72, 72, UNITMAP_OOZE_OLDELVISH_SORCERESS);
+addMapEntry("oldelvish-sorceress-melee4.png", 289, 44, 0, 41, 41, 20, 17, 72, 72, UNITMAP_OOZE_OLDELVISH_SORCERESS);
+addMapEntry("oldelvish-sorceress-melee5.png", 330, 44, 0, 32, 41, 24, 16, 72, 72, UNITMAP_OOZE_OLDELVISH_SORCERESS);
+addMapEntry("oldelvish-sorceress-ranged-defend.png", 0, 0, 0, 63, 63, 7, 5, 72, 72, UNITMAP_OOZE_OLDELVISH_SORCERESS);
+addMapEntry("oldelvish-sorceress.png", 362, 44, 0, 28, 43, 24, 14, 72, 72, UNITMAP_OOZE_OLDELVISH_SORCERESS);

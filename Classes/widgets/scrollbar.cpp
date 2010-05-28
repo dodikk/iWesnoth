@@ -25,17 +25,17 @@
 
 
 namespace {
-	const std::string scrollbar_top = "buttons/scrolltop.png";
-	const std::string scrollbar_bottom = "buttons/scrollbottom.png";
-	const std::string scrollbar_mid = "buttons/scrollmid.png";
+	const std::string scrollbar_top = "buttons/scrolltop2.png";
+	const std::string scrollbar_bottom = "buttons/scrollbottom2.png";
+	const std::string scrollbar_mid = "buttons/scrollmid2.png";
 
-	const std::string scrollbar_top_hl = "buttons/scrolltop-active.png";
-	const std::string scrollbar_bottom_hl = "buttons/scrollbottom-active.png";
-	const std::string scrollbar_mid_hl = "buttons/scrollmid-active.png";
+	const std::string scrollbar_top_hl = "buttons/scrolltop2.png"; //"buttons/scrolltop-active.png";
+	const std::string scrollbar_bottom_hl = "buttons/scrollbottom2.png"; //"buttons/scrollbottom-active.png";
+	const std::string scrollbar_mid_hl = "buttons/scrollmid2.png"; //"buttons/scrollmid-active.png";
 
-	const std::string groove_top = "buttons/scrollgroove-top.png";
-	const std::string groove_mid = "buttons/scrollgroove-mid.png";
-	const std::string groove_bottom = "buttons/scrollgroove-bottom.png";
+	const std::string groove_top = "buttons/scrollgroove-top2.png";
+	const std::string groove_mid = "buttons/scrollgroove-mid2.png";
+	const std::string groove_bottom = "buttons/scrollgroove-bottom2.png";
 
 }
 
@@ -60,29 +60,29 @@ scrollbar::scrollbar(CVideo &video)
 handler_vector scrollbar::handler_members()
 {
 	handler_vector h;
-	h.push_back(&uparrow_);
-	h.push_back(&downarrow_);
+//	h.push_back(&uparrow_);
+//	h.push_back(&downarrow_);
 	return h;
 }
 
 void scrollbar::update_location(SDL_Rect const &rect)
 {
-	int uh = uparrow_.height(), dh = downarrow_.height();
-	uparrow_.set_location(rect.x, rect.y);
-	downarrow_.set_location(rect.x, rect.y + rect.h - dh);
+	//int uh = uparrow_.height(), dh = downarrow_.height();
+	int uh = 0, dh = 0;
+	//uparrow_.set_location(rect.x, rect.y);
+	//downarrow_.set_location(rect.x, rect.y + rect.h - dh);
 	SDL_Rect r = rect;
 	r.y += uh;
 	r.h -= uh + dh;
 
 	widget::update_location(r);
-	//bg_register(r);
 }
 
 void scrollbar::hide(bool value)
 {
 	widget::hide(value);
-	uparrow_.hide(value);
-	downarrow_.hide(value);
+//	uparrow_.hide(value);
+//	downarrow_.hide(value);
 }
 
 unsigned scrollbar::get_position() const
@@ -102,8 +102,8 @@ void scrollbar::set_position(unsigned pos)
 	if (pos == grip_position_)
 		return;
 	grip_position_ = pos;
-	uparrow_.enable(grip_position_ != 0);
-	downarrow_.enable(grip_position_ < full_height_ - grip_height_);
+//	uparrow_.enable(grip_position_ != 0);
+//	downarrow_.enable(grip_position_ < full_height_ - grip_height_);
 	set_dirty();
 }
 
@@ -159,8 +159,8 @@ void scrollbar::set_scroll_rate(unsigned r)
 
 bool scrollbar::is_valid_height(int height) const
 {
-	int uh = uparrow_.height();
-	int dh = downarrow_.height();
+	int uh = 0; //uparrow_.height();
+	int dh = 0; //downarrow_.height();
 	if(uh + dh >= height) {
 		return false;
 	} else {
@@ -180,18 +180,18 @@ void scrollbar::scroll_up()
 
 void scrollbar::process_event()
 {
-	if (uparrow_.pressed())
-		scroll_up();
-
-	if (downarrow_.pressed())
-		scroll_down();
+//	if (uparrow_.pressed())
+//		scroll_up();
+//
+//	if (downarrow_.pressed())
+//		scroll_down();
 }
 
 SDL_Rect scrollbar::groove_area() const
 {
 	SDL_Rect loc = location();
-	int uh = uparrow_.height();
-	int dh = downarrow_.height();
+	int uh = 0; //uparrow_.height();
+	int dh = 0; //downarrow_.height();
 	if(uh + dh >= loc.h) {
 		loc.h = 0;
 	} else {
@@ -268,6 +268,10 @@ void scrollbar::draw_contents()
 
 //	surface const screen = video().getSurface();
 
+	// KP: leave a little more space
+	groove.x += 4;
+	grip.x += 4;
+	
 	// Draw scrollbar "groove"
 	blit_surface(groove.x, groove.y, top_grv);
 	blit_surface(groove.x, groove.y + top_grv->h, groove_scaled_);
@@ -286,6 +290,8 @@ void scrollbar::handle_event(const SDL_Event& event)
 	if (mouse_locked() || hidden())
 		return;
 
+// KP: no longer handle scrollbar events
+/*
 	STATE new_state = state_;
 	SDL_Rect const &grip = grip_area();
 	SDL_Rect const &groove = groove_area();
@@ -346,6 +352,7 @@ void scrollbar::handle_event(const SDL_Event& event)
 		mid_scaled_.assign(NULL);
 	}
 	state_ = new_state;
+*/
 }
 
 } // end namespace gui

@@ -19,6 +19,10 @@
 #include "log.hpp"
 #include "preferences.hpp"
 
+extern bool gMegamap;
+extern bool gRedraw;
+extern bool gIsDragging;
+
 
 namespace events {
 
@@ -80,7 +84,7 @@ bool mouse_handler_base::mouse_motion_default(int x, int y, bool /*update*/)
 	if(simple_warp_) {
 		return true;
 	}
-
+/*
 	if(minimap_scrolling_) {
 		//if the game is run in a window, we could miss a LMB/MMB up event
 		// if it occurs outside our window.
@@ -100,6 +104,7 @@ bool mouse_handler_base::mouse_motion_default(int x, int y, bool /*update*/)
 		}
 		if(minimap_scrolling_) return true;
 	}
+*/ 
 
 	// Fire the drag & drop only after minimal drag distance
 	// While we check the mouse buttons state, we also grab fresh position data.
@@ -131,6 +136,7 @@ bool mouse_handler_base::mouse_motion_default(int x, int y, bool /*update*/)
 		dragged_x_ = dx;
 		dragged_y_ = dy;
 		didDrag_ = true;
+		gIsDragging = true;
 		// KP: fixes #5
 		unsigned long curTime = SDL_GetTicks();
 		if ((curTime - drag_start_time_) > 100) // update velocity every 1/10 second
@@ -167,7 +173,8 @@ void mouse_handler_base::mouse_press(const SDL_MouseButtonEvent& event, const bo
 	if (is_left_click(event)) {
 		if (event.state == SDL_PRESSED) {
 			cancel_dragging();
-			init_dragging(dragging_left_);
+			if (event.x < gui().map_area().w)
+				init_dragging(dragging_left_);
 			left_click(event.x, event.y, browse);
 		} else if (event.state == SDL_RELEASED) {
 			minimap_scrolling_ = false;
@@ -260,15 +267,48 @@ bool mouse_handler_base::right_click_show_menu(int /*x*/, int /*y*/, const bool 
 bool mouse_handler_base::left_click(int x, int y, const bool /*browse*/)
 {
 	// clicked on a hex on the minimap? then initiate minimap scrolling
-	const map_location& loc = gui().minimap_location_on(x, y);
-	minimap_scrolling_ = false;
-	if(loc.valid()) {
-		minimap_scrolling_ = true;
-		last_hex_ = loc;
-		gui().scroll_to_tile(loc,display::WARP, false);
-		return true;
+	if (gMegamap == true)
+	{
+		const map_location& loc = gui().megamap_location_on(x, y);
+		if(loc.valid()) {
+			minimap_scrolling_ = true;
+			last_hex_ = loc;
+			gui().scroll_to_tile(loc, display::WARP, false);
+			gMegamap = false;
+			gRedraw = true;
+			cancel_dragging();
+			dragged_x_ = 0;
+			dragged_y_ = 0;
+			didDrag_ = false;
+			gIsDragging = false;
+			drag_start_time_ = 0;
+			scroll_velocity_x_ = 0;
+			scroll_velocity_y_ = 0;
+			drag_last_xVelocity_ = 0;
+			drag_last_yVelocity_ = 0;
+			minimap_scrolling_ = false;
+			return true;
+		}		
+		return false;
 	}
-	return false;
+	else
+	{
+		const map_location& loc = gui().minimap_location_on(x, y);
+		minimap_scrolling_ = false;
+		if(loc.valid()) {
+#ifdef __IPAD__			
+			minimap_scrolling_ = true;
+			last_hex_ = loc;
+			gui().scroll_to_tile(loc,display::WARP, false);
+#else
+			// KP: now, a click on the minimap causes the megamap to popup
+			gMegamap = true;
+#endif
+			return true;
+		}
+				
+		return false;
+	}
 }
 
 void mouse_handler_base::left_drag_end(int x, int y, const bool browse)

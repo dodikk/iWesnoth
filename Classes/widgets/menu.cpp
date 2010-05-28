@@ -26,6 +26,8 @@
 #include "video.hpp"
 #include "wml_separators.hpp"
 
+#include "construct_dialog.hpp"
+
 #include <numeric>
 
 namespace gui {
@@ -287,8 +289,15 @@ void menu::create_help_strings()
 
 void menu::update_scrollbar_grip_height()
 {
-	set_full_size(items_.size());
-	set_shown_size(max_items_onscreen());
+	//set_full_size(items_.size());
+	int h = heading_height();
+	for(int i = 0; i < items_.size(); i++)
+		h += get_item_height(i);	
+	set_full_size(h);
+	size_t max_height = (max_height_ == -1 ? (video().gety()*88)/100 : max_height_) - heading_height();
+	if (max_height > h)
+		max_height = h;
+	set_shown_size(max_height);
 }
 
 void menu::update_size()
@@ -314,8 +323,17 @@ void menu::update_size()
 		w = max_width_;
 	}
 
+	//update_scrollbar_grip_height();
+	//set_measurements(w, h);
+	size_t max_height = (max_height_ == -1 ? (video().gety()*88)/100 : max_height_) - heading_height();
+	h = heading_height();
+	for(int i = 0; i < items_.size(); i++)
+		h += get_item_height(i);	
+
+	if (max_height > h)
+		max_height = h;
+	set_measurements(w, max_height);
 	update_scrollbar_grip_height();
-	set_measurements(w, h);
 }
 
 int menu::selection() const
@@ -441,7 +459,7 @@ size_t menu::max_items_onscreen() const
 #if defined(USE_TINY_GUI) //&& !defined(__IPHONEOS__)
 	const size_t max_height = (max_height_ == -1 ? (video().gety()*88)/100 : max_height_) - heading_height();
 #else
-	const size_t max_height = (max_height_ == -1 ? (video().gety()*66)/100 : max_height_) - heading_height();
+	const size_t max_height = (max_height_ == -1 ? (video().gety()*88)/100 : max_height_) - heading_height();
 #endif
 
 	std::vector<int> heights;
@@ -466,7 +484,8 @@ void menu::adjust_viewport_to_selection()
 {
 	if(click_selects_)
 		return;
-	adjust_position(selected_);
+	//adjust_position(selected_);
+	adjust_position(selected_ * item_height_);
 }
 
 void menu::set_selection_pos(size_t new_selected, bool silent, SELECTION_MOVE_VIEWPORT move_viewport)
@@ -602,14 +621,19 @@ void menu::handle_event(const SDL_Event& event)
 	scrollarea::handle_event(event);
 	if (height()==0 || hidden())
 		return;
+	
+
+	if (scrollarea::handle_drag_event(event) == true)
+		return;
 
 	if(event.type == SDL_KEYDOWN) {
 		// Only pass key events if we have the focus
 		if (focus(&event))
 			key_press(event.key.keysym.sym);
 	} else if(!mouse_locked() && ((event.type == SDL_MOUSEBUTTONUP &&
-	         (event.button.button == SDL_BUTTON_LEFT || event.button.button == SDL_BUTTON_RIGHT)) ||
-	         event.type == DOUBLE_CLICK_EVENT)) {
+	         (event.button.button == SDL_BUTTON_LEFT || event.button.button == SDL_BUTTON_RIGHT)) 
+//								  || event.type == DOUBLE_CLICK_EVENT
+								  )) {
 
 		int x = 0;
 		int y = 0;
@@ -881,7 +905,7 @@ void menu::draw_row(const size_t row_index, const SDL_Rect& rect, ROW_TYPE type)
 		if(lang_rtl)
 			xpos -= widths[i];
 		if(type == HEADING_ROW && highlight_heading_ == int(i)) {
-			draw_solid_tinted_rectangle(xpos,rect.y,widths[i],rect.h,255,255,255,0.3); //,video().getSurface());
+			//draw_solid_tinted_rectangle(xpos,rect.y,widths[i],rect.h,255,255,255,0.3); //,video().getSurface());
 		}
 
 		const int last_x = xpos;
@@ -941,9 +965,25 @@ void menu::draw_row(const size_t row_index, const SDL_Rect& rect, ROW_TYPE type)
 
 void menu::draw_contents()
 {
+	
+	// KP: now draw a nice frame!
+	SDL_Rect frame_rect = inner_location();
+	gui::dialog_frame f(video(), "", gui::dialog_frame::preview_style, false);
+	f.layout(frame_rect);
+//	f.draw_background();
+	f.draw_border();
+	
+	
 	SDL_Rect heading_rect = inner_location();
 	heading_rect.h = heading_height();
 	style_->draw_row(*this,0,heading_rect,HEADING_ROW);
+	
+	// KP: make sure to clip
+	SDL_Rect content_rect = inner_location();
+	content_rect.y += heading_rect.h;
+	content_rect.h -= heading_rect.h;
+	clip_rect_setter clippy(content_rect);
+	
 
 	for(size_t i = 0; i != item_pos_.size(); ++i) {
 		style_->draw_row(*this,item_pos_[i],get_item_rect(i),
@@ -984,6 +1024,9 @@ void menu::draw()
 	invalid_.clear();
 
 	bg_restore();
+	
+	
+	
 
 	util::scoped_ptr<clip_rect_setter> clipper(NULL);
 	if(clip_rect())
@@ -1084,9 +1127,11 @@ SDL_Rect menu::get_item_rect(int item) const
 
 SDL_Rect menu::get_item_rect_internal(size_t item) const
 {
-	unsigned int first_item_on_screen = get_position();
+	//unsigned int first_item_on_screen = get_position();
+	unsigned int first_item_on_screen = get_position() / item_height_;
+	unsigned int leftovers = get_position() - (first_item_on_screen * item_height_);
 	if (item < first_item_on_screen ||
-	    size_t(item) >= first_item_on_screen + max_items_onscreen()) {
+	    size_t(item) >= first_item_on_screen + max_items_onscreen() + 2) {
 		return empty_rect;
 	}
 
@@ -1100,6 +1145,11 @@ SDL_Rect menu::get_item_rect_internal(size_t item) const
 	if (item != first_item_on_screen) {
 		const SDL_Rect& prev = get_item_rect_internal(item-1);
 		y = prev.y + prev.h;
+	}
+	else
+	{
+		// KP: sub-item scrolling
+		y -= leftovers;
 	}
 
 	SDL_Rect res = { loc.x, y, loc.w, get_item_height(item) };

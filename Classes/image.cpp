@@ -1000,6 +1000,10 @@ surface get_image(const image::locator& i_locator, TYPE type, bool cacheIt)
 
 bool is_in_hex(const locator& i_locator)
 {
+	// KP: optimization
+	if (i_locator.get_filename() == "")
+		return false;
+	
 	if(i_locator.in_cache(in_hex_info_)) {
 		return i_locator.locate_in_cache(in_hex_info_);
 	} else {

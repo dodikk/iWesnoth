@@ -19,6 +19,8 @@
 #include "wesconfig.h"
 #include "serialization/tokenizer.hpp"
 
+#include <iostream>
+
 
 tokenizer::tokenizer(std::istream& in) :
 	current_(EOF),
@@ -28,8 +30,12 @@ tokenizer::tokenizer(std::istream& in) :
 	file_(),
 	token_(),
 	in_(in)
-{
+{	
 	next_char_fast();
+}
+
+tokenizer::~tokenizer()
+{
 }
 
 #ifdef DEBUG
@@ -59,6 +65,9 @@ const token& tokenizer::next_token()
 		while (is_space(current_)) {
 			//token_.leading_spaces += current_;
 			leading_spaces_buffer += current_;
+			//if (!token_.leading_spaces_ptr)
+			//	token_.leading_spaces_ptr = in_buffer + curPos - 1;
+			//token_.leading_spaces_size++;
 			next_char_fast();
 		}
 		if (current_ != 254)
@@ -90,7 +99,7 @@ const token& tokenizer::next_token()
 					break;
 				if(current_ == '"' && peek_char() == '"')
 					next_char_fast();
-				if (current_ == 254 ) {
+				if (current_ == 254) {
 					skip_comment();
 					--lineno_;
 					continue;
@@ -98,25 +107,37 @@ const token& tokenizer::next_token()
 				
 				//token_.value += current_;
 				value_buffer += current_;
+				//if (!token_.value_ptr)
+				//	token_.value_ptr = in_buffer + curPos - 1;
+				//token_.value_size++;
 			};
 			break;
 		case '[': case ']': case '/': case '\n': case '=': case ',': case '+':
 			token_.type = token::token_type(current_);
 			//token_.value = current_;
 			value_buffer += current_;
+			//if (!token_.value_ptr)
+			//	token_.value_ptr = in_buffer + curPos - 1;
+			//token_.value_size++;			
 			break;
 		default:
 			if(is_alnum(current_)) {
 				token_.type = token::STRING;
+				//if (!token_.value_ptr)
+				//	token_.value_ptr = in_buffer + curPos - 1;				
 				do {
 					//token_.value += current_;
 					value_buffer += current_;
+					//token_.value_size++;
 					next_char_fast();
 				} while (is_alnum(current_));
 			} else {
 				token_.type = token::MISC;
 				//token_.value += current_;
 				value_buffer += current_;
+				//if (!token_.value_ptr)
+				//	token_.value_ptr = in_buffer + curPos - 1;				
+				//token_.value_size++;
 				next_char();
 			}
 			
@@ -137,6 +158,30 @@ const token& tokenizer::next_token()
 	token_.leading_spaces.assign(leading_spaces_buffer);
 	return token_;
 }
+
+static const bool alnum[256] = {
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,
+	0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,1,
+	0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,
+	
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+};
+
+bool tokenizer::is_alnum(const int c) const
+{
+	//return (c >= 'a' && c <= 'z')
+	//	|| (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || c == '_';
+	
+	// KP: waaaay faster to use a lookup table, as this function is called a lot
+	if (c < 0)
+		return false;
+	return alnum[c];
+}
+
 
 void tokenizer::skip_comment()
 {

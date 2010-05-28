@@ -1,20 +1,19 @@
 <resources>
 <game_profile_page_info>
+  <suggestions_topic_id>39774</suggestions_topic_id>
   <has_achievements>true</has_achievements>
   <icon_url>/uploads/application_descriptions/h_icons/99/9c/70/ac/6024/Icon100.png</icon_url>
   <has_featured_application>true</has_featured_application>
-  <has_leaderboards>false</has_leaderboards>
-  <short_name>Wesnoth</short_name>
-  <has_ipurchase>true</has_ipurchase>
-  <name>Battle for Wesnoth</name>
-  <is_owned_by_local_player>true</is_owned_by_local_player>
   <has_chat_rooms>true</has_chat_rooms>
   <has_challenges>false</has_challenges>
+  <has_ipurchase>true</has_ipurchase>
+  <is_owned_by_local_player>true</is_owned_by_local_player>
+  <has_leaderboards>false</has_leaderboards>
+  <short_name>Wesnoth</short_name>
+  <name>Battle for Wesnoth</name>
   <id>458</id>
-  <suggestions_topic_id>39774</suggestions_topic_id>
 </game_profile_page_info>
 <offline>
-  <leaderboard_aggregations/>
   <leaderboards/>
 </offline>
 

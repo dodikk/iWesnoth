@@ -16,6 +16,13 @@
 
 #include <string>
 #include <map>
+#include <iostream>
+
+#ifdef NDEBUG
+	#ifndef assert
+		#define assert(a)
+	#endif
+#endif
 
 // do the strings get deleted when not used, or just kept around? performance vs memory
 #define DONT_CLEAR_STRINGS

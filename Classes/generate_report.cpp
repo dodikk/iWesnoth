@@ -134,6 +134,8 @@ Units cannot be killed by poison alone. The poison will not reduce it below 1 HP
 			res.add_text(str,tooltip);
 		}
 		// KP: always add traits here too
+		// @TODO: KP: check why there is a trailing , when not needed
+#ifndef __IPAD__		
 		if (abilities.size() == 0)
 		{
 			res.add_text(u->second.traits_description(),u->second.modification_description("trait"));
@@ -142,13 +144,16 @@ Units cannot be killed by poison alone. The poison will not reduce it below 1 HP
 		{
 			res.add_text(", " + u->second.traits_description(),u->second.modification_description("trait"));
 		}
-
+#endif
 		return res;
 	}
 	case UNIT_HP: {
 	    report res;
 	    std::stringstream tooltip;
-		str << "HP:\n" << font::color2markup( u->second.hp_color() );
+#ifndef __IPAD__	
+		str << "HP:\n";
+#endif
+		str << font::color2markup( u->second.hp_color() );
 		str << u->second.hitpoints() << "/" << u->second.max_hitpoints();
 
 		std::set<std::string> resistances_table;
@@ -192,7 +197,10 @@ Units cannot be killed by poison alone. The poison will not reduce it below 1 HP
 	  report res;
 	  std::stringstream tooltip;
 
-	  str << "XP:\n" << font::color2markup( u->second.xp_color() );
+#ifndef __IPAD__	
+		str << "XP:\n";
+#endif
+		str << font::color2markup( u->second.xp_color() );
 	  str << u->second.experience() << "/" << u->second.max_experience();
 
 	  tooltip << _("Experience Modifier: ") << ((level["experience_modifier"] != "") ? level["experience_modifier"] : "100") << "%";

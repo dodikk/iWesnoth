@@ -101,8 +101,13 @@ void default_map_generator::user_config(display& disp)
 
 	CVideo& screen = disp.video();
 
+#ifdef __IPAD__
+	const int width = 600;
+	const int height = 400;
+#else
 	const int width = 480;//600;
 	const int height = 320;//400;
+#endif
 	const int xpos = screen.getx()/2 - width/2;
 	int ypos = 28;
 

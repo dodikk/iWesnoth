@@ -64,18 +64,25 @@ gamebrowser::gamebrowser(CVideo& video, const config* map_hashes) :
 
 void gamebrowser::set_inner_location(const SDL_Rect& rect)
 {
-	set_full_size(games_.size());
-	set_shown_size(rect.h / row_height());
+	//set_full_size(games_.size());
+	set_full_size(games_.size() * item_height_);
+	//set_shown_size(rect.h / row_height());
+	set_shown_size(rect.h);
 	bg_register(rect);
 	scroll(get_position());
 }
 
 void gamebrowser::scroll(unsigned int pos)
 {
-	if(pos < games_.size()) {
-		visible_range_.first = pos;
-		visible_range_.second = std::min<size_t>(pos + inner_location().h / row_height(), games_.size());
-		set_dirty();
+//	if(pos < games_.size()) 
+	{
+		pos = pos/item_height_;
+		if (pos < games_.size())
+		{
+			visible_range_.first = pos;
+			visible_range_.second = std::min<size_t>(pos + (inner_location().h / row_height()) +2, games_.size());
+			set_dirty();
+		}
 	}
 }
 
@@ -85,7 +92,9 @@ SDL_Rect gamebrowser::get_item_rect(size_t index) const {
 		return res;
 	}
 	const SDL_Rect& loc = inner_location();
-	const SDL_Rect res = { loc.x, loc.y + (index - visible_range_.first) * row_height(), loc.w, row_height()};
+	int firstShown = get_position() / item_height_;
+	int leftovers = get_position() - firstShown*item_height_;
+	const SDL_Rect res = { loc.x, loc.y + (index - visible_range_.first) * row_height() - leftovers, loc.w, row_height()};
 	return res;
 }
 
@@ -106,6 +115,9 @@ void gamebrowser::draw()
 
 void gamebrowser::draw_contents()
 {
+	SDL_Rect content_rect = inner_location();
+	clip_rect_setter clippy(content_rect);
+	
 	if(!games_.empty()) {
 		for(size_t i = visible_range_.first; i != visible_range_.second; ++i) {
 			style_->draw_row(*this,i,get_item_rect(i),(i==selected_)? SELECTED_ROW : NORMAL_ROW);
@@ -277,20 +289,23 @@ void gamebrowser::draw_row(const size_t index, const SDL_Rect& item_rect, ROW_TY
 void gamebrowser::handle_event(const SDL_Event& event)
 {
 	scrollarea::handle_event(event);
+	if (scrollarea::handle_drag_event(event))
+		return;
+	
 	if(event.type == SDL_KEYDOWN) {
 		if(focus(&event) && !games_.empty()) {
 			switch(event.key.keysym.sym) {
 				case SDLK_UP:
 					if(selected_ > 0) {
 						--selected_;
-						adjust_position(selected_);
+						adjust_position(selected_*item_height_);
 						set_dirty();
 					}
 					break;
 				case SDLK_DOWN:
 					if(selected_ < games_.size() - 1) {
 						++selected_;
-						adjust_position(selected_);
+						adjust_position(selected_*item_height_);
 						set_dirty();
 					}
 					break;
@@ -298,7 +313,7 @@ void gamebrowser::handle_event(const SDL_Event& event)
 				{
 					const long items_on_screen = visible_range_.second - visible_range_.first;
 					selected_ = static_cast<size_t>(std::max<long>(static_cast<long>(selected_) - items_on_screen, 0));
-					adjust_position(selected_);
+					adjust_position(selected_*item_height_);
 					set_dirty();
 				}
 					break;
@@ -306,18 +321,18 @@ void gamebrowser::handle_event(const SDL_Event& event)
 				{
 					const size_t items_on_screen = visible_range_.second - visible_range_.first;
 					selected_ = std::min<size_t>(selected_ + items_on_screen, games_.size() - 1);
-					adjust_position(selected_);
+					adjust_position(selected_*item_height_);
 					set_dirty();
 				}
 					break;
 				case SDLK_HOME:
 					selected_ = 0;
-					adjust_position(selected_);
+					adjust_position(selected_*item_height_);
 					set_dirty();
 					break;
 				case SDLK_END:
 					selected_ = games_.size() - 1;
-					adjust_position(selected_);
+					adjust_position(selected_*item_height_);
 					set_dirty();
 					break;
 				default:
@@ -566,8 +581,8 @@ void gamebrowser::set_game_items(const config& cfg, const config& game_config)
 		games_.back().observers = (**game)["observer"] != "no" ? true : false;
 		games_.back().verified = verified;
 	}
-	set_full_size(games_.size());
-	set_shown_size(inner_location().h / row_height());
+	set_full_size(games_.size()*item_height_);
+	set_shown_size(inner_location().h);
 
 	// Try to preserve the game selection
 	if (!selected_game.empty()) {
@@ -587,7 +602,7 @@ void gamebrowser::set_game_items(const config& cfg, const config& game_config)
 		// Keep the selected game visible if it was visible before
 		if (selection_visible && (visible_range_.first > selected_
 								  || visible_range_.second < selected_)) {
-			set_position(selected_);
+			set_position(selected_*item_height_);
 		}
 	}
 	scroll(get_position());
@@ -603,7 +618,7 @@ void gamebrowser::select_game(const std::string id) {
 			break;
 		}
 	}
-	adjust_position(selected_);
+	adjust_position(selected_*item_height_);
 	set_dirty();
 }
 
@@ -679,14 +694,14 @@ lobby::lobby(game_display& disp, const config& cfg, chat& c, config& gamelist) :
 	game_vacant_slots_(),
 	game_observers_(),
 
-	observe_game_(disp.video(), _("Observe Game")),
-	join_game_(disp.video(), _("Join Game")),
-	create_game_(disp.video(), _("Create Game")),
+	observe_game_(disp.video(), _("Observe Game"), gui::button::TYPE_PRESS, "button"),
+	join_game_(disp.video(), _("Join Game"), gui::button::TYPE_PRESS, "button"),
+	create_game_(disp.video(), _("Create Game"), gui::button::TYPE_PRESS, "button"),
 	skip_replay_(disp.video(), _("Quick Replays"), gui::button::TYPE_CHECK),
 #ifndef USE_TINY_GUI
 	game_preferences_(disp.video(), _("Preferences")),
 #endif
-	quit_game_(disp.video(), _("Quit")),
+	quit_game_(disp.video(), _("Quit"), gui::button::TYPE_PRESS, "button"),
 	last_selected_game_(-1), sorter_(gamelist),
 	games_menu_(disp.video(),cfg.child("multiplayer_hashes")),
 	minimaps_()

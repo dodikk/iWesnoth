@@ -33,7 +33,7 @@ namespace image {
 surface getMinimap(int w, int h, const gamemap& map, const viewpoint* vw)
 {
 #ifdef __IPHONEOS__
-	const int scale = 4;
+	const int scale = 8; //4;
 #else
 	const int scale = 8;
 #endif

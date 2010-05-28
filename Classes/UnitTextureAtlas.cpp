@@ -39,7 +39,7 @@ GLuint gUnitTexIds[NUM_UNITMAPS];
 unsigned int gUnitTexW[NUM_UNITMAPS];
 unsigned int gUnitTexH[NUM_UNITMAPS];
 
-#define MAX_UNIT_ATLAS_TOTAL_SIZE	3*1024*1024
+#define MAX_UNIT_ATLAS_TOTAL_SIZE	4*1024*1024
 
 typedef struct
 {
@@ -141,8 +141,8 @@ void loadUnitMap(unsigned short mapId)
 		case UNITMAP_DRAKES_FLARE:
 			filename += "map.drakes.flare.png";
 			break;
-		case UNITMAP_DRAKES_GLADIATOR:
-			filename += "map.drakes.gladiator.png";
+		case UNITMAP_DRAKES_THRASHER:
+			filename += "map.drakes.thrasher.png";
 			break;
 		case UNITMAP_DRAKES_GLIDER:
 			filename += "map.drakes.glider.png";
@@ -156,8 +156,8 @@ void loadUnitMap(unsigned short mapId)
 		case UNITMAP_DRAKES_SKY:
 			filename += "map.drakes.sky.png";
 			break;
-		case UNITMAP_DRAKES_SLASHER:
-			filename += "map.drakes.slasher.png";
+		case UNITMAP_DRAKES_ARBITER:
+			filename += "map.drakes.arbiter.png";
 			break;
 		case UNITMAP_DRAKES_WARDEN:
 			filename += "map.drakes.warden.png";
@@ -1466,7 +1466,40 @@ void loadUnitMap(unsigned short mapId)
 			break;
 			
 			
+		
+		case UNITMAP_OOZE_GIANT_MUDCRAWLER:
+			filename += "map.ooze.giant-mudcrawler.png";
+			break;
+		case UNITMAP_OOZE_HUMAN_QUEEN:
+			filename += "map.ooze.human-queen.png";
+			break;
+		case UNITMAP_OOZE_MUDCRAWLER:
+			filename += "map.ooze.mudcrawler.png";
+			break;
+		case UNITMAP_OOZE_OLDELVISH_ENCHANTRESS:
+			filename += "map.ooze.oldelvish-enchantress.png";
+			break;
+		case UNITMAP_OOZE_OLDELVISH_SHAMAN:
+			filename += "map.ooze.oldelvish-shaman.png";
+			break;
+		case UNITMAP_OOZE_OLDELVISH_SORCERESS:
+			filename += "map.ooze.oldelvish-sorceress.png";
+			break;
+		case UNITMAP_OOZE_OLDELVISH_SYLPH:
+			filename += "map.ooze.oldelvish-sylph.png";
+			break;
+		case UNITMAP_OOZE_QUINTAIN:
+			filename += "map.ooze.quintain.png";
+			break;
 			
+			
+		case UNITMAP_SX_SAND_SCORPION:
+			filename += "map.sx.sand-scorpion.png";
+			break;
+			
+		case UNITMAP_TDH:
+			filename += "map.tdh.png";
+			break;
 			
 			
 		default:
@@ -1477,7 +1510,8 @@ void loadUnitMap(unsigned short mapId)
 	assert (mapId < NUM_UNITMAPS);
 	
 	glGenTextures(1, &gUnitTexIds[mapId+color]);	
-	glBindTexture(GL_TEXTURE_2D, gUnitTexIds[mapId+color]);
+	//glBindTexture(GL_TEXTURE_2D, gUnitTexIds[mapId+color]);
+	cacheBindTexture(GL_TEXTURE_2D, gUnitTexIds[mapId+color], true);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -1567,15 +1601,6 @@ void loadUnitMap(unsigned short mapId)
 		std::cerr << "UnitTextureAtlas: creating atlas ID " << mapId+color << " " << surf->w << "x" << surf->h << ", " << uad.size << " bytes, total " << gUnitAtlasTotalSize << " bytes\n";
 		gUnitAtlasLRU.push_back(uad);
 		
-		while(gUnitAtlasTotalSize >= MAX_UNIT_ATLAS_TOTAL_SIZE && gUnitAtlasLRU.size() > 0)
-		{
-			uad = gUnitAtlasLRU.front();
-			gUnitAtlasLRU.pop_front();
-			glDeleteTextures(1, &gUnitTexIds[uad.mapId]);
-			gUnitTexIds[uad.mapId] = 0;
-			gUnitAtlasTotalSize -= uad.size;
-			std::cerr << "UnitTextureAtlas: FREED atlas ID " << uad.mapId << " size " << uad.size << " bytes, total now " << gUnitAtlasTotalSize << " bytes\n";
-		}			
 		
 		// note: the sdl surface is destroyed at the end of this context
 	}
@@ -1593,6 +1618,8 @@ void loadUnitMap(unsigned short mapId)
 		assert(bytesRead == dataSize);
 		fclose(fp);
 		glCompressedTexImage2D(GL_TEXTURE_2D, 0, GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG, pvrtcSize, pvrtcSize, 0, dataSize, data);
+		
+#ifndef NDEBUG		
 		GLenum err = glGetError();
         if (err != GL_NO_ERROR)
         {
@@ -1600,6 +1627,7 @@ void loadUnitMap(unsigned short mapId)
 			sprintf(buffer, "\n\n*** ERROR uploading compressed texture %s:  glError: 0x%04X\n\n", filename.c_str(), err);
 			std::cerr << buffer;
         }
+#endif
 		
 		free(data);
 		
@@ -1614,16 +1642,7 @@ void loadUnitMap(unsigned short mapId)
 		gUnitAtlasTotalSize += uad.size;
 		std::cerr << "UnitTextureAtlas: creating PVRTC atlas ID " << mapId+color << " " << pvrtcSize << "x" << pvrtcSize << ", " << uad.size << " bytes, total " << gUnitAtlasTotalSize << " bytes\n";
 		gUnitAtlasLRU.push_back(uad);
-		
-		while(gUnitAtlasTotalSize >= MAX_UNIT_ATLAS_TOTAL_SIZE && gUnitAtlasLRU.size() > 0)
-		{
-			uad = gUnitAtlasLRU.front();
-			gUnitAtlasLRU.pop_front();
-			glDeleteTextures(1, &gUnitTexIds[uad.mapId]);
-			gUnitTexIds[uad.mapId] = 0;
-			gUnitAtlasTotalSize -= uad.size;
-			std::cerr << "UnitTextureAtlas: FREED atlas ID " << uad.mapId << " size " << uad.size << " bytes, total now " << gUnitAtlasTotalSize << " bytes\n";
-		}			
+			
 		
 	}
 }
@@ -1640,14 +1659,14 @@ void initUnitTextureAtlas(void)
 	#include "map.drakes.enforcer.h"
 	#include "map.drakes.fighter.h"
 	#include "map.drakes.fire.h"
-	#include "map.drakes.flameheart.h"
-	#include "map.drakes.flare.h"
-	#include "map.drakes.gladiator.h"
+	//#include "map.drakes.flameheart.h"
+	//#include "map.drakes.flare.h"
+	#include "map.drakes.thrasher.h"
 	#include "map.drakes.glider.h"
 	#include "map.drakes.hurricane.h"
 	#include "map.drakes.inferno.h"
 	#include "map.drakes.sky.h"
-	#include "map.drakes.slasher.h"
+	#include "map.drakes.arbiter.h"
 	#include "map.drakes.warden.h"
 	#include "map.drakes.warrior.h"
 
@@ -2068,42 +2087,53 @@ void initUnitTextureAtlas(void)
 	#include "map.undead-flag.h"
 	
 	// HALOS
-	#include "map.elven.druid-healing.h"
-	#include "map.elven.elven-shield.h"
-	#include "map.elven.faerie-fire.h"
-	#include "map.elven.ice-halo.h"
-	#include "map.elven.nature-halo.h"
-	#include "map.elven.shaman-heal.h"
-	#include "map.elven.shyde.h"
-	#include "map.fire-aura.h"
-	#include "map.flame-burst.h"
-	#include "map.holy.halo.h"
-	#include "map.holy.lightbeam.h"
-	#include "map.iftu.avatar.h"
-	#include "map.iftu.bomb-explode.h"
-	#include "map.iftu.chaos.h"
-	#include "map.iftu.darkness-beam.h"
-	#include "map.iftu.elynia-noillum.h"
-	#include "map.iftu.elynia.h"
-	#include "map.iftu.illuminates.h"
-	#include "map.iftu.obscures.h"
-	#include "map.iftu.wose-ranged.h"
-	#include "map.iftu.wose.h"
-	#include "map.illuminates-aura.h"
-	#include "map.liberty.shadow-mage.h"
-	#include "map.lighthouse-aura.h"
-	#include "map.lightning-bolt.h"
-	#include "map.mage-halo-big.h"
-	#include "map.mage-halo.h"
-	#include "map.mage-preparation.h"
-	#include "map.merfolk.staff-flare.h"
-	#include "map.merfolk.water.h"
-	#include "map.saurian-magic-halo.h"
-	#include "map.teleport.h"
-	#include "map.thot.karrag.h"
-	#include "map.undead.h"
+	#include "halomap.elven.druid-healing.h"
+	#include "halomap.elven.elven-shield.h"
+	#include "halomap.elven.faerie-fire.h"
+	#include "halomap.elven.ice-halo.h"
+	#include "halomap.elven.nature-halo.h"
+	#include "halomap.elven.shaman-heal.h"
+	#include "halomap.elven.shyde.h"
+	#include "halomap.fire-aura.h"
+	#include "halomap.flame-burst.h"
+	#include "halomap.holy.halo.h"
+	#include "halomap.holy.lightbeam.h"
+	#include "halomap.iftu.avatar.h"
+	#include "halomap.iftu.bomb-explode.h"
+	#include "halomap.iftu.chaos.h"
+	#include "halomap.iftu.darkness-beam.h"
+	#include "halomap.iftu.elynia-noillum.h"
+	#include "halomap.iftu.elynia.h"
+	#include "halomap.iftu.illuminates.h"
+	#include "halomap.iftu.obscures.h"
+	#include "halomap.iftu.wose-ranged.h"
+	#include "halomap.iftu.wose.h"
+	#include "halomap.illuminates-aura.h"
+	#include "halomap.liberty.shadow-mage.h"
+	#include "halomap.lighthouse-aura.h"
+	#include "halomap.lightning-bolt.h"
+	#include "halomap.mage-halo-big.h"
+	#include "halomap.mage-halo.h"
+	#include "halomap.mage-preparation.h"
+	#include "halomap.merfolk.staff-flare.h"
+	#include "halomap.merfolk.water.h"
+	#include "halomap.saurian-magic-halo.h"
+	#include "halomap.teleport.h"
+	#include "halomap.thot.karrag.h"
+	#include "halomap.undead.h"
 		
+	#include "map.ooze.giant-mudcrawler.h"
+	#include "map.ooze.human-queen.h"
+	#include "map.ooze.mudcrawler.h"
+	#include "map.ooze.oldelvish-enchantress.h"
+	#include "map.ooze.oldelvish-shaman.h"
+	#include "map.ooze.oldelvish-sorceress.h"
+	#include "map.ooze.oldelvish-sylph.h"
+	#include "map.ooze.quintain.h"
 	
+	#include "map.sx.sand-scorpion.h"
+	
+	#include "map.tdh.h"
 }
 
 void freeUnitTextureAtlas(void)
@@ -2121,9 +2151,25 @@ void freeUnitTextureAtlas(void)
 	gUnitAtlasTotalSize = 0;
 }
 
+void checkUnitTextureAtlas(void)
+{
+	while(gUnitAtlasTotalSize >= MAX_UNIT_ATLAS_TOTAL_SIZE && gUnitAtlasLRU.size() > 0)
+	{
+		unitAtlasData uad;
+		uad = gUnitAtlasLRU.front();
+		gUnitAtlasLRU.pop_front();
+		glDeleteTextures(1, &gUnitTexIds[uad.mapId]);
+		gUnitTexIds[uad.mapId] = 0;
+		gUnitAtlasTotalSize -= uad.size;
+		std::cerr << "UnitTextureAtlas: FREED atlas ID " << uad.mapId << " size " << uad.size << " bytes, total now " << gUnitAtlasTotalSize << " bytes\n";
+	}			
+	
+}
+
 bool getUnitTextureAtlasInfo(const std::string& filename, const std::string& modifications, textureAtlasInfo& tinfo)
 {
 	std::string searchStr;
+	std::string modStr = modifications;
 	if (filename.compare(0, 5, "halo/") == 0)
 	{
 		// chop off redundant "halo/"
@@ -2140,7 +2186,14 @@ bool getUnitTextureAtlasInfo(const std::string& filename, const std::string& mod
 	{
 		// normal unit images
 		searchStr = filename;
-	}
+		// check for imbedded ~ character, added for Ooze Mini-Campaign
+		int pos = searchStr.find('~', 0);
+		if (pos != std::string::npos)
+		{
+			modStr = searchStr.substr(pos, searchStr.size() - pos);
+			searchStr = searchStr.substr(0, pos);
+		}
+	}	
 	
 	std::map<shared_string, textureAtlasInfo>::iterator it;
 	it = gUnitAtlasMap.find(searchStr);
@@ -2160,38 +2213,38 @@ bool getUnitTextureAtlasInfo(const std::string& filename, const std::string& mod
 	
 	tinfo = it->second;
 
-	int rcPos = modifications.find("~RC(magenta>");
+	int rcPos = modStr.find("~RC(magenta>");
 	if (rcPos != std::string::npos)
 	{
 		// adjust tinfo.mapId based on modifications string
 		rcPos += 12;
 		int colorInt = 0;
-		if (modifications.size() > rcPos+2)
+		if (modStr.size() > rcPos+2)
 		{
 			// also convert color words
-			if (modifications[rcPos] == 'r')
+			if (modStr[rcPos] == 'r')
 				colorInt = 1;	// red
-			else if (modifications[rcPos] == 'b' && modifications[rcPos+2] == 'u')
+			else if (modStr[rcPos] == 'b' && modStr[rcPos+2] == 'u')
 				colorInt = 2;	// blue
-			else if (modifications[rcPos] == 'g')
+			else if (modStr[rcPos] == 'g')
 				colorInt = 3;	// green
-			else if (modifications[rcPos] == 'p')
+			else if (modStr[rcPos] == 'p')
 				colorInt = 4;	// purple
-			else if (modifications[rcPos] == 'b' && modifications[rcPos+2] == 'a')
+			else if (modStr[rcPos] == 'b' && modStr[rcPos+2] == 'a')
 				colorInt = 5;	// black
-			else if (modifications[rcPos] == 'b' && modifications[rcPos+2] == 'o')
+			else if (modStr[rcPos] == 'b' && modStr[rcPos+2] == 'o')
 				colorInt = 6;	// brown
-			else if (modifications[rcPos] == 'o')
+			else if (modStr[rcPos] == 'o')
 				colorInt = 7;	// orange
-			else if (modifications[rcPos] == 'w')
+			else if (modStr[rcPos] == 'w')
 				colorInt = 8;	// white
-			else if (modifications[rcPos] == 't')
+			else if (modStr[rcPos] == 't')
 				colorInt = 9;	// teal
 			
 		}
 		else
 		{
-			char colorChar = modifications[rcPos];
+			char colorChar = modStr[rcPos];
 			colorInt = colorChar - '0';
 		}
 		if (colorInt >= 10)
@@ -2199,38 +2252,38 @@ bool getUnitTextureAtlasInfo(const std::string& filename, const std::string& mod
 		tinfo.mapId += colorInt;
 	}
 	// new special case for ellipse graphics
-	rcPos = modifications.find("~RC(ellipse_red>");
+	rcPos = modStr.find("~RC(ellipse_red>");
 	if (rcPos != std::string::npos)
 	{
 		// adjust tinfo.mapId based on modifications string
 		rcPos += 16;
 		int colorInt = 0;
-		if (modifications.size() > rcPos+2)
+		if (modStr.size() > rcPos+2)
 		{
 			// also convert color words
-			if (modifications[rcPos] == 'r')
+			if (modStr[rcPos] == 'r')
 				colorInt = 1;	// red
-			else if (modifications[rcPos] == 'b' && modifications[rcPos+2] == 'u')
+			else if (modStr[rcPos] == 'b' && modStr[rcPos+2] == 'u')
 				colorInt = 2;	// blue
-			else if (modifications[rcPos] == 'g')
+			else if (modStr[rcPos] == 'g')
 				colorInt = 3;	// green
-			else if (modifications[rcPos] == 'p')
+			else if (modStr[rcPos] == 'p')
 				colorInt = 4;	// purple
-			else if (modifications[rcPos] == 'b' && modifications[rcPos+2] == 'a')
+			else if (modStr[rcPos] == 'b' && modStr[rcPos+2] == 'a')
 				colorInt = 5;	// black
-			else if (modifications[rcPos] == 'b' && modifications[rcPos+2] == 'o')
+			else if (modStr[rcPos] == 'b' && modStr[rcPos+2] == 'o')
 				colorInt = 6;	// brown
-			else if (modifications[rcPos] == 'o')
+			else if (modStr[rcPos] == 'o')
 				colorInt = 7;	// orange
-			else if (modifications[rcPos] == 'w')
+			else if (modStr[rcPos] == 'w')
 				colorInt = 8;	// white
-			else if (modifications[rcPos] == 't')
+			else if (modStr[rcPos] == 't')
 				colorInt = 9;	// teal
 			
 		}
 		else
 		{
-				char colorChar = modifications[rcPos];
+				char colorChar = modStr[rcPos];
 				colorInt = colorChar - '0';
 		}
 		if (colorInt >= 10)
@@ -2238,38 +2291,38 @@ bool getUnitTextureAtlasInfo(const std::string& filename, const std::string& mod
 		tinfo.mapId += colorInt;
 	}
 	// new case for flags
-	rcPos = modifications.find("~RC(flag_green>");
+	rcPos = modStr.find("~RC(flag_green>");
 	if (rcPos != std::string::npos)
 	{
 		// adjust tinfo.mapId based on modifications string
 		rcPos += 15;
 		int colorInt = 0;
-		if (modifications.size() > rcPos+2)
+		if (modStr.size() > rcPos+2)
 		{
 			// also convert color words
-			if (modifications[rcPos] == 'r')
+			if (modStr[rcPos] == 'r')
 				colorInt = 1;	// red
-			else if (modifications[rcPos] == 'b' && modifications[rcPos+2] == 'u')
+			else if (modStr[rcPos] == 'b' && modStr[rcPos+2] == 'u')
 				colorInt = 2;	// blue
-			else if (modifications[rcPos] == 'g')
+			else if (modStr[rcPos] == 'g')
 				colorInt = 3;	// green
-			else if (modifications[rcPos] == 'p')
+			else if (modStr[rcPos] == 'p')
 				colorInt = 4;	// purple
-			else if (modifications[rcPos] == 'b' && modifications[rcPos+2] == 'a')
+			else if (modStr[rcPos] == 'b' && modStr[rcPos+2] == 'a')
 				colorInt = 5;	// black
-			else if (modifications[rcPos] == 'b' && modifications[rcPos+2] == 'o')
+			else if (modStr[rcPos] == 'b' && modStr[rcPos+2] == 'o')
 				colorInt = 6;	// brown
-			else if (modifications[rcPos] == 'o')
+			else if (modStr[rcPos] == 'o')
 				colorInt = 7;	// orange
-			else if (modifications[rcPos] == 'w')
+			else if (modStr[rcPos] == 'w')
 				colorInt = 8;	// white
-			else if (modifications[rcPos] == 't')
+			else if (modStr[rcPos] == 't')
 				colorInt = 9;	// teal
 			
 		}
 		else
 		{
-			char colorChar = modifications[rcPos];
+			char colorChar = modStr[rcPos];
 			colorInt = colorChar - '0';
 		}
 		if (colorInt >= 10)
@@ -2424,17 +2477,21 @@ void renderUnitAtlas(int x, int y, const textureAtlasInfo& tinfo, SDL_Rect *srcR
 	minv = (GLfloat) clippedSrc.y / gUnitTexH[tinfo.mapId];
 	maxv = (GLfloat) (clippedSrc.y + clippedSrc.h) / gUnitTexH[tinfo.mapId];
 	
-	GLshort vertices[8];
+	GLshort vertices[12];
 	GLfloat texCoords[8];
 	
 	vertices[0] = minx;
 	vertices[1] = miny;
-	vertices[2] = maxx;
-	vertices[3] = miny;
-	vertices[4] = minx;
-	vertices[5] = maxy;
-	vertices[6] = maxx;
+	vertices[2] = 0;
+	vertices[3] = maxx;
+	vertices[4] = miny;
+	vertices[5] = 0;
+	vertices[6] = minx;
 	vertices[7] = maxy;
+	vertices[8] = 0;
+	vertices[9] = maxx;
+	vertices[10] = maxy;
+	vertices[11] = 0;
 	/*	
 	 B---C       ->      A B
 	 A---D				| |

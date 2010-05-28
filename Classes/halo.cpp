@@ -247,31 +247,39 @@ bool effect::render()
 }
 
 void effect::unrender()
-{
-/*	
-	if(buffer_ == NULL) {
-		return;
+{	
+	textureAtlasInfo tinfo;
+	getUnitTextureAtlasInfo(current_image(), "", tinfo);
+	surface surf_;
+	if (tinfo.mapId == 0)
+	{
+		//return false;
+		// fallback to normal image, eg scenery/signpost.png
+		surf_.assign(image::get_image(current_image(),image::SCALED_TO_ZOOM));
+		if(surf_ == NULL) {
+			return;
+		}
+		if(orientation_ == HREVERSE || orientation_ == HVREVERSE) {
+			surf_.assign(image::reverse_image(surf_));
+		}
+		if(orientation_ == VREVERSE || orientation_ == HVREVERSE) {
+			surf_.assign(flop_surface(surf_));
+		}
+		tinfo.originalW = surf_->w;
+		tinfo.originalH = surf_->h;
 	}
-
-//	surface const screen = disp->get_screen_surface();
-
-	SDL_Rect clip_rect = disp->map_outside_area();
-	const clip_rect_setter clip_setter(screen,clip_rect);
-
-	// Due to scrolling, the location of the rendered halo
-	// might have changed; recalculate
+	
 	const map_location zero_loc(0,0);
 	const int screenx = disp->get_location_x(zero_loc);
 	const int screeny = disp->get_location_y(zero_loc);
+	
+	const int xpos = x_ + screenx - tinfo.originalW/2;
+	const int ypos = y_ + screeny - tinfo.originalH/2;
+	
+	SDL_Rect rect = {xpos,ypos,tinfo.originalW,tinfo.originalH};
+	
 
-	const int xpos = x_ + screenx - surf_->w/2;
-	const int ypos = y_ + screeny - surf_->h/2;
-
-	SDL_Rect rect = {xpos,ypos,surf_->w,surf_->h};
-//	SDL_BlitSurface(buffer_,NULL,screen,&rect);
-	blit_surface(rect.x, rect.y, buffer_);
-//	update_rect(rect_);
-*/	
+	disp->invalidate_locations_in_rect(rect);
 }
 
 bool effect::on_location(const std::set<map_location>& locations) const

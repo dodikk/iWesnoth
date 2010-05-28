@@ -46,6 +46,10 @@ extern "C" {
 // KP: global redraw request flag lives here
 extern bool gRedraw;
 bool gRedraw = false;
+extern bool gMegamap;
+bool gMegamap = false;
+extern bool gIsDragging;
+bool gIsDragging = false;
 
 
 
@@ -175,7 +179,11 @@ surface display_format_alpha(surface surf)
 
 SDL_Rect screen_area()
 {
+#ifdef __IPAD__
+	const SDL_Rect res = {0,0,1024,768}; //frameBuffer->w,frameBuffer->h};
+#else
 	const SDL_Rect res = {0,0,480,320}; //frameBuffer->w,frameBuffer->h};
+#endif
 	return res;
 }
 /*
@@ -751,10 +759,17 @@ void blit_surface(int x, int y, surface surf, SDL_Rect* srcrect, SDL_Rect* clip_
 	}
 	
 	SDL_Rect clip;
-	
+		
 	if(clip_rect != NULL) 
 	{
-		clip = *clip_rect;
+		//clip = *clip_rect;
+		
+		// KP: 20100228: clipping rects are now merged...
+		SDL_Rect mainclip;
+		getClipRect(&mainclip);
+		SDL_Rect newclip;
+		newclip = *clip_rect;
+		SDL_IntersectRect(&mainclip, &newclip, &clip);
 	} 
 	else 
 	{
@@ -807,7 +822,7 @@ void blit_surface(int x, int y, surface surf, SDL_Rect* srcrect, SDL_Rect* clip_
 	static unsigned long renderCount = 0;
 	renderCount++;
 	
-	SDL_RenderCopy(tex, &clippedSrc, &clippedDst, flags);	
+	SDL_RenderCopy(tex, &clippedSrc, &clippedDst, flags);
 }
 
 void blit_texture(int x, int y, SDL_TextureID tex, SDL_Rect* srcrect, SDL_Rect* clip_rect, textureRenderFlags flags)
@@ -987,7 +1002,7 @@ int CVideo::setMode( int x, int y, int bits_per_pixel, int flags )
 	
 	// KP: added
 	/* create window and renderer */
-    SDL_VideoWindow = SDL_CreateWindow(NULL, 0, 0, 480, 320, SDL_WINDOW_SHOWN);
+    SDL_VideoWindow = SDL_CreateWindow(NULL, 0, 0, getx(), gety(), SDL_WINDOW_SHOWN);
 	SDL_CreateRenderer(SDL_VideoWindow, -1, 0);
 	SDL_SetRenderDrawBlendMode(SDL_BLENDMODE_BLEND);
 	SDL_Rect clip = screen_area();
@@ -1021,16 +1036,24 @@ bool CVideo::modeChanged()
 	return ret;
 }
 
-int CVideo::getx() const
+int CVideo::getx()
 {
 	//return frameBuffer->w;
+#ifdef __IPAD__
+	return 1024;
+#else
 	return 480;
+#endif
 }
 
-int CVideo::gety() const
+int CVideo::gety()
 {
 	//return frameBuffer->h;
+#ifdef __IPAD__
+	return 768;
+#else
 	return 320;
+#endif
 }
 
 int CVideo::getBitsPerPixel()
@@ -1199,7 +1222,8 @@ void draw_wait_cursor(void)
 	{
 		std::string filename = game_config::path + "/images/cursors/wait.png";
 		glGenTextures(1, &wait_cursor);	
-		glBindTexture(GL_TEXTURE_2D, wait_cursor);
+		//glBindTexture(GL_TEXTURE_2D, wait_cursor);
+		cacheBindTexture(GL_TEXTURE_2D, wait_cursor, 1);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -1208,18 +1232,22 @@ void draw_wait_cursor(void)
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surf->w, surf->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, surf->pixels);
 	}
 	
-	GLshort vertices[8];
+	GLshort vertices[12];
 	GLfloat texCoords[8];
 	
 	int size = 64;
-	vertices[0] = (480-size)/2;
-	vertices[1] = (320-size)/2;
-	vertices[2] = vertices[0] + size;;
-	vertices[3] = vertices[1];
-	vertices[4] = vertices[0];
-	vertices[5] = vertices[1] + size;
-	vertices[6] = vertices[0] + size;
+	vertices[0] = (CVideo::getx()-size)/2;
+	vertices[1] = (CVideo::gety()-size)/2;
+	vertices[2] = 0;
+	vertices[3] = vertices[0] + size;
+	vertices[4] = vertices[1];
+	vertices[5] = 0;
+	vertices[6] = vertices[0];
 	vertices[7] = vertices[1] + size;
+	vertices[8] = 0;
+	vertices[9] = vertices[0] + size;
+	vertices[10] = vertices[1] + size;
+	vertices[11] = 0;
 	
 	texCoords[0] = 0;
 	texCoords[1] = 0;
@@ -1231,6 +1259,19 @@ void draw_wait_cursor(void)
 	texCoords[7] = 1;
 	renderQueueAddTexture(vertices, texCoords, wait_cursor, 0xFFFFFFFF, 1.0);
 	SDL_RenderPresent();
+}
+
+int nextPowerOf2(int in)
+{
+	in -= 1;
+	
+	in |= in >> 16;
+	in |= in >> 8;
+	in |= in >> 4;
+	in |= in >> 2;
+	in |= in >> 1;
+	
+	return in + 1;
 }
 
 

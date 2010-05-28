@@ -16,11 +16,9 @@
 /// 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//#include "OFDependencies.h"
+#include "OFDependencies.h"
 
 #ifdef __cplusplus
-	#include "OFDependencies.h"
-
 	#include "OFBase.h"
 	#include "OFSmartObject.h"
 	#include "OFPointer.h"

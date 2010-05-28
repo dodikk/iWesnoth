@@ -93,6 +93,12 @@ namespace preferences {
 	std::string password();
 	void set_password(const std::string& password);
 
+	std::string sync_login_str();
+	void set_sync_login(const std::string& username);
+
+	std::string sync_password();
+	void set_sync_password(const std::string& password);
+	
 	bool remember_password();
 	void set_remember_password(bool remember);
 

@@ -182,6 +182,15 @@ void scrollpane::update_content_size()
 
 	set_dirty();
 }
+	
+	
+void scrollpane::handle_event(const SDL_Event& event)
+{
+	scrollarea::handle_event(event);
+	
+	if (scrollarea::handle_drag_event(event) == true)
+		return;
+}
 
 } // namespace gui
 

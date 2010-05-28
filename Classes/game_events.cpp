@@ -3024,6 +3024,7 @@ std::string get_caption(const vconfig& cfg, unit_map::iterator speaker)
 			if(!(*mi).has_child("show_if")
 					|| game_events::conditional_passed(units,(*mi).child("show_if"))) {
 				options.push_back(msg_str);
+//				options.push_back("Testing!\n123 blah blah");
 				option_events.push_back((*mi).get_children("command"));
 			}
 		}

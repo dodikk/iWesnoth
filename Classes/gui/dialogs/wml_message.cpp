@@ -22,6 +22,9 @@
 #include "gui/widgets/text_box.hpp"
 #include "gui/widgets/window.hpp"
 
+#include "game_display.hpp"
+#include "construct_dialog.hpp"
+
 namespace gui2 {
 
 void twml_message_::set_input(const std::string& caption,
@@ -254,7 +257,24 @@ int show_wml_message(const bool left_side
 	}
 
 	if(!option_list.empty()) {
-		dlg->set_option_list(option_list, chosen_option);
+		//dlg->set_option_list(option_list, chosen_option);
+		// KP: totally redo the option list stuff....
+		std::string optDlgTitle = "Choose an option...";
+		gui::dialog optDlg = gui::dialog(*game_display::get_singleton(), //gui,
+										   optDlgTitle,
+										   message,
+										   gui::OK_ONLY);
+		std::vector<shared_string> opts;
+		for (std::vector<std::string>::const_iterator it=option_list.begin(); it != option_list.end(); it++)
+		{
+			// +d+
+			opts.push_back("&misc/spacer_45.png=]" + *it);
+//			opts.push_back(*it);
+		}
+		optDlg.set_menu(opts);
+		int result = optDlg.show();
+		*chosen_option = result;
+		return twindow::OK;
 	}
 
 	dlg->show(video);

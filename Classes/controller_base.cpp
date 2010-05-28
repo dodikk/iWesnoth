@@ -18,6 +18,8 @@
 #include "mouse_handler_base.hpp"
 #include "foreach.hpp"
 
+extern bool gMegamap;
+
 controller_base::controller_base(
 		int ticks, const config& game_config, CVideo& /*video*/) :
 	game_config_(game_config),
@@ -45,6 +47,19 @@ bool controller_base::can_execute_command(
 void controller_base::handle_event(const SDL_Event& event)
 {
 	if(gui::in_dialog()) {
+		return;
+	}
+	
+	// KP: added megamap popover
+	if (gMegamap == true)
+	{
+		if (event.type == SDL_MOUSEBUTTONUP)
+		{
+			int x = event.button.x;
+			int y = event.button.y;
+			get_mouse_handler_base().left_click(x, y, false);
+			
+		}
 		return;
 	}
 

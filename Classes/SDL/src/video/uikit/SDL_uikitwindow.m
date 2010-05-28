@@ -57,8 +57,13 @@ static int SetupWindowData(_THIS, SDL_Window *window, UIWindow *uiwindow, SDL_bo
         window->x = 0;
         window->y = 0;
 #ifdef LANDSCAPE
+	#ifdef __IPAD__
+        window->w = 1024;
+        window->h = 768;
+	#else
         window->w = 480;
         window->h = 320;
+	#endif
 #else		
         window->w = (int)uiwindow.frame.size.width;
         window->h = (int)uiwindow.frame.size.height;

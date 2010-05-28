@@ -377,20 +377,22 @@ std::string login()
 {
 	const std::string res = preferences::get("login");
 	if(res.empty()) {
-		//char* const login = getenv("USER");
-		//if(login != NULL) {
-		//	return login;
-		//}
-		
+/*		
 		NSString *nsName = [[UIDevice currentDevice] name];
 		if (!nsName)
 			return ("Player");
-		std::string res2 = [nsName cStringUsingEncoding:NSASCIIStringEncoding];
+		std::string res2;
+		const char *cName = [nsName UTF8String];
+		if (cName == NULL)
+			return ("Player");
+		res2 = cName;
 
 		if(res2.empty()) {
 			return _("Player");
 		}
 		return res2;
+ */
+		return ("Player");
 	}
 
 	return res;
@@ -421,6 +423,39 @@ void set_password(const std::string& password)
 		preferences::set("password", password);
 	}
 }
+
+std::string sync_login_str()
+{
+	const std::string res = preferences::get("sync_login");
+	if(res.empty()) 
+	{
+		return ("");
+	}
+	
+	return res;
+}
+	
+void set_sync_login(const std::string& username)
+{
+	preferences::set("sync_login", username);
+}
+	
+std::string sync_password()
+{
+	const std::string res = preferences::get("sync_password");
+	if(res.empty()) 
+	{
+		return ("");
+	}
+	
+	return res;
+}
+
+void set_sync_password(const std::string& password)
+{
+	preferences::set("sync_password", password);
+}
+
 
 bool remember_password()
 {
@@ -708,10 +743,15 @@ std::string client_type()
 
 std::string clock_format()
 {
+/*	
+	if (clock_format_cache.size() > 0)
+		return clock_format
 	if(preferences::get("clock_format").size())
 		return preferences::get("clock_format");
 	else
 		preferences::set("clock_format", "%H:%M");
+*/
+	// KP: save 14% cpu
 	return "%H:%M";
 }
 
@@ -958,12 +998,12 @@ void achievement_add(int achievement)
 void add_kill()
 {
 	total_kills++;
-	if (total_kills >= 1000 && !achievement_earned(ACHIEVEMENT_BATTLE_MASTER))
-		earn_achievement(ACHIEVEMENT_BATTLE_MASTER);
+	if (total_kills >= 1000 && !achievement_earned(ACHIEVEMENT_PREDATOR))
+		earn_achievement(ACHIEVEMENT_PREDATOR);
 	else if (total_kills >= 500 && !achievement_earned(ACHIEVEMENT_BONE_CRUSHER))
 		earn_achievement(ACHIEVEMENT_BONE_CRUSHER);
-	else if (total_kills >= 100 && !achievement_earned(ACHIEVEMENT_PREDATOR))
-		earn_achievement(ACHIEVEMENT_PREDATOR);
+	else if (total_kills >= 100 && !achievement_earned(ACHIEVEMENT_BATTLE_MASTER))
+		earn_achievement(ACHIEVEMENT_BATTLE_MASTER);
 	else if (total_kills >= 50 && !achievement_earned(ACHIEVEMENT_SLAYER))
 		earn_achievement(ACHIEVEMENT_SLAYER);
 	else if (total_kills >= 25 && !achievement_earned(ACHIEVEMENT_BLOODIED))

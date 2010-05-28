@@ -22,6 +22,8 @@
 #include <istream>
 #include <string>
 
+#define TOKENIZER_BUFFER_SIZE	50 * 1024 * 1024
+
 class config;
 
 struct token
@@ -30,7 +32,9 @@ struct token
 		type(END),
 		leading_spaces(),
 		value()
-		{}
+		{
+			reset();
+		}
 
 	enum token_type {
 		STRING,
@@ -52,10 +56,24 @@ struct token
 	void reset() {
 		value.clear();
 		leading_spaces.clear();
+		/*
+		value_ptr = 0;
+		value_size = 0;
+		leading_spaces_ptr = 0;
+		leading_spaces_size = 0;
+		 */
 	}
 
 	std::string leading_spaces;
 	std::string value;
+	
+	/*
+	// KP: creating std::strings all the time was a huge performance hit
+	const char *leading_spaces_ptr;
+	int leading_spaces_size;
+	const char *value_ptr;
+	int value_size;
+	*/
 };
 
 /** Abstract baseclass for the tokenizer. */
@@ -63,13 +81,14 @@ class tokenizer
 {
 	public:
 		tokenizer(std::istream& in);
-		~tokenizer() {}
+		~tokenizer();
 
 		const token& next_token();	// KP: moved to tokenizer.cpp
 
 		void check_translatable()
 		{
 			if(token_.value == "_")
+			//if(token_.value_ptr && token_.value_ptr[0] == '_')
 				token_.type = token::token_type('_');
 		}
 
@@ -114,15 +133,18 @@ class tokenizer
 		{
 			do {
 				if (LIKELY(in_.good()))
+				//if (curPos < numChars-1)
 				{
 					current_ = in_.get();
+					//current_ = (unsigned char) in_buffer[curPos++];
 				}
 				else
 				{
 					current_ = EOF;
 					return;
 				}
-			}while (UNLIKELY(current_ == '\r'));
+			} while (UNLIKELY(current_ == '\r'));
+						
 #if 0
 			// @todo: disabled untill campaign server is fixed
 			if(LIKELY(in_.good())) {
@@ -145,6 +167,7 @@ class tokenizer
 		inline int peek_char() const
 		{
 			return in_.peek();
+			//return in_buffer[curPos];
 		}
 
 	private:
@@ -152,11 +175,8 @@ class tokenizer
 		{
 			return c == ' ' || c == '\t';
 		}
-		inline bool is_alnum(const int c) const
-		{
-			return (c >= 'a' && c <= 'z')
-				|| (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || c == '_';
-		}
+	/*inline*/ bool is_alnum(const int c) const;
+		
 		void skip_comment();
 
 		std::string textdomain_;
@@ -166,6 +186,13 @@ class tokenizer
 		token previous_token_;
 #endif
 		std::istream& in_;
+	
+		/*
+		// KP: added for much faster tokenizing
+		char *in_buffer;
+		int curPos;
+		int numChars;
+		 */
 };
 
 #endif

@@ -31,7 +31,7 @@
 #include "sound.hpp"
 
 #include "UnitTextureAtlas.h"
-
+extern bool gIsDragging;
 
 #define ERR_DP LOG_STREAM(err, display)
 #define INFO_DP LOG_STREAM(info, display)
@@ -500,10 +500,10 @@ void game_display::draw_sidebar()
 	}
 }
 
-void game_display::draw_minimap_units()
+void game_display::draw_minimap_units(SDL_Rect& minimap_loc)
 {
-	double xscaling = 1.0 * minimap_location_.w / get_map().w();
-	double yscaling = 1.0 * minimap_location_.h / get_map().h();
+	double xscaling = 1.0 * minimap_loc.w / get_map().w();
+	double yscaling = 1.0 * minimap_loc.h / get_map().h();
 
 	for(unit_map::const_iterator u = units_.begin(); u != units_.end(); ++u) {
 		if(fogged(u->first) ||
@@ -522,8 +522,8 @@ void game_display::draw_minimap_units()
 		double u_w = 4.0 / 3.0 * xscaling;
 		double u_h = yscaling;
 
-		SDL_Rect r = { minimap_location_.x + round_double(u_x),
-                       minimap_location_.y + round_double(u_y),
+		SDL_Rect r = { minimap_loc.x + round_double(u_x),
+                       minimap_loc.y + round_double(u_y),
                        round_double(u_w), round_double(u_h) };
 
 		//SDL_FillRect(video().getSurface(), &r, mapped_col);
@@ -595,6 +595,7 @@ void game_display::draw_bar(const std::string& image, int xpos, int ypos,
 	const size_t unfilled = static_cast<const size_t>(height*(1.0 - filled));
 
 //	if(unfilled < height && alpha >= ftofxp(0.3)) 
+//	if (gIsDragging == false)
 	{
 		const Uint8 r_alpha = std::min<unsigned>(unsigned(fxpmult(alpha,255)),255);
 		//surface filled_surf = create_compatible_surface(bar_surf, bar_loc.w, height - unfilled);
@@ -775,7 +776,7 @@ textureAtlasInfo game_display::get_flag(const map_location& loc)
 		  (!fogged(loc) || !teams_[currentTeam_].is_enemy(i+1)))
 		{
 			flags_[i].update_last_draw_time();
-			image::locator image_flag = preferences::animate_map() ?
+			image::locator image_flag = (preferences::animate_map() && !gIsDragging) ?
 				flags_[i].get_current_frame() : flags_[i].get_first_frame();
 			//return image::get_image(image_flag, image::SCALED_TO_HEX);
 			getUnitTextureAtlasInfo(image_flag.get_filename(), image_flag.get_modifications(), tinfo);
@@ -933,6 +934,9 @@ const SDL_Rect& game_display::calculate_energy_bar(surface surf)
 }
 
 void game_display::invalidate_animations_location(const map_location& loc) {
+	if (gIsDragging)
+		return;
+	
 	if (get_map().is_village(loc)) {
 		const int owner = player_teams::village_owner(loc);
 		if (owner >= 0 && flags_[owner].need_update()

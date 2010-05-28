@@ -39,12 +39,12 @@
 #define UNITMAP_DRAKES_FIRE			170
 #define UNITMAP_DRAKES_FLAMEHEART	180
 #define UNITMAP_DRAKES_FLARE		190
-#define UNITMAP_DRAKES_GLADIATOR	200
+#define UNITMAP_DRAKES_THRASHER		200
 #define UNITMAP_DRAKES_GLIDER		210
 #define UNITMAP_DRAKES_HURRICANE	220
 #define UNITMAP_DRAKES_INFERNO		230
 #define UNITMAP_DRAKES_SKY			240
-#define UNITMAP_DRAKES_SLASHER		250
+#define UNITMAP_DRAKES_ARBITER		250
 #define UNITMAP_DRAKES_WARDEN		260
 #define UNITMAP_DRAKES_WARRIOR		270
 
@@ -462,6 +462,7 @@
 #define UNITMAP_IFTU_UNDEAD_SKELETAL				4540
 #define UNITMAP_IFTU_UNDEAD							4550
 
+// Dead Water
 #define UNITMAP_DEADWATER_BRAWLER					4560
 #define UNITMAP_DEADWATER_CHILD_KING				4570
 #define UNITMAP_DEADWATER_CITIZEN					4580
@@ -518,15 +519,32 @@
 #define HALOMAP_UNDEAD							5040
 
 
+// Oooze Mini-Campaign
+#define UNITMAP_OOZE_GIANT_MUDCRAWLER			5050
+#define UNITMAP_OOZE_HUMAN_QUEEN				5060
+#define UNITMAP_OOZE_MUDCRAWLER					5070
+#define UNITMAP_OOZE_OLDELVISH_ENCHANTRESS		5080
+#define UNITMAP_OOZE_OLDELVISH_SHAMAN			5090
+#define UNITMAP_OOZE_OLDELVISH_SORCERESS		5100
+#define UNITMAP_OOZE_OLDELVISH_SYLPH			5110
+#define UNITMAP_OOZE_QUINTAIN					5120
 
-#define NUM_UNITMAPS		5050
+// SurvivalXtreme
+#define UNITMAP_SX_SAND_SCORPION				5130
+
+// The Dark Hordes
+#define UNITMAP_TDH								5140
+
+
+#define NUM_UNITMAPS		5150
+
 
 
 
 #include "SDL.h"
 #include <string>
 
-
+void checkUnitTextureAtlas(void);
 void initUnitTextureAtlas(void);
 void freeUnitTextureAtlas(void);
 bool getUnitTextureAtlasInfo(const std::string& filename, const std::string& modifications, textureAtlasInfo &tinfo);

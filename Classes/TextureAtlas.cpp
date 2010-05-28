@@ -72,9 +72,12 @@ void loadMap(unsigned short mapId)
 			filename += "map.base.png";
 			break;
 		case MAP_BASE_TRANSITION:
-			//filename += "base_transition.map.png";
+#ifdef __IPAD__			
+			filename += "map.base_transition.png";
+#else
 			filename += "map.base_transition.pvrtc";
 			pvrtcSize = 1024;
+#endif
 			break;
 		case MAP_OVERLAY_MISC:
 			filename = game_config::path + "/images/misc/map.misc.png";
@@ -203,7 +206,9 @@ void loadMap(unsigned short mapId)
 	assert (mapId < NUM_MAPS);
 	
 	glGenTextures(1, &gTexIds[mapId]);	
-	glBindTexture(GL_TEXTURE_2D, gTexIds[mapId]);
+	//glBindTexture(GL_TEXTURE_2D, gTexIds[mapId]);
+	cacheBindTexture(GL_TEXTURE_2D, gTexIds[mapId], true);
+
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -237,6 +242,8 @@ void loadMap(unsigned short mapId)
 		assert(bytesRead == dataSize);
 		fclose(fp);
 		glCompressedTexImage2D(GL_TEXTURE_2D, 0, GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG, pvrtcSize, pvrtcSize, 0, dataSize, data);
+		
+#ifndef NDEBUG		
 		GLenum err = glGetError();
         if (err != GL_NO_ERROR)
         {
@@ -244,6 +251,7 @@ void loadMap(unsigned short mapId)
 			sprintf(buffer, "\n\n*** ERROR uploading compressed texture %s:  glError: 0x%04X\n\n", filename.c_str(), err);
 			std::cerr << buffer;
         }
+#endif
 		
 		free(data);
 		
@@ -478,17 +486,21 @@ void renderAtlas(int x, int y, const textureAtlasInfo& tinfo, SDL_Rect *srcRect 
 	minv = (GLfloat) clippedSrc.y / gTexH[tinfo.mapId];
 	maxv = (GLfloat) (clippedSrc.y + clippedSrc.h) / gTexH[tinfo.mapId];
 	
-	GLshort vertices[8];
+	GLshort vertices[12];
 	GLfloat texCoords[8];
 
 	vertices[0] = minx;
 	vertices[1] = miny;
-	vertices[2] = maxx;
-	vertices[3] = miny;
-	vertices[4] = minx;
-	vertices[5] = maxy;
-	vertices[6] = maxx;
+	vertices[2] = 0;
+	vertices[3] = maxx;
+	vertices[4] = miny;
+	vertices[5] = 0;
+	vertices[6] = minx;
 	vertices[7] = maxy;
+	vertices[8] = 0;
+	vertices[9] = maxx;
+	vertices[10] = maxy;
+	vertices[11] = 0;
 /*	
 	B---C       ->      A B
 	A---D				| |
@@ -521,8 +533,8 @@ void renderAtlas(int x, int y, const textureAtlasInfo& tinfo, SDL_Rect *srcRect 
 //	glVertexPointer(3, GL_SHORT, 0, vertices);
 //	glTexCoordPointer(2, GL_FLOAT, 0, texCoords);
 //	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-	renderQueueAddTexture(vertices, texCoords, gTexIds[tinfo.mapId], drawColor, brightness);
 	
+	renderQueueAddTexture(vertices, texCoords, gTexIds[tinfo.mapId], drawColor, brightness);	
 }
 
 unsigned int getTextureForMap(unsigned short mapId)

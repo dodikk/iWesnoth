@@ -257,7 +257,7 @@ int twindow::show(const bool restore, void* /*flip_function*/)
 	
 	// KP: make sure we don't close by mistake
 	add_easy_close_blocker("waitasec");
-	unsigned long easy_time = SDL_GetTicks() + 500;
+	unsigned long easy_time = SDL_GetTicks() + 750;
 	bool block = true;
 	
 	// Start our loop drawing will happen here as well.

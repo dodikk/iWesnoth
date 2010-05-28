@@ -103,19 +103,21 @@ void shared_string::set(const std::string &str)
 		return;
 	}
 	
-	fnd = gStringPool().find(&str);
-	if (fnd == gStringPool().end())
+	//fnd = gStringPool().find(&str);
+	fnd = gStringPool().lower_bound(&str);	// KP: use lower bound for quick insert
+	if (fnd != gStringPool().end() && !(gStringPool().key_comp()(&str, fnd->first)))
+	{
+		++fnd->second->count;
+		data_ = fnd->second;
+	}
+	else
 	{
 		PAIR tmp;
 		tmp.second = new string_node(str);
 		tmp.first = &tmp.second->str;
-		gStringPool().insert(tmp);
+		//gStringPool().insert(tmp);
+		gStringPool().insert(fnd, tmp);
 		data_ = tmp.second;
-	}
-	else
-	{
-		++fnd->second->count;
-		data_ = fnd->second;
 	}
 	assert(data_);
 }

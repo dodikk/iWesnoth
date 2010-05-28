@@ -35,7 +35,8 @@ const int combo::horizontal_padding = 10;
 const int combo::vertical_padding = 10;
 
 combo::combo(display& disp, const std::vector<shared_string>& items)
-	: button(disp.video(), items.empty() ? empty_combo_label : items[0]),
+//	: button(disp.video(), items.empty() ? empty_combo_label : items[0]),
+	: button(disp.video(), items.empty() ? empty_combo_label : items[0], TYPE_PRESS, "button"),
 	  items_(items), selected_(0), oldSelected_(0), disp_(&disp)
 {
 }

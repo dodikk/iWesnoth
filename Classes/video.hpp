@@ -60,8 +60,8 @@ class CVideo : private boost::noncopyable {
 	bool modeChanged();
 
 	//functions to get the dimensions of the current video-mode
-	int getx() const;
-	int gety() const;
+	static int getx();
+	static int gety();
 	int getBitsPerPixel();
 	int getBytesPerPixel();
 	int getRedMask();
@@ -174,4 +174,5 @@ extern void draw_line(Uint32 color, int x1, int y1, int x2, int y2);
 extern void fill_rect(Uint32 color, SDL_Rect *rect);
 extern void convertSurfaceToFill(int x, int y, surface surf);
 extern void draw_wait_cursor(void);
+extern int nextPowerOf2(int in);
 #endif

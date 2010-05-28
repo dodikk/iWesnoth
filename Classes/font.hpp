@@ -29,6 +29,8 @@ class CVideo;
 #include <string>
 #include <vector>
 
+class display;
+
 namespace font {
 
 //object which initializes and destroys structures needed for fonts
@@ -96,6 +98,7 @@ const int
 
 	SIZE_15         = relative_size(15),
 	SIZE_PLUS       = relative_size(16),
+	SIZE_TITLE		= relative_size(16),
 	SIZE_LARGE      = relative_size(18),
 	SIZE_XLARGE     = relative_size(24)
   ;
@@ -176,7 +179,7 @@ void show_floating_label(int handle, bool show);
 SDL_Rect get_floating_label_rect(int handle);
 
 void draw_floating_labels(/*surface screen*/);
-void undraw_floating_labels(/*surface screen*/);
+void undraw_floating_labels(display* disp);
 
 bool load_font_config();
 

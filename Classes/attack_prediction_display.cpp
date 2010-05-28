@@ -106,7 +106,7 @@ battle_prediction_pane::battle_prediction_pane(display &disp,
 	get_hp_distrib_surface(hp_prob_vector, defender_stats, attacker_stats, defender_hp_distrib_,
 					   defender_hp_distrib_width_, defender_hp_distrib_height_);
 	hp_distribs_height_ = std::max<int>(attacker_hp_distrib_height_, defender_hp_distrib_height_);
-
+	
 	// Build the strings and compute the layout.
 	std::stringstream str;
 
@@ -268,7 +268,8 @@ under_leadership(units_, u_loc, &leadership_bonus);
 	}
 
 	// Unscathed probability.
-	left_strings.push_back(_("Chance of being unscathed"));
+	//left_strings.push_back(_("Chance of being unscathed"));
+	left_strings.push_back(_("Unhit chance"));
 	format_prob(str_buf, u_unscathed);
 	right_strings.push_back(str_buf);
 
@@ -347,9 +348,7 @@ void battle_prediction_pane::draw_unit(int x_off, int damage_line_skip, int left
 									   const std::string& label, int label_width,
 									   surface& hp_distrib, int hp_distrib_width)
 {
-	// KP: this screen is not used on iPhone...
-/*	
-	surface screen = disp_.get_screen_surface();
+	//surface screen = disp_.get_screen_surface();
 	int i;
 
 	// NOTE. A preview pane is not made to be used alone and it is not
@@ -367,20 +366,28 @@ void battle_prediction_pane::draw_unit(int x_off, int damage_line_skip, int left
 	int y_off = 15;
 
 	// Draw unit label.
-	font::draw_text_line(screen, clip_rect, font::SIZE_15, font::NORMAL_COLOUR, label,
-						 clip_rect.x + x_off + (units_width_ - label_width) / 2, clip_rect.y + y_off, 0, TTF_STYLE_BOLD);
+//	font::draw_text_line(screen, clip_rect, font::SIZE_15, font::NORMAL_COLOUR, label,
+//		clip_rect.x + x_off + (units_width_ - label_width) / 2, clip_rect.y + y_off, 0, TTF_STYLE_BOLD);
 
+	font::draw_text(&video(), clip_rect, font::SIZE_15, font::NORMAL_COLOUR, label,
+					clip_rect.x + x_off + (units_width_ - label_width) / 2, clip_rect.y + y_off);
+	
 	y_off += 24;
 
 	// Draw unit left and right strings except the last two (total damage and unscathed probability).
 	for(i = 0; i < static_cast<int>(left_strings.size()) - 2; i++) {
-		font::draw_text_line(screen, clip_rect, font::SIZE_NORMAL, font::NORMAL_COLOUR, left_strings[i],
-							 clip_rect.x + x_off, clip_rect.y + y_off + (font::SIZE_NORMAL + inter_line_gap_) * i,
-							 0, TTF_STYLE_NORMAL);
+		//font::draw_text_line(screen, clip_rect, font::SIZE_NORMAL, font::NORMAL_COLOUR, left_strings[i],
+		//					 clip_rect.x + x_off, clip_rect.y + y_off + (font::SIZE_NORMAL + inter_line_gap_) * i,
+		//					 0, TTF_STYLE_NORMAL);
+		font::draw_text(&video(), clip_rect, font::SIZE_NORMAL, font::NORMAL_COLOUR, left_strings[i],
+						clip_rect.x + x_off, clip_rect.y + y_off + (font::SIZE_NORMAL + inter_line_gap_) * i);
 
-		font::draw_text_line(screen, clip_rect, font::SIZE_NORMAL, font::NORMAL_COLOUR, right_strings[i],
-							 clip_rect.x + x_off + left_strings_width + inter_column_gap_,
-							 clip_rect.y + y_off + (font::SIZE_NORMAL + inter_line_gap_) * i, 0, TTF_STYLE_NORMAL);
+		//font::draw_text_line(screen, clip_rect, font::SIZE_NORMAL, font::NORMAL_COLOUR, right_strings[i],
+		//					 clip_rect.x + x_off + left_strings_width + inter_column_gap_,
+		//					 clip_rect.y + y_off + (font::SIZE_NORMAL + inter_line_gap_) * i, 0, TTF_STYLE_NORMAL);
+		font::draw_text(&video(), clip_rect, font::SIZE_NORMAL, font::NORMAL_COLOUR, right_strings[i],
+						clip_rect.x + x_off + left_strings_width + inter_column_gap_,
+						clip_rect.y + y_off + (font::SIZE_NORMAL + inter_line_gap_) * i);
 	}
 
 	// Ensure both damage lines are aligned.
@@ -391,26 +398,32 @@ void battle_prediction_pane::draw_unit(int x_off, int damage_line_skip, int left
 		const std::string& left_string = left_strings[left_strings.size() - 2 + i];
 		const std::string& right_string = right_strings[right_strings.size() - 2 + i];
 
-		font::draw_text_line(screen, clip_rect, font::SIZE_NORMAL, font::NORMAL_COLOUR, left_string,
-							 clip_rect.x + x_off, clip_rect.y + y_off + (font::SIZE_NORMAL + inter_line_gap_) * i,
-							 0, TTF_STYLE_NORMAL);
+		//font::draw_text_line(screen, clip_rect, font::SIZE_NORMAL, font::NORMAL_COLOUR, left_string,
+		//					 clip_rect.x + x_off, clip_rect.y + y_off + (font::SIZE_NORMAL + inter_line_gap_) * i,
+		//					 0, TTF_STYLE_NORMAL);
+		font::draw_text(&video(), clip_rect, font::SIZE_NORMAL, font::NORMAL_COLOUR, left_string,
+						clip_rect.x + x_off, clip_rect.y + y_off + (font::SIZE_NORMAL + inter_line_gap_) * i);
 
-		font::draw_text_line(screen, clip_rect, font::SIZE_NORMAL, font::NORMAL_COLOUR, right_string,
-							 clip_rect.x + x_off + left_strings_width + inter_column_gap_,
-							 clip_rect.y + y_off + (font::SIZE_NORMAL + inter_line_gap_) * i, 0, TTF_STYLE_NORMAL);
+		//font::draw_text_line(screen, clip_rect, font::SIZE_NORMAL, font::NORMAL_COLOUR, right_string,
+		//					 clip_rect.x + x_off + left_strings_width + inter_column_gap_,
+		//					 clip_rect.y + y_off + (font::SIZE_NORMAL + inter_line_gap_) * i, 0, TTF_STYLE_NORMAL);
+		font::draw_text(&video(), clip_rect, font::SIZE_NORMAL, font::NORMAL_COLOUR, right_string,
+						clip_rect.x + x_off + left_strings_width + inter_column_gap_,
+						clip_rect.y + y_off + (font::SIZE_NORMAL + inter_line_gap_) * i);
+						
 	}
 
 	y_off += 2 * (font::SIZE_NORMAL + inter_line_gap_) + 14;
 
 	// Draw hitpoints distribution string.
-	font::draw_text(screen, clip_rect, font::SIZE_SMALL, font::NORMAL_COLOUR, hp_distrib_string_,
+	font::draw_text(&video(), clip_rect, font::SIZE_SMALL, font::NORMAL_COLOUR, hp_distrib_string_,
 					clip_rect.x + x_off + (units_width_ - hp_distrib_string_width_) / 2, clip_rect.y + y_off);
 
 	y_off += 19;
 
 	// Draw hitpoints distributions.
-	video().blit_surface(clip_rect.x + x_off + (units_width_ - hp_distrib_width) / 2, clip_rect.y + y_off, hp_distrib);
- */
+	//video().blit_surface(clip_rect.x + x_off + (units_width_ - hp_distrib_width) / 2, clip_rect.y + y_off, hp_distrib);
+	blit_surface(clip_rect.x + x_off + (units_width_ - hp_distrib_width) / 2, clip_rect.y + y_off, hp_distrib);
 }
 
 void battle_prediction_pane::get_hp_distrib_surface(const std::vector<std::pair<int, double> >& hp_prob_vector,

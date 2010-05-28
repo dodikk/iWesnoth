@@ -182,7 +182,7 @@ protected:
 	 */
 	void invalidate_animations_location(const map_location& loc);
 
-	virtual void draw_minimap_units();
+	virtual void draw_minimap_units(SDL_Rect& minimap_loc);
 
 public:
 	/** Temporarily place a unit on map (moving: can overlap others). */
@@ -291,6 +291,10 @@ public:
 		LINGER_MP };     /**< linger overlay, show fog and shroud. */
 
 	void set_game_mode(const tgame_mode game_mode);
+	
+	map_location displayedUnitHex_;
+	bool invalidateUnit_;
+
 
 private:
 	game_display(const game_display&);
@@ -330,8 +334,6 @@ private:
 
 	void invalidate_route();
 
-	bool invalidateUnit_;
-	map_location displayedUnitHex_;
 
 	struct overlay {
 		overlay(const std::string& img, const std::string& halo_img,

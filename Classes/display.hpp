@@ -164,6 +164,9 @@ public:
 	 * location if the mouse isn't over the minimap.
 	 */
 	map_location minimap_location_on(int x, int y);
+	
+	// KP: a version for the megamap
+	map_location megamap_location_on(int x, int y);
 
 	const map_location& selected_hex() { return selectedHex_; }
 	const map_location& mouseover_hex() { return mouseoverHex_; }
@@ -260,7 +263,7 @@ public:
 		      bool brightened = false);
 
 	// Will be overridden in the display subclass
-	virtual void draw_minimap_units() {};
+	virtual void draw_minimap_units(SDL_Rect& minimap_loc) {};
 
 	/** Function to invalidate all tiles. */
 	void invalidate_all();
@@ -545,6 +548,9 @@ protected:
 		const int xpos, const int ypos);
 
 	void draw_minimap();
+	
+	// KP: added enlarged minimap for iPhone
+	void draw_megamap();
 
 	enum ADJACENT_TERRAIN_TYPE { ADJACENT_BACKGROUND, ADJACENT_FOREGROUND, ADJACENT_FOGSHROUD };
 

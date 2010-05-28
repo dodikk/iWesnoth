@@ -33,6 +33,8 @@
 #define ERR_NG LOG_STREAM(err , engine)
 #define LOG_NG LOG_STREAM(info, engine)
 
+extern bool gRedraw;
+
 namespace {
 	void scan_deprecation_messages(const config& cfg)
 	{
@@ -50,7 +52,7 @@ namespace {
 } // end unnamed namespace
 
 static bool show_intro_part(display &disp, const vconfig& part,
-		const std::string& scenario);
+		const std::string& scenario, bool redrawOnly=false);
 
 void show_intro(display &disp, const vconfig& data, const config& level)
 {
@@ -100,7 +102,7 @@ static bool show_intro_part_helper(display &disp, const vconfig& part,
 		CKey& key);
 
 bool show_intro_part(display &disp, const vconfig& part,
-		const std::string& scenario)
+		const std::string& scenario, bool redrawOnly)
 {
 	LOG_NG << "showing intro part\n";
 	scan_deprecation_messages(part.get_parsed_config());
@@ -109,14 +111,18 @@ bool show_intro_part(display &disp, const vconfig& part,
 	const std::string music_file = part["music"];
 
 	// Play music if available
-	if(music_file != "") {
+	if(!redrawOnly && music_file != "") {
 		sound::play_music_repeatedly(music_file);
 	}
 
 	CKey key;
-
-	gui::button next_button(video,_("Next") + std::string(">>>"));
+#ifdef __IPAD__
+	gui::button next_button(video,_("Next") + std::string(" >>>"));
 	gui::button skip_button(video,_("Skip"));
+#else
+	gui::button next_button(video,_("Next") + std::string(">>>"), gui::button::TYPE_PRESS, "button");
+	gui::button skip_button(video,_("Skip"), gui::button::TYPE_PRESS, "button");
+#endif
 
 //	draw_solid_tinted_rectangle(0,0,video.getx(),video.gety(),
 //			0,0,0,1.0,video.getSurface());
@@ -163,6 +169,11 @@ bool show_intro_part(display &disp, const vconfig& part,
 		dstrect.y -= 75/2;
 #endif
 	
+#ifdef __IPAD__
+	if(images.empty())
+		dstrect.y -= 75;
+#endif
+	
 	dstrect.w = background->w;
 	dstrect.h = background->h;
 
@@ -187,7 +198,7 @@ bool show_intro_part(display &disp, const vconfig& part,
 	texty = video.gety() - 200;
 	ybuttons = video.gety() - 40;
 
-	next_button.set_location(xbuttons,ybuttons-30);
+	next_button.set_location(xbuttons,ybuttons-50);
 	skip_button.set_location(xbuttons,ybuttons);
 #endif
 
@@ -222,8 +233,16 @@ bool show_intro_part(display &disp, const vconfig& part,
 			if(img.null()) continue;
 
 			const int delay = lexical_cast_default<int>((*i)["delay"], 0);
-			const int x = static_cast<int>(atoi((*i)["x"].c_str())*scale);
-			const int y = static_cast<int>(atoi((*i)["y"].c_str())*scale);
+			int x = static_cast<int>(atoi((*i)["x"].c_str())*scale);
+			int y = static_cast<int>(atoi((*i)["y"].c_str())*scale);
+			
+#ifndef __IPAD__
+			// KP: fix progress images
+			double xs = 427.0f/1024.0f; //480.0f/1024.0f;
+			double ys = 320.0f/768.0f;
+			x = x * xs;
+			y = y * ys;
+#endif
 
 			if (utils::string_bool((*i)["scaled"])){
 				img = scale_surface(img, static_cast<int>(img->w*scale), static_cast<int>(img->h*scale));
@@ -279,6 +298,10 @@ bool show_intro_part(display &disp, const vconfig& part,
 			}
 		}
 	}
+	
+	if (redrawOnly)
+		return true;
+	
 	try {
 		return show_intro_part_helper(
 			disp, part, textx, texty,
@@ -451,6 +474,73 @@ static bool show_intro_part_helper(display &disp, const vconfig& part,
 
 		if(!skip || itor == utils::utf8_iterator::end(story))
 			disp.delay(20);
+		
+		if (gRedraw == true)
+		{
+			gRedraw = false;
+			
+			itor = utils::utf8_iterator::begin(story);
+#ifdef USE_TINY_GUI
+			xpos = textx;
+			ypos = texty + 10;
+#else
+			xpos = textx;
+			ypos = texty + 20;
+#endif
+			
+			// mid-story flip support
+			show_intro_part(disp, part, "", true);
+
+			if(story.empty() != true)
+			{
+				// this should kill the tiniest flickering caused
+				// by the buttons being hidden and unhidden in this scope.
+				update_locker locker(disp.video());
+				
+				const SDL_Rect total_size = font::draw_text(NULL, screen_area(), font::SIZE_PLUS,
+															font::NORMAL_COLOUR, story, 0, 0);
+				
+				next_button.hide();
+				skip_button.hide();
+				
+				if (texty + 20 + total_size.h > screen_area().h) {
+					texty = screen_area().h > total_size.h + 1 ? screen_area().h - total_size.h - 21 : 0;
+				}
+				
+				update_y = texty;
+				update_h = screen_area().h-texty;
+				blur_helper(disp.video(), update_y, update_h);
+				
+				//draw_solid_tinted_rectangle(
+				//	0, texty, screen_area().w, screen_area().h - texty,
+				//	0, 0, 0, 1.0, video.getSurface()
+				//);
+				SDL_Rect tintRect = {0, texty, screen_area().w, screen_area().h - texty};
+				SDL_SetRenderDrawColor(0, 0, 0, 0xff);
+				SDL_RenderFill(&tintRect);
+				
+				// Draw a nice border
+				if(has_background) {
+					// FIXME: perhaps hard-coding the image path isn't a really
+					// good idea - it must not be forgotten if someone decides to switch
+					// the image directories around.
+					surface top_border = image::get_image("dialogs/translucent54-border-top.png");
+					top_border = scale_surface_blended(top_border, screen_area().w, top_border->h);
+					update_y = texty - top_border->h;
+					update_h += top_border->h;
+					blur_helper(disp.video(), update_y, top_border->h);
+					blit_surface(0, texty - top_border->h, top_border);
+				}
+				
+				// Make buttons aware of the changes in the background
+				next_button.set_location(next_button.location());
+				next_button.hide(false);
+				skip_button.set_location(skip_button.location());
+				skip_button.hide(false);
+			}
+			
+			
+		}
 	}
 
 	// KP: hmmm... it draws everything black, but doesn't update the screen.... ignore it for now...

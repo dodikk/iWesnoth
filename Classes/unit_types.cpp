@@ -953,7 +953,7 @@ const shared_string& unit_type::image_profile() const
 const t_string unit_type::unit_description() const
 {
 	if(description_.empty()) {
-		return (_("No description available."));
+		return (_(""));
 	} else {
 		return description_;
 	}

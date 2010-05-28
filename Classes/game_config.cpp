@@ -276,11 +276,18 @@ namespace game_config
 
 	const color_range& color_info(const std::string& name)
 	{
-		std::map<std::string, color_range>::const_iterator i = team_rgb_range.find(name);
+		// KP: get rid of trailing \n
+		std::string checkName = name;
+		int pos = checkName.find('\n');
+		if (pos != std::string::npos)
+		{
+			checkName = checkName.substr(0, pos);
+		}
+		std::map<std::string, color_range>::const_iterator i = team_rgb_range.find(checkName);
 		if(i == team_rgb_range.end()) {
 			try {
-				team_rgb_range.insert(std::make_pair(name,color_range(string2rgb(name))));
-				return color_info(name);
+				team_rgb_range.insert(std::make_pair(name,color_range(string2rgb(checkName))));
+				return color_info(checkName);
 			} catch(bad_lexical_cast&) {
 				//ERR_NG << "Invalid color range: " << name;
 				//return color_info();

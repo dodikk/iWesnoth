@@ -1893,7 +1893,7 @@ void draw_solid_tinted_rectangle(int x, int y, int w, int h,
 	//fill_rect_alpha(rect,SDL_MapRGB(target->format,r,g,b),Uint8(alpha*255),target);
 	//SDL_SetRenderDrawColor(r, g, b, Uint8(alpha*255));
 	//SDL_RenderFill(&rect);
-	Uint32 color = Uint8(alpha*255)<<24 & (r&0xff)<<16 & (g&0xff)<<8 & (b&0xff);
+	Uint32 color = ((((Uint32)alpha)*255)<<24) | ((r&0xff)<<16) | ((g&0xff)<<8) | (b&0xff);
 	fill_rect(color, &rect);
 }
 

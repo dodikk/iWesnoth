@@ -26,7 +26,7 @@ class CVideo;
 namespace font {
 
 /** Standard markups for color, size, font, images. */
-extern const char LARGE_TEXT, SMALL_TEXT, BOLD_TEXT, NORMAL_TEXT, NULL_MARKUP, BLACK_TEXT, GRAY_TEXT,
+extern const char EXTRA_LARGE_TEXT, LARGE_TEXT, SMALL_TEXT, BOLD_TEXT, NORMAL_TEXT, NULL_MARKUP, BLACK_TEXT, GRAY_TEXT,
                   GOOD_TEXT, BAD_TEXT, GREEN_TEXT, RED_TEXT, COLOR_TEXT, YELLOW_TEXT, IMAGE;
 
 /** Parses the markup-tags at the front of a string. */

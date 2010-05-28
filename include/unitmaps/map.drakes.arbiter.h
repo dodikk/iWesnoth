@@ -1,0 +1,24 @@
+// "filename.png", texOffsetX, texOffsetY, flags, texW, texH, trimmedX, trimmedY, originalW, originalH, UNITMAP_DRAKES_ARBITERID
+addMapEntry("units/drakes/arbiter-blade-s-4.png", 201, 236, 0, 53, 125, 7, 25, 72, 150, UNITMAP_DRAKES_ARBITER);
+addMapEntry("units/drakes/arbiter-blade-s-5.png", 145, 312, 0, 43, 92, 10, 56, 72, 148, UNITMAP_DRAKES_ARBITER);
+addMapEntry("units/drakes/arbiter-blade-s-6.png", 473, 384, 0, 39, 83, 12, 37, 72, 120, UNITMAP_DRAKES_ARBITER);
+addMapEntry("units/drakes/arbiter-blade-se-1.png", 416, 384, 0, 57, 89, 3, 0, 72, 122, UNITMAP_DRAKES_ARBITER);
+addMapEntry("units/drakes/arbiter-blade-se-2.png", 254, 376, 0, 52, 89, 3, 0, 72, 120, UNITMAP_DRAKES_ARBITER);
+addMapEntry("units/drakes/arbiter-blade-se-3.png", 336, 448, 0, 68, 63, 0, 3, 94, 72, UNITMAP_DRAKES_ARBITER);
+addMapEntry("units/drakes/arbiter-blade-se-4.png", 0, 0, 0, 101, 110, 39, 0, 140, 116, UNITMAP_DRAKES_ARBITER);
+addMapEntry("units/drakes/arbiter-blade-se-5.png", 101, 0, 0, 100, 83, 42, 23, 142, 106, UNITMAP_DRAKES_ARBITER);
+addMapEntry("units/drakes/arbiter-blade-se-6.png", 254, 306, 0, 82, 70, 12, 20, 94, 90, UNITMAP_DRAKES_ARBITER);
+addMapEntry("units/drakes/arbiter-defend-1.png", 336, 236, 0, 66, 61, 43, 44, 150, 150, UNITMAP_DRAKES_ARBITER);
+addMapEntry("units/drakes/arbiter-defend-2.png", 336, 306, 0, 68, 78, 41, 29, 150, 150, UNITMAP_DRAKES_ARBITER);
+addMapEntry("units/drakes/arbiter-pierce-s-3.png", 201, 449, 0, 45, 63, 37, 39, 150, 150, UNITMAP_DRAKES_ARBITER);
+addMapEntry("units/drakes/arbiter-pierce-s-4.png", 145, 404, 0, 43, 91, 43, 51, 150, 150, UNITMAP_DRAKES_ARBITER);
+addMapEntry("units/drakes/arbiter-pierce-s-5.png", 101, 312, 0, 44, 91, 42, 57, 150, 150, UNITMAP_DRAKES_ARBITER);
+addMapEntry("units/drakes/arbiter-pierce-s-6.png", 201, 361, 0, 46, 88, 39, 62, 150, 150, UNITMAP_DRAKES_ARBITER);
+addMapEntry("units/drakes/arbiter-pierce-s-7.png", 464, 236, 0, 44, 67, 43, 53, 150, 150, UNITMAP_DRAKES_ARBITER);
+addMapEntry("units/drakes/arbiter-pierce-se-1.png", 336, 384, 0, 80, 64, 40, 43, 150, 150, UNITMAP_DRAKES_ARBITER);
+addMapEntry("units/drakes/arbiter-pierce-se-2.png", 404, 306, 0, 66, 64, 40, 41, 150, 150, UNITMAP_DRAKES_ARBITER);
+addMapEntry("units/drakes/arbiter-pierce-se-3.png", 402, 236, 0, 62, 64, 37, 39, 150, 150, UNITMAP_DRAKES_ARBITER);
+addMapEntry("units/drakes/arbiter-pierce-se-4.png", 101, 83, 0, 102, 77, 42, 51, 150, 150, UNITMAP_DRAKES_ARBITER);
+addMapEntry("units/drakes/arbiter-pierce-se-5.png", 101, 160, 0, 102, 76, 46, 56, 150, 150, UNITMAP_DRAKES_ARBITER);
+addMapEntry("units/drakes/arbiter-pierce-se-6.png", 101, 236, 0, 100, 76, 50, 59, 150, 150, UNITMAP_DRAKES_ARBITER);
+addMapEntry("units/drakes/arbiter-pierce-se-7.png", 254, 236, 0, 82, 70, 41, 50, 150, 150, UNITMAP_DRAKES_ARBITER);

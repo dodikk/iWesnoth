@@ -13,16 +13,30 @@
 
 #include "achievements.h"
 
-#include "OpenFeint.h"
+#ifndef DISABLE_OPENFEINT
 
-#include "OFAchievementService.h"
-#include "OFAchievement.h"
+	#include "OpenFeint.h"
+
+	#include "OFAchievementService.h"
+	#include "OFAchievement.h"
+
+	#import "SampleOFDelegate.h"
+
+	SampleOFDelegate *ofDelegate;
+
+#endif
 
 #include "game_preferences.hpp"
 
 #include "construct_dialog.hpp"
 #include "game_display.hpp"
 #include "stdio.h"
+
+#import "Appirater.h"
+
+
+
+
 
 std::string names[] = { "Bloodied", "Slayer", "Battle Master", "Bone Crusher", "Predator", "Penny Pincher", "Money Hoarder", "Veteran Unit",
 	"Heroic Unit", "Fearless Leader", "Beserk", "Rampage", "Proficient Commander", "Great General", "Divine Blessing", "Lightning Quick Blades",
@@ -39,27 +53,66 @@ std::string desc[] = { "Kill 25 enemy units", "Kill 50 enemy units", "Kill 100 e
 
 bool gInitialized = false;
 
+extern "C" unsigned char gFlippedGL;
+
+
+
 void of_init(void)
 {
 	if (gInitialized)
 		return;
 	
+#ifndef DISABLE_OPENFEINT	
+	
+	UIInterfaceOrientation orient;
+	if (!gFlippedGL)
+		orient = UIInterfaceOrientationLandscapeRight;
+	else
+		orient = UIInterfaceOrientationLandscapeLeft;	
+		
+
+	
 	NSDictionary* settings = [NSDictionary dictionaryWithObjectsAndKeys:
-							  [NSNumber numberWithInt:UIInterfaceOrientationLandscapeRight], OpenFeintSettingDashboardOrientation,
+							  [NSNumber numberWithInt:orient], OpenFeintSettingDashboardOrientation,
 							  @"Wesnoth", OpenFeintSettingShortDisplayName, 
 							  [NSNumber numberWithBool:YES], OpenFeintSettingEnablePushNotifications,
 							  [NSNumber numberWithBool:NO], OpenFeintSettingDisableUserGeneratedContent,
 							  [NSNumber numberWithBool:YES], OpenFeintSettingPromptToPostAchievementUnlock,
+//							  [UIApplication sharedApplication].keyWindow, OpenFeintSettingPresentationWindow,
 							  nil
 							  ];
 	
-	[OpenFeint initializeWithProductKey:@"WDYPKxGL2aP5ujZFrnKmQ" andSecret:@"WoRs8Pt7ch9r0Re1UI7Zx5d62gezqfHDLPy4t5suQE" andDisplayName:@"Wesnoth" andSettings:settings andDelegates:nil];
-	gInitialized = true;
+	ofDelegate = [SampleOFDelegate new];
+	
+	OFDelegatesContainer* delegates = [OFDelegatesContainer containerWithOpenFeintDelegate:ofDelegate
+																	  andChallengeDelegate:nil
+																   andNotificationDelegate:nil];
+	
+	[OpenFeint initializeWithProductKey:@"WDYPKxGL2aP5ujZFrnKmQ" 
+							  andSecret:@"WoRs8Pt7ch9r0Re1UI7Zx5d62gezqfHDLPy4t5suQE" 
+						 andDisplayName:@"Wesnoth" 
+							andSettings:settings 
+						   andDelegates:delegates];
+	
+#endif
+	
+gInitialized = true;
+	
+	
+// now also set up AppiRater
+[Appirater appLaunched];
+	
 }
 
 void of_dashboard(void)
 {
-	[OpenFeint launchDashboard];
+#ifndef DISABLE_OPENFEINT	
+	{
+		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+		[OpenFeint launchDashboard];
+		[pool release];
+	}
+#endif
 }
 
 std::string achievement_name(int achievement)
@@ -69,6 +122,8 @@ std::string achievement_name(int achievement)
 
 void earn_achievement(int achievement, bool show_dlg)
 {
+#ifndef DISABLE_OPENFEINT
+	
 	if (preferences::achievement_earned(achievement))
 		return;
 	
@@ -94,4 +149,5 @@ void earn_achievement(int achievement, bool show_dlg)
 	
 	// do OpenFeint stuff
 	[OFAchievementService unlockAchievement:ids[achievement]];
+#endif
 }

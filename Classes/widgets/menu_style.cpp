@@ -27,12 +27,12 @@ namespace gui {
 
 	//static initializations
 menu::imgsel_style menu::bluebg_style("misc/selection2", true,
-										   0x000000, 0x000000, 0x333333,
-										   0.35, 0.0, 0.3);
+										   0x000000, 0x000000, 0x001829,
+									  0.35, 0.0, 1.0); //0.3);
 menu::style menu::simple_style;
 menu::imgsel_style menu::bigger_style("misc/selection2", true,
-										  0x000000, 0x000000, 0x333333,
-										  0.35, 0.0, 0.3, 18);
+										  0x000000, 0x000000, 0x001829,
+									  0.35, 0.0, 0.3, 25); //18);
 
 #if defined(USE_TINY_GUI) && !defined(__IPHONEOS__)
 menu::style &menu::default_style = menu::simple_style;
@@ -44,15 +44,15 @@ menu *empty_menu = NULL;
 	//constructors
 menu::style::style() : font_size_(font::SIZE_NORMAL),
 		cell_padding_(font::SIZE_NORMAL * 3/5), thickness_(0),
-		normal_rgb_(0x000000), selected_rgb_(0x000099), heading_rgb_(0x333333),
-		normal_alpha_(0.2),  selected_alpha_(0.6), heading_alpha_(0.3),
+		normal_rgb_(0x000000), selected_rgb_(0x000099), heading_rgb_(0x001829),
+		normal_alpha_(0.2),  selected_alpha_(0.6), heading_alpha_(1.0),
 		max_img_w_(-1), max_img_h_(-1)
 {}
 
 menu::style::style(int fontSize) : font_size_(fontSize),
 	cell_padding_(fontSize * 3/5), thickness_(0),
-	normal_rgb_(0x000000), selected_rgb_(0x000099), heading_rgb_(0x333333),
-	normal_alpha_(0.2),  selected_alpha_(0.6), heading_alpha_(0.3),
+	normal_rgb_(0x000000), selected_rgb_(0x000099), heading_rgb_(0x001829),
+	normal_alpha_(0.2),  selected_alpha_(0.6), heading_alpha_(1.0),
 	max_img_w_(-1), max_img_h_(-1)
 {}
 	

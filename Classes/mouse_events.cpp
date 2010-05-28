@@ -28,6 +28,8 @@
 #include "replay.hpp"
 #include "wml_separators.hpp"
 
+extern bool gIsDragging;
+extern bool gRedraw;
 
 namespace events{
 
@@ -335,14 +337,29 @@ void mouse_handler::mouse_press(const SDL_MouseButtonEvent& event, const bool br
 	mouse_handler_base::mouse_press(event, browse);
 }
 
-bool mouse_handler::right_click_show_menu(int /*x*/, int /*y*/, const bool browse)
+bool mouse_handler::right_click_show_menu(int x, int y, const bool browse)
 {
 	// The first right-click cancel the selection if any,
 	// the second open the context menu
 	if (selected_hex_.valid() && find_unit(selected_hex_) != units_.end()) {
-		select_hex(map_location(), browse);
+		//select_hex(map_location(), browse);
+		
+		// KP: if we double tap on the selected unit, then always display the context menu
+		map_location new_hex = gui().hex_clicked_on(x,y);
+		if (selected_hex_ == new_hex)
+		{
+			select_hex(map_location(), browse);
+			return true;
+		}
+		
+		// KP: now, we just send another tap if a unit is already selected, the user probably tapped too fast...
+		left_mouse_up(x, y, browse);
+		// note: we just need one, because the first one was already sent...
 		return false;
 	} else {
+		const SDL_Rect map_area = gui().map_area();
+		if (x > map_area.w || y < map_area.y)
+			return false;	// tap on a panel, not the map
 		return true;
 	}
 }
@@ -351,6 +368,16 @@ bool mouse_handler::left_click(int x, int y, const bool browse)
 {
 	if (mouse_handler_base::left_click(x, y, browse)) 
 		return false;
+	
+	// check for a click on the selected unit's description image
+	const SDL_Rect uia = gui().unit_image_area();
+	if (x > uia.x && y > uia.y && x < uia.x+uia.w && y < uia.y+uia.h)
+	{
+		const unit_map::const_iterator i = find_unit(gui().displayedUnitHex_);
+		if (i != units_.end())
+			dialogs::show_unit_description(gui(), i->second);
+		return true;
+	}
 	
 	return false;
 }
@@ -515,6 +542,8 @@ void mouse_handler::left_mouse_up(int x, int y, const bool browse)
 	if (didDrag_)
 	{
 		didDrag_ = false;
+		gIsDragging = false;
+		gRedraw = true;
 		return;
 	}
 	
@@ -813,9 +842,9 @@ bool mouse_handler::attack_enemy_(unit_map::iterator attacker, unit_map::iterato
 	gui().highlight_hex(map_location());
 	gui().draw(true,true);
 
-//	attack_prediction_displayer ap_displayer(gui(), bc_vector, map_, teams_, units_, status_, attacker_loc, defender_loc);
+	//attack_prediction_displayer ap_displayer(gui(), bc_vector, map_, teams_, units_, status_, attacker_loc, defender_loc);
 	std::vector<gui::dialog_button_info> buttons;
-//	buttons.push_back(gui::dialog_button_info(&ap_displayer, _("Damage Calculations")));
+	//buttons.push_back(gui::dialog_button_info(&ap_displayer, _("Damage Calculations")));
 
 	int res = 0;
 

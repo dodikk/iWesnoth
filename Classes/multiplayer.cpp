@@ -75,7 +75,7 @@ static void run_lobby_loop(display& disp, mp::ui& ui)
 		events::raise_draw_event();
 
 		disp.flip();
-//		disp.delay(20);
+		disp.delay(10);
 	}
 	font::cache_mode(font::CACHE_GAME);
 }

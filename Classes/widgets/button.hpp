@@ -78,6 +78,8 @@ private:
 	SPACE_CONSUMPTION spacing_;
 
 	int base_height_, base_width_;
+	
+	int font_size;
 
 }; //end class button
 

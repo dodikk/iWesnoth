@@ -73,6 +73,12 @@
 	
 	OFLocation* mLocation;
 	OFUser* mCachedLocalUser;
+
+    struct {
+		unsigned int isConfirmAccountFlowActive:1;
+		unsigned int hasDeferredLoginDelegate:1;
+		unsigned int isOpenFeintDashboardInOnlineMode:1;
+    } _openFeintFlags;
 }
 
 ////////////////////////////////////////////////////////////

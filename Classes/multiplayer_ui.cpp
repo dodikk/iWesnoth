@@ -363,10 +363,17 @@ SDL_Rect ui::client_area() const
 	SDL_Rect res;
 
 #ifdef __IPHONEOS__
-	res.x = 14;
-	res.y = 25;
-	res.w = 452;
-	res.h = 288;
+	#ifdef __IPAD__
+		res.x = xscale(10) + 10;
+		res.y = yscale(38) + 10;
+		res.w = xscale(828) > 12 ? xscale(828) - 12 : 0;
+		res.h = yscale(520+200) > 12 ? yscale(520+200) - 12 : 0;
+	#else
+		res.x = 14;
+		res.y = 25;
+		res.w = 452;
+		res.h = 288;
+	#endif
 #else
 	res.x = xscale(10) + 10;
 	res.y = yscale(38) + 10;
@@ -391,9 +398,9 @@ void ui::draw_contents()
 //	if(background == NULL)
 //		return;
 	
-	for (int y=0; y < 320; y += 128)
+	for (int y=0; y < CVideo::gety(); y += 128)
 	{
-		for (int x=0; x < 480; x += 128)
+		for (int x=0; x < CVideo::getx(); x += 128)
 			blit_surface(x, y, background_);
 	}
 
@@ -503,9 +510,10 @@ void ui::handle_key_event(const SDL_KeyboardEvent& event)
 		chat_handler::do_speak(entry_textbox_.text());
 		entry_textbox_.clear();
 	// nick tab-completion
-	} else if(event.keysym.sym == SDLK_TAB ) {
+	} 
+/*	else if(event.keysym.sym == SDLK_TAB ) {
 		std::string text = entry_textbox_.text();
-		std::vector<std::string> matches = user_list_;
+		std::vector<shared_string> matches = user_list_;
 		// Exclude own nick from tab-completion.
 		matches.erase(std::remove(matches.begin(), matches.end(),
 				preferences::login()), matches.end());
@@ -522,6 +530,7 @@ void ui::handle_key_event(const SDL_KeyboardEvent& event)
 		}
 		entry_textbox_.set_text(text);
 	}
+ */
 #endif
 }
 
@@ -607,8 +616,11 @@ void ui::layout_children(const SDL_Rect& /*rect*/)
 	umenu_style.set_width(xscale(159));
 	users_menu_.set_width(xscale(159));
 	users_menu_.set_max_width(xscale(159));
-	//users_menu_.set_location(xscale(856), yscale(42));
+#ifdef __IPAD__
+	users_menu_.set_location(xscale(856), yscale(42));
+#else
 	users_menu_.set_location(480,yscale(42));
+#endif
 	users_menu_.set_height(yscale(715));
 	users_menu_.set_max_height(yscale(715));
 #ifdef USE_TINY_GUI

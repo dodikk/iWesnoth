@@ -340,6 +340,7 @@ public:
 	std::string ref_at(const int x, const int y);
 
 protected:
+	virtual void handle_event(const SDL_Event& event);
 	virtual void scroll(unsigned int pos);
 	virtual void set_inner_location(const SDL_Rect& rect);
 
@@ -2020,7 +2021,7 @@ void help_menu::display_visible_items()
 		 end = visible_items_.end(); items_it != end; ++items_it) {
 		std::string to_show = items_it->visible_string;
 		if (selected_item_ == *items_it)
-			to_show = std::string("*") + to_show;
+			to_show = std::string("") + DEFAULT_ITEM + to_show;
 		menu_items.push_back(to_show);
 	}
 	set_items(menu_items, false, true);
@@ -2578,6 +2579,11 @@ void help_text_area::draw_contents()
 //	update_rect(loc);
 }
 
+void help_text_area::handle_event(const SDL_Event& event)
+{
+	handle_drag_event(event);
+}
+	
 void help_text_area::scroll(unsigned int)
 {
 	// Nothing will be done on the actual scroll event. The scroll
@@ -2618,8 +2624,8 @@ help_browser::help_browser(display &disp, const section &toplevel) :
 	ref_cursor_(false),
 	back_topics_(),
 	forward_topics_(),
-	back_button_(disp.video(), _(" < Back"), gui::button::TYPE_PRESS),
-	forward_button_(disp.video(), _("Forward >"), gui::button::TYPE_PRESS),
+	back_button_(disp.video(), _(" < Back"), gui::button::TYPE_PRESS, "button"),
+	forward_button_(disp.video(), _("Forward >"), gui::button::TYPE_PRESS, "button"),
 	shown_topic_(NULL)
 {
 	// Hide the buttons at first since we do not have any forward or
@@ -2630,7 +2636,11 @@ help_browser::help_browser(display &disp, const section &toplevel) :
 	// Set sizes to some default values.
 #ifdef __IPHONEOS__
 	//set_measurements(font::relative_size(200), font::relative_size(320));
-	set_measurements(480, 320);
+	#ifdef __IPAD__
+		set_measurements(1024, 768);
+	#else
+		set_measurements(480, 320);
+	#endif
 #else	
 	set_measurements(font::relative_size(400), font::relative_size(500));
 #endif	
@@ -3122,8 +3132,13 @@ void show_help(display &disp, const section &toplevel_sec,
 #endif
 
 #ifdef __IPHONEOS__
-	const int width  = 480;
-	const int height = 280;
+	#ifdef __IPAD__
+		const int width  = 1024;
+		const int height = 768-55;
+	#else
+		const int width  = 480;
+		const int height = 280;
+	#endif
 #else
 	const int width  = std::min<int>(font::relative_size(900), screen.x() - font::relative_size(20));
 	const int height = std::min<int>(font::relative_size(800), screen.y() - font::relative_size(150));
@@ -3140,7 +3155,7 @@ void show_help(display &disp, const section &toplevel_sec,
 		yloc = screen.gety() / 2 - height / 2;
 	}
 	std::vector<gui::button*> buttons_ptr;
-	gui::button close_button_(disp.video(), _("Close"));
+	gui::button close_button_(disp.video(), _("Close"), gui::button::TYPE_PRESS, "button");
 	buttons_ptr.push_back(&close_button_);
 
 	gui::dialog_frame f(disp.video(), _("The Battle for Wesnoth Help"), gui::dialog_frame::default_style,

@@ -42,6 +42,8 @@
 #define WRN_CONFIG LOG_STREAM(warn, config)
 #define ERR_CONFIG LOG_STREAM(err, config)
 
+extern bool gIsDragging;
+
 namespace {
 	const std::string ModificationTypes[] = { "advance", "trait", "object" };
 	const size_t NumModificationTypes = sizeof(ModificationTypes)/
@@ -1980,18 +1982,22 @@ void unit::redraw_unit(game_display& disp, const map_location& loc)
 		//ellipse_front.assign(image::get_image(image::locator(buf), image::SCALED_TO_ZOOM));
 		getUnitTextureAtlasInfo(buf, mods, ellipse_front);
 	}
-	//if (ellipse_back != NULL) {
-	if (ellipse_back.mapId != 0) {
-		//disp.drawing_buffer_add(display::LAYER_UNIT_BG, loc,
-		disp.drawing_buffer_add(display::LAYER_UNIT_FIRST, loc,
-			display::tblit(xsrc, ysrc +adjusted_params.y-ellipse_floating, ellipse_back));
-	}
+	
+//	if (gIsDragging == false)
+	{
+		//if (ellipse_back != NULL) {
+		if (ellipse_back.mapId != 0) {
+			//disp.drawing_buffer_add(display::LAYER_UNIT_BG, loc,
+			disp.drawing_buffer_add(display::LAYER_UNIT_FIRST, loc,
+								display::tblit(xsrc, ysrc +adjusted_params.y-ellipse_floating, ellipse_back));
+		}
 
-	//if (ellipse_front != NULL) {
-	if (ellipse_front.mapId != 0) {
-		//disp.drawing_buffer_add(display::LAYER_UNIT_FG, loc,
-		disp.drawing_buffer_add(display::LAYER_UNIT_FIRST, loc,
-			display::tblit(xsrc, ysrc +adjusted_params.y-ellipse_floating, ellipse_front));
+		//if (ellipse_front != NULL) {
+		if (ellipse_front.mapId != 0) {
+			//disp.drawing_buffer_add(display::LAYER_UNIT_FG, loc,
+			disp.drawing_buffer_add(display::LAYER_UNIT_FIRST, loc,
+								display::tblit(xsrc, ysrc +adjusted_params.y-ellipse_floating, ellipse_front));
+		}
 	}
 
 	if(draw_bars) {
@@ -2016,7 +2022,7 @@ void unit::redraw_unit(game_display& disp, const map_location& loc)
 			}
 		}
 
-		if (movement_file)
+		if (movement_file) //&& gIsDragging == false)
 		{
 			textureAtlasInfo tinfo;
 			if (getTextureAtlasInfo(movement_file->get(), tinfo))
@@ -2057,18 +2063,21 @@ void unit::redraw_unit(game_display& disp, const map_location& loc)
 			//if(!crown.null()) {
 				
 			textureAtlasInfo crown;
-			if (getTextureAtlasInfo("misc/leader-crown.png", crown)) 
+			if (/*gIsDragging==false &&*/ getTextureAtlasInfo("misc/leader-crown.png", crown)) 
 			{
 				disp.drawing_buffer_add(display::LAYER_UNIT_BAR,
 					loc, display::tblit(xsrc, ysrc +adjusted_params.y, crown));
 			}
 		}
 
-		for(std::vector<shared_string>::const_iterator ov = overlays().begin(); ov != overlays().end(); ++ov) {
-			const surface ov_img(image::get_image(*ov, image::SCALED_TO_ZOOM));
-			if(ov_img != NULL) {
-				disp.drawing_buffer_add(display::LAYER_UNIT_BAR,
-					loc, display::tblit(xsrc, ysrc +adjusted_params.y, ov_img));
+		//if (gIsDragging == false)
+		{
+			for(std::vector<shared_string>::const_iterator ov = overlays().begin(); ov != overlays().end(); ++ov) {
+				const surface ov_img(image::get_image(*ov, image::SCALED_TO_ZOOM));
+				if(ov_img != NULL) {
+					disp.drawing_buffer_add(display::LAYER_UNIT_BAR,
+											loc, display::tblit(xsrc, ysrc +adjusted_params.y, ov_img));
+				}
 			}
 		}
 	}

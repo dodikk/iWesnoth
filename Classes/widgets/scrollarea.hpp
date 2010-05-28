@@ -41,6 +41,7 @@ protected:
 	virtual handler_vector handler_members();
 	virtual void update_location(SDL_Rect const &rect);
 	virtual void handle_event(const SDL_Event& event);
+	bool handle_drag_event(const SDL_Event& event);		// KP: added content dragging
 	virtual void process_event();
 	virtual void scroll(unsigned int pos) = 0;
 	virtual void set_inner_location(SDL_Rect const &rect) = 0;

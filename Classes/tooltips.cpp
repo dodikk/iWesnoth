@@ -18,6 +18,7 @@
 #include "marked-up_text.hpp"
 #include "tooltips.hpp"
 #include "video.hpp"
+#include "game_display.hpp"
 
 
 static bool rectangles_overlap(const SDL_Rect& a, const SDL_Rect& b)
@@ -64,6 +65,10 @@ static void clear_tooltip()
 	if(tooltip_handle != 0) {
 		font::remove_floating_label(tooltip_handle);
 		tooltip_handle = 0;
+		// KP: also invalidate the panel
+		game_display *gd = game_display::get_singleton();
+		if (gd)
+			gd->invalidateUnit_ = true;
 	}
 }
 

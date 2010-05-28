@@ -113,8 +113,13 @@ UIKit_VideoInit(_THIS)
     SDL_zero(mode);
 	mode.format = SDL_PIXELFORMAT_ARGB8888; //SDL_PIXELFORMAT_ABGR8888;
 #ifdef LANDSCAPE
-    mode.w = 480;
-    mode.h = 320;
+	#ifdef __IPAD__
+		mode.w = 1024;
+		mode.h = 768;
+	#else
+		mode.w = 480;
+		mode.h = 320;
+	#endif
 #else
 	mode.w = 320;
 	mode.h = 480;

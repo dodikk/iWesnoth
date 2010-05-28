@@ -44,6 +44,8 @@
 #define MIN_PERCENTAGE   0
 #define MAX_PERCENTAGE 100
 
+extern bool gRedraw;
+
 loadscreen::global_loadscreen_manager* loadscreen::global_loadscreen_manager::manager = 0;
 
 loadscreen::global_loadscreen_manager::global_loadscreen_manager(CVideo& screen)
@@ -208,7 +210,13 @@ static void draw_tip_of_day(CVideo& screen,
 			const std::string& source =
 			font::word_wrap_text((*tip)["source"], font::SIZE_NORMAL, tip_width);
 			
-			const int pad = game_config::title_tip_padding;
+//			const int pad = game_config::title_tip_padding;
+			
+#ifdef __IPAD__
+			const int pad = 10;
+#else
+			const int pad = 5;
+#endif
 			
 			SDL_Rect area = font::text_area(text,font::SIZE_NORMAL);
 			area.w = tip_width;
@@ -298,7 +306,11 @@ loadscreen::loadscreen(CVideo &screen, const int &percent):
 	file += ".pvrtc";
 	std::string path = game_config::path + "/data/core/images/" + file; 
 	
+#ifdef __IPAD__
+	int pvrtcSize = 1024;
+#else
 	int pvrtcSize = 512;
+#endif
 	GLsizei dataSize = (pvrtcSize * pvrtcSize * 4) / 8;
 	FILE *fp = fopen(path.c_str(), "rb");
 	if (!fp)
@@ -312,12 +324,14 @@ loadscreen::loadscreen(CVideo &screen, const int &percent):
 	fclose(fp);
 	
 	glGenTextures(1, &logo_texture_);	
-	glBindTexture(GL_TEXTURE_2D, logo_texture_);
+	//glBindTexture(GL_TEXTURE_2D, logo_texture_);
+	cacheBindTexture(GL_TEXTURE_2D, logo_texture_, 1);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	glCompressedTexImage2D(GL_TEXTURE_2D, 0, GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG, pvrtcSize, pvrtcSize, 0, dataSize, data);
+#ifndef NDEBUG
 	GLenum err = glGetError();
 	if (err != GL_NO_ERROR)
 	{
@@ -325,6 +339,7 @@ loadscreen::loadscreen(CVideo &screen, const int &percent):
 		sprintf(buffer, "\n\n*** ERROR uploading compressed texture %s:  glError: 0x%04X\n\n", path.c_str(), err);
 		std::cerr << buffer;
 	}
+#endif
 	
 	free(data);
 	
@@ -335,6 +350,13 @@ loadscreen::loadscreen(CVideo &screen, const int &percent):
 
 void loadscreen::set_progress(const int percentage, const std::string &text, const bool commit)
 {
+	
+	if (gRedraw)
+	{
+		gRedraw = false;
+		logo_drawn_ = false;
+	}
+	
 	// Saturate percentage.
 	prcnt_ = percentage < MIN_PERCENTAGE ? MIN_PERCENTAGE: percentage > MAX_PERCENTAGE ? MAX_PERCENTAGE: percentage;
 	// Set progress bar parameters:
@@ -386,17 +408,27 @@ void loadscreen::set_progress(const int percentage, const std::string &text, con
 		//area.h = logo_surface_->h;
 		//SDL_BlitSurface (logo_surface_, 0, gdis, &area);		
 		//screen_.blit_surface(0, 0, logo_surface_);
-		GLshort vertices[8];
+		GLshort vertices[12];
 		GLfloat texCoords[8];
+		
+#ifdef __IPAD__
+		int size = 1024;
+#else
+		int size = 512;
+#endif
 		
 		vertices[0] = 0;
 		vertices[1] = 0;
-		vertices[2] = 512;
-		vertices[3] = 0;
+		vertices[2] = 0;
+		vertices[3] = size;
 		vertices[4] = 0;
-		vertices[5] = 512;
-		vertices[6] = 512;
-		vertices[7] = 512;
+		vertices[5] = 0;
+		vertices[6] = 0;
+		vertices[7] = size;
+		vertices[8] = 0;
+		vertices[9] = size;
+		vertices[10] = size;
+		vertices[11] = 0;
 
 		texCoords[0] = 0;
 		texCoords[1] = 0;
@@ -417,6 +449,15 @@ void loadscreen::set_progress(const int percentage, const std::string &text, con
 		//SDL_UpdateRect(gdis, area.x, area.y, area.w, area.h);
 		
 		// draw logo over everything
+#ifdef __IPAD__
+		std::string path = game_config::path + "/data/core/images/misc/logo.png";
+		surface logo_surface = IMG_Load(path.c_str());
+		blit_surface((1024-logo_surface.get()->w)/2, -10, logo_surface);
+		
+		
+		SDL_Rect tip_area = {690, 306, 225, 140};
+		draw_tip_of_day(screen_, tips_of_day, gui::dialog_frame::titlescreen_style,&tip_area);		
+#else
 		std::string path = game_config::path + "/data/core/images/misc/logo_small.png";
 		surface logo_surface = IMG_Load(path.c_str());
 		blit_surface((480-logo_surface.get()->w)/2, -10, logo_surface);
@@ -424,6 +465,7 @@ void loadscreen::set_progress(const int percentage, const std::string &text, con
 
 		SDL_Rect tip_area = {242, 100, 225, 140};
 		draw_tip_of_day(screen_, tips_of_day, gui::dialog_frame::titlescreen_style,&tip_area);
+#endif
 
 		logo_drawn_ = true;
 
@@ -431,7 +473,11 @@ void loadscreen::set_progress(const int percentage, const std::string &text, con
 	}
 	
 	int pbx = (scrx - pbw)/2;					// Horizontal location.
+#ifdef __IPAD__	
+	int pby = 693;
+#else
 	int pby = 276; //(scry - pbh)/2 + pby_offset_;		// Vertical location.
+#endif
 
 	// Draw top border.
 	area.x = pbx; area.y = pby;

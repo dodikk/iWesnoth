@@ -121,3 +121,49 @@ extern const NSString* OpenFeintSettingInitialUserId;
 ///
 ////////////////////////////////////////////////////////////
 extern const NSString* OpenFeintSettingPromptToPostAchievementUnlock;
+
+////////////////////////////////////////////////////////////
+///
+/// @type		NSString
+/// @default	nil
+/// @behavior	If this setting is present, then OpenFeint will attempt to load nibs with the given suffix
+///				before attempting to load nibs with its default suffix ("Of").  You can use this if you want
+///				to override specific controller nibs within OpenFeint with your own.
+///
+////////////////////////////////////////////////////////////
+extern const NSString* OpenFeintSettingOverrideSuffixString;
+
+////////////////////////////////////////////////////////////
+///
+/// @type		NSString
+/// @default	nil
+/// @behavior	If this setting is present, then OpenFeint will attempt to instantiate classes with the given
+///				prefix before attempting to instantiate classes with its default prefix ("OF").  You can use
+///				this if you want to override specific UI classes within OpenFeint with your own.
+///
+////////////////////////////////////////////////////////////
+extern const NSString* OpenFeintSettingOverrideClassNamePrefixString;
+
+////////////////////////////////////////////////////////////
+///
+/// @type		NSString
+/// @default	nil
+/// @behavior	If this setting is present and set to YES blobs will not be compressed before uploaded to the cloud. 
+///				It is recomended to use this only if your data is already in a very compact format that will not compress.
+//				To find out how well your data compresses pass in the OpenFeintSettingOutputCloudStorageCompressionRatio setting.
+///
+///				NOTE: This flag applies to ALL of your cloud storage. You can not selectively use compression. If you're not sure
+///					  if you should use compression or not then it's safest to leave it enabled
+///
+////////////////////////////////////////////////////////////
+extern const NSString* OpenFeintSettingDisableCloudStorageCompression;
+
+////////////////////////////////////////////////////////////
+///
+/// @type		NSString
+/// @default	nil
+/// @behavior	If this setting is present and set to YES then OpenFeint will output the compression ratio of all compressed blobs to the console
+///
+////////////////////////////////////////////////////////////
+extern const NSString* OpenFeintSettingOutputCloudStorageCompressionRatio;
+

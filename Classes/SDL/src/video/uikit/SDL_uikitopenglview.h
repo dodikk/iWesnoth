@@ -30,7 +30,7 @@
 	The view content is basically an EAGL surface you render your OpenGL scene into.
 	Note that setting the view non-opaque will only work if the EAGL surface has an alpha channel.
  */
-/* *INDENT-OFF* */
+
 @interface SDL_uikitopenglview : SDL_uikitview {
 	
 @private
@@ -62,4 +62,4 @@
 	depthBits:(int)depthBits;
 
 @end
-/* *INDENT-ON* */
+

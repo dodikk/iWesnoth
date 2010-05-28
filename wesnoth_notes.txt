@@ -852,3 +852,23 @@ MALLOC:            1              Thread heaps in use
 MALLOC:       655360 (    0.6 MB) Metadata allocated
 ------------------------------------------------
 
+
+Loading time improvements
+-> load uncached tutorial campain
+
+BASE
+Took 18943 ms to SAVE cached file
+
+Improved shared_string::set
+Took 13783 ms to SAVE cached file
+28% faster than base!
+
+Improved tokenizer::is_alnum to use lookup table
+Took 12282 ms to SAVE cached file
+
+Improved config_cache::cacheSaveString
+Took 562 ms to SAVE cached file
+
+Ok.... that's not a good indicator :P
+
+

@@ -21,7 +21,7 @@
 
 #ifdef __IPHONEOS__
 	#include "iSound.h"
-	iSound *gSound;
+	iSound *gSound = NULL;
 #else
 	#include "SDL_mixer.h"
 #endif
@@ -346,8 +346,8 @@ bool init_sound() {
 //	if(SDL_WasInit(SDL_INIT_AUDIO) == 0)
 //		if(SDL_InitSubSystem(SDL_INIT_AUDIO) == -1)
 //			return false;
-	
-	gSound = new iSound();
+	if (gSound == NULL)
+		gSound = new iSound();
 
 	if(!mix_ok) {
 //		if(Mix_OpenAudio(preferences::sample_rate(), MIX_DEFAULT_FORMAT, 2, preferences::sound_buffer_size()) == -1) {
@@ -421,7 +421,7 @@ void reset_sound() {
 	bool bell = preferences::turn_bell();
 
 	if (music || sound || bell || UI_sound) {
-		sound::close_sound();
+//		sound::close_sound();
 		if (!sound::init_sound()) {
 //			ERR_AUDIO << "Error initializing audio device: " << Mix_GetError() << "\n";
 		}

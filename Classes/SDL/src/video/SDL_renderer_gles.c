@@ -33,6 +33,11 @@
 // KP: render queue and automatic z-order support
 #include "RenderQueue.h"
 
+extern unsigned char gFlippedGL;
+extern unsigned char gInitializedGL;
+
+unsigned char gInitializedGL = 0;
+
 #if defined(__QNXNTO__)
 /* Include QNX system header to check QNX version later */
 #include <sys/neutrino.h>
@@ -342,6 +347,8 @@ GLES_CreateRenderer(SDL_Window * window, Uint32 flags)
 	glAlphaFunc( GL_GREATER, 0.01f );
 */
 	
+	glClearDepthf(1.0f);
+	
     data->glDisable(GL_CULL_FACE);
     data->updateSize = SDL_TRUE;
 	
@@ -357,7 +364,8 @@ GLES_CreateRenderer(SDL_Window * window, Uint32 flags)
 	data->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	data->glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST); 
-	data->glClearColor(0.0f,0.0f,0.5f,1.0f);
+	data->glClearColor(0.0f,0.0f,0.0f,1.0f);
+	glClearStencil(0);
 	
 	// KP: multitexture support used for effects like greyscale
 	
@@ -367,7 +375,8 @@ GLES_CreateRenderer(SDL_Window * window, Uint32 flags)
 	glActiveTexture(GL_TEXTURE1);
 	GLuint texID;
 	glGenTextures(1, &texID);
-	glBindTexture(GL_TEXTURE_2D, texID);
+	//glBindTexture(GL_TEXTURE_2D, texID);
+	cacheBindTexture(GL_TEXTURE_2D, texID, 1);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -395,10 +404,21 @@ GLES_ActivateRenderer(SDL_Renderer * renderer)
         glLoadIdentity();
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
+	#ifdef __IPAD__
+        glViewport(0, 0, 768, 1024);
+		if (gFlippedGL)
+			glRotatef(90, 0, 0, 1);
+		else
+			glRotatef(-90, 0, 0, 1);
+        glOrthof(0.0, (GLfloat) 1024, (GLfloat) 768, 0.0, 0, 100.0f);
+	#else
         glViewport(0, 0, 320, 480);
-		glRotatef(-90, 0, 0, 1);
-        glOrthof(0.0, (GLfloat) 480, (GLfloat) 320, 0.0, 400, -400);
-		
+		if (gFlippedGL)
+			glRotatef(90, 0, 0, 1);
+		else
+			glRotatef(-90, 0, 0, 1);
+        glOrthof(0.0, (GLfloat) 480, (GLfloat) 320, 0.0, 0, 100.0f);
+	#endif	
 #else
         data->glMatrixMode(GL_PROJECTION);
         data->glLoadIdentity();
@@ -410,6 +430,8 @@ GLES_ActivateRenderer(SDL_Renderer * renderer)
 #endif
         data->updateSize = SDL_FALSE;
     }
+	
+	gInitializedGL = 1;
     return 0;
 }
 
@@ -630,18 +652,21 @@ GLES_UpdateTexture(SDL_Renderer * renderer, SDL_Texture * texture,
     GLES_TextureData *data = (GLES_TextureData *) texture->driverdata;
     GLenum result;
 
-    renderdata->glGetError();
+//    renderdata->glGetError();
 //    renderdata->glEnable(data->type);
     SetupTextureUpdate(renderdata, texture, pitch);
     renderdata->glTexSubImage2D(data->type, 0, rect->x, rect->y, rect->w,
                                 rect->h, data->format, data->formattype,
                                 pixels);
 //    renderdata->glDisable(data->type);
+	
+#ifndef NDEBUG	
     result = renderdata->glGetError();
     if (result != GL_NO_ERROR) {
         GLES_SetError("glTexSubImage2D()", result);
         return -1;
     }
+#endif
     return 0;
 }
 
@@ -719,7 +744,7 @@ GLES_RenderPoint(SDL_Renderer * renderer, int x, int y)
 
     GLES_SetBlendMode(data, renderer->blendMode);
 
-    data->glColor4f((GLfloat) renderer->r * inv255f,
+    cacheColor4f((GLfloat) renderer->r * inv255f,
                     (GLfloat) renderer->g * inv255f,
                     (GLfloat) renderer->b * inv255f,
                     (GLfloat) renderer->a * inv255f);
@@ -745,7 +770,7 @@ GLES_RenderLine(SDL_Renderer * renderer, int x1, int y1, int x2, int y2)
 
     GLES_SetBlendMode(data, renderer->blendMode);
 
-    data->glColor4f((GLfloat) renderer->r * inv255f,
+    cacheColor4f((GLfloat) renderer->r * inv255f,
                     (GLfloat) renderer->g * inv255f,
                     (GLfloat) renderer->b * inv255f,
                     (GLfloat) renderer->a * inv255f);
@@ -796,15 +821,19 @@ GLES_RenderFill(SDL_Renderer * renderer, const SDL_Rect * rect)
     GLshort miny = rect->y;
     GLshort maxy = rect->y + rect->h;
 
-    GLshort vertices[8];
+    GLshort vertices[12];
     vertices[0] = minx;
     vertices[1] = miny;
-    vertices[2] = maxx;
-    vertices[3] = miny;
-    vertices[4] = minx;
-    vertices[5] = maxy;
-    vertices[6] = maxx;
+	vertices[2] = 0;
+    vertices[3] = maxx;
+    vertices[4] = miny;
+	vertices[5] = 0;
+    vertices[6] = minx;
     vertices[7] = maxy;
+	vertices[8] = 0;
+    vertices[9] = maxx;
+    vertices[10] = maxy;
+	vertices[11] = 0;
 /*	
     data->glVertexPointer(3, GL_SHORT, 0, vertices);
     //data->glEnableClientState(GL_VERTEX_ARRAY);
@@ -963,17 +992,21 @@ GLES_RenderCopy(SDL_Renderer * renderer, SDL_Texture * texture,
         maxv = (GLfloat) (srcrect->y + srcrect->h) / texture->h;
         maxv *= texturedata->texh;
 
-        GLshort vertices[8];
+        GLshort vertices[12];
         GLfloat texCoords[8];
 		
         vertices[0] = minx;
         vertices[1] = miny;
-        vertices[2] = maxx;
-        vertices[3] = miny;
-        vertices[4] = minx;
-        vertices[5] = maxy;
-        vertices[6] = maxx;
+		vertices[2] = 0;
+        vertices[3] = maxx;
+        vertices[4] = miny;
+		vertices[5] = 0;
+        vertices[6] = minx;
         vertices[7] = maxy;
+		vertices[8] = 0;
+        vertices[9] = maxx;
+        vertices[10] = maxy;
+		vertices[11] = 0;
 				
         texCoords[0] = minu;
         texCoords[1] = minv;
@@ -1029,7 +1062,8 @@ GLES_RenderPresent(SDL_Renderer * renderer)
 	
 	// KP: clear the buffer after rendering
 	//GLES_RenderData *data = (GLES_RenderData *) renderer->driverdata;
-	glClear( /*GL_COLOR_BUFFER_BIT |*/ GL_DEPTH_BUFFER_BIT );
+//	glClear( /*GL_COLOR_BUFFER_BIT |*/ GL_DEPTH_BUFFER_BIT );
+	glClear(GL_DEPTH_BUFFER_BIT);
 }
 
 

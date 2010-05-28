@@ -232,9 +232,9 @@ void memory_profiler_start(const char *path)
 void memory_stats(const char *reason)
 {
 	// get general overall iPhone memory stats
-	printf("%s\n", reason);
-	tc_malloc_stats();
-	iPhoneMemory();
+//	printf("%s\n", reason);
+//	tc_malloc_stats();
+//	iPhoneMemory();
 }
 
 #endif
@@ -296,6 +296,7 @@ void getres(task_t task, unsigned int *rss, unsigned int *vs)
 size_t iPhoneMemory(void)
 {
 	// report process memory
+	/*
 	unsigned int rss, vs, psize;
 	task_t task = MACH_PORT_NULL;
 	if (task_for_pid(current_task(), getpid(), &task) == KERN_SUCCESS)
@@ -304,6 +305,7 @@ size_t iPhoneMemory(void)
 		psize = getpagesize();
 		printf("iPhone process memory used: %u KiB, VS: %u KiB.\n", rss, vs);
 	}	
+	*/
 	
 	// now report overall system memory
 	mach_port_t host_port;

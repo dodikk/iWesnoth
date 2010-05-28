@@ -6,10 +6,6 @@
  *
  */
 
-// KP: this file was added recently just to get OpenFeint to compile...
-//#ifdef __OBJC__
-//	#import <Foundation/Foundation.h>
-//	#import <UIKit/UIKit.h>
-//#endif
-
-#import "OpenFeintPrefix.pch"
+#ifndef DISABLE_OPENFEINT
+	#import "OpenFeintPrefix.pch"
+#endif
