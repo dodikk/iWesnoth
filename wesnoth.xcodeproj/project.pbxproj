@@ -14105,7 +14105,11 @@
 			isa = PBXProject;
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "wesnoth" */;
 			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				en,
+			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -20883,7 +20887,7 @@
 				GCC_THREADSAFE_STATICS = YES;
 				GCC_THUMB_SUPPORT = NO;
 				GCC_UNROLL_LOOPS = NO;
-				GCC_VERSION = 4.2;
+				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
@@ -20901,7 +20905,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A337F453-3282-4914-8722-11672C283F24";
-				SDKROOT = iphoneos3.2;
+				SDKROOT = iphoneos;
 				STRIP_INSTALLED_PRODUCT = YES;
 				USER_HEADER_SEARCH_PATHS = "./include/halomaps ./include/flagmaps ./include/unitmaps ./Classes ./";
 			};
@@ -21201,7 +21205,6 @@
 					"\\\"$(SRCROOT)/FlurryLib\\\"",
 				);
 				PRODUCT_NAME = wesnoth;
-				SDKROOT = iphoneos3.0;
 			};
 			name = Debug;
 		};
@@ -21239,7 +21242,6 @@
 					"\\\"$(SRCROOT)/FlurryLib\\\"",
 				);
 				PRODUCT_NAME = wesnoth;
-				SDKROOT = iphoneos3.0;
 			};
 			name = Release;
 		};
@@ -21258,7 +21260,6 @@
 					"\\\"$(SRCROOT)/FlurryLib\\\"",
 				);
 				PRODUCT_NAME = wesnoth;
-				SDKROOT = iphoneos3.0;
 			};
 			name = Distribution;
 		};
@@ -21311,7 +21312,6 @@
 					"\\\"$(SRCROOT)/FlurryLib\\\"",
 				);
 				PRODUCT_NAME = "wesnoth-iPad";
-				SDKROOT = iphoneos3.2;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
@@ -21335,7 +21335,6 @@
 					"\\\"$(SRCROOT)/FlurryLib\\\"",
 				);
 				PRODUCT_NAME = "wesnoth-iPad";
-				SDKROOT = iphoneos3.2;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Valgrind;
@@ -21369,7 +21368,6 @@
 					"\\\"$(SRCROOT)/FlurryLib\\\"",
 				);
 				PRODUCT_NAME = "wesnoth-iPad";
-				SDKROOT = iphoneos3.2;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;
@@ -21403,7 +21401,6 @@
 					"\\\"$(SRCROOT)/FlurryLib\\\"",
 				);
 				PRODUCT_NAME = "wesnoth-iPad";
-				SDKROOT = iphoneos3.2;
 				TARGETED_DEVICE_FAMILY = 2;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -21426,7 +21423,6 @@
 					"\\\"$(SRCROOT)/FlurryLib\\\"",
 				);
 				PRODUCT_NAME = "wesnoth-iPad";
-				SDKROOT = iphoneos3.2;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Beta;
@@ -21459,7 +21455,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 3.2;
 				LIBRARY_SEARCH_PATHS = "";
 				PRODUCT_NAME = "wesnoth-iPad";
-				SDKROOT = iphoneos3.2;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
@@ -21479,7 +21474,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 2.2.1;
 				LIBRARY_SEARCH_PATHS = "";
 				PRODUCT_NAME = "wesnoth-iPad";
-				SDKROOT = iphoneos3.2;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Valgrind;
@@ -21510,7 +21504,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 2.2.1;
 				LIBRARY_SEARCH_PATHS = "";
 				PRODUCT_NAME = "wesnoth-iPad";
-				SDKROOT = iphoneos3.2;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;
@@ -21540,7 +21533,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 2.2.1;
 				LIBRARY_SEARCH_PATHS = "";
 				PRODUCT_NAME = "wesnoth-iPad";
-				SDKROOT = iphoneos3.2;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Distribution;
@@ -21558,7 +21550,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 3.2;
 				LIBRARY_SEARCH_PATHS = "";
 				PRODUCT_NAME = "wesnoth-iPad";
-				SDKROOT = iphoneos3.2;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Beta;
@@ -21594,7 +21585,7 @@
 				GCC_THREADSAFE_STATICS = YES;
 				GCC_THUMB_SUPPORT = NO;
 				GCC_UNROLL_LOOPS = NO;
-				GCC_VERSION = 4.2;
+				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
@@ -21612,7 +21603,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				SDKROOT = iphoneos3.2;
+				SDKROOT = iphoneos;
 				STRIP_INSTALLED_PRODUCT = YES;
 				USER_HEADER_SEARCH_PATHS = "./include/halomaps ./include/flagmaps ./include/unitmaps ./Classes ./";
 			};
@@ -21632,7 +21623,6 @@
 					"\"$(SRCROOT)/FlurryLib\"",
 				);
 				PRODUCT_NAME = wesnoth;
-				SDKROOT = iphoneos3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -21670,7 +21660,7 @@
 				);
 				GCC_THREADSAFE_STATICS = YES;
 				GCC_THUMB_SUPPORT = NO;
-				GCC_VERSION = 4.2;
+				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
@@ -21689,7 +21679,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5A110399-8927-45EB-87EC-41FBA296A31E";
-				SDKROOT = iphoneos3.2;
+				SDKROOT = iphoneos;
 				STRIP_INSTALLED_PRODUCT = NO;
 				USER_HEADER_SEARCH_PATHS = "./include/halomaps ./include/flagmaps ./include/unitmaps ./Classes ./";
 			};
@@ -21745,7 +21735,7 @@
 				);
 				GCC_THREADSAFE_STATICS = YES;
 				GCC_THUMB_SUPPORT = NO;
-				GCC_VERSION = 4.2;
+				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
@@ -21763,7 +21753,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				SDKROOT = iphoneos3.2;
+				SDKROOT = iphoneos;
 				STRIP_INSTALLED_PRODUCT = YES;
 				USER_HEADER_SEARCH_PATHS = "./include/halomaps ./include/flagmaps ./include/unitmaps ./Classes ./";
 			};
@@ -21800,7 +21790,7 @@
 				GCC_THREADSAFE_STATICS = YES;
 				GCC_THUMB_SUPPORT = NO;
 				GCC_UNROLL_LOOPS = NO;
-				GCC_VERSION = 4.2;
+				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
@@ -21818,7 +21808,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				SDKROOT = iphoneos3.2;
+				SDKROOT = iphoneos;
 				STRIP_INSTALLED_PRODUCT = YES;
 				USER_HEADER_SEARCH_PATHS = "./include/halomaps ./include/flagmaps ./include/unitmaps ./Classes ./";
 			};

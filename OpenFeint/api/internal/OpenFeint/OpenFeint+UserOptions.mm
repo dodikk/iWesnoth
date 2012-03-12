@@ -25,39 +25,39 @@
 #import "OFUser.h"
 #import "OFProvider.h"
 
-static const NSString* OpenFeintUserOptionShouldAutomaticallyPromptLogin = @"OpenFeintSettingShouldAutomaticallyPromptLogin";
-static const NSString* OpenFeintUserOptionLastLoggedInUserHasSetName = @"OpenFeintSettingLastLoggedInUserHasSetName";
-static const NSString* OpenFeintUserOptionLastLoggedInUserHadSetNameOnBootup = @"OpenFeintSettingLastLoggedInUserHadSetNameOnBootup";
-static const NSString* OpenFeintUserOptionLastLoggedInUserNonDeviceCredential = @"OpenFeintSettingLastLoggedInUserHasNonDeviceCredential";
+static NSString* const OpenFeintUserOptionShouldAutomaticallyPromptLogin = @"OpenFeintSettingShouldAutomaticallyPromptLogin";
+static NSString* const OpenFeintUserOptionLastLoggedInUserHasSetName = @"OpenFeintSettingLastLoggedInUserHasSetName";
+static NSString* const OpenFeintUserOptionLastLoggedInUserHadSetNameOnBootup = @"OpenFeintSettingLastLoggedInUserHadSetNameOnBootup";
+static NSString* const OpenFeintUserOptionLastLoggedInUserNonDeviceCredential = @"OpenFeintSettingLastLoggedInUserHasNonDeviceCredential";
 
-static const NSString* OpenFeintUserOptionLastLoggedInUserHttpBasicCredential = @"OpenFeintSettingLastLoggedInUserHasHttpBasicCredential";
+static NSString* const OpenFeintUserOptionLastLoggedInUserHttpBasicCredential = @"OpenFeintSettingLastLoggedInUserHasHttpBasicCredential";
 
-static const NSString* OpenFeintUserOptionLastLoggedInUserFbconnectCredential = @"OpenFeintSettingLastLoggedInUserHasFbconnectCredential";
+static NSString* const OpenFeintUserOptionLastLoggedInUserFbconnectCredential = @"OpenFeintSettingLastLoggedInUserHasFbconnectCredential";
 
-static const NSString* OpenFeintUserOptionLastLoggedInUserTwitterCredential = @"OpenFeintSettingLastLoggedInUserHasTwitterCredential";
+static NSString* const OpenFeintUserOptionLastLoggedInUserTwitterCredential = @"OpenFeintSettingLastLoggedInUserHasTwitterCredential";
 
-static const NSString* OpenFeintUserOptionLastLoggedInUserIsNewUser = @"OpenFeintSettingsLastLoggedInUserIsNewUser";
-static const NSString* OpenFeintUserOptionUserFeintApproval = @"OpenFeintUserOptionUserFeintApproval";
-static const NSString* OpenFeintUserOptionClientApplicationId = @"OpenFeintSettingClientApplicationId";
-static const NSString* OpenFeintUserOptionInitialDashboardScreen = @"OpenFeintUserOptionInitialDashboardScreen";
-static const NSString* OpenFeintUserOptionClientApplicationIconUrl = @"OpenFeintSettingClientApplicationIconUrl";
-static const NSString* OpenFeintUserOptionUnviewedChallengesCount = @"OpenFeintSettingUnviewedChallengesCount";
-static const NSString* OpenFeintUserOptionUserHasRememberedChoiceForNotifications = @"OpenFeintUserOptionUserHasRememberedChoiceForNotifications";
-static const NSString* OpenFeintUserOptionUserAllowsNotifications = @"OpenFeintUserOptionUserAllowsNotifications";
-static const NSString* OpenFeintUserOptionLastLoggedInUserHasChatEnabled = @"OpenFeintUserOptionLastLoggedInUserHasChatEnabled";
-static const NSString* OpenFeintUserOptionLoggedInUserSharesOnlineStatus = @"OpenFeintUserOptionLoggedInUserSharesOnlineStatus";
-static const NSString* OpenFeintUserOptionLocalGameInfo = @"OpenFeintUserOptionLocalGameInfo";
-static const NSString* OpenFeintUserOptionLocalUser = @"OpenFeintUserOptionLocalUser";
-static const NSString* OpenFeintUserOptionPendingFriendsCount = @"OpenFeintSettingPendingFriendsCount";
-static const NSString* OpenFeintUserOptionUnreadInboxCount = @"OpenFeintUserOptionUnreadInboxCount";
+static NSString* const OpenFeintUserOptionLastLoggedInUserIsNewUser = @"OpenFeintSettingsLastLoggedInUserIsNewUser";
+static NSString* const OpenFeintUserOptionUserFeintApproval = @"OpenFeintUserOptionUserFeintApproval";
+static NSString* const OpenFeintUserOptionClientApplicationId = @"OpenFeintSettingClientApplicationId";
+static NSString* const OpenFeintUserOptionInitialDashboardScreen = @"OpenFeintUserOptionInitialDashboardScreen";
+static NSString* const OpenFeintUserOptionClientApplicationIconUrl = @"OpenFeintSettingClientApplicationIconUrl";
+static NSString* const OpenFeintUserOptionUnviewedChallengesCount = @"OpenFeintSettingUnviewedChallengesCount";
+static NSString* const OpenFeintUserOptionUserHasRememberedChoiceForNotifications = @"OpenFeintUserOptionUserHasRememberedChoiceForNotifications";
+static NSString* const OpenFeintUserOptionUserAllowsNotifications = @"OpenFeintUserOptionUserAllowsNotifications";
+static NSString* const OpenFeintUserOptionLastLoggedInUserHasChatEnabled = @"OpenFeintUserOptionLastLoggedInUserHasChatEnabled";
+static NSString* const OpenFeintUserOptionLoggedInUserSharesOnlineStatus = @"OpenFeintUserOptionLoggedInUserSharesOnlineStatus";
+static NSString* const OpenFeintUserOptionLocalGameInfo = @"OpenFeintUserOptionLocalGameInfo";
+static NSString* const OpenFeintUserOptionLocalUser = @"OpenFeintUserOptionLocalUser";
+static NSString* const OpenFeintUserOptionPendingFriendsCount = @"OpenFeintSettingPendingFriendsCount";
+static NSString* const OpenFeintUserOptionUnreadInboxCount = @"OpenFeintUserOptionUnreadInboxCount";
 
-static const NSString* OpenFeintUserOptionShouldWarnOnIncompleteDelegates = @"OpenFeintUserOptionShouldWarnOnIncompleteDelegates";
+static NSString* const OpenFeintUserOptionShouldWarnOnIncompleteDelegates = @"OpenFeintUserOptionShouldWarnOnIncompleteDelegates";
 
-static const NSString* OpenFeintUserOptionDistanceUnit = @"OpenFeintUserOptionDistanceUnit";
+static NSString* const OpenFeintUserOptionDistanceUnit = @"OpenFeintUserOptionDistanceUnit";
 
-static const NSString* OpenFeintUserOptionLastAnnouncementDate = @"OpenFeintLastAnnouncementDate_UserID";
-static const NSString* OpenFeintUserOptionSuggestionsForumId = @"OpenFeintUserOptionSuggestionsForumId";
-static const NSString* OpenFeintUserOptionDoneWithGetTheMost = @"OpenFeintUserOptionDoneWithGetTheMost";
+static NSString* const OpenFeintUserOptionLastAnnouncementDate = @"OpenFeintLastAnnouncementDate_UserID";
+static NSString* const OpenFeintUserOptionSuggestionsForumId = @"OpenFeintUserOptionSuggestionsForumId";
+static NSString* const OpenFeintUserOptionDoneWithGetTheMost = @"OpenFeintUserOptionDoneWithGetTheMost";
 
 
 @implementation OpenFeint (UserOptions)

@@ -37,8 +37,8 @@
 
 namespace 
 {
-	const NSString* kFollowingTabName = @"Friends";
-	const NSString* kFollowersTabName = @"Pending";
+	 NSString* const kFollowingTabName = @"Friends";
+    NSString* const  kFollowersTabName = @"Pending";
 }
 
 @interface OFFriendsController (Internal)

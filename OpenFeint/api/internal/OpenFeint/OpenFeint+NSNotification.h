@@ -26,28 +26,28 @@
 // Online/Offline Notification
 //
 // This notification is posted when the user goes online
-extern NSString const* OFNSNotificationUserOnline;
+extern NSString* const OFNSNotificationUserOnline;
 // This notification is posted when the user goes offline
-extern NSString const* OFNSNotificationUserOffline;
+extern NSString* const OFNSNotificationUserOffline;
 /////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////
 // User Changed Notification
 //
 // This notification is posted when the user changes
-extern NSString const* OFNSNotificationUserChanged;
+extern NSString* const OFNSNotificationUserChanged;
 // These are the keys for the userInfo dictionary in the UserChanged notification
-extern NSString const* OFNSNotificationInfoPreviousUser;
-extern NSString const* OFNSNotificationInfoCurrentUser;
+extern NSString* const OFNSNotificationInfoPreviousUser;
+extern NSString* const OFNSNotificationInfoCurrentUser;
 /////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////
 // Unviewed Challenge Count Notification
 //
 // This notification is posted when the unviewed challenge count changes
-extern NSString const* OFNSNotificationUnviewedChallengeCountChanged;
+extern NSString* const OFNSNotificationUnviewedChallengeCountChanged;
 // These are the keys for the userInfo dictionary in the UnviewedChallengeCountChanged notification
-extern NSString const* OFNSNotificationInfoUnviewedChallengeCount;
+extern NSString* const OFNSNotificationInfoUnviewedChallengeCount;
 /////////////////////////////////////////////////////
 
 //Presence Notifications
@@ -58,33 +58,33 @@ extern NSString const *OFNSNotificationFriendPresenceChanged;
 // Pending Friend Count Notification
 //
 // This notification is posted when the pending friend count changes
-extern NSString const* OFNSNotificationPendingFriendCountChanged;
+extern NSString* const OFNSNotificationPendingFriendCountChanged;
 // These are the keys for the userInfo dictionary in the PendingFriendCountChanged notification
-extern NSString const* OFNSNotificationInfoPendingFriendCount;
+extern NSString* const OFNSNotificationInfoPendingFriendCount;
 /////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////
 // Add/Remove Friends Notification
-extern NSString const* OFNSNotificationAddFriend;
-extern NSString const* OFNSNotificationRemoveFriend;
+extern NSString* const OFNSNotificationAddFriend;
+extern NSString* const OFNSNotificationRemoveFriend;
 /////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////
 // Unread Announcement Notification
 //
 // This notification is posted when the unread announcement count changes
-extern NSString const* OFNSNotificationUnreadAnnouncementCountChanged;
+extern NSString* const OFNSNotificationUnreadAnnouncementCountChanged;
 // These are the keys for the userInfo dictionary in the UnreadAnnouncementCountChanged notification
-extern NSString const* OFNSNotificationInfoUnreadAnnouncementCount;
+extern NSString* const OFNSNotificationInfoUnreadAnnouncementCount;
 /////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////
 // Unread Inbox Notification
 //
 // This notification is posted when the unread inbox count changes
-extern NSString const* OFNSNotificationUnreadInboxCountChanged;
+extern NSString* const OFNSNotificationUnreadInboxCountChanged;
 // These are the keys for the userInfo dictionary in the UnreadInboxCountChanged notification
-extern NSString const* OFNSNotificationInfoUnreadInboxCount;
+extern NSString* const OFNSNotificationInfoUnreadInboxCount;
 /////////////////////////////////////////////////////
 
 @interface OpenFeint (NSNotification)

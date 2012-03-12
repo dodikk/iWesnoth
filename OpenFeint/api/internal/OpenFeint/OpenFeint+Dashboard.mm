@@ -22,16 +22,16 @@
 #import "OFControllerLoader.h"
 #import "OFApplicationDescriptionController.h"
 
-const NSString* OpenFeintDashBoardTabNowPlaying = @"GameProfile";
-const NSString* OpenFeintDashBoardTabMyFeint = @"MyFeint";
-const NSString* OpenFeintDashBoardTabGames = @"GameDiscovery";
+NSString* const OpenFeintDashBoardTabNowPlaying = @"GameProfile";
+NSString* const OpenFeintDashBoardTabMyFeint = @"MyFeint";
+NSString* const OpenFeintDashBoardTabGames = @"GameDiscovery";
 
-const NSString* OpenFeintControllerAchievementsList = @"AchievementList";
-const NSString* OpenFeintControllerLeaderboardsList = @"Leaderboard";
-const NSString* OpenFeintControllerChallengesList = @"ChallengeList";
-const NSString* OpenFeintControllerFindFriends = @"ImportFriends";
-const NSString* OpenFeintControllerWhosPlaying = @"WhosPlaying";
-const NSString* OpenFeintControllerHighScores = @"HighScore";
+NSString* const OpenFeintControllerAchievementsList = @"AchievementList";
+NSString* const OpenFeintControllerLeaderboardsList = @"Leaderboard";
+NSString* const OpenFeintControllerChallengesList = @"ChallengeList";
+NSString* const OpenFeintControllerFindFriends = @"ImportFriends";
+NSString* const OpenFeintControllerWhosPlaying = @"WhosPlaying";
+NSString* const OpenFeintControllerHighScores = @"HighScore";
 
 @implementation OpenFeint (Dashboard)
 

@@ -38,7 +38,7 @@
 /// @behavior	Used make the intial dashboard tab the Current Game tab
 ///
 ////////////////////////////////////////////////////////////
-extern const NSString* OpenFeintDashBoardTabNowPlaying;
+extern NSString* const OpenFeintDashBoardTabNowPlaying;
 
 ////////////////////////////////////////////////////////////
 ///
@@ -46,7 +46,7 @@ extern const NSString* OpenFeintDashBoardTabNowPlaying;
 /// @behavior	Used make the intial dashboard tab the My Feint tab
 ///
 ////////////////////////////////////////////////////////////
-extern const NSString* OpenFeintDashBoardTabMyFeint;
+extern NSString* const OpenFeintDashBoardTabMyFeint;
 
 ////////////////////////////////////////////////////////////
 ///
@@ -54,7 +54,7 @@ extern const NSString* OpenFeintDashBoardTabMyFeint;
 /// @behavior	Used make the intial dashboard tab the Games tab
 ///
 ////////////////////////////////////////////////////////////
-extern const NSString* OpenFeintDashBoardTabGames;
+extern NSString* const OpenFeintDashBoardTabGames;
 
 ////////////////////////////////////////////////////////////
 ///
@@ -62,7 +62,7 @@ extern const NSString* OpenFeintDashBoardTabGames;
 /// @behavior	Achievements List controller
 ///
 ////////////////////////////////////////////////////////////
-extern const NSString* OpenFeintControllerAchievementsList;
+extern NSString* const OpenFeintControllerAchievementsList;
 
 ////////////////////////////////////////////////////////////
 ///
@@ -70,7 +70,7 @@ extern const NSString* OpenFeintControllerAchievementsList;
 /// @behavior	Leaderboard List controller
 ///
 ////////////////////////////////////////////////////////////
-extern const NSString* OpenFeintControllerLeaderboardsList;
+extern NSString* const OpenFeintControllerLeaderboardsList;
 
 ////////////////////////////////////////////////////////////
 ///
@@ -78,7 +78,7 @@ extern const NSString* OpenFeintControllerLeaderboardsList;
 /// @behavior	Challenges List controller
 ///
 ////////////////////////////////////////////////////////////
-extern const NSString* OpenFeintControllerChallengesList;
+extern NSString* const OpenFeintControllerChallengesList;
 
 ////////////////////////////////////////////////////////////
 ///
@@ -86,7 +86,7 @@ extern const NSString* OpenFeintControllerChallengesList;
 /// @behavior	Find Friends controller
 ///
 ////////////////////////////////////////////////////////////
-extern const NSString* OpenFeintControllerFindFriends;
+extern NSString* const OpenFeintControllerFindFriends;
 
 ////////////////////////////////////////////////////////////
 ///
@@ -94,7 +94,7 @@ extern const NSString* OpenFeintControllerFindFriends;
 /// @behavior	High Scores controller
 ///
 ////////////////////////////////////////////////////////////
-extern const NSString* OpenFeintControllerHighScores;
+extern NSString* const OpenFeintControllerHighScores;
 
 
 ////////////////////////////////////////////////////////////
@@ -103,4 +103,4 @@ extern const NSString* OpenFeintControllerHighScores;
 /// @behavior	Who's Playing controller
 ///
 ////////////////////////////////////////////////////////////
-extern const NSString* OpenFeintControllerWhosPlaying;
+extern NSString* const OpenFeintControllerWhosPlaying;

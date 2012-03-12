@@ -19,31 +19,31 @@
 #import "OpenFeint+NSNotification.h"
 #import "OFUser.h"
 
-NSString const* OFNSNotificationUserOnline = @"OFNSNotificationUserOnline";
-NSString const* OFNSNotificationUserOffline = @"OFNSNotificationUserOffline";
+NSString* const OFNSNotificationUserOnline = @"OFNSNotificationUserOnline";
+NSString* const OFNSNotificationUserOffline = @"OFNSNotificationUserOffline";
 
-NSString const* OFNSNotificationUserChanged = @"OFNSNotificationUserChanged";
+NSString* const OFNSNotificationUserChanged = @"OFNSNotificationUserChanged";
 
-NSString const* OFNSNotificationInfoPreviousUser = @"OFNSNotificationInfoPreviousUser";
-NSString const* OFNSNotificationInfoCurrentUser = @"OFNSNotificationInfoCurrentUser";
+NSString* const OFNSNotificationInfoPreviousUser = @"OFNSNotificationInfoPreviousUser";
+NSString* const OFNSNotificationInfoCurrentUser = @"OFNSNotificationInfoCurrentUser";
 
-NSString const* OFNSNotificationUnviewedChallengeCountChanged = @"OFNSNotificationUnviewedChallengeCountChanged";
-NSString const* OFNSNotificationInfoUnviewedChallengeCount = @"OFNSNotificationInfoUnviewedChallengeCount";
+NSString* const OFNSNotificationUnviewedChallengeCountChanged = @"OFNSNotificationUnviewedChallengeCountChanged";
+NSString* const OFNSNotificationInfoUnviewedChallengeCount = @"OFNSNotificationInfoUnviewedChallengeCount";
 
 NSString const *OFNSNotificationFriendPresenceChanged = @"OFNSNotificationFriendPresenceChanged";
 
-NSString const* OFNSNotificationPendingFriendCountChanged = @"OFNSNotificationPendingFriendCountChanged";
-NSString const* OFNSNotificationInfoPendingFriendCount = @"OFNSNotificationInfoPendingFriendCount";
+NSString* const OFNSNotificationPendingFriendCountChanged = @"OFNSNotificationPendingFriendCountChanged";
+NSString* const OFNSNotificationInfoPendingFriendCount = @"OFNSNotificationInfoPendingFriendCount";
 
-NSString const* OFNSNotificationAddFriend = @"OFNSNotificationAddFriend";
-NSString const* OFNSNotificationRemoveFriend = @"OFNSNotificationRemoveFriend";
-NSString const* OFNSNotificationInfoFriend = @"OFNSNotificationInfoFriend";
+NSString* const OFNSNotificationAddFriend = @"OFNSNotificationAddFriend";
+NSString* const OFNSNotificationRemoveFriend = @"OFNSNotificationRemoveFriend";
+NSString* const OFNSNotificationInfoFriend = @"OFNSNotificationInfoFriend";
 
-NSString const* OFNSNotificationUnreadAnnouncementCountChanged = @"OFNSNotificationUnreadAnnouncementCountChanged";
-NSString const* OFNSNotificationInfoUnreadAnnouncementCount = @"OFNSNotificationInfoUnreadAnnouncementCount";
+NSString* const OFNSNotificationUnreadAnnouncementCountChanged = @"OFNSNotificationUnreadAnnouncementCountChanged";
+NSString* const OFNSNotificationInfoUnreadAnnouncementCount = @"OFNSNotificationInfoUnreadAnnouncementCount";
 
-NSString const* OFNSNotificationUnreadInboxCountChanged = @"OFNSNotificationUnreadInboxCountChanged";
-NSString const* OFNSNotificationInfoUnreadInboxCount = @"OFNSNotificationInfoUnreadInboxCount";
+NSString* const OFNSNotificationUnreadInboxCountChanged = @"OFNSNotificationUnreadInboxCountChanged";
+NSString* const OFNSNotificationInfoUnreadInboxCount = @"OFNSNotificationInfoUnreadInboxCount";
 
 @implementation OpenFeint (NSNotification)
 
