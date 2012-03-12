@@ -30,6 +30,7 @@
 #include "wml_separators.hpp"
 #include "formula_string_utils.hpp"
 
+#include <stdlib>
 #include <boost/bind.hpp>
 
 #define LOG_NW LOG_STREAM(info, network)

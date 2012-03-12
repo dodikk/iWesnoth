@@ -14,6 +14,7 @@
 #ifndef SHARED_STRING_HPP_INCLUDED
 #define SHARED_STRING_HPP_INCLUDED
 
+#include <cassert>
 #include <string>
 #include <map>
 #include <iostream>
